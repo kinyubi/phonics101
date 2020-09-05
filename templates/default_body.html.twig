@@ -1,0 +1,103 @@
+
+{#
+    For site pages that rely on the Document class to build tabs, menus and titles use this template.
+    Mapping of Document class properties to twig variables in the Document::render method is as follows:
+       $titleBar        -> pageTitle        set with $document->setTitle(string $title)
+       $navbar          -> menu             set with $document->addToNavbar() or $doucment->addLinkToNavBar()
+       $tabArray        -> tabs             add a tab with $document->writeTab(title, html)
+       $initialTabName  -> initialTabName   set with $document->setInitialTab(tabName)
+       $errorMessage    -> errorMessage     set with $document->appendToErrorMessage(html)
+       $systemMessage   -> systemMessage    set with $document->appendToSystemMessage(html)
+
+       The HTML returned from the TwigFactory::renderBlock call is put into the variable $content.
+       $args is set to ['content' => $content. The call to TwigFactory::renderTemplate is as follows:
+           TwigFactory::renderTemplate('base.html.twig', $args)
+#}
+
+{# variable consumed by body block
+    errorMessage:
+    systemMessage:
+    initialTabName: Title of the tab to be initially displayed (defaults to first tab)
+    pageTitle: array of titles
+    menu: array of menu items (key value pairs of title=>link)
+
+
+    For a tabbed page
+    -----------------
+    tabs associative array: key is tab title, value is html
+
+    For an untabbed page you can create another block template for the body block and use that
+#}
+
+{% block body %}
+    {# our logo, menu items, and title that span the entire width of the page #}
+    <div class="container-fluid m-0 p-0">
+        <div class="row m-0 p-0">
+            <div class="col-12 p-0">
+                <nav class="navbar navbar-dark bg-secondary text-white-50 m-0 mb-2 px-1">
+                    <img class="navbar-brand" style="max-height:50px" alt="ReadXYZ"
+                         src="/images/readxyzicon_filled.png">
+                {#    <ul class="nav-link d-flex flex-nowrap"> #}
+                        {% for title, link in menu %}
+                            {#<li class="nav-item" >#}
+                                <a id="menuItem-{{ loop.index }}" class="nav-link sfp" href="{{ link }}">{{ title }}</a>
+                            {#</li>#}
+                        {% endfor %}
+                    {#</ul>#}
+                    <span class="navbar-text ml-auto text-white h5 px-2">{{ pageTitle }}</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    {# display any error messages #}
+    {% if errorMessage %}
+        <div class="container border border-danger p-0">
+            <h2 class="bg-danger text-white">ERROR</h2>
+            <p class="text-danger">{{ errorMessage | raw }}</p>
+        </div>
+
+    {% endif %}
+    {% if systemMessage %}
+        <div class="container border border-dark p-0">
+            <h2 class="bg-dark text-white">SYSTEM ERROR</h2>
+            <p class="text-dark">{{ systemMessage | raw }}</p>
+        </div>
+    {% endif %}
+
+    {# create the tabs setting the initial tab as visible and active #}
+    <div class="container p-3" id="thePage" style="max-width: 960px;">
+        {% set tabCount =  tabs | length %}
+        {% set visibleTab = (initialTabName is empty) ? (tabs|keys|first) : initialTabName %}
+
+        {# display the tab bar #}
+        {% if tabCount  > 1 %}
+            <nav>
+                <div class="nav nav-tabs bg-light mb-4" id="nav-tab" role="tablist">
+                    {% for tabTitle, tabHtml in tabs %}
+                        {% set active = (tabTitle == visibleTab) ? 'active' : '' %}
+                        {% set selected = (tabTitle == visibleTab) ? 'true' : 'false' %}
+                        {% set tabId = tabTitle|lower ~ '-tab' %}
+                        {% set body = tabTitle|lower ~ '-body' %}
+                        <a class="nav-item nav-link {{ active }}" data-toggle="tab" id="{{ tabId }}" href="#{{ body }}"
+                           role="tab" aria-controls="{{ body }}" aria-selected="{{ selected }}">{{ tabTitle }} </a>
+
+                    {% endfor %}
+                </div>
+            </nav> {# close navbar #}
+            <div class="tab-content" id="myTabContent">
+                {% for tabTitle, tabHtml in tabs %}
+                    {% set active = (tabTitle == visibleTab) ? 'show active' : '' %}
+                    {% set tabId = tabTitle|lower ~ '-tab' %}
+                    {% set bodyId = tabTitle|lower ~ '-body' %}
+                    <div id="{{ bodyId }}" class="tab-pane fade {{ active }}" role="tabpanel" aria-labelledby="{{ tabId }}">{{ tabHtml |raw }}</div>
+                {% endfor %}
+            </div>
+        {% else %} {# only one tab #}
+            {% for tabTitle, tabHtml in tabs %}
+                <div class="container">{{ tabHtml | raw }}</div>
+            {% endfor %}
+        {% endif %}
+
+    </div> {# end container#}
+{% endblock %}

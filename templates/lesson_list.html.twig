@@ -1,0 +1,97 @@
+
+{#
+Build a page of available lessons. Each lesson is a link to the action handler with a P1 parameter
+containing the lesson name. If no action is specified, then the programs default action handler is
+used specifying Lessons::renderLesson to handle
+used by: ReadXYZ\Twig\Twigs::renderLessonList
+
+inputs:
+    accordion[] : obtained by calling Lessons::getInstance()->getAccordionList()
+    studentName : obtained by calling Student::getInstance()->getStudentName()
+    mostRecentLesson: lesson most recently worked on
+    mostRecentTab: lesson tab most recently worked on
+    isLocal     : obtained by Util::isLocal()
+    action      : if specified a file in /actions, otherwise we do legacy treatment
+#}
+
+{% block body %}
+    {% set iconList = ['plus text-xyz', 'check text-xyz', 'star text-warning'] %}
+    {% if action|default('') is empty %}
+        {% set actionHandler = '/actions/processLessonSelection.php' %}
+    {% else %}
+        {# use a custom handler that #}
+        {% set actionHandler = '/actions/' ~ action %}
+    {% endif %}
+    <style>
+        a span {
+            font-stretch: 100%;
+            color: black;
+            font: bold 20px Muli, Century Gothic, sans-serif;
+        }
+    </style>
+    {% if mostRecentLesson %}
+        <ul class="nav nav-pills"><li class="nav-item mx-2 px-2 py-1 w-100">
+            <a class="nav-link bg-info text-white border rounded w-100" href="{{ actionHandler }}?P1={{
+            mostRecentLesson|url_encode }}&P2={{ mostRecentTab }}">
+                <i class="fas fa-arrow-circle-right px-2 fa-2x text-secondary"></i>
+                <span class="h6 p-2 mr-2">MOST RECENT LESSON</span>
+                <span class="h5 mr-5 text-white">{{ mostRecentLesson }}</span>
+            </a>
+            </li></ul>
+    {% endif %}
+    <div class="container text-left" id="groupedLessons">
+        {% for groupName in accordion|keys %}
+            {% set groupIndex = loop.index %}
+            {% set groupHeader = 'header-' ~ loop.index %}
+            {% set groupCollapse = 'collapse-' ~ loop.index %}
+            <div class="card text-left">
+                <div class="card-header" id="{{ groupHeader }}">
+                    <h2 class="mb-0">
+                        <a style="text-decoration: none !important;" data-toggle="collapse"
+                           href="#{{ groupCollapse }}" aria-controls="{{ groupCollapse }}" aria-expanded="false">
+                            <i class="fas fa-plus-circle px-2 fa-2x text-secondary"></i>
+                            <span class="h5 text-dark">{{ groupName }}</span>
+                        </a>
+                    </h2>
+                </div>
+                <div id="{{ groupCollapse }}" class="collapse" data-parent="#groupedLessons"
+                     aria-labelledby="{{ groupHeader }}">
+                    <div class="card-body">
+                        <div class="d-flex flex-column flex-nowrap">
+                            {% for lessonName, masteryLevel in accordion[groupName] %}
+                                <div>
+                                    <a role="button" href="{{ actionHandler }}?P1={{ lessonName|url_encode }}">
+                                        <i class="fas fa-{{ iconList[masteryLevel] }}   fa-bold px-2"></i>
+                                        <span>{{ lessonName }}</span>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock body %}
+
+
+{# inputs:
+    action - the php file that is the target of the form
+    accordion[]
+#}
+{% block lessonDropDown %}
+    <form action="/{{ action }}">
+        <label for="lessons">Choose a lesson:</label>
+        <select name="lessons" id="lessons">
+            {% for groupName in accordion|keys %}
+                <optgroup label="{{ groupName }}">
+                    {% for lessonName, masteryLevel in accordion[groupName] %}
+                        <option value="{{ lessonName }}">{{ lessonName }}</option>
+                    {% endfor %}
+                </optgroup>
+            {% endfor %}
+        </select>
+    </form>
+{% endblock lessonDropDown %}
+

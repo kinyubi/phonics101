@@ -1,0 +1,82 @@
+[
+    {
+        "tabTypeId": "instructions",
+        "tabDisplayAs": "Instructions",
+        "tabClassName": "InstructionPage",
+        "columns": 1,
+        "useFullStyle": false,
+        "isGenerated": false,
+        "reviewLesson": false,
+        "canRefresh": false
+    },
+    {
+        "tabTypeId": "practice",
+        "tabDisplayAs": "Practice",
+        "tabClassName": "WordList",
+        "columns": 3,
+        "useFullStyle": false,
+        "isGenerated": false,
+        "reviewLesson": false,
+        "canRefresh": true
+    },
+    {
+        "tabTypeId": "spell",
+        "tabDisplayAs": "Spell",
+        "tabClassName": "WordSpinner",
+        "columns": 1,
+        "useFullStyle": true,
+        "isGenerated": false,
+        "reviewLesson": false,
+        "canRefresh": false
+    },
+    {
+        "tabTypeId": "intro",
+        "tabDisplayAs": "Intro",
+        "tabClassName": "WordList",
+        "columns": 1,
+        "useFullStyle": true,
+        "isGenerated": false,
+        "reviewLesson": false,
+        "canRefresh": true
+    },
+    {
+        "tabTypeId": "test",
+        "tabDisplayAs": "Test",
+        "tabClassName": "WordListTimed",
+        "columns": 1,
+        "useFullStyle": false,
+        "isGenerated": false,
+        "reviewLesson": false,
+        "canRefresh": true
+    },
+    {
+        "tabTypeId": "write",
+        "tabDisplayAs": "Write",
+        "tabClassName": "WordList",
+        "columns": 1,
+        "useFullStyle": true,
+        "isGenerated": false,
+        "reviewLesson": false,
+        "canRefresh": true
+    },
+    {
+        "tabTypeId": "fluency",
+        "tabDisplayAs": "Fluency",
+        "tabClassName": "",
+        "columns": 0,
+        "useFullStyle": false,
+        "isGenerated": true,
+        "reviewLesson": false,
+        "canRefresh": true
+    },
+    {
+        "tabTypeId": "mastery",
+        "tabDisplayAs": "Mastery",
+        "tabClassName": "",
+        "columns": 0,
+        "useFullStyle": false,
+        "isGenerated": true,
+        "reviewLesson": false,
+        "canRefresh": false
+    }
+]

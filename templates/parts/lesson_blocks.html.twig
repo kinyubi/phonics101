@@ -1,0 +1,63 @@
+{# html blocks for classes in the ReadXYZ\Lessons namespace #}
+
+{% block AdvancedSpell %}
+    {% set alt = 'Advanced Spell' %}
+    <a class="advanced-spell" href="https://www.reallygreatreading.com/lettertiles/">
+        <img class="thumb" src="/images/thumbs/advanced-spell.jpg" alt="{{ alt }}" title="{{ alt }}">
+    </a>
+{% endblock %}
+
+{# inputs isBdp (default false #}
+{% block Dice %}
+    {%  set  parms = isBdp ? '?pips=bdpq' : '' %}
+    <div style="display:flex; justify-content: center; align-items: center; width:100%;">
+        <div style="height:110px; width: 150px;">
+            <iframe src="/resources/dice/rolldice.php{{ parms }}" style="overflow:hidden" height="150" width="200"></iframe>
+        </div>
+    </div>
+{% endblock %}
+
+{# inputs: gameName, iframe, thumbNail #}
+{% block Game %}
+    <a class="games" href="{{ iframe|raw }}">
+        <figure style="text-align: center; padding: 10px">
+            <img class="thumb" src="/images/thumbs/{{ thumbNail|raw }}" alt="{{ gameName }}">
+        </figure>
+    </a>
+{% endblock %}
+
+{# inputs: imageUrl #}
+{% block LearningCurve %}
+    <img src="{{ imageUrl }}" alt="Learning Curve" style="border: 0 solid gray; max-width: 100%">
+{% endblock %}
+
+
+{# inputs: imageFile (string) #}
+{% block SideImage %}
+    {% set alt = ('b-d-p' in imageFile) ? 'bdp' : 'pronounce' %}
+    {% set thumbClass = alt ~ '-thumb' %}
+    <a class="intro-image" href="/images/{{ imageFile }}">
+        <div class="{{ thumbClass }}">
+            <img src="/images/thumbs/thumb_{{ imageFile }}" alt="{{ alt }}">
+        </div>
+    </a>
+{% endblock %}
+
+{# inputs:  P1 (optional), P2 (optional), words[] (required) #}
+{% block TicTacToe %}
+    <a class="tic-tac-toe"   href="/tictactoe/tictac.php?P1={{ P1|default('any') }}&P2={{ P2|default('any') }}&wordlist={{ words|join('_') }}">
+        <figure style="text-align: center; padding: 10px">
+            <img class="thumb" src="/images/thumbs/tic-tac-toe.jpg" alt="Tic-Tac-Toe" title="Tic-Tac-Toe">
+        </figure>
+    </a>
+{% endblock %}
+
+{% block MasterySaveProgressButton %}
+<div class="container mx-0 px-0">
+    <div class="row tac">
+        <div id="saveMasteryProgressButton" class="btn btn-outline-info col-12  col-sm-8 mx-auto sfp">
+            Save Progress
+        </div>
+    </div>
+</div>
+{% endblock %}
