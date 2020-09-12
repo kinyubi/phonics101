@@ -16,15 +16,15 @@
         "'note': {'tab': 'tabName', 'note': 'html for note'}"
     ],
     "default_tab_notes": {
-        "Pronounce": "<br/><b>Instructions:</b> Introduce the new sound pattern for the lesson. If there is a list of contrasting words, read down and then across.",
-        "Write": "<br/><b>Instructions:</b> Read the list of words with the student. Then stop sharing the screen, refresh the list, and give the student 5 or 6 words to write. <br><br>Have the student tell you the phonemes in the word before writing it. (For example, the student would say c - a - t before writing cat.)",
-        "Practice": "<br/><b>Instructions:</b> Have the student practice reading the words. Challenge the student with the stopwatch to make it more interesting. Refresh the list for additional practice.",
-        "Contrast": "<br/><b>Instructions:</b> Point out the sound(s) that change. Have the student read across. (If this is challenging, read down first.)",
-        "Spell": "<br/><b>Instructions:</b> Give the student control of the mouse and dictate words from the lesson. </br></br><b>Note:</b> It works best to change one sound at a time. ie: mat -> cat -> cap -> sap -> sat -> sit",
-        "Test": "<br/><b>Instructions:</b> Shoot for a goal of 15 seconds. (Be flexible for students with slow processing speed. Automaticity is more important than speed.)</br></br>Click <i>Mastered</i> if the student does not need to review the lesson again. Click <i>Advancing</i> if the student can move on but needs to revisit the lesson at a later date.",
-        "Fluency": "<br/><b>Instructions:</b> Time the student reading the passage 3 times. <br/><br/>Define unfamiliar words. <br/><br/>Encourage fluency and accuracy over speed.",
-        "Mastery": "<br/><b>Instructions:</b> Check off the word if the student reads it correctly. Review incorrect words when you get to the end of the list.",
-        "Intro": "<br/>Read across or down. Require clear pronunciation."
+        "Pronounce": "<b>Instructions:</b> Introduce the new sound pattern for the lesson. If there is a list of contrasting words, read down and then across.",
+        "Write": "<b>Instructions:</b> Read the list of words with the student. Then stop sharing the screen, refresh the list, and give the student 5 or 6 words to write. <br><br>Have the student tell you the phonemes in the word before writing it. (For example, the student would say c - a - t before writing cat.)",
+        "Practice": "<b>Instructions:</b> Have the student practice reading the words. Challenge the student with the stopwatch to make it more interesting. Refresh the list for additional practice.",
+        "Contrast": "<b>Instructions:</b> Point out the sound(s) that change. Have the student read across. (If this is challenging, read down first.)",
+        "Spell": "<b>Instructions:</b> Give the student control of the mouse and dictate words from the lesson. </br></br><b>Note:</b> It works best to change one sound at a time. ie: mat -> cat -> cap -> sap -> sat -> sit",
+        "Test": "<b>Instructions:</b> Shoot for a goal of 15 seconds. (Be flexible for students with slow processing speed. Automaticity is more important than speed.)</br></br>Click <i>Mastered</i> if the student does not need to review the lesson again. Click <i>Advancing</i> if the student can move on but needs to revisit the lesson at a later date.",
+        "Fluency": "<b>Instructions:</b> Time the student reading the passage 3 times. <br/><br/>Define unfamiliar words. <br/><br/>Encourage fluency and accuracy over speed.",
+        "Mastery": "<b>Instructions:</b> Check off the word if the student reads it correctly. Review incorrect words when you get to the end of the list.",
+        "Intro": "Read across or down. Require clear pronunciation."
     },
     "group_notes": {
         "Letters": {

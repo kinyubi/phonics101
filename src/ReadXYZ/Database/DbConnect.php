@@ -19,7 +19,7 @@ class DbConnect
     public function __construct(mysqli $conn = null)
     {
         if ($conn && defined('UNIT_TESTING')) {
-            $this->dbConnector = conn;
+            $this->dbConnector = $conn;
         } else {
             $this->dbConnector = Util::dbConnect();
             if (mysqli_connect_errno()) {

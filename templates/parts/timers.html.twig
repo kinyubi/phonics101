@@ -32,7 +32,7 @@
         </div>
         {{ _self.timerText(tab) }}
         <div class="row">
-            <form name="testMasteryForm" id="testMasteryForm" data-ajax="false" method="post" action="{{ action }}">
+            <form name="testMasteryForm" id="testMasteryForm" data-ajax="false" method="post" action="/timer">
                 <div class="d-flex flex-wrap">
                 <input class="col" type="hidden" name="masteryType" value="" />
                 <input class="col" type="hidden" name="testWords" value="" />
@@ -49,13 +49,14 @@
     {% set btnSz = 'col-9 m-1 btn-sm' %}
     <div class="container mx-0 px-0">
         <div class="row d-flex flex-wrap justify-content-center">
-            <div id="testAdvancingButton" class="my-tooltip btn btn-outline-info {{ btnSz }}">Advancing
-                <span class="my-tooltip-text ">Press to indicate that the student is advancing but has not yet
-                    mastered the lesson</span>
-            </div>
-            <div id="testMasteredButton" class="my-tooltip btn btn-outline-info {{ btnSz }}">Mastered
-                <span class="my-tooltip-text">Press to indicate that the student has mastered the lesson</span>
-            </div>
+            <button id="testAdvancingButton" class="btn btn-outline-info {{ btnSz }}"
+                    data-toggle="tooltip" data-placement="left"
+                    title="Press to indicate that the student is advancing but has not yet mastered the lesson">Advancing
+            </button>
+            <button id="testMasteredButton" class="btn btn-outline-info {{ btnSz }}"
+                    data-toggle="tooltip" data-placement="left"
+                    title="Press to indicate that the student has mastered the lesson">Mastered
+            </button>
         </div>
     </div>
     <form name="testTimerForm" id="testTimerForm" data-ajax="false" method="post" action="{{ action }}">

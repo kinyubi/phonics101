@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\Tests\Lessons;
+namespace ReadXYZ\Tests\Helpers;
 
 use PHPUnit\Framework\TestCase;
 use ReadXYZ\Helpers\Util;

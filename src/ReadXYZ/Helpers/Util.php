@@ -267,30 +267,21 @@ class Util
 
     public static function getReadXyzSourcePath($filename = ''): string
     {
-        return self::stripExtraSlashes(self::reslash(XYZ_SRC_ROOT .  $filename));
+        return self::stripExtraSlashes(self::reslash($_SERVER['XYZ_SRC_ROOT'] .  $filename));
     }
 
     public static function getProjectPath($filename = ''): string
     {
-        return self::stripExtraSlashes(self::reslash(PROJECT_ROOT .  $filename));
-    }
-
-    /**
-     * Prepends phonics/101/ uri to passed in path or filename. If phonics/101 is already
-     * part of $phonicsPath we do not prepend.
-     *
-     * @param string $phonicsPath a path relative to phonics/101
-     *
-     * @return string a cleaned up valid path
-     */
-    public static function getPhonicsUrl(string $phonicsPath = ''): string
-    {
-            return self::stripExtraSlashes(self::reslash(PHONICS_URL . "$phonicsPath"));
+        return self::stripExtraSlashes(self::reslash($_SERVER['PROJECT_ROOT'] .  $filename));
     }
 
     public static function isLocal(): bool
     {
-        return false !== strpos(PHONICS_URL, '.test');
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+        if (!$host) {
+            return true;
+        }
+        return self::contains($host, ['.local', '.test']);
     }
 
     /**

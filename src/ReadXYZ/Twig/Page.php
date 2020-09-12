@@ -130,6 +130,23 @@ class Page
         $this->pageTitle = $title;
     }
 
+    private function baseRender(array $pageArgs): string
+    {
+        $twig = TwigFactory::getInstance();
+        $pageArgs['pageTitle'] = $this->pageTitle;
+        if ($this->errors) {
+            $pageArgs['errorMessage'] = $this->errors;
+        }
+        if ($this->navBar) {
+            $pageArgs['menu'] = $this->navBar;
+        }
+        $this->addArguments($pageArgs);
+        $html = $twig->renderBlock('default_body', 'body', $this->arguments);
+        $this->addBaseArguments(['content' => $html]);
+        $this->addBaseArguments(['lightbox' => 'colorbox', 'jquery' => 'latest']);
+        return $twig->renderTemplate('base', $this->baseArguments);
+    }
+
     /**
      * @param string $template The template to use
      * @param string $block    The block to use in the template (default is body)
@@ -141,42 +158,21 @@ class Page
     {
         $twig = TwigFactory::getInstance();
         $html = $twig->renderBlock($template, $block, $args);
+
         $pageArgs = [];
-        $pageArgs['pageTitle'] = $this->pageTitle;
         $pageArgs['tabs'] = ['Main' => $html];
         $pageArgs['initialTabName'] = 'Main';
-        if ($this->errors) {
-            $pageArgs['errorMessage'] = $this->errors;
-        }
-        if ($this->navBar) {
-            $pageArgs['menu'] = $this->navBar;
-        }
-        $this->addArguments($pageArgs);
-        $html = $twig->renderBlock('default_body', 'body', $this->arguments);
-        $this->addBaseArguments(['content' => $html]);
-
-        return $twig->renderTemplate('base', $this->baseArguments);
+        return $this->baseRender($pageArgs);
     }
 
     public function render(string $initialTabName = ''): string
     {
-        $twig = TwigFactory::getInstance();
         $pageArgs = [];
         $pageArgs['pageTitle'] = $this->pageTitle;
         $pageArgs['tabs'] = $this->tabs;
         if ($initialTabName) {
             $pageArgs['initialTabName'] = $initialTabName;
         }
-        if ($this->errors) {
-            $pageArgs['errorMessage'] = $this->errors;
-        }
-        if ($this->navBar) {
-            $pageArgs['menu'] = $this->navBar;
-        }
-        $this->addArguments($pageArgs);
-        $html = $twig->renderBlock('default_body', 'body', $this->arguments);
-        $this->addBaseArguments(['content' => $html]);
-
-        return $twig->renderTemplate('base', $this->baseArguments);
+        return $this->baseRender($pageArgs);
     }
 }

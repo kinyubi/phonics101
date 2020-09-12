@@ -1,15 +1,13 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
+/src/preload.php
 /var/
 /vendor/
-/cache/
-/_gsdata_/
-/generated/
+cache/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -22,3 +20,7 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+public/generated/
+
+_gsdata_/

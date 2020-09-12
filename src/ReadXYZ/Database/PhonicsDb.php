@@ -22,6 +22,10 @@ class PhonicsDb
         $this->connection->close();
     }
 
+    /**
+     * @param string $query
+     * @return DbResult
+     */
     public function queryAndGetCount(string $query): DbResult
     {
         if ($result = $this->connection->query($query)) {

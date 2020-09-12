@@ -1,0 +1,411 @@
+{% macro modalIframeBS(game) %}
+    {% set id = game.gameTypeId ~ '-modal' %}
+    <div class="modal" id="{{ id }}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div id="{{ id }}-body" class="modal-body mb-0 p-0">
+                    <div class="embed-responsive embed-responsive-25by19">
+                        <iframe class="embed-responsive-item" src="{{ game.url }}" width="360" height="500"></iframe>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro modalIframe(game) %}
+
+{% endmacro %}
+
+{% macro modalAnchor(game) %}
+    <a  class="games cboxElement"  href="{{ game.url }}" >
+        <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}"
+             title="{{ game.gameTitle }}" width="100%">
+    </a>
+{% endmacro %}
+
+{% macro modalAnchorbs(game) %}
+    {% set id = game.gameTypeId ~ '-modal' %}
+    <a class="m-1 p-1" data-toggle="modal" data-target="#{{ id }}">
+        <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}"
+             title="{{ game.gameTitle }}" width="100%">
+    </a>
+{% endmacro %}
+
+{# input:
+    tabName         :
+    canRefresh      : display the refresh icon
+    information     : information that will display when hovering over the info icon
+    pronounceImage  : if present an image file name to be displayed as thumbnail
+    games[]         :
+    timerHtml       : any timer form/buttons html
+    isBdpLesson     : true if bdp-lesson
+#}
+{% block SideBar %}
+    {% set tabId = tabName|lower %}
+    <div class="container p-0 m-0">
+        {# Refresh and Info icon display #}
+        {% if information %}
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="info-container ">
+                <a href="#">
+                    <i class="fas fa-info-circle fa-2x text-info " aria-hidden="true"></i>
+                    <span class="shadow">{{ information|raw }}</span>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        {# BDP Dice if applicable #}
+        {% if (tabName == 'intro') and isBdpLesson %}
+            <div class="d-flex justify-content-center " style="width: 100%;">
+                <div class="px-2 scaled">
+                    <iframe src="/dice/rolldice-orig.php?pips=bdpq" height="160" width="200"></iframe>
+                </div>
+            </div>
+        {% endif %}
+
+        {# Timer if applicable #}
+        {% if timerHtml %}
+            <tr class="d-flex">
+                <td colspan="2">
+                    {{ timerHtml|raw }}
+                </td>
+            </tr>
+        {% endif %}
+        <table id="{{ tabId }}-sidebar-contents" class="table table-sm table-borderless">
+            <tbody>
+            {% for game in games %}
+                <tr class="d-flex">
+                    <td colspan="2">
+                        {{ _self.modalAnchor(game) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            {% if isBdpLesson %}
+                <tr class="d-flex">
+                    <td colspan="2">
+                        {{ timerHtml|raw }}
+                    </td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+        {% if (tabId == 'intro') and pronounceImage and (not isBdpLesson) %}
+            <a class="intro-image" href="/images/{{ pronounceImage }}">
+                <div class="bdp-thumb">
+                    <img src="/images/thumbs/thumb_{{ pronounceImage }}" alt="pronounce">
+                </div>
+            </a>
+        {% endif %}
+
+        {% if (tabId == 'intro') and isBdpLesson %}
+            <a class="intro-image" href="/images/b-d-p_poster.jpg">
+                <div class="bdp-thumb">
+                    <img src="/images/thumbs/thumb_b-d-p_poster.jpg" alt="b-d-p">
+                </div>
+            </a>
+        {% endif %}
+    </div>
+{% endblock SideBar %}
+
+{# input:
+    tabName
+    stretchList
+    sidebarHtml
+    games
+#}
+{% block IntroTab %}
+    {% set tabId = tabName|lower %}
+    {% set listIndex = listIndex ?? 0 %}
+    <div class="container">
+        <div class="row  d-flex flex-nowrap">
+            <div id="{{ tabId }}-main" class="col-9">
+                {% for game in games %}
+                    {{ _self.modalIframe(game) }}
+                {% endfor %}
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                    {% set len = stretchList[0]|length %}
+                    {% set colsz = (len <= 4) ? 'col-3' : ((len < 6) ? 'col-2' : 'col-1') %}
+                    {% for wordSets in stretchList %}
+                        <tr class="d-flex">
+                            {% for word in wordSets|slice(0,3) %}
+                                <td class="wordlist col-4 mx-2 px-0">{{ word }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+                {{ sidebarHtml|raw }}
+            </div>
+        </div>
+    </div>
+
+{% endblock IntroTab %}
+
+{# inputs
+    tabName
+    wordList
+    sidebarHtml
+    games
+#}
+{% block WriteTab %}
+    {% set tabId = tabName|lower %}
+    {% set listIndex = listIndex ?? 0 %}
+    <div class="container">
+        <div class="row  d-flex flex-nowrap">
+            <div id="{{ tabId }}-main" class="col-9">
+                {% for game in games %}
+                    {{ _self.modalIframe(game) }}
+                {% endfor %}
+                <table class="table table-sm table-borderless">
+                    <tbody>
+                    {% for word in wordList %}
+                        <tr>
+                            <td class="wordlist col-12 mx-2">{{ word }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+                {{ sidebarHtml|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock WriteTab %}
+
+{# inputs
+    tabName
+    wordList
+    sidebarHtml
+    games
+#}
+{% block PracticeTab %}
+    {% set tabId = tabName|lower %}
+    {% set listIndex = listIndex ?? 0 %}
+    <div class="container d-flex flex-md-nowrap">
+        <div id="{{ tabId }}-main" class="col-9">
+            {% for game in games %}
+                {{ _self.modalIframe(game) }}
+            {% endfor %}
+            <table class="table table-sm table-borderless">
+                <tbody>
+                {% for i in range(0,20,3) %}
+                    <tr class="d-flex">
+                        {% for j in range(0,2) %}
+                            <td class="wordlist col-3 mx-2">{{ wordList[i+j] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+            {{ sidebarHtml|raw }}
+        </div>
+    </div>
+
+{% endblock PracticeTab %}
+
+{# inputs
+    tabName
+    spinner
+    sidebarHtml
+    games
+    withE           : has a 4th file for an ending e
+#}
+{% block SpellTab %}
+    {% set tabId = tabName|lower %}
+    {% set listIndex = listIndex ?? 0 %}
+    {% set func = withE ? 'WSpin.wordSpinnerPlusE' : 'WSpin.wordSpinner' %}
+    <div class="container">
+        {# all encompassing row #}
+        <div class="row d-flex flex-nowrap">
+            {# main column 75% wide #}
+            <div class="col-9">
+                <div class="row d-flex flex-nowrap">
+                    {% for game in games %}
+                        {{ _self.modalIframe(game) }}
+                    {% endfor %}
+                    {# Prefix letters column #}
+                    <div class="col-8 ">
+                        <div class="row ">
+                            <div class="h3 py-3 tac col-12 d-sm-block d-none" role="heading">First</div>
+                        </div>
+                        <div class="row ">
+                            <div class="d-flex flex-wrap align-items-center tac "
+                                 role="group" data-toggle="tooltip" data-placement="top"
+                                 title="Select a letter from each group to make a word.">
+                                {% for letter in spinner.prefixList %}
+                                    {% set clickFunc = func ~ "('p','" ~ letter ~ "')" %}
+                                    <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button"
+                                            onclick="{{ clickFunc }}">
+                                        {{ letter }}
+                                    </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {# Vowel column #}
+                    <div class="col-2">
+                        <div class="row">
+                            <div class="h3 py-3 tal d-sm-block d-none">Vowel</div>
+                        </div>
+                        <div class="row">
+                            <div class="d-flex flex-wrap align-items-center tac" role="group">
+                                {% for letter in spinner.vowel %}
+                                    {% set clickFunc = func ~ "('v','" ~ letter ~ "')" %}
+                                    <button class="btn btn-outline-danger rounded m-1 p-1 tac col-12"
+                                            type="button" onclick="{{ clickFunc }}">{{ letter }}
+                                    </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Suffix letters column #}
+                    <div class="col-2">
+                        <div class="row">
+                            <div class="h3 py-3 tar  d-sm-block d-none">Last</div>
+                        </div>
+                        <div class="row">
+                            <div class="d-flex flex-wrap align-items-center tac" role="group">
+                                {% for letter in spinner.suffixList %}
+                                    {% set clickFunc = func ~ "('s','" ~ letter ~ "')" %}
+                                    <button class="btn btn-outline-primary rounded m-1 p-1 tac col-12"
+                                            type="button" onclick="{{ clickFunc }}">{{ letter }}
+                                    </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="spinResult" class="col-md-12 wordlist border-secondary border mt-2 p-1" style="height: 1.75em">
+                    </div>
+                </div>
+            </div>
+
+            {# sidebar column 25% #}
+            <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+                {{ sidebarHtml|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock SpellTab %}
+
+    {# inputs
+        tabName
+        wordList
+        sidebarHtml
+        games
+    #}
+    {% block MasteryTab %}
+        {% set tabId = tabName|lower %}
+        {% set listIndex = listIndex ?? 0 %}
+        {% set listCount = max(wordlist|length,99) %}
+        {% set listIndex = listCount // 25 %}
+        {% set scales = ['mast-5', 'mast-4', 'mast-3', 'mast-3'] %}
+        {% set cols = ['col-4', 'col-4', 'col-4', 'col-4'] %}
+        <div class="container">
+            <div class="row d-flex flex-nowrap">
+                <div id="{{ tabId }}-main" class="col-9">
+                    <div class="row">
+                        {% for game in games %}
+                            {{ _self.modalIframe(game) }}
+                        {% endfor %}
+                        <form id="masteryform" name="masteryform" method="POST" action="/actions/updateMastery.php">
+                            <div class="row d-flex flex-wrap">
+                                {% for word in wordList %}
+                                    {% set checked = (word in alreadyMasteredWords) ? 'checked' : '' %}
+                                    <div class="checkbox col-6 col-md-4 col-lg-3 mt-1 mast-3">
+                                        <input type="checkbox" name="word1[]"
+                                               id="wordId{{ loop.index }}"
+                                               value="{{ word }}" {{ checked }}/>
+                                        <label class="mx-2" for="wordId{{ loop.index }}">{{ word }}</label>
+                                    </div>
+                                {% endfor %}
+                                <input type="hidden" name="wordlist" value="{{ lessonWords|join(',') }}"/>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+                    {{ sidebarHtml|raw }}
+                </div>
+            </div>
+
+        </div>
+
+    {% endblock MasteryTab %}
+
+    {# inputs
+        tabName
+        fluencySentences
+        games
+        sidebarHtml
+    #}
+    {% block FluencyTab %}
+        {% set tabId = tabName|lower %}
+        {% set listIndex = listIndex ?? 0 %}
+        <div class="container">
+            <div class="row  d-flex flex-md-nowrap">
+                <div id="{{ tabId }}-main" class="col-9 ">
+                    {% for game in games %}
+                        {{ _self.modalIframe(game) }}
+                    {% endfor %}
+                    <div class="wordlist">
+                        {% for sentence in fluencySentences %}
+                            <span>{{ sentence }}</span><br>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+                    {{ sidebarHtml|raw }}
+                </div>
+            </div>
+        </div>
+    {% endblock FluencyTab %}
+
+    {# inputs
+        tabName
+        wordList
+        sidebarHtml
+    #}
+    {% block TestTab %}
+        {% set tabId = tabName|lower %}
+        {% set listIndex = listIndex ?? 0 %}
+        <div class="container">
+            <div class="row d-flex flex-md-nowrap">
+                <div id="{{ tabId }}-main" class="col-9">
+                    {% for game in games %}
+                        {{ _self.modalIframe(game) }}
+                    {% endfor %}
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                        {% for word in wordList %}
+                            <tr class="d-flex">
+                                <td id="TM{{ loop.index0 }}" class="wordlist col-12 mx-2">{{ word }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+                    {{ sidebarHtml|raw }}
+                </div>
+            </div>
+        </div>
+
+    {% endblock TestTab %}
+

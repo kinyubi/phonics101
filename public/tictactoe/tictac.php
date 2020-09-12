@@ -30,56 +30,6 @@ $animals = [
     'jaguar', 'emu', 'toad', 'stingray', 'beetle', 'lobster', 'scorpion', 'reindeer', 'spider', 'mantis'
 ];
 
-function isWordPress()
-{
-    return defined('ABSPATH');
-}
-
-function phonicsRoot()
-{
-    return $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'phonics' . DIRECTORY_SEPARATOR . '101' . DIRECTORY_SEPARATOR;
-}
-
-function phonicsUrl($filename = '')
-{
-    $ssl = (isset($_SERVER['HTTPS']) && 'on' == $_SERVER['HTTPS']) ? 'https://' : 'http://';
-    $phonics = "$ssl{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}/phonics/101";
-    if ('' == $filename) {
-        return $phonics;
-    } else {
-        return "$phonics/$filename";
-    }
-}
-
-function jsdir(string $filename = '')
-{
-    return phonicsUrl("js/$filename");
-}
-
-function cssdir(string $filename = '')
-{
-    return phonicsUrl("css/$filename");
-}
-
-function imagesdir(string $filename = '')
-{
-    return phonicsUrl("images/$filename");
-}
-
-function get_local_script($filename)
-{
-    $full_url = jsdir($filename);
-
-    return "<script type=\"text/javascript\" src=\"$full_url\"></script>";
-}
-
-function get_local_css($filename)
-{
-    $full_url = cssdir($filename);
-
-    return "<link rel=\"stylesheet\" href=\"$full_url\" media=\"all\" />";
-}
-
 if (isset($_GET['P1']) && in_array($_GET['P1'], $animals)) {
     $player1 = $_GET['P1'];
 } else {
@@ -119,18 +69,19 @@ $cat = "images/$player2.jpg";
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rock Salt">
-    <link rel="stylesheet" href="/css/bootstrap-4.4.1/bootstrap.min.css">
-    <script src="/js/bootstrap-4.4.1/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
+    <script src="/js/bootstrap4-custom/bootstrap.min.js"></script>
     <link rel="stylesheet" href="tictac.css">
+    <link rel="stylesheet" href="/tictactoe/tictac.css">
     <script src="tictac.js"></script>
 </head>
 
-<body>
+<body style=" background-color: white;" >
 <div class="row headrow">
-    <h1>Tic-Tac-Toe Fun</h1>
+    <h1 style="text-align: center; width: 100%; "class="m-2">Tic-Tac-Toe Fun</h1>
 </div>
 <div class="row d-flex flex-nowrap" style="background-color:white; ">
-    <div id="rats" style="display: flex; flex-direction: column; margin:10px; padding:10px">
+    <div id="rats" class="d-flex flex-column m-1 p-1">
         <img id="rat1" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()" alt="P1">
         <img id="rat2" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()"  alt="P1">
         <img id="rat3" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()"  alt="P1">
@@ -138,8 +89,7 @@ $cat = "images/$player2.jpg";
         <img id="rat5" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()"  alt="P1">
     </div>
     <div id="tic-tac-toe">
-        <div id="container"
-        ">
+        <div id="container">
 
         <div id="theboard">
             <table>
@@ -185,7 +135,7 @@ $cat = "images/$player2.jpg";
         </div>
     </div>
 </div>
-<div id="cats" style="display: flex; flex-direction: column; margin:10px; padding:10px">
+<div id="cats" class="d-flex flex-column m-1 p-1">
     <img id="cat1" class="gamepiece" src="<?php echo $cat; ?>" draggable="true" ondragstart="drag()"  alt="P2">
     <img id="cat2" class="gamepiece" src="<?php echo $cat; ?>" draggable="true" ondragstart="drag()"  alt="P2">
     <img id="cat3" class="gamepiece" src="<?php echo $cat; ?>" draggable="true" ondragstart="drag()"  alt="P2">

@@ -43,4 +43,4 @@ if ($result->failed()) {
 
 // if we get to here, we've logged in successfully
 
-RouteMe::autoLogin();
+echo RouteMe::autoLogin();

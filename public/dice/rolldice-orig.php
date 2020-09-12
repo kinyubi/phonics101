@@ -1,7 +1,7 @@
 <?php
 $request_uri_exists = array_key_exists('REQUEST_URI', $_SERVER);
 // valid face/pips combinations: white/red, white/black, white/gray, black/white, black/red, */bdpq
-// if nothing is specified it will default to white/#00aab0
+// if nothing is specified it will default to white/#00aabe
 $face = 'white';
 $pips = 'turquoise';
 
@@ -75,7 +75,7 @@ if (!file_exists($die_file)) {
             background: url(<?php echo $die_file; ?>) no-repeat;
             background-size: 300px 200px;
             border-radius: 15px;
-            border: 3px solid #00aab0;
+            border: 3px solid #00aabe;
             color: white;
             font-size: 20px;
             position: absolute;

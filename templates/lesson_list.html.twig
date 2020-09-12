@@ -15,7 +15,7 @@ inputs:
 #}
 
 {% block body %}
-    {% set iconList = ['plus text-xyz', 'check text-xyz', 'star text-warning'] %}
+    {% set iconList = ['plus text-readxyz', 'check text-readxyz', 'star text-warning'] %}
     {% if action|default('') is empty %}
         {% set actionHandler = '/actions/processLessonSelection.php' %}
     {% else %}
@@ -31,7 +31,7 @@ inputs:
     </style>
     {% if mostRecentLesson %}
         <ul class="nav nav-pills"><li class="nav-item mx-2 px-2 py-1 w-100">
-            <a class="nav-link bg-info text-white border rounded w-100" href="{{ actionHandler }}?P1={{
+            <a class="nav-link bg-readxyz text-white border rounded w-100" href="{{ actionHandler }}?P1={{
             mostRecentLesson|url_encode }}&P2={{ mostRecentTab }}">
                 <i class="fas fa-arrow-circle-right px-2 fa-2x text-secondary"></i>
                 <span class="h6 p-2 mr-2">MOST RECENT LESSON</span>

@@ -2,6 +2,7 @@
 
 namespace ReadXYZ\Twig;
 
+use ReadXYZ\Display\LearningCurve;
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Lessons\Lesson;
 use ReadXYZ\Lessons\Lessons;
@@ -25,6 +26,7 @@ class Twigs
     private TwigFactory $factory;
     private ?Lesson $lesson;
     private Identity $identity;
+    private string $lessonTemplate = 'lesson';
 
     private function __construct()
     {
@@ -70,6 +72,11 @@ class Twigs
         }
     }
 
+    public function setDefaultTemplate(string $templateBaseName): void
+    {
+        $this->lessonTemplate = $templateBaseName;
+    }
+
     private function renderIntroTab(Page $page): void
     {
         $tabTypeId = 'intro';
@@ -80,7 +87,7 @@ class Twigs
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         //$args['colsz'] = $args['stretchList'];
         $args['tabName'] = $tabTypeId;
-        $html = $this->factory->renderBlock('lesson', 'IntroTab', $args);
+        $html = $this->factory->renderBlock($this->lessonTemplate, 'IntroTab', $args);
         $page->addTab($tabInfo->getTabDisplayAs(), $html);
     }
 
@@ -94,7 +101,7 @@ class Twigs
         $args['wordList'] = $this->lesson->getWordLists($tabTypeId, Cookie::getInstance()->getListIndex($tabTypeId));
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         // add this tab's functionality
-        $html = $this->factory->renderBlock('lesson', 'WriteTab', $args);
+        $html = $this->factory->renderBlock($this->lessonTemplate, 'WriteTab', $args);
         $page->addTab($tabInfo->getTabDisplayAs(), $html);
     }
 
@@ -108,7 +115,7 @@ class Twigs
         $args['wordList'] = $this->lesson->getWordLists($tabTypeId, Cookie::getInstance()->getListIndex($tabTypeId));
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         // add this tab's functionality
-        $html = $this->factory->renderBlock('lesson', 'PracticeTab', $args);
+        $html = $this->factory->renderBlock($this->lessonTemplate, 'PracticeTab', $args);
         $page->addTab($tabInfo->getTabDisplayAs(), $html);
     }
 
@@ -122,7 +129,7 @@ class Twigs
         $args['spinner'] = $this->lesson->getSpinner();
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         // add this tab's functionality
-        $html = $this->factory->renderBlock('lesson', 'SpellTab', $args);
+        $html = $this->factory->renderBlock($this->lessonTemplate, 'SpellTab', $args);
         $page->addTab($tabInfo->getTabDisplayAs(), $html);
     }
 
@@ -138,7 +145,7 @@ class Twigs
         $args['wordList'] = $this->lesson->getWordList();
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         // add this tab's functionality
-        $html = $this->factory->renderBlock('lesson', 'MasteryTab', $args);
+        $html = $this->factory->renderBlock($this->lessonTemplate, 'MasteryTab', $args);
         $page->addTab($tabInfo->getTabDisplayAs(), $html);
     }
 
@@ -152,7 +159,7 @@ class Twigs
         $args['fluencySentences'] = $this->lesson->getFluencySentences();
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         // add this tab's functionality
-        $html = $this->factory->renderBlock('lesson', 'FluencyTab', $args);
+        $html = $this->factory->renderBlock($this->lessonTemplate, 'FluencyTab', $args);
         $page->addTab($tabInfo->getTabDisplayAs(), $html);
     }
 
@@ -168,7 +175,7 @@ class Twigs
         $args['wordList'] = $this->lesson->getWordLists($tabTypeId, Cookie::getInstance()->getListIndex($tabTypeId));
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         // add this tab's functionality
-        $html = $this->factory->renderBlock('lesson', 'TestTab', $args);
+        $html = $this->factory->renderBlock($this->lessonTemplate, 'TestTab', $args);
         $page->addTab($tabInfo->getTabDisplayAs(), $html);
     }
 
@@ -207,7 +214,7 @@ class Twigs
                 $args['timerHtml'] = $timerHtml . $curveHtml;
                 break;
             case 'practice':
-                $timerHtml = $this->factory->renderBlock('timers', 'practiceTimer');
+                $timerHtml = $this->factory->renderBlock('timers', 'practiceTimer', $timerArgs);
                 $args['timerHtml'] = $timerHtml;
                 break;
             case 'test':
@@ -218,9 +225,7 @@ class Twigs
             default:
                 break;
         }
-        $html = $this->factory->renderBlock('lesson', 'SideBar', $args);
-
-        return $html;
+        return $this->factory->renderBlock($this->lessonTemplate, 'SideBar', $args);
     }
 
     /**
@@ -233,6 +238,7 @@ class Twigs
      */
     public function renderLessonList(array $argsIn = []): string
     {
+        LearningCurve::cleanUpOldGraphics();
         if (!Cookie::getInstance()->tryContinueSession()) {
             return $this->login('Login has expired (2).');
         }
@@ -286,6 +292,7 @@ class Twigs
      */
     public function renderLesson(string $lessonName = '', string $initialTabName = '', bool $useNextLessonButton = false): string
     {
+        LearningCurve::cleanUpOldGraphics();
         if (!Cookie::getInstance()->tryContinueSession()) {
             return $this->login('Login has expired (3).');
         }
@@ -353,6 +360,11 @@ class Twigs
         return $page->render($initialTabName);
     }
 
+    /**
+     * Returns the html for the login screen. If error message is specified, it will show up in a modal.
+     * @param string $errorMessage
+     * @return string
+     */
     public function login(string $errorMessage = ''): string
     {
         $page = new Page('ReadXYZ Login');

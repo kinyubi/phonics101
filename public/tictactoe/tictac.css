@@ -25,7 +25,7 @@ td {
 h1 {
     font-family: "Rock Salt", Times, serif;
     font-size: 26px;
-    color: #00aab0;
+    color: #00aabe;
     padding: 5px;
     margin-bottom: 0;
 }
@@ -37,7 +37,7 @@ td {
 }
 
 button.tictac {
-    background-color: #00aab0;
+    background-color: #00aabe;
     border: none;
     color: white;
     padding: 5px;
@@ -73,7 +73,7 @@ button.tictac {
 .gamepiece {
     width: 50px;
     height: 50px;
-    margin: 10px;
+    margin: 4px 10px;
 }
 
 .row:after {
@@ -84,7 +84,7 @@ button.tictac {
 
 .square {
     width: 100px;
-    height: 100px;
+    height: 70px;
     padding: 3px;
     border-collapse: collapse;
     font-family: serif;
@@ -93,11 +93,11 @@ button.tictac {
 }
 
 .rbdr {
-    border-right: 5px solid #00aab0;
+    border-right: 5px solid #00aabe;
 }
 
 .bbdr {
-    border-bottom: 5px solid #00aab0;
+    border-bottom: 5px solid #00aabe;
 }
 
 .mainrow {

@@ -53,7 +53,7 @@ class LearningCurve
         return $urlName;
     }
 
-    public function cleanUpOldGraphics()
+    public static function cleanUpOldGraphics()
     {
         // clean up old files
         Debug::printNice('LC', 'Called cleanUpOldGraphics()');
@@ -67,7 +67,7 @@ class LearningCurve
                 if ('.' == substr($entry, 0, 1)) {
                     continue;
                 }     // skip the . and .. files
-                if (filemtime("$generatedCache/$entry") + (60 * 60 * 24) < time()) {  // erase anything 1 day old
+                if (filemtime("$generatedCache/$entry") + (60 * 60 * 8) < time()) {  // 8 hours
                     unlink("$generatedCache/$entry");
                 }
             }
