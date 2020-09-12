@@ -70,6 +70,7 @@ $cat = "images/$player2.jpg";
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rock Salt">
     <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
+    <script src="/js/jquery-3.5.1.js"></script>
     <script src="/js/bootstrap4-custom/bootstrap.min.js"></script>
     <link rel="stylesheet" href="tictac.css">
     <link rel="stylesheet" href="/tictactoe/tictac.css">

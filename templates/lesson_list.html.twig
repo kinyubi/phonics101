@@ -61,7 +61,7 @@ inputs:
                             {% for lessonName, masteryLevel in accordion[groupName] %}
                                 <div>
                                     <a role="button" href="{{ actionHandler }}?P1={{ lessonName|url_encode }}">
-                                        <i class="fas fa-{{ iconList[masteryLevel] }}   fa-bold px-2"></i>
+                                        <i class="fas fa-{{ iconList[masteryLevel] }}   fa-lg px-2 "></i>
                                         <span>{{ lessonName }}</span>
                                     </a>
                                 </div>

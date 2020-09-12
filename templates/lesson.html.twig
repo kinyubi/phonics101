@@ -1,4 +1,4 @@
-{% macro modalIframeBS(game) %}
+{% macro modalIframebs(game) %}
   {% set id = game.gameTypeId ~ '-modal' %}
   <div class="modal" id="{{ id }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -6,7 +6,7 @@
 
         <div id="{{ id }}-body" class="modal-body mb-0 p-0">
           <div class="embed-responsive embed-responsive-25by19">
-            <iframe class="embed-responsive-item" src="{{ game.url }}" width="360" height="500"></iframe>
+            <iframe class="embed-responsive-item" src="{{ game.url }}" width="360" height="360"></iframe>
           </div>
         </div>
         <div class="modal-footer">
@@ -367,7 +367,7 @@
       {% set listIndex = listIndex ?? 0 %}
       <div class="container">
         <div class="row  d-flex flex-md-nowrap">
-          <div id="{{ tabId }}-main" class="col-9 ">
+          <div id="{{ tabId }}-main" class="col-8 ">
             {% for game in games %}
               {{ _self.modalIframe(game) }}
             {% endfor %}
@@ -394,7 +394,7 @@
       {% set listIndex = listIndex ?? 0 %}
       <div class="container">
         <div class="row d-flex flex-md-nowrap">
-          <div id="{{ tabId }}-main" class="col-9">
+          <div id="{{ tabId }}-main" class="col-8">
             {% for game in games %}
               {{ _self.modalIframe(game) }}
             {% endfor %}
