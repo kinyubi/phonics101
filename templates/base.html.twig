@@ -4,9 +4,9 @@ Input:
     content - raw html which is the default content of the body block
 
   Optional
-    jquery      : 1.4', '1.8', '1.12' or 'latest' (default 1.12)
-    lightbox    : 'featherlight', 'fancybox', 'colorbox', 'embed', 'custom'
+    lightbox    : 'colorbox'
 #}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,31 +27,15 @@ Input:
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
 
-    {% if lightbox == 'colorbox' %}
-  <link rel="stylesheet" href="css/colorbox/colorbox.css">
-    {% elseif lightbox == 'fancybox' %}
-  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
-    {% elseif lightbox == 'featherlight' %}
-  <link rel="stylesheet" href="css/featherlight.min.css">
-    {% endif %}
+  <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
 
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/phonics.css" media="all">
 
   {% endblock stylesheets %}
   {% block scripts %}
-    {% if '1.8' in jquery %}
-    <script src="/js/jquery-1.8.3.min.js"></script>
-    {% elseif '1.12' in jquery %}
-    <script src="/js/jquery-1.12.4.min.js"></script>
-    {% else %}
     <script src="/js/jquery-3.5.1.js"></script>
-    {% endif %}
-    {% if lightbox == 'colorbox' %}
     <script src="/js/jquery.colorbox.js"></script>
-    {% elseif lightbox == 'fancybox' %}
-    <script src="/js/jquery.fancybox.min.js"></script>
-    {% endif %}
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap4-custom/bootstrap.bundle.js"></script>
     <script src="/js/phonics.js"></script>
@@ -99,25 +83,15 @@ Input:
   <script>
 
       $('document').ready(function () {
-        {% if lightbox == 'fancybox' %}
-          $('[data-fancybox]').fancybox({
-              toolbar: false,
-              smallBtn: true,
-              iframe: {
-                  preload: false,
-                  css: {width: '500px'}
-              }
-          });
-        {% endif %}
         {% if lightbox == 'colorbox' %}
           $(".ajax").colorbox();
           $(".tic-tac-toe").colorbox({
-              iframe: true, innerWidth: 600, innerHeight: 550, top: 100, left: 100,
-              overlayClose: false
+              iframe: true, innerWidth: "90%", maxWidth: "440px", innerHeight: "100%", maxHeight: "440px",
+              top: 20, overlayClose: false, scrolling: false, className: "frame__responsives"
           });
-          $(".games").colorbox({iframe: true, width: "360px", maxWidth: "360px", height: "380px", top: 20});
+          $(".games").colorbox({iframe: true, width: "360px", maxWidth: "360px", height: "380px", top: 20, className: "gameFrame"});
           $(".sound-box").colorbox({
-              iframe: true, innerWidth: 750, innerHeight: 795, top: 100, left: 100,
+              iframe: true, innerWidth: 450, innerHeight: 400, top: 100, left: 100,
               scrolling: false, overlayClose: false
           });
           $(".advanced-spell").colorbox({
@@ -128,42 +102,10 @@ Input:
           $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
           $(".inline").colorbox({inline: true, width: "50%"});
           $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
-          // $(".callbacks").colorbox({
-          //     onOpen: function () {
-          //         alert('onOpen: colorbox is about to open');
-          //     },
-          //     onLoad: function () {
-          //         alert('onLoad: colorbox has started to load the targeted content');
-          //     },
-          //     onComplete: function () {
-          //         alert('onComplete: colorbox has displayed the loaded content');
-          //     },
-          //     onCleanup: function () {
-          //         alert('onCleanup: colorbox has begun the close process');
-          //     },
-          //     onClosed: function () {
-          //         alert('onClosed: colorbox has completely closed');
-          //     }
-          // });
-          //
-          // $('.non-retina').colorbox({rel: 'group5', transition: 'none'})
-          // $('.retina').colorbox({rel: 'group5', transition: 'none', retinaImage: true, retinaUrl: true});
 
-          // //Example of preserving a JavaScript event for inline calls.
-          // $("#click").click(function () {
-          //     $('#click').css({"background-color": "#f00", "color": "#fff", "cursor": "inherit"}).text("Open this window again and this message will still be here.");
-          //     return false;
-          // });
-
-          // $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
+          $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
         {% endif %}
-        {# {% if lightbox == 'fancybox' %} #}
-        {# $('a.games').fancybox({type: "iframe"}); #}
-        {# $('a.tic-tac-toe').fancybox({type: "iframe"}); #}
-        {# $('a.sound-box').fancybox({type: "iframe"}); #}
-        {# $('a.advanced-spell').fancybox({type: "iframe"}); #}
-        {# $('a.fancybox').fancybox({type: "iframe"}); #}
-        {# {% endif %} #}
+
       });
 
   </script>

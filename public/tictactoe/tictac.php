@@ -65,85 +65,259 @@ $cat = "images/$player2.jpg";
 <html lang="en-US">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
-    <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rock Salt">
-    <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
-    <script src="/js/jquery-3.5.1.js"></script>
-    <script src="/js/bootstrap4-custom/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="tictac.css">
-    <link rel="stylesheet" href="/tictactoe/tictac.css">
-    <script src="tictac.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rock Salt">
+  <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/colorbox/colorbox.css">
+  <link rel="stylesheet" href="/css/phonics.css">
+
+  <!--  <script src="/js/jquery-3.5.1.js"></script>-->
+  <script src="/js/unused/jquery-1.12.4.js"></script>
+
+  <script src="/js/jquery.colorbox.js"></script>
+  <script src="/js/bootstrap4-custom/bootstrap.min.js"></script>
+  <script src="/js/drag-and-touch.js"></script>
+
+  <style>
+      body {
+          width: 440px;
+          height: 400px;
+          overflow: hidden;
+      }
+
+      table, td, tr {
+          border-spacing: 0;
+      }
+
+      table {
+          margin: 0;
+      }
+
+      td {
+          margin: 5px;
+      }
+
+      h1 {
+          font-family: "Rock Salt", Times, serif;
+          font-size: 26px;
+          color: #00aabe;
+          padding: 5px;
+          margin-bottom: 0;
+      }
+
+      h1, td {
+          text-align: center;
+          position: relative;
+      }
+
+      button.ticTacToe {
+          background-color: #00aabe;
+          border: none;
+          color: white;
+          padding: 5px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 10px;
+          margin: 15px 15px 0 0;
+          cursor: pointer;
+          border-radius: 8px;
+          width: 65px;
+      }
+
+      .gamePiece {
+          width: 50px;
+          height: 50px;
+          margin: 4px 10px;
+          z-index: 100;
+      }
+
+      .row__ticTacToe:after {
+          content: "";
+          display: table;
+          clear: both;
+      }
+
+      .square {
+          width: 100px;
+          height: 70px;
+          padding: 3px;
+          border-collapse: collapse;
+          font-family: serif;
+          font-size: 40px;
+          color: black;
+      }
+
+      .border__right {
+          border-right: 5px solid #00aabe;
+      }
+
+      .border__bottom {
+          border-bottom: 5px solid #00aabe;
+      }
+
+      #buttons {
+          text-align: center;
+          padding-top: 15px;
+      }
+  </style>
+
+  <script>
+      let rats = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      let cats = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      const winners = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]];
+      let moves = 0;
+      let status = "UNFINISHED";
+
+      function winner() {
+          $.colorbox({
+              closeButton: true, close: "X", opacity: 1, maxWidth: "200px", left: "18%", top: "25%",
+              href: "https://movellas-users.s3.amazonaws.com/comment/201210171910330233/201307010339396490.gif"
+          });
+      }
+
+      function noWinner() {
+          $.colorbox({html: "The game was a tie. Try again!"});
+      }
+
+      function setGameStatus() {
+          let combo;
+          for (combo of winners) {
+              if (cats[combo[0]] && cats[combo[1]] && cats[combo[2]]) {
+                  status = "WINCAT";
+                  return;
+              }
+          }
+          for (combo of winners) {
+              if (rats[combo[0]] && rats[combo[1]] && rats[combo[2]]) {
+                  status = "WINRAT";
+                  return;
+              }
+          }
+          if (moves === 9) {
+              status = "DRAW";
+              return;
+          }
+          status = "UNFINISHED";
+      }
+
+      function checkStatus(moverId, receiverId) {
+          let idx = parseInt(receiverId.substring(1));
+          moves++;
+          if (moverId.charAt(0) === "r") {
+              rats[idx] = 1;
+          } else {
+              cats[idx] = 1;
+          }
+          setGameStatus();
+          if (status.startsWith("WIN")) {
+              winner();
+          } else if (status === "DRAW") {
+              noWinner();
+          }
+      }
+
+      function dropOnSquare(event) {
+          event.preventDefault();
+          let moverId = event.dataTransfer.getData("text");
+          let receiverId = event.target.id;
+          checkStatus(moverId, receiverId);
+      }
+
+      function touchSquare(event) {
+          const receptacles = document.getElementsByClassName('receptacle');
+          let mover = event.target;
+          let receiver = null;
+          for (let r of receptacles) {
+              if (detectContainment(mover, r)) {
+                  receiver = r;
+                  break;
+              }
+          }
+          if (receiver) {
+              checkStatus(mover.id, receiver.id);
+              mover.removeEventListener('touchend', touchSquare, {passive: true});
+          }
+      }
+
+      document.addEventListener("DOMContentLoaded", function (event) {
+          const receptacles = document.getElementsByClassName('receptacle');
+          for (let receiver of receptacles) {
+              receiver.addEventListener('drop', dropOnSquare, false);
+          }
+          const movers = document.getElementsByClassName('mover');
+          for (let mover of movers) {
+              mover.addEventListener('touchend', touchSquare, {passive: true});
+          }
+      });
+
+      // window.onload = function () {
+      //     const receptacles = document.getElementsByClassName('receptacle');
+      //     for (let receiver of receptacles) {
+      //         receiver.addEventListener('drop', dropOnSquare, false);
+      //     }
+      //     const movers = document.getElementsByClassName('mover');
+      //     for (let mover of movers) {
+      //         mover.addEventListener('touchend', touchSquare, {passive: true});
+      //     }
+      // }
+
+  </script>
 </head>
 
-<body style=" background-color: white;" >
-<div class="row headrow">
-    <h1 style="text-align: center; width: 100%; "class="m-2">Tic-Tac-Toe Fun</h1>
-</div>
-<div class="row d-flex flex-nowrap" style="background-color:white; ">
+<body style=" background-color: white;">
+<div class="container p-0 m-0">
+  <div class="row row__ticTacToe row__header m-3 p-0">
+    <h1 style="text-align: center; width:100%">Tic-Tac-Toe Fun</h1>
+  </div>
+
+  <div class="row__ticTacToe d-flex flex-nowrap" style="background-color:white; ">
     <div id="rats" class="d-flex flex-column m-1 p-1">
-        <img id="rat1" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()" alt="P1">
-        <img id="rat2" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()"  alt="P1">
-        <img id="rat3" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()"  alt="P1">
-        <img id="rat4" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()"  alt="P1">
-        <img id="rat5" class="gamepiece" src="<?php echo $rat; ?>" draggable="true" ondragstart="drag()"  alt="P1">
+      <img id="rat1" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
+      <img id="rat2" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
+      <img id="rat3" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
+      <img id="rat4" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
+      <img id="rat5" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
     </div>
     <div id="tic-tac-toe">
-        <div id="container">
+      <div id="container">
 
         <div id="theboard">
-            <table>
-                <tr>
-                    <td id="1" class="square rbdr bbdr" ondrop="drop(e)" ondragover="allowDrop()">
-                        <?php echo $word_list[0]; ?>
-                    </td>
-                    <td id="2" class="square rbdr bbdr" ondrop="drop(e)" ondragover="allowDrop()">
-                        <?php echo $word_list[1]; ?>
-                    </td>
-                    <td id="3"
-                        class="square bbdr" ondrop="drop()" ondragover="allowDrop()">
-                        <?php echo $word_list[2]; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td id="4" class="square rbdr bbdr" ondrop="drop(e)" ondragover="allowDrop()">
-                        <?php echo $word_list[3]; ?>
-                    </td>
-                    <td id="5" class="square rbdr bbdr" ondrop="drop(e)" ondragover="allowDrop()">
-                        <?php echo $word_list[4]; ?>
-                    </td>
-                    <td id="6" class="square bbdr" ondrop="drop(e)" ondragover="allowDrop()">
-                        <?php echo $word_list[5]; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td id="7" class="square rbdr" ondrop="drop(e)" ondragover="allowDrop()">
-                        <?php echo $word_list[6]; ?>
-                    </td>
-                    <td id="8" class="square rbdr" ondrop="drop(e)" ondragover="allowDrop()">
-                        <?php echo $word_list[7]; ?>
-                    </td>
-                    <td id="9" class="square" ondrop="drop(e)" ondragover="allowDrop()">
-                        <?php echo $word_list[8]; ?>
-                    </td>
-                </tr>
-            </table>
+          <table>
+            <tr>
+              <td id="s1" class="square receptacle border__right border__bottom"><?php echo $word_list[0]; ?></td>
+              <td id="s2" class=" square receptacle border__right border__bottom"><?php echo $word_list[1]; ?></td>
+              <td id="s3" class=" square receptacle border__bottom"><?php echo $word_list[2]; ?></td>
+            </tr>
+            <tr>
+              <td id="s4" class=" square receptacle border__right border__bottom"><?php echo $word_list[3]; ?></td>
+              <td id="s5" class=" square receptacle border__right border__bottom"><?php echo $word_list[4]; ?></td>
+              <td id="s6" class=" square receptacle border__bottom"><?php echo $word_list[5]; ?></td>
+            </tr>
+            <tr>
+              <td id="s7" class=" square receptacle border__right"><?php echo $word_list[6]; ?></td>
+              <td id="s8" class=" square receptacle border__right"><?php echo $word_list[7]; ?></td>
+              <td id="s9" class=" square receptacle"><?php echo $word_list[8]; ?></td>
+            </tr>
+          </table>
         </div>
 
         <div id="buttons">
-            <button class="tictac" onClick="window.location.reload();">New Game</button>
+          <button class="ticTacToe" onClick="window.location.reload();">New Game</button>
         </div>
+      </div>
     </div>
+    <div id="cats" class="d-flex flex-column m-1 p-1">
+      <img id="cat1" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
+      <img id="cat2" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
+      <img id="cat3" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
+      <img id="cat4" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
+      <img id="cat5" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
+    </div>
+  </div>
 </div>
-<div id="cats" class="d-flex flex-column m-1 p-1">
-    <img id="cat1" class="gamepiece" src="<?php echo $cat; ?>" draggable="true" ondragstart="drag()"  alt="P2">
-    <img id="cat2" class="gamepiece" src="<?php echo $cat; ?>" draggable="true" ondragstart="drag()"  alt="P2">
-    <img id="cat3" class="gamepiece" src="<?php echo $cat; ?>" draggable="true" ondragstart="drag()"  alt="P2">
-    <img id="cat4" class="gamepiece" src="<?php echo $cat; ?>" draggable="true" ondragstart="drag()"  alt="P2">
-    <img id="cat5" class="gamepiece" src="<?php echo $cat; ?>" draggable="true" ondragstart="drag()"  alt="P2">
-</div>
-
 </body>
 
 </html>

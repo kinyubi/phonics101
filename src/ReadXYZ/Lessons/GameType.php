@@ -14,6 +14,7 @@ class GameType
     private bool $isUniversal;
     private string $universalGameUrl;
 
+
     public function __construct(stdCLass $popoGameType)
     {
         $this->gameTypeId = $popoGameType->gameTypeId;
@@ -84,5 +85,18 @@ class GameType
     public function getUniversalGameUrl(): string
     {
         return $this->universalGameUrl;
+    }
+
+    public function getCssClass(): string
+    {
+        if ($this->gameTypeId == 'tic-tac-toe') {
+            return $this->gameTypeId;
+        } elseif ($this->gameTypeId == 'sound-boxes') {
+            return 'sound-box';
+        } elseif ($this->gameTypeId == 'advanced-spell') {
+            return 'advanced-spell';
+        } else {
+            return 'games';
+        }
     }
 }

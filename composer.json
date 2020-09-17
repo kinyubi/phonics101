@@ -1,55 +1,56 @@
 {
-    "name": "symfony/website-skeleton",
-    "type": "project",
-    "license": "MIT",
-    "description": "A skeleton to start a new Symfony website",
-    "require": {
-        "ext-gd": "*",
-        "ext-json": "*",
-        "ext-mysqli": "*",
-        "scssphp/scssphp": "^1.1",
-        "symfony/console": "*",
-        "symfony/phpunit-bridge": "^3.4.3",
-        "symfony/dotenv": "*",
-        "symfony/flex": "^1.6",
-        "symfony/framework-bundle": "*",
-        "symfony/http-kernel": "4.4.*",
-        "twig/twig": "^3.0"
+  "name": "symfony/website-skeleton",
+  "type": "project",
+  "license": "MIT",
+  "description": "A skeleton to start a new Symfony website",
+  "require": {
+    "ext-gd": "*",
+    "ext-json": "*",
+    "ext-mysqli": "*",
+    "scssphp/scssphp": "^1.1",
+    "symfony/console": "*",
+    "symfony/phpunit-bridge": "^3.4.3",
+    "symfony/dotenv": "*",
+    "symfony/flex": "^1.6",
+    "symfony/framework-bundle": "*",
+    "symfony/http-kernel": "4.4.*",
+    "twig/twig": "^3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "ext-curl": "*"
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
     },
-    "require-dev": {
-        "phpunit/phpunit": "*",
-        "ext-curl": "*"
-    },
-    "config": {
-        "preferred-install": {
-            "*": "dist"
-        },
-        "sort-packages": true
-    },
-    "autoload": {
-        "files": [
-            "src/3rdParty/libChart/classes/libChart.php"
-        ],
-        "psr-4": {
-            "ReadXYZ\\": "src/ReadXYZ/",
-            "Peekmo\\": "src/3rdParty/Peekmo/",
-			"App\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ReadXYZ\\Tests\\":"tests/"
-        }
-    },
-    "scripts": {
-    },
-	"extra": {
-        "symfony": {
-            "allow-contrib": false,
-            "require": "4.4.*"
-        }
-    },
-	"conflict": {
-        "symfony/symfony": "4.4.*"
+    "sort-packages": true
+  },
+  "autoload": {
+    "files": [
+      "src/3rdParty/libChart/classes/libChart.php"
+    ],
+    "psr-4": {
+      "ReadXYZ\\": "src/ReadXYZ/",
+      "Peekmo\\": "src/3rdParty/Peekmo/",
+      "JsonMapper\\": "src/3rdParty/JsonMapper",
+      "App\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ReadXYZ\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": false,
+      "require": "4.4.*"
+    }
+  },
+  "conflict": {
+    "symfony/symfony": "4.4.*"
+  }
 }

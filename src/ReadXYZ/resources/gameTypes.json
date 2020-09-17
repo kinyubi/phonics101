@@ -24,7 +24,7 @@
         "belongsOnTab": "write",
         "isUniversal": true,
         "ordering": 1,
-        "universalGameUrl": "https://toytheater.com/elkonin-boxes"
+        "universalGameUrl": "/sound-box.php"
     },
     {
         "gameTypeId": "tic-tac-toe",

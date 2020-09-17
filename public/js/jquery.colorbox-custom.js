@@ -490,6 +490,7 @@
 
 			$close = $('<button type="button"/>').attr({id:prefix+'Close'});
 
+
 			$wrap.append( // The 3x3 Grid that makes up Colorbox
 				$tag(div).append(
 					$tag(div, "TopLeft"),
@@ -873,7 +874,12 @@
 				if (!settings.get('scrolling')) {
 					iframe.scrolling = "no";
 				}
-
+				if (settings.get('height')) {
+					iframe.height = settings.get('height');
+				}
+				if (settings.get('width')) {
+					iframe.width = settings.get('width');
+				}
 				$(iframe)
 					.attr({
 						src: settings.get('href'),

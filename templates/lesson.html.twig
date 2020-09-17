@@ -1,43 +1,11 @@
-{% macro modalIframebs(game) %}
-  {% set id = game.gameTypeId ~ '-modal' %}
-  <div class="modal" id="{{ id }}" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-
-        <div id="{{ id }}-body" class="modal-body mb-0 p-0">
-          <div class="embed-responsive embed-responsive-25by19">
-            <iframe class="embed-responsive-item" src="{{ game.url }}" width="360" height="360"></iframe>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endmacro %}
 
 {% macro modalIframe(game) %}
 
 {% endmacro %}
 
 {% macro modalAnchorCbox(game) %}
-  <a class="games" href="{{ game.url }}">
-    <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}"
-         title="{{ game.gameTitle }}" width="100%">
-  </a>
-{% endmacro %}
-
-{% macro modalAnchorFancy(game) %}
-  <a data-fancybox data-type="iframe" data-src="{{ game.url }}" href="javascript:;">
-    <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}"
-         title="{{ game.gameTitle }}" width="100%">
-  </a>
-{% endmacro %}
-
-{% macro modalAnchorbs(game) %}
-  {% set id = game.gameTypeId ~ '-modal' %}
-  <a class="m-1 p-1" data-toggle="modal" data-target="#{{ id }}">
+  {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell']) ? game.gameTypeId : 'games' %}
+  <a class="{{ class }}" href="{{ game.url }}">
     <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}"
          title="{{ game.gameTitle }}" width="100%">
   </a>
@@ -85,6 +53,7 @@
     {% endif %}
     <table id="{{ tabId }}-sidebar-contents" class="table table-sm table-borderless">
       <tbody>
+
       {% for game in games %}
         <tr class="d-flex">
           <td colspan="2">
@@ -92,6 +61,7 @@
           </td>
         </tr>
       {% endfor %}
+
       {% if isBdpLesson %}
         <tr class="d-flex">
           <td colspan="2">
@@ -168,9 +138,7 @@
   <div class="container">
     <div class="row  d-flex flex-nowrap">
       <div id="{{ tabId }}-main" class="col-9">
-        {% for game in games %}
-          {{ _self.modalIframe(game) }}
-        {% endfor %}
+
         <table class="table table-sm table-borderless">
           <tbody>
           {% for word in wordList %}
