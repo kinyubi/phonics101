@@ -23,4 +23,6 @@ cache/
 
 public/generated/
 
-_gsdata_/
+###_gsdata_/
+
+*.log

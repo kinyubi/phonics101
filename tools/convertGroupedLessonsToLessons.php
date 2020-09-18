@@ -11,7 +11,7 @@ use ReadXYZ\POPO\gamePOPO;
 use ReadXYZ\POPO\LessonPOPO;
 use ReadXYZ\POPO\SpellSpinner;
 
-require dirname(__DIR__) . 'src/ReadXYZ/autoload.php';
+require dirname(__DIR__) . '/config/bootstrap.php';
 
 function getNewLessonName(string $lessonName, array $csvMap): string
 {
@@ -149,9 +149,11 @@ foreach ($csvLessons as $csvLesson) {
             foreach ($oldLesson['games'] as $game) {
                 $iframe = $game['iframe'] ?? '';
                 if (!$iframe) {
-                    exit("No iframe for $foundLessonName for game " . $game['game']);
+                    printf("No iframe for $foundLessonName for game " . $game['game']. PHP_EOL);
+                    $url = '/404.html';
+                } else {
+                    $url = preg_replace($urlPattern, '$1', $iframe);
                 }
-                $url = preg_replace($urlPattern, '$1', $iframe);
                 $lesson->games[] = new gamePOPO($game['game'], $url);
             }
         }
@@ -175,7 +177,7 @@ foreach ($csvLessons as $csvLesson) {
 }
 
 $json = json_encode($lessons, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-$outputFile = Util::getReadXyzSourcePath('resources/unifiedLessons.json');
+$outputFile = Util::getReadXyzSourcePath('resources/unifiedLessons_candidate.json');
 file_put_contents($outputFile, $json);
 // $tabTypes = new TabTypesPOPO();
 // $tabTypes->write(Util::getReadXyzSourcePath('resources/tabTypes.json'));

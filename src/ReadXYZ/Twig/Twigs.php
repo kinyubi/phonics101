@@ -292,10 +292,12 @@ class Twigs
      */
     public function renderLesson(string $lessonName = '', string $initialTabName = '', bool $useNextLessonButton = false): string
     {
+        $cookie = Cookie::getInstance();
         LearningCurve::cleanUpOldGraphics();
-        if (!Cookie::getInstance()->tryContinueSession()) {
+        if (!$cookie->tryContinueSession()) {
             return $this->login('Login has expired (3).');
         }
+        $cookie->setCurrentLesson($lessonName);
         $lessons = Lessons::getInstance();
 
         if (empty($lessonName)) {
@@ -324,7 +326,7 @@ class Twigs
             $parms = [
                 'P1' => $nextLessonName,
                 'P2' => $initialTabName,
-                'P3' => $useNextLessonButton ? '1' : '0'
+                'P3' => '1'
             ];
             $link = $link = '/actions/render.php?' . http_build_query($parms);
             $page->addNavLink('Next Lesson', $link);

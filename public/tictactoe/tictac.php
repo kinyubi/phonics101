@@ -81,11 +81,11 @@ $cat = "images/$player2.jpg";
   <script src="/js/drag-and-touch.js"></script>
 
   <style>
-      body {
-          width: 440px;
-          height: 400px;
-          overflow: hidden;
-      }
+      /*body {*/
+      /*    width: 440px;*/
+      /*    height: 400px;*/
+      /*    overflow: hidden;*/
+      /*}*/
 
       table, td, tr {
           border-spacing: 0;
@@ -96,7 +96,9 @@ $cat = "images/$player2.jpg";
       }
 
       td {
-          margin: 5px;
+          margin: 2px;
+          width: 70px;
+          height: 70px;
       }
 
       h1 {
@@ -128,10 +130,15 @@ $cat = "images/$player2.jpg";
       }
 
       .gamePiece {
+          width: 45px;
+          height: 45px;
+          margin: 0;
+          z-index: 100;
+      }
+      .gamePiece__wrapper {
           width: 50px;
           height: 50px;
-          margin: 4px 10px;
-          z-index: 100;
+          margin: 2px;
       }
 
       .row__ticTacToe:after {
@@ -141,7 +148,7 @@ $cat = "images/$player2.jpg";
       }
 
       .square {
-          width: 100px;
+          width: 70px;
           height: 70px;
           padding: 3px;
           border-collapse: collapse;
@@ -275,11 +282,11 @@ $cat = "images/$player2.jpg";
 
   <div class="row__ticTacToe d-flex flex-nowrap" style="background-color:white; ">
     <div id="rats" class="d-flex flex-column m-1 p-1">
-      <img id="rat1" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
-      <img id="rat2" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
-      <img id="rat3" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
-      <img id="rat4" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
-      <img id="rat5" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1">
+      <div class="gamePiece__wrapper"><img id="rat1" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
+      <div class="gamePiece__wrapper"><img id="rat2" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
+      <div class="gamePiece__wrapper"><img id="rat3" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
+      <div class="gamePiece__wrapper"><img id="rat4" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
+      <div class="gamePiece__wrapper"><img id="rat5" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
     </div>
     <div id="tic-tac-toe">
       <div id="container">
@@ -310,11 +317,11 @@ $cat = "images/$player2.jpg";
       </div>
     </div>
     <div id="cats" class="d-flex flex-column m-1 p-1">
-      <img id="cat1" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
-      <img id="cat2" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
-      <img id="cat3" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
-      <img id="cat4" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
-      <img id="cat5" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2">
+      <div class="gamePiece__wrapper"><img id="cat1" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+      <div class="gamePiece__wrapper"><img id="cat2" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+      <div class="gamePiece__wrapper"><img id="cat3" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+      <div class="gamePiece__wrapper"><img id="cat4" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+      <div class="gamePiece__wrapper"><img id="cat5" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
     </div>
   </div>
 </div>

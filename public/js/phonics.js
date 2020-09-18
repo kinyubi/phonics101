@@ -52,3 +52,12 @@ function scaleIframe(gameId)
     frame.style.oTransform='scale('+percent+')';
     frame.style.oTransformOrigin='top left';
   }
+
+// see https://www.geeksforgeeks.org/how-to-disable-scrolling-temporarily-using-javascript/
+function disableScroll() {
+    document.body.classList.add("body__scroll_disable");
+}
+
+function enableScroll() {
+    document.body.classList.remove("body__scroll_disable");
+}

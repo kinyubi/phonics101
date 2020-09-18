@@ -6,7 +6,7 @@
 {% macro modalAnchorCbox(game) %}
   {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell']) ? game.gameTypeId : 'games' %}
   <a class="{{ class }}" href="{{ game.url }}">
-    <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}"
+    <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
          title="{{ game.gameTitle }}" width="100%">
   </a>
 {% endmacro %}

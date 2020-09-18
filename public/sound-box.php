@@ -2,10 +2,20 @@
 
 use ReadXYZ\Twig\TwigFactory;
 
-$objectCount = $_REQUEST['count'] ?? 3;
-$color = $_REQUEST['color'] ?? 'blue';
+
+$cookie = $_COOKIE['readxyz_sound_box'] ?? '3blue';
+$cookieCount = substr($cookie,0, 1);
+$cookieColor = substr($cookie, 1);
+
+$parts = parse_url($_SERVER['REQUEST_URI']);
+parse_str($parts['query'] ?? '', $query);
+
+$objectCount = $_REQUEST['count'] ?? intval($query['count'] ?? $cookieCount);
+$color = $_REQUEST['color'] ?? $query['color'] ?? $cookieColor;
 
 
 require __DIR__ . '/autoload.php';
 
-echo TwigFactory::getInstance()->renderBlock('sound_box', 'soundBox');
+$args = ['count' => $objectCount, 'color' => $color];
+
+echo TwigFactory::getInstance()->renderBlock('sound_box', 'soundBox', $args);

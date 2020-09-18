@@ -72,13 +72,18 @@ function handleTouchEnd(e) {
     let receiver = null;
     for (let rId of receiverIds) {
       let r = document.getElementById(rId);
-      if (detectContainment(e.target, r)) {
+      let mover = e.target;
+      if (detectContainment(mover, r)) {
         receiver = r;
+        receiver.innerText = '';
+        mover.style.position = 'static';
+        mover.style.left = '';
+        mover.style.top = '';
         break;
       }
     }
     if (receiver && receiver.classList.contains('unlocked')) {
-      receiver.innerText = '';
+      // receiver.innerText = '';
       receiver.appendChild(e.target);
       e.target.removeEventListener('touchstart', handleTouchStart, {passive: true});
       e.target.removeEventListener('touchmove', handleTouchMove, {passive: true});
@@ -94,7 +99,10 @@ function handleTouchEnd(e) {
 function detectContainment(mover, receiver) {
   let m = mover.getBoundingClientRect();
   let r = receiver.getBoundingClientRect();
-  return ((m.x + m.width) < (r.x + r.width) && m.x > r.x && m.y > r.y && (m.y + m.height) < (r.y + r.height));
+  let contained = ((m.x + m.width - 4) <= (r.x + r.width) && (m.x + 4) > r.x && (m.y+4) > r.y && (m.y + m.height - 4) < (r.y + r.height));
+  if (contained) {
+  }
+  return contained;
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {

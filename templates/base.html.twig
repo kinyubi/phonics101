@@ -19,7 +19,7 @@ Input:
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1.0; user-scalable=no"/>
   {% endblock metadata %}
   {{ block('favicons', 'blocks.html.twig') }}
   {% block stylesheets %}
@@ -27,7 +27,7 @@ Input:
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
 
-  <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
+    <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
 
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/phonics.css" media="all">
@@ -44,17 +44,20 @@ Input:
 </head>
 
 <body>
-{# content comes from the page rendering of a template block like default_body_bs.html.twig. #}
-{{ block('statusModals', 'modal.html.twig') }}
+<div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; ">
+  {# content comes from the page rendering of a template block like default_body_bs.html.twig. #}
+  {{ block('statusModals', 'modal.html.twig') }}
 
-{% block body %}
-  {{ content | raw }}
-{% endblock body %}
-
+  {% block body %}
+    {{ content | raw }}
+  {% endblock body %}
+</div>
 {% block jqueryReady %}
   <script>
       $(document).ready(function () {
-          $('.modal-backdrop').removeClass("modal-backdrop");    {# don't dim background #}
+        {# when bootstrap modal is active, don't dim background #}
+          $('.modal-backdrop').removeClass("modal-backdrop");
+
         {# bootstrap customized accordion #}
           // Add minus icon for collapse element which is open by default
           $(".collapse.show").each(function () {
@@ -69,13 +72,13 @@ Input:
           });
 
         {# bootstrap popover load url #}
-          $('*[data-poload]').hover(function () {
-              let e = $(this);
-              e.off('hover');
-              $.get(e.data('poload'), function (d) {
-                  e.popover({content: d}).popover('show');
-              });
-          });
+        //   $('*[data-poload]').hover(function () {
+        //       let e = $(this);
+        //       e.off('hover');
+        //       $.get(e.data('poload'), function (d) {
+        //           e.popover({content: d}).popover('show');
+        //       });
+        //   });
         {{ otherJqueryReady|raw }}
       });
 
@@ -106,10 +109,20 @@ Input:
           $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
         {% endif %}
 
+          // disable parent scrolling when colorbox modal is active
+          // reenable scrolling when colorbox modal is closed
+          // see: https://www.geeksforgeeks.org/how-to-disable-scrolling-temporarily-using-javascript/
+          $(document).bind('cbox_open', function () {
+              $('html').addClass("body__scroll_disable");
+          }).bind('cbox_cleanup', function () {
+              $('html').removeClass("body__scroll_disable");
+          });
+
       });
 
   </script>
 {% endblock jqueryReady %}
+
 </body>
 </html>
 

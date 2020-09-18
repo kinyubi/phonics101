@@ -19,6 +19,8 @@
 /*    vertical-align: baseline;*/
 /*}*/
 
+html, body {width: auto!important; overflow-x: hidden!important}
+
 article, aside, details, figcaption, figure, dialog, footer, header, hgroup, menu, nav, section {
     display: block;
 }
@@ -489,39 +491,14 @@ a img {
    float:left;
  }
 
-.my-iframe-container {
- position: relative;
- height: 0;
- overflow: hidden;
- max-width: 100%;
+/* see: https://www.geeksforgeeks.org/how-to-disable-scrolling-temporarily-using-javascript/ */
+/* IOS needs this at least or colorbox iframes move around */
+.body__scroll_disable {
+    height: 100%;
+    overflow: hidden;
 }
 
-.my-iframe {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
-}
-
-.my-iframe-wordwall-container {
-    padding-bottom: 76%; /* set the aspect ratio here as (height / width) * 100% */
-}
-
-.my-iframe-tictactoe-container {
-    padding-bottom: 100%; /* set the aspect ratio here as (height / width) * 100% */
-}
-
+/* used for colorbox games iframe in base.html.twig line 92 */
 .gameFrame {
     border: 2px solid dimgray;
 }
-/*!* To change position of close button to Top Right Corner *!*/
-/*#colorbox #cboxClose*/
-/*{*/
-/*top: 0;*/
-/*right: 0;*/
-/*}*/
-/*#cboxLoadedContent{*/
-/*margin-top:28px;*/
-/*margin-bottom:0;*/
-/*}*/

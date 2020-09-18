@@ -1,5 +1,5 @@
 {% block soundBox %}
-  {% set count = count ?? 5 %}
+  {% set count = count ?? 3 %}
   {% set color = color ?? 'random' %}
   {% set colorSet = ['red', 'green', 'orangered', 'blue', 'goldenrod'] %}
   {% if color == 'mixed' %}
@@ -29,19 +29,27 @@
 
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap4-custom/bootstrap.bundle.min.js"></script>
+    <script src="/js/drag-and-touch.js"></script>
 
     <style>
-        .box{
-            border: 3px solid black;
+        .box {
             height: 60px;
-            width: 60px
+            width: 60px;
+            padding: 3px;
         }
 
+        .box__border {
+            border: 3px solid black;
+        }
 
+        /*body {position: fixed;}*/
         /*body {width: 360px; height: 380px}*/
     </style>
 
     <script>
+        let soundBoxColor = 'blue';
+        let soundBoxCount = 3;
+
         function dragPiece(ev) {
             ev.dataTransfer.setData("text/plain", ev.target.id);
         }
@@ -72,10 +80,80 @@
             }
         }
 
+        /**
+         * Keeps track of sound-box settings cookie 'readxyz_sound_box'
+         * @param cookieValue first char is # of balls, rest of string is html color of balls
+         * @param daysToExpire
+         */
+        function setCookie(cookieValue, daysToExpire) {
+            let d = new Date();
+            d.setTime(d.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = "readxyz_sound_box=" + cookieValue + ";" + expires + ";path=/";
+        }
+
+        /**
+         * find the cookie we're looking for and decode it
+         * @returns {string}
+         */
+        function getCookie() {
+            let name = "readxyz_sound_box=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let parts = decodedCookie.split(';');
+            for (let i = 0; i < parts.length; i++) {
+                let cookieValue = parts[i].trim();
+
+                if (cookieValue.indexOf(name) === 0) {
+                    return cookieValue.substring(name.length, cookieValue.length);
+                }
+            }
+            return "";
+        }
+
+        /**
+         * We try to get the cookie. If we can't find it we create one with default values.
+         * We return the values into the global variables color and soundBoxCount
+         */
+        function checkCookie() {
+            let cookieValue = getCookie();
+            if (cookieValue !== "") {
+                soundBoxCount = parseInt(cookieValue.substring(0, 1));
+                soundBoxColor = cookieValue.substring(1);
+            } else {
+                soundBoxCount = 3;
+                soundBoxColor = 'blue'
+                cookieValue = '3blue';
+                setCookie(cookieValue, 30);
+            }
+        }
+
+        function setColor(newColor) {
+            soundBoxColor = newColor;
+            reload();
+        }
+
+        function setCount(newCount) {
+            if (newCount !== soundBoxCount) {
+                soundBoxCount = newCount;
+                reload();
+            }
+        }
+
+        function reload() {
+            let countStr = soundBoxCount.toString();
+            let cookieValue = countStr + soundBoxColor;
+            setCookie(cookieValue, 30);
+            window.location.href = '/sound-box.php?count=' + countStr + '&color=' + soundBoxColor;
+        }
+
+        $(document).ready(function () {
+            checkCookie();
+        });
+
     </script>
   </head>
 
-  <body style="border: 2px solid grey" >
+  <body style="border: 2px solid grey; height: 300px; width:95%">
   <div id="game_container" class="container">
     <div class="row d-flex justify-content-center">
       <h1 class="my-2 col tac">Sound Boxes</h1>
@@ -86,32 +164,34 @@
       {# The button to select the ball color #}
       <div class="btn-group my-3 mx-1 p-0 col">
         <button id="color-button" type="button" class="btn  btn-sm btn-primary dropdown-toggle"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color</button>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color
+        </button>
         <div class="dropdown-menu" aria-labelledby="color-button">
-          <a class="dropdown-item" href="#"><i class="fas fa-circle fa-2x" style="color:red"></i></a>
-          <a class="dropdown-item" href="#"><i class="fas fa-circle fa-2x" style="color:green"></i> </a>
-          <a class="dropdown-item" href="#"><i class="fas fa-circle fa-2x" style="color:orangered"></i> </a>
-          <a class="dropdown-item" href="#"><i class="fas fa-circle fa-2x" style="color:blue"></i> </a>
-          <a class="dropdown-item" href="#"><i class="fas fa-circle fa-2x" style="color:goldenrod"></i> </a>
+          <a class="dropdown-item" href="#" onclick="setColor('red')"><i class="fas fa-circle fa-2x" style="color:red"></i></a>
+          <a class="dropdown-item" href="#" onclick="setColor('green')"><i class="fas fa-circle fa-2x" style="color:green"></i> </a>
+          <a class="dropdown-item" href="#" onclick="setColor('orangered')"><i class="fas fa-circle fa-2x" style="color:orangered"></i> </a>
+          <a class="dropdown-item" href="#" onclick="setColor('blue')"><i class="fas fa-circle fa-2x" style="color:blue"></i> </a>
+          <a class="dropdown-item" href="#" onclick="setColor('goldenrod')"><i class="fas fa-circle fa-2x" style="color:goldenrod"></i> </a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Multi-color</a>
+          <a class="dropdown-item" onclick="setColor('mixed')" href="#">Multi-color</a>
         </div>
       </div>
 
       {# The button to select the number of balls #}
       <div class="btn-group  my-3 mx-1 p-0 col">
         <button id="count-button" type="button" class="btn btn-sm btn-primary dropdown-toggle"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Count</button>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Count
+        </button>
         <div class="dropdown-menu" aria-labelledby="count-button">
-          <a class="dropdown-item" href="#"><span class="h3">3</span></a>
-          <a class="dropdown-item" href="#"><span class="h3">4</span></a>
-          <a class="dropdown-item" href="#"><span class="h3">5</span></a>
+          <a class="dropdown-item" href="#" onclick="setCount(3)"><span class="h3">3</span></a>
+          <a class="dropdown-item" href="#" onclick="setCount(4)"><span class="h3">4</span></a>
+          <a class="dropdown-item" href="#" onclick="setCount(5)"><span class="h3">5</span></a>
         </div>
       </div>
 
       {# The reset button #}
       <div class="btn-group  my-3 mx-1 p-0 col">
-        <button type="button" class="btn btn-primary btn-sm px-2">Reset</button>
+        <button type="button" class="btn btn-primary btn-sm px-2" onclick="reload()">Reset</button>
       </div>
     </div>
     {# Botton Row start #}
@@ -119,24 +199,20 @@
     {# Receptacle Boxes Row -- Start #}
     <div class="row d-flex justify-content-center flex-nowrap mb-2 ">
       {% for i in range(0,count - 1) %}
-        <div id="box-{{ i }}" class="box" ondragover="allowDrop" ondrop="dropOnSquare(event);"></div>
+        <div id="box-{{ i }}" class="box box__border receptacle"></div>
       {% endfor %}
     </div>
     {# Receptacle Boxes Row -- End #}
 
     {# Balls Row -- Start #}
     <div class="row d-flex justify-content-center flex-nowrap">
-{#      <table>#}
-{#        <tr>#}
-          {% for i in range(0,count -1) %}
-{#            <td >#}
-              <div id="ball-{{ i }}" class="m-1 p-0" draggable="true" ondragstart="dragPiece(event);">
-                <i class="fas fa-circle  tac" style="color:{{ colors[loop.index0] }}; font-size: 48px"></i>
-              </div>
-{#            </td>#}
-          {% endfor %}
-{#        </tr>#}
-{#      </table>#}
+      {% for i in range(0,count -1) %}
+        <div class="box">
+          <div id="ball-{{ i }}" class="m-1 p-0 mover">
+            <i class="fas fa-circle  tac" style="color:{{ colors[loop.index0] }}; font-size: 48px"></i>
+          </div>
+        </div>
+      {% endfor %}
     </div>
     {# Balls Row -- End #}
   </div>
