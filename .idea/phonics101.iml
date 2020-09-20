@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/3rdParty/JsonMapper" isTestSource="false" packagePrefix="JsonMapper\" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/src/3rdParty/Peekmo" isTestSource="false" packagePrefix="Peekmo\" />
+      <excludeFolder url="file://$MODULE_DIR$/_gsdata_" />
       <excludeFolder url="file://$MODULE_DIR$/src/ReadXYZ/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/common" />

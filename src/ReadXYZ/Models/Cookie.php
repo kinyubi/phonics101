@@ -207,8 +207,7 @@ class Cookie
     }
 
     /**
-     * @param string $currentLesson
-     *
+     * @param string $currentTab
      * @return Cookie
      */
     public function setCurrentTab(string $currentTab): Cookie
@@ -270,25 +269,12 @@ class Cookie
     {
         Util::sessionContinue();
         $identity = Identity::getInstance();
-        $savedSession = $identity->getSessionId();
-        if (empty($savedSession)) {
-            throw new RuntimeException('Identity sessionId is empty');
-        }
-        if (empty($this->sessionId)) {
-            $this->sessionId = $savedSession;
-            error_log('Cookie session id was not set. Logic error.', E_USER_NOTICE);
-            $this->setCookie();
-        }
-        if ($savedSession != $this->sessionId) {
-            $this->sessionId = $savedSession;
-        }
         $identity->validateSignin($this->username, 'xx');
         if ($identity->isValidUser() && not(empty($this->studentId))) {
             $identity->setStudent($this->studentId);
 
             return true;
         }
-
 
         return false;
     }

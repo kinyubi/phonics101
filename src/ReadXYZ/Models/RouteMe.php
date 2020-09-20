@@ -7,6 +7,7 @@ use ReadXYZ\Database\OneTimePass;
 use ReadXYZ\Database\StudentTable;
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Twig\Twigs;
+use Throwable;
 
 class RouteMe
 {
@@ -78,10 +79,23 @@ class RouteMe
             exit;
         }
         $result = $identity->validateSignin($username, $password);
+        if ($result->failed()) {
+            echo $twigs->login($result->getErrorMessage());
+            exit;
+        }
+        echo self::autoLogin();
     }
 
     public static function parseRoute()
     {
+        $cookie = Cookie::getInstance();
+        try {
+            $foundSession = $cookie->tryContinueSession();
+        } catch (Throwable $ex) {
+            $foundSession = false;
+        }
+
+
         $requestUri = parse_url($_SERVER['REQUEST_URI']);
         $parameters = $requestUri['query'] ?? [];
         $posts = $_REQUEST ?? [];
@@ -91,7 +105,11 @@ class RouteMe
         $path = $requestUri['path'] ?? '/';
         switch ($path) {
             case '/':
-                echo Twigs::getInstance()->login();
+                if ($foundSession) {
+                    echo self::autoLogin();
+                } else {
+                    echo Twigs::getInstance()->login();
+                }
                 break;
             case '/wp':
                 $login = new ProcessWordPressRequest();
@@ -102,9 +120,10 @@ class RouteMe
                 echo $processor->handleRequestAndGetResponse($parameters);
                 break;
             case '/timer':
-                include $_SERVER['PUBLIC_ROOT'] . 'actions/timers.php';
+                include $_SERVER['DOCUMENT_ROOT'] . '/public/actions/timers.php';
                 break;
-
+            case '/login':
+                echo Twigs::getInstance()->login();
 
 
         }

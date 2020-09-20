@@ -14,7 +14,7 @@ if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
 $cookie = Cookie::getInstance();
-$cookie->tryContinueSession();
+$foundSession = $cookie->tryContinueSession();
 
 $pageToRender = ($_REQUEST['P1'] ?? $_REQUEST['page'] ?? $_REQUEST['target'] ??  'none');
 $twigs = Twigs::getInstance();

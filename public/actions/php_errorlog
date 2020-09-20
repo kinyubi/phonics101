@@ -1,0 +1,15 @@
+[18-Sep-2020 23:21:16 CST6CDT] PHP Fatal error:  Uncaught RuntimeException: Identity sessionId is empty in /home/readxyz0/public_html/testing/src/ReadXYZ/Models/Cookie.php:275
+Stack trace:
+#0 /home/readxyz0/public_html/testing/public/actions/processLessonSelection.php(21): ReadXYZ\Models\Cookie->tryContinueSession()
+#1 {main}
+  thrown in /home/readxyz0/public_html/testing/src/ReadXYZ/Models/Cookie.php on line 275
+[18-Sep-2020 23:21:38 CST6CDT] PHP Fatal error:  Uncaught RuntimeException: Identity sessionId is empty in /home/readxyz0/public_html/testing/src/ReadXYZ/Models/Cookie.php:275
+Stack trace:
+#0 /home/readxyz0/public_html/testing/public/actions/processLessonSelection.php(21): ReadXYZ\Models\Cookie->tryContinueSession()
+#1 {main}
+  thrown in /home/readxyz0/public_html/testing/src/ReadXYZ/Models/Cookie.php on line 275
+[18-Sep-2020 23:21:46 CST6CDT] PHP Fatal error:  Uncaught RuntimeException: Identity sessionId is empty in /home/readxyz0/public_html/testing/src/ReadXYZ/Models/Cookie.php:275
+Stack trace:
+#0 /home/readxyz0/public_html/testing/public/actions/processLessonSelection.php(21): ReadXYZ\Models\Cookie->tryContinueSession()
+#1 {main}
+  thrown in /home/readxyz0/public_html/testing/src/ReadXYZ/Models/Cookie.php on line 275

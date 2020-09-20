@@ -40,6 +40,9 @@
 
         .box__border {
             border: 3px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /*body {position: fixed;}*/
@@ -209,7 +212,7 @@
       {% for i in range(0,count -1) %}
         <div class="box">
           <div id="ball-{{ i }}" class="m-1 p-0 mover">
-            <i class="fas fa-circle  tac" style="color:{{ colors[loop.index0] }}; font-size: 48px"></i>
+            <i class="fas fa-circle  tac" style="color:{{ colors[loop.index0] }}; font-size: 36px"></i>
           </div>
         </div>
       {% endfor %}

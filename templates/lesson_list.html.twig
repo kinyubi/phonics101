@@ -33,7 +33,7 @@ inputs:
         <ul class="nav nav-pills"><li class="nav-item mx-2 px-2 py-1 w-100">
             <a class="nav-link bg-readxyz text-white border rounded w-100" href="{{ actionHandler }}?P1={{
             mostRecentLesson|url_encode }}&P2={{ mostRecentTab }}">
-                <i class="fas fa-arrow-circle-right px-2 fa-2x text-secondary"></i>
+                <i class="fas fa-arrow-circle-right px-2 fa-lg fa-fw text-secondary"></i>
                 <span class="h6 p-2 mr-2">MOST RECENT LESSON</span>
                 <span class="h5 mr-5 text-white">{{ mostRecentLesson }}</span>
             </a>
@@ -49,8 +49,10 @@ inputs:
                     <h2 class="mb-0">
                         <a style="text-decoration: none !important;" data-toggle="collapse"
                            href="#{{ groupCollapse }}" aria-controls="{{ groupCollapse }}" aria-expanded="false">
-                            <i class="fas fa-plus-circle px-2 fa-2x text-secondary"></i>
-                            <span class="h5 text-dark">{{ groupName }}</span>
+                            <div class="d-flex align-items-center">
+                            <i class="fas fa-plus-circle px-2 fa-lg fa-fw text-secondary"></i>
+                            <span class="h5 ml-2 text-dark">{{ groupName }}</span>
+                            </div>
                         </a>
                     </h2>
                 </div>

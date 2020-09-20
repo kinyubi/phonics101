@@ -76,7 +76,7 @@ function handleTouchEnd(e) {
       if (detectContainment(mover, r)) {
         receiver = r;
         receiver.innerText = '';
-        mover.style.position = 'static';
+        mover.style.position = 'relative';
         mover.style.left = '';
         mover.style.top = '';
         break;

@@ -58,17 +58,22 @@ class Lesson implements JsonSerializable
         $this->contrastList = Util::csvStringToArray($lesson->contrastList);
         $this->stretchList = Util::stretchListToArray($lesson->stretchList);
         $this->fluencySentences = $lesson->fluencySentences ?? null;
-
+        $this->games = [];
         // get the universal games added to the lesson
         $gameTypes = GameTypes::getInstance();
         $universalGames = $gameTypes->getUniversalGameTypes();
         foreach ($universalGames as $game) {
+            $url = $game->getUniversalGameUrl();
+            if ($game->getGameTypeId() == 'tic-tac-toe') {
+                $wordlist = join('_', $this->getTicTacToeWords());
+                $url .= '?wordlist=' . $wordlist;
+            }
             $this->games[$game->getBelongsOnTab()][] = new Game(
                 $game->getGameTypeId(),
                 $game->getGameDisplayAs(),
                 $game->getThumbNailUrl(),
                 $game->getBelongsOnTab(),
-                $game->getUniversalGameUrl()
+                $url
             );
         }
         // combine the GameTypes information with the games array in the lesson to build the games array
@@ -80,7 +85,8 @@ class Lesson implements JsonSerializable
             if (null == $gameType) {
                 continue;
             }
-            $this->games[$gameType->getBelongsOnTab()][] = new Game(
+            $gameTag = $gameType->getBelongsOnTab();
+            $this->games[$gameTag][] = new Game(
                 $gameType->getGameTypeId(),
                 $gameType->getGameDisplayAs(),
                 $gameType->getThumbNailUrl(),
@@ -368,6 +374,18 @@ class Lesson implements JsonSerializable
         }
 
         return $result;
+    }
+
+    public function getTicTacToeWords(): array
+    {
+        $initialWords = $this->wordList;
+        $words = $initialWords;
+        while (count($words) < 9) {
+            $words = array_merge($words, $initialWords);
+        }
+        $slice = array_slice($words, 0, 9);
+        shuffle($slice);
+        return $slice;
     }
 
     // =========== PROTECTED/PUBLIC METHODS
