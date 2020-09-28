@@ -27,8 +27,8 @@ class TwigFactory
     private function __construct()
     {
         $options = [];
-        $options['debug'] = defined('TWIG_DEBUG') ? TWIG_DEBUG : Util::isLocal();
-        $options['auto_reload'] = defined('TWIG_DEBUG') ? TWIG_DEBUG : Util::isLocal();
+        $options['debug'] =  Util::isLocal();
+        $options['auto_reload'] = Util::isLocal();
         if (Util::isLocal()) {
             $options['cache'] = Util::getReadXyzSourcePath('cache');
         }

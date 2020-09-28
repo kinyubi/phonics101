@@ -8,9 +8,9 @@ use ReadXYZ\Helpers\Util;
 class UtilTest extends TestCase
 {
 
-    public function testAddSoundClassToLessonName()
+    public function testAddSoundClass()
     {
-        $this->assertEquals('<sound>dog</sound>', Util::addSoundClassToLessonName('/dog/'));
+        $this->assertEquals('<sound>dog</sound>', Util::addSoundClass('/dog/'));
     }
 
     public function testArrayToList()

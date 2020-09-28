@@ -3,13 +3,12 @@
 namespace ReadXYZ\Lessons;
 
 use JsonSerializable;
+use ReadXYZ\Helpers\Location;
 use ReadXYZ\Helpers\Util;
-use ReadXYZ\Traits\LessonTraits;
 use stdClass;
 
 class Lesson implements JsonSerializable
 {
-    use LessonTraits;
 
     private string $lessonId;
     private string $lessonName;
@@ -30,6 +29,7 @@ class Lesson implements JsonSerializable
     private ?array  $tabNames;
     private ?Spinner $spinner;
     private string $pronounceImage;
+    private string $pronounceImageThumb;
     /** @var string[] */
     private ?array $contrastImages;
     private int $ordering;
@@ -101,7 +101,9 @@ class Lesson implements JsonSerializable
         $this->spinner = null;
         $this->spinner = new Spinner($lesson->spinner->prefixList, $lesson->spinner->vowel ?? '', $lesson->spinner->suffixList ?? '');
 
-        $this->pronounceImage = $lesson->pronounceImage ?? '';
+        $this->pronounceImage = Location::getPronounceImage($lesson->pronounceImage ?? '');
+        $this->pronounceImageThumb = Location::getPronounceImageThumb($lesson->pronounceImage ?? '');
+
         $this->contrastImages = $lesson->contrastImages ?? null;
         $this->ordering = $lesson->ordering ?? 0;
         $this->visible = true;
@@ -266,6 +268,11 @@ class Lesson implements JsonSerializable
     public function getPronounceImage()
     {
         return $this->pronounceImage;
+    }
+
+    public function getPronounceImageThumb(): string
+    {
+        return $this->pronounceImageThumb;
     }
 
     /**

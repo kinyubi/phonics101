@@ -11,7 +11,7 @@ use ReadXYZ\POPO\gamePOPO;
 use ReadXYZ\POPO\LessonPOPO;
 use ReadXYZ\POPO\SpellSpinner;
 
-require dirname(__DIR__) . '/config/bootstrap.php';
+require 'autoload.php';
 
 function getNewLessonName(string $lessonName, array $csvMap): string
 {
@@ -87,7 +87,7 @@ foreach ($csvLessons as $csvLesson) {
     $lesson->lessonId = trim($csvLesson['ID']);
     $lesson->lessonName = $realName;
     $lesson->visible = true;
-    $lesson->lessonDisplayAs = Util::addSoundClassToLessonName($realName);
+    $lesson->lessonDisplayAs = Util::addSoundClass($realName);
     $lesson->alternateNames = $csvInfo->getAlternateNames($realName);
     if (false == $newLesson) {
         $blendingLesson = $blendingInfo->findLesson($lesson->alternateNames);

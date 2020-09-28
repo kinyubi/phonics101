@@ -1,5 +1,7 @@
 <?php
 
+use ReadXYZ\Helpers\Location;
+
 $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'cap,gap,lap,map,rap,sap,tap,zap,nap',
           'bag,hag,jag,lag,nag,rag,sag,tag,wag',
@@ -57,8 +59,8 @@ if (isset($_GET['wordlist'])) {
     }
 }
 
-$rat = "images/$player1.jpg";
-$cat = "images/$player2.jpg";
+$rat = Location::getTicTacToeAnimal($player1);
+$cat = location::getTicTacToeAnimal($player2);
 ?>
 
 <!DOCTYPE html>

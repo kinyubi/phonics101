@@ -2,7 +2,7 @@
     {
         "gameTypeId": "random",
         "gameDisplayAs": "Word Cards",
-        "thumbNailUrl": "/images/thumbs/word-cards.jpg",
+        "thumbNailUrl": "/images/sidebar/random_sm.jpg",
         "belongsOnTab": "intro",
         "isUniversal": false,
         "ordering": 1,
@@ -11,16 +11,16 @@
     {
         "gameTypeId": "word-builder",
         "gameDisplayAs": "Word Builder",
-        "thumbNailUrl": "/images/thumbs/word-builder.jpg",
+        "thumbNailUrl": "/images/sidebar/word-builder_sm.jpg",
         "belongsOnTab": "intro",
         "isUniversal": false,
         "ordering": 2,
         "universalGameUrl": ""
     },
     {
-        "gameTypeId": "sound-boxes",
+        "gameTypeId": "sound-box",
         "gameDisplayAs": "Sound Boxes",
-        "thumbNailUrl": "/images/thumbs/sound-boxes.jpg",
+        "thumbNailUrl": "/images/sidebar/sound-box_sm.jpg",
         "belongsOnTab": "write",
         "isUniversal": true,
         "ordering": 1,
@@ -29,25 +29,16 @@
     {
         "gameTypeId": "tic-tac-toe",
         "gameDisplayAs": "Tic-Tac-Toe",
-        "thumbNailUrl": "/images/thumbs/tic-tac-toe.jpg",
+        "thumbNailUrl": "/images/sidebar/tic-tac-toe_sm.jpg",
         "belongsOnTab": "practice",
         "isUniversal": true,
         "ordering": 1,
         "universalGameUrl": "/tictactoe/tictac.php"
     },
     {
-        "gameTypeId": "advanced-spell",
-        "gameDisplayAs": "Advanced Spell",
-        "thumbNailUrl": "/images/thumbs/advanced-spell.jpg",
-        "belongsOnTab": "spell",
-        "isUniversal": true,
-        "ordering": 2,
-        "universalGameUrl": "https://www.reallygreatreading.com/lettertiles/"
-    },
-    {
         "gameTypeId": "whack-a-mole",
         "gameDisplayAs": "Whack-A-Mole",
-        "thumbNailUrl": "/images/thumbs/whack-a-mole.jpg",
+        "thumbNailUrl": "/images/sidebar/whack-a-mole_sm.jpg",
         "belongsOnTab": "practice",
         "isUniversal": false,
         "ordering": 2,
@@ -56,7 +47,7 @@
     {
         "gameTypeId": "sort",
         "gameDisplayAs": "Rhyme Sort",
-        "thumbNailUrl": "/images/thumbs/rhyme-sort.jpg",
+        "thumbNailUrl": "/images/sidebar/sort_sm.jpg",
         "belongsOnTab": "practice",
         "isUniversal": false,
         "ordering": 3,
@@ -65,7 +56,7 @@
     {
         "gameTypeId": "alien",
         "gameDisplayAs": "Alien",
-        "thumbNailUrl": "/images/thumbs/alien.jpg",
+        "thumbNailUrl": "/images/sidebar/alien_sm.jpg",
         "belongsOnTab": "practice",
         "isUniversal": false,
         "ordering": 4,
@@ -74,7 +65,7 @@
     {
         "gameTypeId": "scramble",
         "gameDisplayAs": "Word Scramble",
-        "thumbNailUrl": "/images/thumbs/word-scramble.jpg",
+        "thumbNailUrl": "/images/sidebar/scramble_sm.jpg",
         "belongsOnTab": "spell",
         "isUniversal": false,
         "ordering": 1,
@@ -83,7 +74,7 @@
     {
         "gameTypeId": "mastery",
         "gameDisplayAs": "Mastery Flip",
-        "thumbNailUrl": "/images/thumbs/mastery-flip.jpg",
+        "thumbNailUrl": "/images/sidebar/mastery_sm.jpg",
         "belongsOnTab": "mastery",
         "isUniversal": false,
         "ordering": 1,
@@ -92,7 +83,7 @@
     {
         "gameTypeId": "sentences",
         "gameDisplayAs": "Missing Word",
-        "thumbNailUrl": "/images/thumbs/missing-word.jpg",
+        "thumbNailUrl": "/images/sidebar/sentences_sm.jpg",
         "belongsOnTab": "fluency",
         "isUniversal": false,
         "ordering": 0,

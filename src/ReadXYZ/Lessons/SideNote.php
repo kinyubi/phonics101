@@ -55,19 +55,6 @@ class SideNote
     }
 
     /**
-     * @param string $blockName The name of the block template we want to use in lesson_blocks.html.twig.
-     * @param array  $args      the arguments for the twig block
-     *
-     * @return string
-     */
-    private function getTwigBlock(string $blockName, array $args = []): string
-    {
-        $HTML = TwigFactory::getInstance()->renderBlock('lesson_blocks', $blockName, $args) ?? '';
-
-        return $HTML ?? Util::redBox("No twig output for $blockName.");
-    }
-
-    /**
      * For the specified tab, returns lesson note if found or returns a group note if found
      * or returns a default note if found or returns an empty string.
      *
@@ -83,9 +70,9 @@ class SideNote
             return $note;
         }
         $note = $this->getDefaultTabNote($tab_name) ?? '';
-        if (!Util::startsWith($note, '<br')) {
-            $note = '<br\>' . $note;
-        }
+        // if (!Util::startsWith($note, '<br')) {
+        //     $note = '<br\>' . $note;
+        // }
 
         return $note;
     }
@@ -124,7 +111,6 @@ class SideNote
      */
     private function getCurveHTML(string $index): string
     {
-        $HTML = '';
 
         $ts = Student::getInstance();                   // pick up current session
         $cargo = $ts->cargo;
@@ -144,14 +130,14 @@ class SideNote
         } elseif (isset($currentLesson[$index])) {
             $data = $currentLesson[$index];
         }
+        $html = '';
         if (!empty($data)) {
             $learningCurve = new LearningCurve();
             $imgURL = $learningCurve->learningCurveChart($data);
-
-            return $this->getTwigBlock('LearningCurve', ['imageUrl' => $imgURL]);
+            $html = TwigFactory::getInstance()->renderBlock('timers', 'LearningCurve', ['imageUrl' => $imgURL]) ?? '';
         }
 
-        return $HTML;
+        return $html;
     }
 
 

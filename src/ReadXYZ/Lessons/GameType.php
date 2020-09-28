@@ -91,7 +91,7 @@ class GameType
     {
         if ($this->gameTypeId == 'tic-tac-toe') {
             return $this->gameTypeId;
-        } elseif ($this->gameTypeId == 'sound-boxes') {
+        } elseif ($this->gameTypeId == 'sound-box') {
             return 'sound-box';
         } elseif ($this->gameTypeId == 'advanced-spell') {
             return 'advanced-spell';

@@ -19,7 +19,7 @@ Input:
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1.0; user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
   {% endblock metadata %}
   {{ block('favicons', 'blocks.html.twig') }}
   {% block stylesheets %}
@@ -38,13 +38,18 @@ Input:
     <script src="/js/jquery.colorbox.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap4-custom/bootstrap.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script src="/js/phonics.js"></script>
     <script src="/js/timers.js"></script>
+
+
+
   {% endblock scripts %}
 </head>
 
-<body>
-<div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; ">
+<body style="max-width: 1000px;">
+{#<div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; ">#}
+<div class="m-0 p-0">
   {# content comes from the page rendering of a template block like default_body_bs.html.twig. #}
   {{ block('statusModals', 'modal.html.twig') }}
 
@@ -52,6 +57,12 @@ Input:
     {{ content | raw }}
   {% endblock body %}
 </div>
+
+{% set clientProperties = ['screen.width', 'screen.height', 'window.innerWidth', 'window.innerHeight'] %}
+{% for property in clientProperties %}
+<form method='POST' id='data' style='display:none'>
+{% endfor %}
+
 {% block jqueryReady %}
   <script>
       $(document).ready(function () {
@@ -71,6 +82,7 @@ Input:
               $(this).prev(".card-header").find(".fas").removeClass("fa-minus-circle").addClass("fa-plus-circle");
           });
 
+          $('[data-toggle="tooltip"]').tooltip();
         {# bootstrap popover load url #}
         //   $('*[data-poload]').hover(function () {
         //       let e = $(this);
@@ -90,9 +102,9 @@ Input:
           $(".ajax").colorbox();
           $(".tic-tac-toe").colorbox({
               iframe: true, innerWidth: "90%", maxWidth: "440px", innerHeight: "100%", maxHeight: "440px",
-              top: 20, overlayClose: false, scrolling: false, className: "frame__responsives"
+              top: 20, overlayClose: false, scrolling: false
           });
-          $(".games").colorbox({iframe: true, width: "360px", maxWidth: "360px", height: "380px", top: 20, className: "gameFrame"});
+          $(".games").colorbox({iframe: true, width: "360px", maxWidth: "500px", height: "380px", top: 20, className: "gameFrame"});
           $(".sound-box").colorbox({
               iframe: true, innerWidth: 450, innerHeight: 400, top: 100, left: 100,
               scrolling: false, overlayClose: false
@@ -118,11 +130,19 @@ Input:
               $('html').removeClass("body__scroll_disable");
           });
 
+          setScreenCookie();
+
+          $( window ).resize(function() {
+            setScreenCookie();
+          });
+
       });
 
   </script>
 {% endblock jqueryReady %}
-
+<script>
+    window.history.replaceState(null,null); //avoid form warning if user clicks refresh
+</script>
 </body>
 </html>
 

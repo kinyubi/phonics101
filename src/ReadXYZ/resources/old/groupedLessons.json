@@ -5515,7 +5515,7 @@
               "paragraphs": [
                 "<strong>WHAT IS PHONICS?</strong>",
                 "We use about 40 sounds for speaking English. Since we only have 26 letters, we can't simply use a letter of the alphabet for each sound.",
-                "Here's a sound that you can't find in the alphabet:  <span class='sound'>oy</span> and it has two common spellings:<br><img src='./images/soil_boy.jpg' width='500' />",
+                "Here's a sound that you can't find in the alphabet:  <span class='sound'>oy</span> and it has two common spellings:<br><img src='/images/pronounce/soil_boy.jpg' width='500' />",
                 "'Phonics' is about mapping sounds to spellings that represent those sounds."
               ]
             },
@@ -5525,7 +5525,7 @@
                 "<b>Letters:</b> There are 26 letters.  Letters make spellings and spellings make sounds. We shouldn't say \"this letter makes a sound\", because only spellings make sounds.",
                 "<b>Spellings:</b> There are about 180 common spellings, and spellings make sounds. The simplest spellings have one letter like 'a' in <span class='spelling'>a</span> which makes the <span class='sound'>ah</span> sound in 'cat'.",
                 "People get confused because the letter 'a' seems the same as the spelling <span class='spelling'>a</span> which makes the <span class='sound'>ah</span> sound.  But that doesn't work for the spelling <span class='spelling'>oi</span> which makes the <span class='sound'>oy</span> in 'soil'.",
-                "<img src='./images/cat_soil.jpg' width='500' /><br>Now can you explain why 'letters' and 'spellings' are not the same?"
+                "<img src='./images/pronounce/cat_soil.jpg' width='500' /><br>Now can you explain why 'letters' and 'spellings' are not the same?"
               ]
             },
             {
@@ -5533,7 +5533,7 @@
               "paragraphs": [
                 "In this program we will show sounds like this: <span class='sound'>oi</span> and spellings like this: <span class='spelling'>oy</span> and <span class='spelling'>oi</span>.",
                 "We simplify the colours when we show a word-drawing.  You are familiar with word-drawings if you have taken the Blending program.",
-                "<img src='./images/soil.jpg' width='500' /> "
+                "<img src='./images/pronounce/soil.jpg' width='500' /> "
               ]
             },
             {

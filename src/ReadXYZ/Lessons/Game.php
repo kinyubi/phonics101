@@ -3,6 +3,7 @@
 namespace ReadXYZ\Lessons;
 
 use JsonSerializable;
+use ReadXYZ\Helpers\Location;
 use ReadXYZ\Helpers\Util;
 
 class Game implements JsonSerializable
@@ -19,7 +20,7 @@ class Game implements JsonSerializable
     {
         $this->gameTypeId = $id;
         $this->gameTitle = $title;
-        $this->thumbRef = $thumb;
+        $this->thumbRef = Location::getGameThumbnail($id);
         $this->tabName = $tab;
         $this->ordering = $order;
         $this->url = $url;

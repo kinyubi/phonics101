@@ -31,10 +31,10 @@
 
 {% block body %}
     {# our logo, menu items, and title that span the entire width of the page #}
-    <div class="container m-0 p-0">
+    <div class="container-fluid m-0 p-0">
         <div class="row m-0 p-0">
             <div class="col-12 p-0">
-                <nav class="navbar navbar-dark bg-secondary text-white-50 m-0 mb-2 px-1">
+                <nav class="navbar navbar-dark bg-readxyz m-0 mb-2 px-1">
                     <img class="navbar-brand" style="max-height:50px" alt="ReadXYZ"
                          src="/images/logo-150.png">
                 {#    <ul class="nav-link d-flex flex-nowrap"> #}
@@ -53,20 +53,26 @@
     {# display any error messages #}
     {% if errorMessage %}
         <div class="container border border-danger p-0">
+          <div class="row">
             <h2 class="bg-danger text-white">ERROR</h2>
             <p class="text-danger">{{ errorMessage | raw }}</p>
+          </div>
         </div>
 
     {% endif %}
     {% if systemMessage %}
         <div class="container border border-dark p-0">
+          <div class="row">
             <h2 class="bg-dark text-white">SYSTEM ERROR</h2>
             <p class="text-dark">{{ systemMessage | raw }}</p>
+          </div>
         </div>
     {% endif %}
 
     {# create the tabs setting the initial tab as visible and active #}
-    <div class="container p-0 p-md-3" id="thePage" style="max-width: 960px;">
+{#    <div class="container p-0 p-md-3" id="thePage" style="max-width: 960px;">#}
+     <div class="container-fluid" id="thePage" >
+       <div class="row m-0 p-0 justify-content-start">
         {% set tabCount =  tabs | length %}
         {% set visibleTab = (initialTabName is empty) ? (tabs|keys|first) : initialTabName %}
 
@@ -85,7 +91,9 @@
                     {% endfor %}
                 </div>
             </nav> {# close navbar #}
-            <div class="tab-content" id="myTabContent">
+       </div>
+       <div class="row">
+            <div class="tab-content w-100" id="myTabContent">
                 {% for tabTitle, tabHtml in tabs %}
                     {% set active = (tabTitle == visibleTab) ? 'show active' : '' %}
                     {% set tabId = tabTitle|lower ~ '-tab' %}
@@ -98,6 +106,6 @@
                 <div class="container">{{ tabHtml | raw }}</div>
             {% endfor %}
         {% endif %}
-
+       </div>
     </div> {# end container#}
 {% endblock %}

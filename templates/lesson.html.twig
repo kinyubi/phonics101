@@ -1,10 +1,9 @@
-
 {% macro modalIframe(game) %}
 
 {% endmacro %}
 
 {% macro modalAnchorCbox(game) %}
-  {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell']) ? game.gameTypeId : 'games' %}
+  {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell', 'sound-box']) ? game.gameTypeId : 'games' %}
   <a class="{{ class }}" href="{{ game.url }}">
     <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
          title="{{ game.gameTitle }}" width="100%">
@@ -16,6 +15,7 @@
     canRefresh      : display the refresh icon
     information     : information that will display when hovering over the info icon
     pronounceImage  : if present an image file name to be displayed as thumbnail
+    pronounceImageThumb
     games[]         :
     timerHtml       : any timer form/buttons html
     isBdpLesson     : true if bdp-lesson
@@ -27,9 +27,12 @@
     {% if information %}
       <div class="row d-flex align-items-center justify-content-center">
         <div class="info-container ">
-          <a href="#">
-            <i class="fas fa-info-circle fa-2x text-info " aria-hidden="true"></i>
-            <span class="shadow">{{ information|raw }}</span>
+{#          <a href="#">#}
+{#            <i class="fas fa-info-circle fa-2x text-info " aria-hidden="true"></i>#}
+{#            <span class="shadow">{{ information|raw }}</span>#}
+{#          </a>#}
+          <a href="#" data-toggle="tooltip" data-placement="left" data-html="true" title="{{ information }}">
+            <i class="fas fa-info-circle fa-2x text-info " ></i>
           </a>
         </div>
       </div>
@@ -72,22 +75,67 @@
       </tbody>
     </table>
     {% if (tabId == 'intro') and pronounceImage and (not isBdpLesson) %}
-      <a class="intro-image" href="/images/{{ pronounceImage }}">
+      <a class="intro-image" href="{{ pronounceImage }}">
         <div class="bdp-thumb">
-          <img src="/images/thumbs/thumb_{{ pronounceImage }}" alt="pronounce">
+          <img src="{{ pronounceImageThumb }}" alt="pronounce">
         </div>
       </a>
     {% endif %}
 
     {% if (tabId == 'intro') and isBdpLesson %}
-      <a class="intro-image" href="/images/b-d-p_poster.jpg">
+      <a class="intro-image" href="{{ pronounceImage }}">
         <div class="bdp-thumb">
-          <img src="/images/thumbs/thumb_b-d-p_poster.jpg" alt="b-d-p">
+          <img src="{{ pronounceImageThumb }}" alt="b-d-p">
         </div>
       </a>
     {% endif %}
   </div>
 {% endblock SideBar %}
+
+{# input:
+    lessonName
+    warmups
+#}
+{% block WarmupTab %}
+  {% set tabId = 'warmup' %}
+  {% set tabName = 'Warm-Up' %}
+  <div class="container" id="{{ tabId }}-container">
+    <div class="row  d-flex flex-nowrap justify-content-start  m-2 p-2">
+      <h1>Instructions<small class="text-muted"><br>{{ warmups.instructions }}</small>
+      </h1>
+    </div>
+    <div class="row  d-flex flex-sm-wrap">
+      <div id="{{ tabId }}-accordion">
+
+        {% for warmup in warmups.warmupItems %}
+          <div class="card">
+
+            <div class="card-header" id="warmup-header{{ loop.index }}">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed text-readxyz" data-toggle="collapse" data-target="#warmup-content{{ loop.index }}"
+                        aria-expanded="false" aria-controls="warmup-content{{ loop.index }}">
+                  {{ warmup.directions }}
+                </button>
+              </h5>
+            </div>
+
+            <div id="warmup-content{{ loop.index }}" class="collapse" aria-labelledby="warmup-header{{ loop.index }}"
+                 data-parent="#{{ tabId }}-accordion">
+              <div class="card-body">
+                <ul class="list-group">
+                {% for part in warmup.parts %}
+                  <li class="list-group-item list-group-item-readxyz">{{ part }}</li>
+                {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+{% endblock WarmupTab %}
 
 {# input:
     tabName
@@ -99,8 +147,8 @@
   {% set tabId = tabName|lower %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
-    <div class="row  d-flex flex-nowrap">
-      <div id="{{ tabId }}-main" class="col-9">
+    <div class="row  d-flex flex-nowrap  m-2 p-2">
+      <div id="{{ tabId }}-main" class="flex-grow-1 ">
         {% for game in games %}
           {{ _self.modalIframe(game) }}
         {% endfor %}
@@ -118,7 +166,7 @@
           </tbody>
         </table>
       </div>
-      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0 ">
         {{ sidebarHtml|raw }}
       </div>
     </div>
@@ -135,9 +183,9 @@
 {% block WriteTab %}
   {% set tabId = tabName|lower %}
   {% set listIndex = listIndex ?? 0 %}
-  <div class="container">
-    <div class="row  d-flex flex-nowrap">
-      <div id="{{ tabId }}-main" class="col-9">
+  <div class="container w-100">
+    <div class="row  d-flex flex-nowrap justify-content-between w-100">
+      <div id="{{ tabId }}-main" class="col-9  w-75">
 
         <table class="table table-sm table-borderless">
           <tbody>
@@ -149,7 +197,7 @@
           </tbody>
         </table>
       </div>
-      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0 float-right">
         {{ sidebarHtml|raw }}
       </div>
     </div>

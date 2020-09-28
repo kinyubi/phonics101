@@ -1,0 +1,128 @@
+
+{#
+Input:
+  Required
+    content - raw html which is the default content of the body block
+
+  Optional
+    jquery      : 'latest' or 'legacy' (default latest)
+    lightbox    : 'featherlight', 'fancybox', 'colorbox', 'embed', 'custom'
+    bootstrap   : true/false (default true)
+#}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}ReadXYZ{% endblock %}</title>
+
+        {% block metadata %}
+            <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+            <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {% endblock metadata %}
+        {{ block('favicons', 'blocks.html.twig') }}
+        {% block stylesheets %}
+            <script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
+            <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
+
+            <link rel="stylesheet" href="../public/css/colorbox/colorbox.css">
+            <link rel="stylesheet" href="/css/phonics.css" media="all">
+        {% endblock stylesheets %}
+
+        {% block scripts %}
+            <script src="/js/unused/jquery-1.8.3.min.js"></script>
+            <script src="/js/unused/jquery-1.12.4.min.js"></script>
+            <script src="/js/phonics.js"></script>
+            <script src="/js/jquery.colorbox-min.js"></script>
+            <script src="/js/popper.min.js" ></script>
+            <script src="/js/bootstrap4-custom/bootstrap.bundle.min.js"></script>
+
+            <script src="/js/timers.js"></script>
+        {% endblock scripts %}
+    </head>
+
+    <body>
+    {#  content comes from the page rendering of a template block like default_body_bs.html.twig.  #}
+        {{ block('statusModals', 'modal.html.twig') }}
+
+        {% block body %}
+        {{ content | raw }}
+        {% endblock body %}
+
+
+        {% block jqueryReady %}
+            <script>
+                $(document).ready(function () {
+                    $('.modal-backdrop').removeClass("modal-backdrop");    {# don't dim background #}
+                    {# bootstrap customized accordion #}
+                    // Add minus icon for collapse element which is open by default
+                    $(".collapse.show").each(function () {
+                        $(this).prev(".card-header").find(".fas").addClass("fa-minus-cirle").removeClass("fa-plus-circle");
+                    });
+
+                    // Toggle plus minus icon on show hide of collapse element
+                    $(".collapse").on('show.bs.collapse', function () {
+                        $(this).prev(".card-header").find(".fas").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+                    }).on('hide.bs.collapse', function () {
+                        $(this).prev(".card-header").find(".fas").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+                    });
+
+                    {# bootstrap popover load url#}
+                    $('*[data-poload]').hover(function() {
+                        let e=$(this);
+                        e.off('hover');
+                        $.get(e.data('poload'),function(d) {
+                            e.popover({content: d}).popover('show');
+                        });
+                    });
+                    {{ otherJqueryReady|raw }}
+                });
+
+            </script>
+            <script>
+
+                $('document').ready(function () {
+                    $(".tic-tac-toe").colorbox({iframe:true, innerWidth:600, innerHeight:550, top:100, left:100,
+                        overlayClose:false});
+                    $(".games").colorbox({iframe:true, width:1000, height:760});
+                    $(".sound-box").colorbox({iframe:true, innerWidth:750, innerHeight:795, top:100, left:100,
+                        scrolling:false, overlayClose:false});
+                    $(".advanced-spell").colorbox({iframe:true, innerWidth:1000, innerHeight:600, top:100, left:100,
+                        scrolling:false, overlayClose:false, escKey:false});
+                    $(".intro-image").colorbox({photo:true, innerWidth:450, innerHeight:500, top:200});
+
+                    $(".ajax").colorbox();
+                    $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+                    $(".inline").colorbox({inline:true, width:"50%"});
+                    $(".callbacks").colorbox({
+                  			onOpen:function(){ alert('onOpen: colorbox is about to open'); },
+                  			onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
+                  			onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
+                  			onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
+                  			onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
+                  		});
+
+                  		$('.non-retina').colorbox({rel:'group5', transition:'none'})
+                  		$('.retina').colorbox({rel:'group5', transition:'none', retinaImage:true, retinaUrl:true});
+
+                  		//Example of preserving a JavaScript event for inline calls.
+                  		$("#click").click(function(){
+                  			$('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+                  			return false;
+                  		});
+                    $.colorbox.settings.close = 'Exit';
+
+                    // $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
+
+                });
+
+            </script>
+        {% endblock jqueryReady %}
+{#    <script src="/js/jquery.fancybox.min.js"></script>#}
+    </body>
+</html>
+
+{# defines blocks title, stylesheets, body, scripts #}

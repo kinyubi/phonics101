@@ -61,3 +61,12 @@ function disableScroll() {
 function enableScroll() {
     document.body.classList.remove("body__scroll_disable");
 }
+
+function setScreenCookie() {
+    let cookieName = 'readxyz_screen';
+    let screenStr = screen.width.toString() + ',' + screen.height.toString();
+    let windowStr = window.innerWidth.toString() + ',' + window.innerHeight.toString();
+    let cookieValue = screenStr + ',' + windowStr;
+    Cookies.set(cookieName, cookieValue, { expires: 1 });
+}
+

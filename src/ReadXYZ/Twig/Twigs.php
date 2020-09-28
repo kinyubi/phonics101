@@ -77,6 +77,7 @@ class Twigs
         $this->lessonTemplate = $templateBaseName;
     }
 
+
     private function renderIntroTab(Page $page): void
     {
         $tabTypeId = 'intro';
@@ -85,7 +86,6 @@ class Twigs
         $args['sidebarHtml'] = $this->renderSideBar($tabTypeId);
         $args['stretchList'] = $this->lesson->getStretchList();
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
-        //$args['colsz'] = $args['stretchList'];
         $args['tabName'] = $tabTypeId;
         $html = $this->factory->renderBlock($this->lessonTemplate, 'IntroTab', $args);
         $page->addTab($tabInfo->getTabDisplayAs(), $html);
@@ -199,6 +199,7 @@ class Twigs
         if ('intro' == $tabTypeId) {
             $args['isBdpLesson'] = Util::contains($this->lesson->getLessonName(), 'b-d-p');
             $args['pronounceImage'] = $this->lesson->getPronounceImage();
+            $args['pronounceImageThumb'] = $this->lesson->getPronounceImageThumb();
         }
 
         $args['canRefresh'] = $tabInfo->canRefresh();

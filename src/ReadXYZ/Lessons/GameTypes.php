@@ -42,7 +42,7 @@ class GameTypes
     }
 
     /**
-     * returns tic-tac-toe and sound-boxes gameTypes (this may change).
+     * returns tic-tac-toe and sound-box gameTypes (this may change).
      *
      * @return GameType[] GameType instances of games that are used in every lesson
      */

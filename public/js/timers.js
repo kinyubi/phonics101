@@ -64,11 +64,12 @@ $(function() {
     })
 
     $("#fluencySaveButton").on("click", function (e) {
+        clearInterval(myPracticeInterval);
         let formObj = document.forms['fluencyTimerForm'];
         let seconds = formObj.elements['seconds'];
-        let testTime = parseInt(document.getElementById("fluencyTime").innerHTML);
-        let timerMinutes = parseInt(testTime.substring(0,2));
-        let timerSeconds = parseInt(testTime.substring(3));
+        let fluencyTimeStr = document.getElementById("fluencyTime").innerHTML;
+        let timerMinutes = parseInt(fluencyTimeStr.substring(0,2));
+        let timerSeconds = parseInt(fluencyTimeStr.substring(3));
         seconds.value = (timerMinutes * 60) + timerSeconds;
         if (seconds.value > 0) formObj.submit();
 
@@ -104,9 +105,9 @@ $(function() {
     $("#testSaveButton").on("click", function (e) {
         let formObj = document.forms['testTimerForm'];
         let seconds = formObj.elements['seconds'];
-        let testTime = parseInt(document.getElementById("testTime").innerHTML);
-        let timerMinutes = parseInt(testTime.substring(0,2));
-        let timerSeconds = parseInt(testTime.substring(3));
+        let testTimeStr = document.getElementById("testTime").innerHTML;
+        let timerMinutes = parseInt(testTimeStr.substring(0,2));
+        let timerSeconds = parseInt(testTimeStr.substring(3));
         seconds.value = (timerMinutes * 60) + timerSeconds;
         if (seconds.value > 0) formObj.submit();
     });

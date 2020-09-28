@@ -15,7 +15,7 @@ if (Util::isLocal()) {
 }
 $cookie = Cookie::getInstance();
 if (!$cookie->tryContinueSession()) {
-    echo $twigs->login('Login has expired (fluency timer).');
+    echo Twigs::getInstance()->login('Login has expired (fluency timer).');
     exit;
 }
 $student = Student::getInstance();
@@ -24,6 +24,8 @@ $currentLessonName = $cookie->getCurrentLesson();
 
 $source = $_REQUEST['source'] ?? 'unknown';
 $seconds = $_REQUEST['seconds'] ?? 0;
+$twigs = Twigs::getInstance();
+$USE_NEXT_LESSON_BUTTON = true;
 
 if ('fluency' == $source) {
     if ($seconds) {
@@ -36,8 +38,8 @@ if ('fluency' == $source) {
         error_log("Fluency timed test for $studentName was 0.");
     }
 
-    $USE_NEXT_LESSON_BUTTON = true;
-    Twigs::getInstance()->renderLesson($currentLessonName, 'fluency', $USE_NEXT_LESSON_BUTTON);
+
+    echo $twigs->renderLesson($currentLessonName, 'fluency', $USE_NEXT_LESSON_BUTTON);
 } elseif ('test' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $seconds = intval($_REQUEST['seconds'] ?? '0');
@@ -46,6 +48,7 @@ if ('fluency' == $source) {
         array_shift($student->cargo['currentLessons'][$currentLessonName]['testCurve']);
     }
     $student->saveSession();
+    echo $twigs->renderLesson($currentLessonName, 'test', $USE_NEXT_LESSON_BUTTON);
 } elseif ('testMastery' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $masteryType = $_REQUEST['masteryType'];
@@ -70,9 +73,14 @@ if ('fluency' == $source) {
             break;
 
         default:
-            assert(false, "Did not expect '$button' as a submit type");
+            assert(false, "Did not expect '$masteryType' as a submit type");
     }
     $student->saveSession();
+    echo $twigs->renderLesson($currentLessonName, 'test', $USE_NEXT_LESSON_BUTTON);
+
 } else {
-    error_log("Call to timers.php with unrecognized source $source");
+    $message = "Call to timers.php with unrecognized source $source";
+    error_log($message);
+    echo Util::redBox($message);
 }
+

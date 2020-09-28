@@ -21,15 +21,15 @@ class Lessons
 
     private ?Lesson $nullGuard;
     /** @var Lesson[] */
-    private array $blendingLessons;
+    private array $blendingLessons = [];
     private JsonStore $store;
     /** @var string[] */
-    private array $groupNames;
+    private array $groupNames = [];
     /** @var array structure is accordion[groupId][lessonName] => masteryLevel (0-none, 1-advancing, 2-mastered) */
-    private array $accordion;
+    private array $accordion = [];
     private string $currentLessonName;
     private array $alternateNameMap;
-    private array $lessonNames;
+    private array $lessonNames = [];
     private int $currentLessonNameIndex;
 
     private function __construct()
@@ -111,14 +111,16 @@ class Lessons
         $lessonLocations = ['masteredLessons', 'currentLessons'];
         foreach ($lessonLocations as $location) {
             foreach ($cargo[$location] as $key => $item) {
-                $value = $item['mastery'] > 1 ? 2 : $item['mastery'];
-                // if it's not one of the current lessons, don't include it
-                $lessonName = Util::convertLessonKeyToLessonName($key);
-                $realName = $this->alternateNameMap[$lessonName] ?? '';
-                if ($realName) {
-                    $groupName = $this->blendingLessons[$realName]->getGroupId() ?? '';
-                    if ($groupName && key_exists($realName, $this->accordion[$groupName])) {
-                        $this->accordion[$groupName][$realName] = $value;
+                if (isset($item['mastery'])) {
+                    // if it's not one of the current lessons, don't include it
+                    $value = $item['mastery'] > 1 ? 2 : $item['mastery'];
+                    $lessonName = Util::convertLessonKeyToLessonName($key);
+                    $realName = $this->alternateNameMap[$lessonName] ?? '';
+                    if ($realName) {
+                        $groupName = $this->blendingLessons[$realName]->getGroupId() ?? '';
+                        if ($groupName && key_exists($realName, $this->accordion[$groupName])) {
+                            $this->accordion[$groupName][$realName] = $value;
+                        }
                     }
                 }
             }

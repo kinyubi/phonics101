@@ -9,11 +9,13 @@ use Throwable;
 
 class Util
 {
-    public static function addSoundClassToLessonName(string $lessonName): string
-    {
-        $pattern = '#/([a-z]+)/#';
 
-        $result = preg_replace($pattern, '<sound>$1</sound>', $lessonName);
+
+    public static function addSoundClass(string $lessonName): string
+    {
+        $pattern = '#/([a-zA-Z]+)/#';
+
+        $result = preg_replace($pattern, '<span class="sound">$1</span>', $lessonName);
 
         return $result;
     }
@@ -22,6 +24,7 @@ class Util
     {
         echo "<script type='text/javascript'>alert('$message');</script>";
     }
+
 
     /**
      * Takes an array of words and converts it to a string list of single-quoted

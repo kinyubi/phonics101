@@ -32,7 +32,7 @@
         </div>
         {{ _self.timerText(tab) }}
         <div class="row">
-            <form name="testMasteryForm" id="testMasteryForm" data-ajax="false" method="post" action="/timer">
+            <form name="testMasteryForm" id="testMasteryForm" data-ajax="false" method="post" action="{{ action }}">
                 <div class="d-flex flex-wrap">
                 <input class="col" type="hidden" name="masteryType" value="" />
                 <input class="col" type="hidden" name="testWords" value="" />
@@ -98,3 +98,19 @@
         {{ _self.timerText(tab) }}
     </div>
 {% endblock %}
+
+{% block MasterySaveProgressButton %}
+<div class="container mx-0 px-0">
+    <div class="row tac">
+        <div id="saveMasteryProgressButton" class="btn btn-outline-readxyz col-12  col-sm-8 mx-auto sfp">
+            Save Progress
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{# inputs: imageUrl #}
+{% block LearningCurve %}
+    <img src="{{ imageUrl }}" alt="Learning Curve" style="border: 0 solid gray; max-width: 100%">
+{% endblock %}
+

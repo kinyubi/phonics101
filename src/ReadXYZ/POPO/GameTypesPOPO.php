@@ -2,6 +2,7 @@
 
 namespace ReadXYZ\POPO;
 
+use ReadXYZ\Helpers\Location;
 use ReadXYZ\Helpers\Util;
 
 /**
@@ -13,44 +14,42 @@ use ReadXYZ\Helpers\Util;
 class GameTypesPOPO
 {
     /** @var GameTypePOPO[] */
-    private array $games;
+    private array $games = [];
 
     public function __construct()
     {
-        $loc = '/images/thumbs';
-
         $name = 'word-cards';
-        $this->games[] = new GameTypePOPO('random', 'Word Cards', "$loc/$name.jpg", 'intro', 1);
+        $this->games[] = new GameTypePOPO('random', 'Word Cards', 'intro', 1);
         $name = 'word-builder';
-        $this->games[] = new GameTypePOPO($name, 'Word Builder', "$loc/$name.jpg", 'intro', 2);
+        $this->games[] = new GameTypePOPO($name, 'Word Builder', 'intro', 2);
 
-        $name = 'sound-boxes';
-        $game = new GameTypePOPO($name, 'Sound Boxes', "$loc/$name.jpg", 'write', 1, true);
-        $game->universalGameUrl = 'https://toytheater.com/elkonin-boxes';
+        $name = 'sound-box';
+        $game = new GameTypePOPO($name, 'Sound Boxes', 'write', 1, true);
+        $game->universalGameUrl = Location::SOUND_BOX_GAME;
         $this->games[] = $game;
 
         $name = 'tic-tac-toe';
-        $game = new GameTypePOPO($name, 'Tic-Tac-Toe', "$loc/$name.jpg", 'practice', 1, true);
-        $game->universalGameUrl = '/tictactoe/tictac.php';
+        $game = new GameTypePOPO($name, 'Tic-Tac-Toe', 'practice', 1, true);
+        $game->universalGameUrl = Location::TIC_TAC_TOE_GAME;
         $this->games[] = $game;
 
-        $name = 'advanced-spell';
-        $game = new GameTypePOPO($name, 'Advanced Spell', "$loc/$name.jpg", 'spell', 2, true);
-        $game->universalGameUrl = 'https://www.reallygreatreading.com/lettertiles/';
-        $this->games[] = $game;
+        // $name = 'advanced-spell';
+        // $game = new GameTypePOPO($name, 'Advanced Spell', 'spell', 2, true);
+        // $game->universalGameUrl = 'https://www.reallygreatreading.com/lettertiles/';
+        // $this->games[] = $game;
 
         $name = 'whack-a-mole';
-        $this->games[] = new GameTypePOPO($name, 'Whack-A-Mole', "$loc/$name.jpg", 'practice', 2);
+        $this->games[] = new GameTypePOPO($name, 'Whack-A-Mole', 'practice', 2);
         $name = 'rhyme-sort';
-        $this->games[] = new GameTypePOPO('sort', 'Rhyme Sort', "$loc/$name.jpg", 'practice', 3);
+        $this->games[] = new GameTypePOPO('sort', 'Rhyme Sort', 'practice', 3);
         $name = 'alien';
-        $this->games[] = new GameTypePOPO('alien', 'Alien', "$loc/$name.jpg", 'practice', 4);
+        $this->games[] = new GameTypePOPO('alien', 'Alien', 'practice', 4);
         $name = 'word-scramble';
-        $this->games[] = new GameTypePOPO('scramble', 'Word Scramble', "$loc/$name.jpg", 'spell', 1);
+        $this->games[] = new GameTypePOPO('scramble', 'Word Scramble', 'spell', 1);
         $name = 'mastery-flip';
-        $this->games[] = new GameTypePOPO('mastery', 'Mastery Flip', "$loc/$name.jpg", 'mastery', 1);
+        $this->games[] = new GameTypePOPO('mastery', 'Mastery Flip', 'mastery', 1);
         $name = 'missing-word';
-        $this->games[] = new GameTypePOPO('sentences', 'Missing Word', "$loc/$name.jpg", 'fluency', 0);
+        $this->games[] = new GameTypePOPO('sentences', 'Missing Word', 'fluency', 0);
     }
 
     public function write(string $filename): void
@@ -64,5 +63,5 @@ class GameTypesPOPO
 if (!count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS))) {
     require dirname(__DIR__) . '/autoload.php';
     $gameTypes = new GameTypesPOPO();
-    $gameTypes->write(Util::getPublicPath('resources/gameTypes.json'));
+    $gameTypes->write(Util::getReadXyzSourcePath('resources/gameTypes.json'));
 }

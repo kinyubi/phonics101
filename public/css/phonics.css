@@ -119,21 +119,23 @@ button.resetButton {
     font-family: sans-serif;
     font-style: normal;
     font-size: inherit;
-    color: #00aabe;
+    font-weight: bold;
+    color: #666;
     border: solid 1px grey;
     border-radius: 5px;
     text-align: center;
-    background: #ffffff;
+    background: bisque;
     margin: 1px;
+    padding: 3px;
 }
 
-.sound:before {
-    content: "/";
-}
+/*.sound:before {*/
+/*    content: "/";*/
+/*}*/
 
-.sound:after {
-    content: "/";
-}
+/*.sound:after {*/
+/*    content: "/";*/
+/*}*/
 
 .spelling {
     font-family: sans-serif;
@@ -142,13 +144,13 @@ button.resetButton {
     color: red;
 }
 
-.spelling:before {
-    content: "[";
-}
+/*.spelling:before {*/
+/*    content: "[";*/
+/*}*/
 
-.spelling:after {
-    content: "]";
-}
+/*.spelling:after {*/
+/*    content: "]";*/
+/*}*/
 
 /* ------------------------ */
 
@@ -245,85 +247,45 @@ td.info-thumb {
     border: 2px solid #444 !important; /* Gray border */
 }
 
-/* Tooltip container */
-.my-tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
 
-/* Tooltip text */
-.my-tooltip .my-tooltip-text {
-    visibility: hidden;
-    width: 250px;
-    background-color: #cccccc;
-    color: #333333;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    top: -10px;
-    left: -255px;
-    font-size: 12px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
+/*div.info-container {*/
+/*    max-width: 100px;*/
+/*    height: auto;*/
+/*    position: relative;*/
+/*    !*margin: 1.563em auto;*!*/
+/*}*/
 
+/*div.info-container a {*/
+/*    text-decoration: none;*/
+/*    color: white;*/
+/*    cursor: default;*/
+/*    font-weight: normal;*/
+/*}*/
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.my-tooltip:hover .my-tooltip-text {
-    visibility: visible;
-    opacity: 1;
-}
+/*div.info-container a span {*/
+/*    visibility: hidden;*/
+/*    position: absolute;*/
+/*    left: -205px;*/
+/*    top: 2em;*/
+/*    background-color: white;*/
+/*    border-radius: 6px;*/
+/*    border: 2px solid lightgray;*/
+/*    color: #444444;*/
+/*    width: 200px;*/
+/*    font-size: 0.8em;*/
+/*    padding: 0.3em;*/
+/*    cursor: default;*/
+/*    line-height: 1.4;*/
+/*    opacity: 0;*/
 
-.my-tooltip span {
-    display: none;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    color: black;
-    background: white;
-}
+/*}*/
 
-div.info-container {
-    max-width: 100px;
-    height: auto;
-    position: relative;
-    /*margin: 1.563em auto;*/
-}
-
-div.info-container a {
-    text-decoration: none;
-    color: white;
-    cursor: default;
-    font-weight: normal;
-}
-
-div.info-container a span {
-    visibility: hidden;
-    position: absolute;
-    left: -205px;
-    top: 2em;
-    background-color: white;
-    border-radius: 6px;
-    border: 2px solid lightgray;
-    color: #444444;
-    width: 200px;
-    font-size: 0.8em;
-    padding: 0.3em;
-    cursor: default;
-    line-height: 1.4;
-    opacity: 0;
-
-}
-
-div.info-container a:hover span {
-    visibility: visible;
-    opacity: 1;
-    background-color: white;
-    z-index: 1;
-}
+/*div.info-container a:hover span {*/
+/*    visibility: visible;*/
+/*    opacity: 1;*/
+/*    background-color: white;*/
+/*    z-index: 1;*/
+/*}*/
 
 
 /* Practice tab timer button */
@@ -439,48 +401,32 @@ a img {
 
 /* classes based on screen size (if using max-midth order largest to smallest) */
 
- /* 0 - 575 pixels wide - extra-small (xs) */
- .sfp {font-size: .75rem !important;}
- .sfp-2 {font-size: .8rem !important;}
- .wordlist {font-size: 1.5rem !important;}
- .mast-5 {transform:scale(1.75, 1.75);}
- .mast-4  {transform:scale(1.5, 1.5);}
- .mast-3 {transform:scale(1.25, 1.25);}
- .mast-2 {transform:scale(1, 1);}
- .scaled {transform:scale(.4, .4);}
+ /* 0 - 575 pixels wide - phone */
+@media  (max-width: 575px) {
+     .sfp {font-size: .75rem !important;}
+     .wordlist {font-size: 1.5rem !important;}
+     .scaled {transform:scale(.4, .4);}
+}
+
 
  /* Small devices (landscape phones, 576px and up) */
- @media (min-width: 576px) {
+ @media (min-width: 576px) and (max-width: 767px) {
      .sfp {font-size: .9rem !important;}
-     .sfp-2 {font-size: 1rem !important;}
      .wordlist {font-size: 2rem !important;}
      .scaled {transform:scale(.6, .6);}
-     .mast-5 {transform:scale(2, 2);}
-     .mast-4  {transform:scale(1.75, 1.75);}
-     .mast-3 {transform:scale(1.5, 1.5);}
-     .mast-2 {transform:scale(1.25, 1.25);}
+
  }
 
  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
- @media (min-width: 768px) {
+ @media (min-width: 768px) and (max-width: 991px) {
      .sfp {font-size: .95rem !important;}
-     .sfp-2 {font-size: 1.2rem !important;}
-     .wordlist {font-size: 2.25rem !important;}
-     .mast-5 {transform:scale(2.25, 2.25);}
-     .mast-4  {transform:scale(2, 2);}
-     .mast-3 {transform:scale(1.5, 1.5);}
-     .mast-2 {transform:scale(1.25, 1.25);}
+     .wordlist {font-size: 2.5rem !important;}
      .scaled {transform:scale(.75, .75);}
  }
  /* Large devices (desktops, 992px and up) */
  @media (min-width: 992px) {
      .sfp {font-size: 1rem !important;}
-     .sfp-2 {font-size: 1.5rem !important;}
      .wordlist {font-size: 3rem !important;}
-     .mast-5 {transform:scale(3, 3);}
-     .mast-4 {transform:scale(2.5, 2.5);}
-     .mast-3 {transform:scale(1.5, 1.5);}
-     .mast-2 {transform: scale(1.25,1.25)}
      .scaled {transform:scale(1.0, 1.0);}
  }
 

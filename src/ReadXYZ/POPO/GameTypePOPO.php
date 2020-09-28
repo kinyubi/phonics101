@@ -3,6 +3,7 @@
 namespace ReadXYZ\POPO;
 
 use JsonSerializable;
+use ReadXYZ\Helpers\Location;
 
 class GameTypePOPO implements JsonSerializable
 {
@@ -14,11 +15,10 @@ class GameTypePOPO implements JsonSerializable
     public bool $isUniversal;
     public string $universalGameUrl;
 
-    public function __construct(string $id, string $display, string $thumb, string $tab, int $order, bool $builtIn = false)
+    public function __construct(string $id, string $display, string $tab, int $order, bool $builtIn = false)
     {
         $this->gameTypeId = $id;
         $this->gameDisplayAs = $display;
-        $this->thumbNailUrl = $thumb;
         $this->belongsOnTab = $tab;
         $this->isUniversal = $builtIn;
         $this->ordering = $order;

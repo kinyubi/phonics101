@@ -32,11 +32,11 @@ body {
 }
 
 .bdp-die-img {
-    background: url('/resources/dice/images/bdpq_die.jpg') no-repeat;
+    background: url('/dice/images/bdpq_die.jpg') no-repeat;
 }
 
 .xyz-die-img {
-    background: url('/resources/dice/images/turquoise_die.jpg') no-repeat;
+    background: url('/dice/images/turquoise_die.jpg') no-repeat;
 }
 
 .die-front {
