@@ -19,9 +19,10 @@
 /*    vertical-align: baseline;*/
 /*}*/
 
+
 html, body {width: auto!important; overflow-x: hidden!important}
 
-article, aside, details, figcaption, figure, dialog, footer, header, hgroup, menu, nav, section {
+article, aside, details, dialog, footer, header, hgroup, menu, nav, section {
     display: block;
 }
 
@@ -331,9 +332,27 @@ td.info-thumb {
     object-fit: scale-down;
 }
 
-.img-contain {
-    object-fit: scale-down;
+a.img-contain {
+    position: relative;
 }
+a.img-contain img {
+    object-fit: scale-down;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+/*figcaption {*/
+/*    position: absolute;*/
+/*    background-color: transparent;*/
+/*    top: 100%;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    display: block;*/
+/*}*/
 
 .bw3 {border-width: 3px; border-style: solid;}
 
@@ -393,9 +412,6 @@ td.info-thumb {
      color: white !important;
  }
 
-a img {
-    max-width:90%
-}
 
 /*iframe {overflow: hidden;}*/
 
@@ -406,6 +422,8 @@ a img {
      .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 1.5rem !important;}
      .scaled {transform:scale(.4, .4);}
+     .size--tab-icon {height: 40px; width: 40px}
+     .size--tab-icon-height {height: 40px;}
 }
 
 
@@ -414,7 +432,8 @@ a img {
      .sfp {font-size: .9rem !important;}
      .wordlist {font-size: 2rem !important;}
      .scaled {transform:scale(.6, .6);}
-
+     .size--tab-icon {height: 40px; width: 40px}
+     .size--tab-icon-height {height: 40px;}
  }
 
  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
@@ -422,12 +441,16 @@ a img {
      .sfp {font-size: .95rem !important;}
      .wordlist {font-size: 2.5rem !important;}
      .scaled {transform:scale(.75, .75);}
+     .size--tab-icon {height: 70px; width: 70px}
+     .size--tab-icon-height {height: 70px;}
  }
  /* Large devices (desktops, 992px and up) */
  @media (min-width: 992px) {
      .sfp {font-size: 1rem !important;}
      .wordlist {font-size: 3rem !important;}
      .scaled {transform:scale(1.0, 1.0);}
+     .size--tab-icon {height: 100px; width: 100px}
+     .size--tab-icon-height {height: 100px;}
  }
 
  input[type="checkbox"] {
@@ -448,3 +471,22 @@ a img {
 .gameFrame {
     border: 2px solid dimgray;
 }
+
+/* override navbar-nav active color */
+.nav-item.a:not(.active)  {
+    background-color: transparent;
+}
+ /*override navbar-nav active color */
+.nav-item.active  {
+    background-color: #00aabe;
+}
+
+.nav-item:focus .nav-item:hover  {
+    background-color: #999;
+}
+
+.bg-tab {
+    background-color: #ccc;
+}
+
+

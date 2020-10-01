@@ -2,7 +2,9 @@
 
 namespace ReadXYZ\Twig;
 
+use App\ReadXYZ\Helpers\ScreenCookie;
 use InvalidArgumentException;
+use ReadXYZ\Helpers\Location;
 use ReadXYZ\Lessons\Game;
 use ReadXYZ\Models\Document;
 use ReadXYZ\Models\KeyValuePair;
@@ -140,6 +142,7 @@ class Page
         if ($this->navBar) {
             $pageArgs['menu'] = $this->navBar;
         }
+        $pageArgs['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         $this->addArguments($pageArgs);
         $html = $twig->renderBlock('default_body', 'body', $this->arguments);
         $this->addBaseArguments(['content' => $html]);

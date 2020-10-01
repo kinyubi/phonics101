@@ -27,7 +27,7 @@ class Location
 
     public static function getGameThumbnail(string $gameTypeId): string
     {
-        $isSmall = ScreenCookie::useSmallIcons();
+        $isSmall = ScreenCookie::isScreenSizeSmall();
         if ($isSmall) {
             return self::SIDEBAR_IMAGES_DIR . $gameTypeId . '_sm.png';
         } else {

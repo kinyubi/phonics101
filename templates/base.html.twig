@@ -3,8 +3,7 @@ Input:
   Required
     content - raw html which is the default content of the body block
 
-  Optional
-    lightbox    : 'colorbox'
+    otherJQueryReady - additional javascript to execute on document.ready
 #}
 
 
@@ -83,14 +82,7 @@ Input:
           });
 
           $('[data-toggle="tooltip"]').tooltip();
-        {# bootstrap popover load url #}
-        //   $('*[data-poload]').hover(function () {
-        //       let e = $(this);
-        //       e.off('hover');
-        //       $.get(e.data('poload'), function (d) {
-        //           e.popover({content: d}).popover('show');
-        //       });
-        //   });
+
         {{ otherJqueryReady|raw }}
       });
 
@@ -135,6 +127,8 @@ Input:
           $( window ).resize(function() {
             setScreenCookie();
           });
+
+          $('[data-toggle="tooltip"]').tooltip();
 
       });
 

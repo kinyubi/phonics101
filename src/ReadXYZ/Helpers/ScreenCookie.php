@@ -13,47 +13,47 @@ class ScreenCookie
 
 
 
-    public static function getDimensions()
+    public static function getScreenInfo()
     {
         if (!isset($_SESSION)) { //You can't start a session that's already going
             session_start(); // continues the existing session
         }
         if (!isset($_COOKIE['readxyz_screen'])) {
-            return self::makeObject(0,0,0, 0);
+            return self::makeObject(0,0,0, 0, self::UNKNOWN_DEVICE);
         }
         $dims = explode(',', $_COOKIE['readxyz_screen']);
-        return self::makeObject(intval($dims[0]), intval($dims[1]), intval($dims[2]), intval($dims[3]));
+        $type = self::getDeviceType($dims[0], $dims[1]);
+        return self::makeObject(intval($dims[0]), intval($dims[1]), intval($dims[2]), intval($dims[3]), $type);
     }
 
-    public static function getDeviceType(): string
+    public static function getDeviceType(int $width, int $height): string
     {
-        $sizes = self::getDimensions();
-        $screenWidth = $sizes->screenWidth;
-        $screenHeight = $sizes->screenHeight;
-        if ($screenWidth == 0) {
-            return self::UNKNOWN_DEVICE;
-        } elseif ($screenWidth < 500 || $screenHeight < 500) {
-            return self::PHONE_DEVICE;
-        } elseif ($screenWidth < 1000 || $screenHeight < 1000) {
-            return self::TABLET_DEVICE;
+        if ($width == 0) {
+            $type = self::UNKNOWN_DEVICE;
+        } elseif ($width < 500 || $height < 500) {
+            $type = self::PHONE_DEVICE;
+        } elseif ($width < 900 || $height < 900) {
+            $type = self::TABLET_DEVICE;
         } else {
-            return self::COMPUTER_DEVICE;
+            $type = self::COMPUTER_DEVICE;
         }
+        return $type;
     }
 
-    public static function useSmallIcons(): bool
+    public static function isScreenSizeSmall(): bool
     {
-        $sizes = self::getDimensions();
-        return ($sizes->windowWidth < 950);
+        $sizes = self::getScreenInfo();
+        return ($sizes->windowWidth < 900);
     }
 
-    private static function makeObject(int $screenWidth, int $screenHeight, int $windowWidth, int $windowHeight)
+    private static function makeObject(int $screenWidth, int $screenHeight, int $windowWidth, int $windowHeight, string $type)
     {
         return (object) [
             'screenWidth' => $screenWidth,
             'screenHeight' => $screenHeight,
             'windowWidth' => $windowWidth,
-            'windowHeight' => $windowHeight
+            'windowHeight' => $windowHeight,
+            'deviceType' => $type
         ];
     }
 }

@@ -4,8 +4,8 @@
 
 {% macro modalAnchorCbox(game) %}
   {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell', 'sound-box']) ? game.gameTypeId : 'games' %}
-  <a class="{{ class }}" href="{{ game.url }}">
-    <img class="img-contain" src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
+  <a class="img-contain {{ class }}" href="{{ game.url }}">
+    <img src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
          title="{{ game.gameTitle }}" width="100%">
   </a>
 {% endmacro %}
@@ -27,12 +27,12 @@
     {% if information %}
       <div class="row d-flex align-items-center justify-content-center">
         <div class="info-container ">
-{#          <a href="#">#}
-{#            <i class="fas fa-info-circle fa-2x text-info " aria-hidden="true"></i>#}
-{#            <span class="shadow">{{ information|raw }}</span>#}
-{#          </a>#}
+          {# <a href="#"> #}
+          {# <i class="fas fa-info-circle fa-2x text-info " aria-hidden="true"></i> #}
+          {# <span class="shadow">{{ information|raw }}</span> #}
+          {# </a> #}
           <a href="#" data-toggle="tooltip" data-placement="left" data-html="true" title="{{ information }}">
-            <i class="fas fa-info-circle fa-2x text-info " ></i>
+            <i class="fas fa-info-circle fa-2x text-info "></i>
           </a>
         </div>
       </div>
@@ -100,7 +100,9 @@
   {% set tabId = 'warmup' %}
   {% set tabName = 'Warm-Up' %}
   <div class="container" id="{{ tabId }}-container">
+    <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center"><div>Warm-up</div></div>
     <div class="row  d-flex flex-nowrap justify-content-start  m-2 p-2">
+      <h1 class="'text-readxyz">{{ tabName }}</h1>
       <h1>Instructions<small class="text-muted"><br>{{ warmups.instructions }}</small>
       </h1>
     </div>
@@ -123,9 +125,9 @@
                  data-parent="#{{ tabId }}-accordion">
               <div class="card-body">
                 <ul class="list-group">
-                {% for part in warmup.parts %}
-                  <li class="list-group-item list-group-item-readxyz">{{ part }}</li>
-                {% endfor %}
+                  {% for part in warmup.parts %}
+                    <li class="list-group-item list-group-item-readxyz">{{ part }}</li>
+                  {% endfor %}
                 </ul>
               </div>
             </div>
@@ -147,6 +149,7 @@
   {% set tabId = tabName|lower %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
+    <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center"><div>{{ tabName|capitalize }}</div></div>
     <div class="row  d-flex flex-nowrap  m-2 p-2">
       <div id="{{ tabId }}-main" class="flex-grow-1 ">
         {% for game in games %}
@@ -183,8 +186,9 @@
 {% block WriteTab %}
   {% set tabId = tabName|lower %}
   {% set listIndex = listIndex ?? 0 %}
-  <div class="container w-100">
-    <div class="row  d-flex flex-nowrap justify-content-between w-100">
+  <div class="container">
+    <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center"><div>{{ tabName|capitalize }}</div></div>
+    <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9  w-75">
 
         <table class="table table-sm table-borderless">
@@ -213,25 +217,28 @@
 {% block PracticeTab %}
   {% set tabId = tabName|lower %}
   {% set listIndex = listIndex ?? 0 %}
-  <div class="container d-flex flex-md-nowrap">
-    <div id="{{ tabId }}-main" class="col-9">
-      {% for game in games %}
-        {{ _self.modalIframe(game) }}
-      {% endfor %}
-      <table class="table table-sm table-borderless">
-        <tbody>
-        {% for i in range(0,20,3) %}
-          <tr class="d-flex">
-            {% for j in range(0,2) %}
-              <td class="wordlist col-3 mx-2">{{ wordList[i+j] }}</td>
-            {% endfor %}
-          </tr>
+  <div class="container">
+    <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center"><div>{{ tabName|capitalize }}</div></div>
+    <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+      <div id="{{ tabId }}-main" class="col-9">
+        {% for game in games %}
+          {{ _self.modalIframe(game) }}
         {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
-      {{ sidebarHtml|raw }}
+        <table class="table table-sm table-borderless">
+          <tbody>
+          {% for i in range(0,20,3) %}
+            <tr class="d-flex">
+              {% for j in range(0,2) %}
+                <td class="wordlist col-3 mx-2">{{ wordList[i+j] }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+        {{ sidebarHtml|raw }}
+      </div>
     </div>
   </div>
 
@@ -249,8 +256,9 @@
   {% set listIndex = listIndex ?? 0 %}
   {% set func = withE ? 'WSpin.wordSpinnerPlusE' : 'WSpin.wordSpinner' %}
   <div class="container">
+    <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center"><div>{{ tabName|capitalize }}</div></div>
     {# all encompassing row #}
-    <div class="row d-flex flex-nowrap">
+    <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       {# main column 75% wide #}
       <div class="col-9">
         <div class="row d-flex flex-nowrap">
@@ -340,7 +348,8 @@
       {% set scales = ['mast-5', 'mast-4', 'mast-3', 'mast-3'] %}
       {% set cols = ['col-4', 'col-4', 'col-4', 'col-4'] %}
       <div class="container">
-        <div class="row d-flex flex-nowrap">
+        <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center"><div>{{ tabName|capitalize }}</div></div>
+        <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
           <div id="{{ tabId }}-main" class="col-9">
             <div class="row">
               {% for game in games %}
@@ -363,7 +372,7 @@
               </form>
             </div>
           </div>
-          <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+          <div id="{{ tabId }}-sidebar" class="col-3 mx-1 ">
             {{ sidebarHtml|raw }}
           </div>
         </div>
@@ -382,7 +391,8 @@
       {% set tabId = tabName|lower %}
       {% set listIndex = listIndex ?? 0 %}
       <div class="container">
-        <div class="row  d-flex flex-md-nowrap">
+        <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center"><div>{{ tabName|capitalize }}</div></div>
+        <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
           <div id="{{ tabId }}-main" class="col-8 ">
             {% for game in games %}
               {{ _self.modalIframe(game) }}
@@ -409,7 +419,8 @@
       {% set tabId = tabName|lower %}
       {% set listIndex = listIndex ?? 0 %}
       <div class="container">
-        <div class="row d-flex flex-md-nowrap">
+        <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center"><div>{{ tabName|capitalize }}</div></div>
+        <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
           <div id="{{ tabId }}-main" class="col-8">
             {% for game in games %}
               {{ _self.modalIframe(game) }}

@@ -140,7 +140,7 @@ class Twigs
         $args = [];
         $args['tabName'] = $tabTypeId;
         $html = $this->renderSideBar($tabTypeId);
-        $html .= $this->factory->renderBlock('lesson_blocks', 'MasterySaveProgressButton');
+        $html .= $this->factory->renderBlock('timers', 'MasterySaveProgressButton');
         $args['sidebarHtml'] = $html;
         $args['wordList'] = $this->lesson->getWordList();
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
