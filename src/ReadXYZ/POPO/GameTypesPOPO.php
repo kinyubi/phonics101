@@ -18,38 +18,23 @@ class GameTypesPOPO
 
     public function __construct()
     {
-        $name = 'word-cards';
-        $this->games[] = new GameTypePOPO('random', 'Word Cards', 'intro', 1);
-        $name = 'word-builder';
-        $this->games[] = new GameTypePOPO($name, 'Word Builder', 'intro', 2);
+        $random = new GameTypePOPO('random', 'Word Cards', 'intro', 1);
+        $wordBuilder = new GameTypePOPO('word-builder', 'Word Builder', 'intro', 2);
 
-        $name = 'sound-box';
-        $game = new GameTypePOPO($name, 'Sound Boxes', 'write', 1, true);
-        $game->universalGameUrl = Location::SOUND_BOX_GAME;
-        $this->games[] = $game;
+        $soundBox = new GameTypePOPO('sound-box', 'Sound Boxes', 'write', 1, true);
+        $soundBox->universalGameUrl = Location::SOUND_BOX_GAME;
 
-        $name = 'tic-tac-toe';
-        $game = new GameTypePOPO($name, 'Tic-Tac-Toe', 'practice', 1, true);
-        $game->universalGameUrl = Location::TIC_TAC_TOE_GAME;
-        $this->games[] = $game;
+        $ticTacToe = new GameTypePOPO('tic-tac-toe', 'Tic-Tac-Toe', 'practice', 1, true);
+        $ticTacToe->universalGameUrl = Location::TIC_TAC_TOE_GAME;
 
-        // $name = 'advanced-spell';
-        // $game = new GameTypePOPO($name, 'Advanced Spell', 'spell', 2, true);
-        // $game->universalGameUrl = 'https://www.reallygreatreading.com/lettertiles/';
-        // $this->games[] = $game;
+        $whack = new GameTypePOPO('whack-a-mole', 'Whack-A-Mole', 'practice', 2);
+        $sort = new GameTypePOPO('sort', 'Rhyme Sort', 'practice', 3);
+        $alien = new GameTypePOPO('alien', 'Alien', 'practice', 4);
+        $scramble = new GameTypePOPO('scramble', 'Word Scramble', 'spell', 1);
+        $mastery = new GameTypePOPO('mastery', 'Mastery Flip', 'mastery', 1);
+        $sentences = new GameTypePOPO('sentences', 'Missing Word', 'fluency', 0);
 
-        $name = 'whack-a-mole';
-        $this->games[] = new GameTypePOPO($name, 'Whack-A-Mole', 'practice', 2);
-        $name = 'rhyme-sort';
-        $this->games[] = new GameTypePOPO('sort', 'Rhyme Sort', 'practice', 3);
-        $name = 'alien';
-        $this->games[] = new GameTypePOPO('alien', 'Alien', 'practice', 4);
-        $name = 'word-scramble';
-        $this->games[] = new GameTypePOPO('scramble', 'Word Scramble', 'spell', 1);
-        $name = 'mastery-flip';
-        $this->games[] = new GameTypePOPO('mastery', 'Mastery Flip', 'mastery', 1);
-        $name = 'missing-word';
-        $this->games[] = new GameTypePOPO('sentences', 'Missing Word', 'fluency', 0);
+        $this->games = [$random, $wordBuilder, $soundBox, $ticTacToe, $whack, $sort, $alien, $scramble, $mastery, $sentences];
     }
 
     public function write(string $filename): void

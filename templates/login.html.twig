@@ -11,8 +11,8 @@ form fields: username, password
     <form name="frm" method="POST" action="/actions/processUserLogin.php" id="frm" data-ajax="false">
 
     <label for="username" class="pt-3">Email</label>
-    <input type="text" name="username" id="username"  value="{{ email }}" class="form-control wlx" aria-describedby="emailHelp" placeholder="Enter email address">
-    <label for="password" class="pt-3">Password</label>
+    <input type="text" name="username" id="username"  value="{{ email }}" autocomplete="email" class="form-control wlx" aria-describedby="emailHelp" placeholder="Enter email address">
+    <label for="password" class="pt-3" onautocomplete="current-password">Password</label>
     <input type="password" name="password" id="password" value="" class="form-control wlx" placeholder="Password">
     <input type="submit" value="LOG IN" class="btn btn-primary mt-3">
     </form>

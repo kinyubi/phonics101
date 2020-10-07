@@ -2,15 +2,19 @@
 
 namespace ReadXYZ\Twig;
 
+use App\ReadXYZ\Helpers\ScreenCookie;
 use ReadXYZ\Display\LearningCurve;
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Lessons\Lesson;
+use ReadXYZ\Lessons\LessonPage;
 use ReadXYZ\Lessons\Lessons;
 use ReadXYZ\Lessons\SideNote;
 use ReadXYZ\Lessons\TabTypes;
+use ReadXYZ\Lessons\Warmups;
 use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Identity;
 use ReadXYZ\Models\Student;
+use ReadXYZ\POPO\Warmup;
 use RuntimeException;
 
 /**
@@ -72,111 +76,72 @@ class Twigs
         }
     }
 
-    public function setDefaultTemplate(string $templateBaseName): void
+    private function baseRender(string $id, array $argsIn, Page $page, string $blockName = ''): void
     {
-        $this->lessonTemplate = $templateBaseName;
+        $tabTypeId = $id;
+        $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
+        $args = $argsIn;
+        $args['sidebarHtml'] = $this->renderSideBar($tabTypeId);
+        $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
+        $args['tabInfo'] = $tabInfo;
+        if(empty($blockName)) {
+            $blockName = ucfirst($id) . 'Tab';
+        }
+        $html = $this->factory->renderBlock($this->lessonTemplate, $blockName, $args);
+        $page->addTab($tabInfo, $html);
     }
 
+    private function renderWarmupTab(Page $page, Warmup $warmup): void
+    {
+        $id = 'warmup';
+        $args = ['wordList' => $this->lesson->getWordList(), 'warmups' => $warmup];
+        $this->baseRender($id, $args,  $page);
+    }
 
     private function renderIntroTab(Page $page): void
     {
-        $tabTypeId = 'intro';
-        $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
-        $args = [];
-        $args['sidebarHtml'] = $this->renderSideBar($tabTypeId);
-        $args['stretchList'] = $this->lesson->getStretchList();
-        $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
-        $args['tabName'] = $tabTypeId;
-        $html = $this->factory->renderBlock($this->lessonTemplate, 'IntroTab', $args);
-        $page->addTab($tabInfo->getTabDisplayAs(), $html);
+        $args = ['stretchList' => $this->lesson->getStretchList()];
+        $this->baseRender('intro', $args, $page);
     }
 
     private function renderWriteTab(Page $page): void
     {
-        $tabTypeId = 'write';
-        $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
-        $args = [];
-        $args['tabName'] = $tabTypeId;
-        $args['sidebarHtml'] = $this->renderSideBar($tabTypeId);
-        $args['wordList'] = $this->lesson->getWordLists($tabTypeId, Cookie::getInstance()->getListIndex($tabTypeId));
-        $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
-        // add this tab's functionality
-        $html = $this->factory->renderBlock($this->lessonTemplate, 'WriteTab', $args);
-        $page->addTab($tabInfo->getTabDisplayAs(), $html);
+        $id = 'write';
+        $args = ['wordList' => $this->lesson->getWordLists($id, Cookie::getInstance()->getListIndex($id))];
+        $this->baseRender($id, $args,  $page);
     }
 
     private function renderPracticeTab(Page $page): void
     {
-        $tabTypeId = 'practice';
-        $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
-        $args = [];
-        $args['tabName'] = $tabTypeId;
-        $args['sidebarHtml'] = $this->renderSideBar($tabTypeId);
-        $args['wordList'] = $this->lesson->getWordLists($tabTypeId, Cookie::getInstance()->getListIndex($tabTypeId));
-        $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
-        // add this tab's functionality
-        $html = $this->factory->renderBlock($this->lessonTemplate, 'PracticeTab', $args);
-        $page->addTab($tabInfo->getTabDisplayAs(), $html);
+        $id = 'practice';
+        $args = ['wordList' => $this->lesson->getWordLists($id, Cookie::getInstance()->getListIndex($id))];
+        $this->baseRender($id, $args, $page);
     }
 
     private function renderSpellTab(Page $page): void
     {
-        $tabTypeId = 'spell';
-        $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
-        $args = [];
-        $args['tabName'] = $tabTypeId;
-        $args['sidebarHtml'] = $this->renderSideBar($tabTypeId);
-        $args['spinner'] = $this->lesson->getSpinner();
-        $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
-        // add this tab's functionality
-        $html = $this->factory->renderBlock($this->lessonTemplate, 'SpellTab', $args);
-        $page->addTab($tabInfo->getTabDisplayAs(), $html);
+        $args = ['spinner' => $this->lesson->getSpinner()];
+        $this->baseRender('spell', $args, $page);
     }
 
     private function renderMasteryTab(Page $page): void
     {
-        $tabTypeId = 'mastery';
-        $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
-        $args = [];
-        $args['tabName'] = $tabTypeId;
-        $html = $this->renderSideBar($tabTypeId);
-        $html .= $this->factory->renderBlock('timers', 'MasterySaveProgressButton');
-        $args['sidebarHtml'] = $html;
-        $args['wordList'] = $this->lesson->getWordList();
-        $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
-        // add this tab's functionality
-        $html = $this->factory->renderBlock($this->lessonTemplate, 'MasteryTab', $args);
-        $page->addTab($tabInfo->getTabDisplayAs(), $html);
+        $id = 'mastery';
+        $args = ['wordList' => $this->lesson->getWordList()];
+        $this->baseRender($id, $args,  $page);
     }
 
     private function renderFluencyTab(Page $page): void
     {
-        $tabTypeId = 'fluency';
-        $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
-        $args = [];
-        $args['tabName'] = $tabTypeId;
-        $args['sidebarHtml'] = $this->renderSideBar($tabTypeId);
-        $args['fluencySentences'] = $this->lesson->getFluencySentences();
-        $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
-        // add this tab's functionality
-        $html = $this->factory->renderBlock($this->lessonTemplate, 'FluencyTab', $args);
-        $page->addTab($tabInfo->getTabDisplayAs(), $html);
+        $args = ['fluencySentences' => $this->lesson->getFluencySentences()];
+        $this->baseRender('fluency', $args, $page);
     }
 
     private function renderTestTab(Page $page): void
     {
-        $tabTypeId = 'test';
-        $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
-        $args = [];
-        $args['tabName'] = $tabTypeId;
-        $html = $this->renderSideBar($tabTypeId);
-        $html .= $this->factory->renderBlock('timers', 'testButtons');
-        $args['sidebarHtml'] = $html;
-        $args['wordList'] = $this->lesson->getWordLists($tabTypeId, Cookie::getInstance()->getListIndex($tabTypeId));
-        $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
-        // add this tab's functionality
-        $html = $this->factory->renderBlock($this->lessonTemplate, 'TestTab', $args);
-        $page->addTab($tabInfo->getTabDisplayAs(), $html);
+        $id = 'test';
+        $args = ['wordList' => $this->lesson->getWordLists($id, Cookie::getInstance()->getListIndex($id))];
+        $this->baseRender($id, $args,  $page);
     }
 
     /**
@@ -189,21 +154,24 @@ class Twigs
     private function renderSideBar(string $tabTypeId)
     {
         $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
+        if (null == $tabInfo) {
+            throw new RuntimeException("tabInfo should never be null for $tabTypeId.");
+        }
         $side = SideNote::getInstance();
         $args = [];
 
         $timerArgs = ['action' => '/actions/timers.php'];
         $groupName = $this->lesson->getGroupId();
-        $args['tabName'] = $tabTypeId;
+        $args['tabInfo'] = $tabInfo;
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
+        $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         if ('intro' == $tabTypeId) {
             $args['isBdpLesson'] = Util::contains($this->lesson->getLessonName(), 'b-d-p');
             $args['pronounceImage'] = $this->lesson->getPronounceImage();
             $args['pronounceImageThumb'] = $this->lesson->getPronounceImageThumb();
         }
 
-        $args['canRefresh'] = $tabInfo->canRefresh();
-        $info = $this->lesson->getNote($tabInfo->getTabDisplayAs());
+        $info = $this->lesson->getNote($tabInfo->tabTypeId);
         if (!$info) {
             $info = SideNote::getInstance()->getNote($groupName, $tabTypeId);
         }
@@ -226,7 +194,13 @@ class Twigs
             default:
                 break;
         }
-        return $this->factory->renderBlock($this->lessonTemplate, 'SideBar', $args);
+        $html = $this->factory->renderBlock($this->lessonTemplate, 'SideBar', $args);
+        if ('mastery' == $tabTypeId) {
+            $html .= $this->factory->renderBlock('timers', 'MasterySaveProgressButton');
+        } elseif ('test' == $tabTypeId) {
+            $html .= $this->factory->renderBlock('timers', 'testButtons');
+        }
+        return $html;
     }
 
     /**
@@ -245,17 +219,26 @@ class Twigs
         }
         $lessons = Lessons::getInstance();
         $studentName = Student::getInstance()->getCapitalizedStudentName();
+        $accordion = $lessons->getAccordionList();
+        $displayAs = [];
+        foreach ($accordion as $group => $lessons) {
+            $displayAs[$group] = Util::addSoundClass($group);
+            foreach($lessons as $lessonName => $masteryLevel) {
+                $displayAs[$lessonName] = Util::addSoundClass($lessonName);
+            }
+        }
         $args = [
-            'accordion' => $lessons->getAccordionList(),
+            'accordion' => $accordion,
             'studentName' => $studentName,
             'isLocal' => Util::isLocal(),
+            'displayAs' => $displayAs
         ];
         if (isAssociative($argsIn)) {
             foreach ($argsIn as $key => $value) {
                 addAssociative($args, $key, $value);
             }
         }
-        $page = new Page("ReadXYZ Lessons for $studentName");
+        $page = new Page($studentName);
         $page->addArguments($argsIn);
 
         return $page->simpleRender('lesson_list', 'body', $args);
@@ -318,24 +301,19 @@ class Twigs
         if (null === $this->lesson) {
             throw new RuntimeException('Lesson should never be null here.');
         }
-        $page = new Page("$lessonName lesson for $studentName");
+        $page = new LessonPage($lessonName, $studentName);
         if (Identity::getInstance()->hasMultipleStudents()) {
             $page->addActionsLink('Exit', 'render', ['P1' => 'studentList']);
         }
-        if ($useNextLessonButton) {
-            $nextLessonName = $lessons->getNextLessonName();
-            $parms = [
-                'P1' => $nextLessonName,
-                'P2' => $initialTabName,
-                'P3' => '1'
-            ];
-            $link = $link = '/actions/render.php?' . http_build_query($parms);
-            $page->addNavLink('Next Lesson', $link);
-        }
-        $page->addActionsLink('Lesson Selections', 'render', ['target' => 'LessonList']);
-        $page->addActionsLink('Next Lesson', 'render', ['target' => 'NextLesson']);
+
+        $page->addActionsLink('Lessons', 'render', ['target' => 'LessonList']);
+        $page->addActionsLink('Next', 'render', ['target' => 'NextLesson']);
         if (Util::isLocal()) {
             $page->addActionsLink('Logout', 'render', ['target' => 'login']);
+        }
+        $warmup = Warmups::getInstance()->getLessonWarmup($lessonName);
+        if ($warmup) {
+            $this->renderWarmupTab($page, $warmup);
         }
         $tabs = $this->lesson->getTabNames();
         if (in_array('stretch', $tabs) or in_array('intro', $tabs)) {
@@ -360,7 +338,7 @@ class Twigs
             $this->renderTestTab($page);
         }
 
-        return $page->render($initialTabName);
+        return $page->lessonRender($initialTabName);
     }
 
     /**

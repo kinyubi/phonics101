@@ -9,7 +9,7 @@ class GameTypes
     private static GameTypes $instance;
 
     /** @var GameType[] */
-    private array $gameTypes;
+    private array $gameTypes = [];
 
     private function __construct()
     {

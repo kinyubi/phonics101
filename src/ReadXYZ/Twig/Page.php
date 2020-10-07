@@ -4,26 +4,22 @@ namespace ReadXYZ\Twig;
 
 use App\ReadXYZ\Helpers\ScreenCookie;
 use InvalidArgumentException;
-use ReadXYZ\Helpers\Location;
 use ReadXYZ\Lessons\Game;
-use ReadXYZ\Models\Document;
+use ReadXYZ\Lessons\TabType;
 use ReadXYZ\Models\KeyValuePair;
+use stdClass;
 
 class Page
 {
-    private string $pageTitle;
-    private string $initialTabName;
-    private array $navBar;  // key/value pairs of title => link
-    private array $tabs;    // key value pairs of title => html
-    private string $errors;
-    private array $arguments;
-    private array $baseArguments;
+    protected string $pageTitle;
+    protected string $initialTabName;
+    protected array $navBar;  // key/value pairs of title => link
+    protected array $tabs;    // key value pairs of title => html
+    protected string $errors;
+    protected array $arguments;
+    protected array $baseArguments;
     /** @var Game[] */
-    private array $games;
-
-    private function makeArgs(): string
-    {
-    }
+    protected array $games;
 
     public function __construct(string $title)
     {
@@ -110,15 +106,17 @@ class Page
         $pair->addToArray($this->navBar);
     }
 
-    public function addTab(string $tabName, string $html): void
+    public function addTab(TabType $tabInfo, string $html): void
     {
-        if (empty($tabName)) {
-            throw new InvalidArgumentException('Tab name parameter cannot be null.');
+        if (!$tabInfo) {
+            throw new InvalidArgumentException('Tab info parameter cannot be null.');
         }
-        if (isset($this->tabs[$tabName])) {
-            $this->tabs[$tabName] .= $html;
+        $id = $tabInfo->tabTypeId;
+        if (isset($this->tabs[$id])) {
+            $this->tabs[$id]->html .= $html;
         } else {
-            $this->tabs[$tabName] = $html;
+            $tabInfo->html = $html;
+            $this->tabs[$id] = $tabInfo;
         }
     }
 
@@ -132,7 +130,12 @@ class Page
         $this->pageTitle = $title;
     }
 
-    private function baseRender(array $pageArgs): string
+    /**
+     * Renders the default_body.html.twig template which is then fed to the base.html.twig template
+     * @param array $pageArgs
+     * @return string
+     */
+    protected function baseRender(array $pageArgs): string
     {
         $twig = TwigFactory::getInstance();
         $pageArgs['pageTitle'] = $this->pageTitle;
@@ -143,14 +146,17 @@ class Page
             $pageArgs['menu'] = $this->navBar;
         }
         $pageArgs['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
+        if (not(isset($pageArgs['bodyBackgroundClass']))) {
+            $pageArgs['bodyBackgroundClass'] = 'bg-transparent';
+        }
         $this->addArguments($pageArgs);
         $html = $twig->renderBlock('default_body', 'body', $this->arguments);
         $this->addBaseArguments(['content' => $html]);
-        $this->addBaseArguments(['lightbox' => 'colorbox', 'jquery' => 'latest']);
         return $twig->renderTemplate('base', $this->baseArguments);
     }
 
     /**
+     * Renders the specified template which is passed up to the default_body.html.twig and base.html.twig templates
      * @param string $template The template to use
      * @param string $block    The block to use in the template (default is body)
      * @param array  $args     The arguments associated with the template block
@@ -168,14 +174,4 @@ class Page
         return $this->baseRender($pageArgs);
     }
 
-    public function render(string $initialTabName = ''): string
-    {
-        $pageArgs = [];
-        $pageArgs['pageTitle'] = $this->pageTitle;
-        $pageArgs['tabs'] = $this->tabs;
-        if ($initialTabName) {
-            $pageArgs['initialTabName'] = $initialTabName;
-        }
-        return $this->baseRender($pageArgs);
-    }
 }

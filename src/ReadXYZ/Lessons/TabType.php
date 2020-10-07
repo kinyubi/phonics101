@@ -6,14 +6,16 @@ use stdClass;
 
 class TabType
 {
-    private string $tabTypeId;
-    private string $tabDisplayAs;
-    private string $tabClassName;
-    private int $columns;
-    private bool $useFullStyle;
-    private bool $isGenerated;
-    private bool $reviewLesson;
-    private bool $canRefresh;
+    public string $tabTypeId;
+    public string $tabDisplayAs;
+    public string $tabClassName;
+    public int $columns;
+    public bool $useFullStyle;
+    public bool $isGenerated;
+    public bool $reviewLesson;
+    public string $script;
+    public string $imageFile;
+    public string $html;
 
     // stdClass fields are from GameTypePOPO:
     //      gameTypeId, gameDisplayAs, thumbNailUrl, belongsOnTab, isUniversal,ordering, universalGameUrl
@@ -26,63 +28,9 @@ class TabType
         $this->useFullStyle = $other->useFullStyle;
         $this->isGenerated = $other->isGenerated;
         $this->reviewLesson = $other->reviewLesson;
-        $this->canRefresh = $other->canRefresh;
+        $this->script = $other->script;
+        $this->imageFile = $other->imageFile;
+        $this->html = '';
     }
 
-    // ============ GETTERS ===========
-
-    /**
-     * @return int
-     */
-    public function getColumns(): int
-    {
-        return $this->columns;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTabClassName(): string
-    {
-        return $this->tabClassName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTabDisplayAs(): string
-    {
-        return $this->tabDisplayAs;
-    }
-
-    // =========== PROTECTED/PUBLIC METHODS
-
-    /**
-     * @return bool
-     */
-    public function UsesFullStyle(): bool
-    {
-        return $this->useFullStyle;
-    }
-
-    public function canRefresh(): bool
-    {
-        return $this->canRefresh;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isGenerated(): bool
-    {
-        return $this->isGenerated;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isReviewLesson(): bool
-    {
-        return $this->reviewLesson;
-    }
 }

@@ -144,8 +144,8 @@ if (!file_exists($die_file)) {
 
     </style>
 
-    <script src="/js/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.js"></script>    <script type="text/javascript">
         let debug = false;
         const element = document.getElementById("rollContainer");
         const dice = {

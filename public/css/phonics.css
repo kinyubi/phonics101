@@ -407,10 +407,11 @@ a.img-contain img {
      color: dimgray !important;
  }
 
- [id^=menuItem]  {
-     font-size:.75rem;
-     color: white !important;
- }
+
+ /*[id^=menuItem]  {*/
+ /*    font-size:.75rem;*/
+ /*    color: white !important;*/
+ /*}*/
 
 
 /*iframe {overflow: hidden;}*/
@@ -482,11 +483,24 @@ a.img-contain img {
 }
 
 .nav-item:focus .nav-item:hover  {
-    background-color: #999;
+    background-color: var(--readxyz);
 }
 
 .bg-tab {
-    background-color: #ccc;
+    background-color: var(--readlite);
 }
 
+/* classes to handle background images in accordion */
+.accordion--image {
+  height: 20px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+.accordion--expanded {
+    background-image: url("/images/lessonlist/accordion-expanded.png");
+}
 
+.accordion--collapsed {
+    background-image: url("/images/lessonlist/accordion-unexpanded.png");
+}

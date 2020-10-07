@@ -2,7 +2,7 @@
     {
         "gameTypeId": "random",
         "gameDisplayAs": "Word Cards",
-        "thumbNailUrl": "/images/sidebar/random_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/random.jpg",
         "belongsOnTab": "intro",
         "isUniversal": false,
         "ordering": 1,
@@ -11,7 +11,7 @@
     {
         "gameTypeId": "word-builder",
         "gameDisplayAs": "Word Builder",
-        "thumbNailUrl": "/images/sidebar/word-builder_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/word-builder.jpg",
         "belongsOnTab": "intro",
         "isUniversal": false,
         "ordering": 2,
@@ -20,7 +20,7 @@
     {
         "gameTypeId": "sound-box",
         "gameDisplayAs": "Sound Boxes",
-        "thumbNailUrl": "/images/sidebar/sound-box_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/sound-box.jpg",
         "belongsOnTab": "write",
         "isUniversal": true,
         "ordering": 1,
@@ -29,7 +29,7 @@
     {
         "gameTypeId": "tic-tac-toe",
         "gameDisplayAs": "Tic-Tac-Toe",
-        "thumbNailUrl": "/images/sidebar/tic-tac-toe_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/tic-tac-toe.jpg",
         "belongsOnTab": "practice",
         "isUniversal": true,
         "ordering": 1,
@@ -38,7 +38,7 @@
     {
         "gameTypeId": "whack-a-mole",
         "gameDisplayAs": "Whack-A-Mole",
-        "thumbNailUrl": "/images/sidebar/whack-a-mole_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/whack-a-mole.jpg",
         "belongsOnTab": "practice",
         "isUniversal": false,
         "ordering": 2,
@@ -47,7 +47,7 @@
     {
         "gameTypeId": "sort",
         "gameDisplayAs": "Rhyme Sort",
-        "thumbNailUrl": "/images/sidebar/sort_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/sort.jpg",
         "belongsOnTab": "practice",
         "isUniversal": false,
         "ordering": 3,
@@ -56,7 +56,7 @@
     {
         "gameTypeId": "alien",
         "gameDisplayAs": "Alien",
-        "thumbNailUrl": "/images/sidebar/alien_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/alien.jpg",
         "belongsOnTab": "practice",
         "isUniversal": false,
         "ordering": 4,
@@ -65,7 +65,7 @@
     {
         "gameTypeId": "scramble",
         "gameDisplayAs": "Word Scramble",
-        "thumbNailUrl": "/images/sidebar/scramble_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/scramble.jpg",
         "belongsOnTab": "spell",
         "isUniversal": false,
         "ordering": 1,
@@ -74,7 +74,7 @@
     {
         "gameTypeId": "mastery",
         "gameDisplayAs": "Mastery Flip",
-        "thumbNailUrl": "/images/sidebar/mastery_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/mastery.jpg",
         "belongsOnTab": "mastery",
         "isUniversal": false,
         "ordering": 1,
@@ -83,10 +83,19 @@
     {
         "gameTypeId": "sentences",
         "gameDisplayAs": "Missing Word",
-        "thumbNailUrl": "/images/sidebar/sentences_sm.jpg",
+        "thumbNailUrl": "/images/sidebar/sentences.jpg",
         "belongsOnTab": "fluency",
         "isUniversal": false,
         "ordering": 0,
         "universalGameUrl": ""
+    },
+    {
+        "gameTypeId": "dice",
+        "gameDisplayAs": "Phonological Awareness",
+        "thumbNailUrl": "/images/sidebar/dice.jpg",
+        "belongsOnTab": "warmup",
+        "isUniversal": true,
+        "ordering": 1,
+        "universalGameUrl": "/dice/rolldice-orig.php"
     }
 ]

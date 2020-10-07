@@ -11,9 +11,10 @@ class TabTypePOPO implements \JsonSerializable
     private bool $useFullStyle;
     private bool $isGenerated;
     private bool $reviewLesson;
-    private bool $canRefresh;
+    private string $script;
+    private string $imageFile;
 
-    public function __construct(string $id, string $display, string $class, bool $full = false, int $columns = 1, bool $generated = false, $review = false, $canRefresh = false)
+    public function __construct(string $id, string $display, string $class, bool $full = false, int $columns = 1, bool $generated = false, $review = false)
     {
         $this->tabTypeId = $id;
         $this->tabDisplayAs = $display;
@@ -22,7 +23,18 @@ class TabTypePOPO implements \JsonSerializable
         $this->useFullStyle = $full;
         $this->isGenerated = $generated;
         $this->reviewLesson = $review;
-        $this->canRefresh = $canRefresh;
+        $this->script = '';
+        $this->imageFile = "/images/tabs/$id.png";
+    }
+
+    public function setScript(string $script): void
+    {
+        $this->script = $script;
+    }
+
+    public function setImage(string $filename): void
+    {
+        $this->imageFile = $filename;
     }
 
     /**
@@ -38,7 +50,8 @@ class TabTypePOPO implements \JsonSerializable
             'useFullStyle' => $this->useFullStyle,
             'isGenerated' => $this->isGenerated,
             'reviewLesson' => $this->reviewLesson,
-            'canRefresh' => $this->canRefresh
+            'script' => $this->script,
+            'imageFile' => $this->imageFile
         ];
     }
 }

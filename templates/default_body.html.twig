@@ -29,32 +29,31 @@ Mapping of Document class properties to twig variables in the Document::render m
 #}
 
 {% block body %}
+  {% set dim = isSmallScreen ? '45' : '80' %}
+
+  {# NAVBAR #}
   {# our logo, menu items, and title that span the entire width of the page #}
   <div class="container-fluid m-0 p-0">
-    <div class="row m-0 p-0">
-      <div class="col-12 p-0">
-        <nav class="navbar navbar-dark bg-readxyz m-0 px-1">
-          <img class="navbar-brand" style="max-height:50px" alt="ReadXYZ"
-               src="/images/logo-150.png">
-          {# <ul class="nav-link d-flex flex-nowrap"> #}
+{#    <div class="row m-0 p-0 ">#}
+{#      <div class="col-12 p-0">#}
+        <nav class="navbar bg-readlite m-0 px-1" style=" border-bottom: 2px solid var(--readxyz);">
+          <img class="navbar-brand" style="max-height:50px" alt="ReadXYZ" src="/images/reader-no-text.png">
           {% for title, link in menu %}
-            {# <li class="nav-item" > #}
-            <a id="menuItem-{{ loop.index }}" class="nav-link" href="{{ link }}">{{ title }}</a>
-            {# </li> #}
+            <a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
           {% endfor %}
-          {# </ul> #}
-          <span class="navbar-text ml-auto text-white h5 px-2">{{ pageTitle }}</span>
+
+          <span class="navbar-text text-secondary h5 px-2">{{ pageTitle }}</span>
         </nav>
-      </div>
-    </div>
+{#      </div>#}
+{#    </div>#}
   </div>
   {{ block('errors') }}
-
-
+  <div class="container-fluid m-0 p-0 {{ bodyBackgroundClass }}" style="height: 4px;"></div>
+  {#  TAB BAR #}
   {# create the tabs setting the initial tab as visible and active #}
   {# <div class="container p-0  id="thePage" style="max-width: 960px;"> #}
   <div class="container-fluid p-0" id="thePage" >
-    <div class="row m-0 p-0 justify-content-center bg-tab" style="width: auto;">
+    <div class="row m-0 p-0 justify-content-center {{ bodyBackgroundClass }}" style="width: auto;">
       {% set tabCount =  tabs | length %}
       {% set visibleTab = (initialTabName is empty) ? (tabs|keys|first) : initialTabName %}
 
@@ -63,27 +62,34 @@ Mapping of Document class properties to twig variables in the Document::render m
       {# creates the tab bar #}
       <nav>
         <div class="nav nav-tabs size--tab-icon-height bg-tab" id="nav-tab" role="tablist" >
-          {% for tabTitle, tabHtml in tabs %}
-            {% set active = (tabTitle|lower == visibleTab|lower) ? 'active' : '' %}
-            {% set selected = (tabTitle == visibleTab|lower) ? 'true' : 'false' %}
-            {% set tabId = tabTitle|lower ~ '-tab' %}
-            {% set body = tabTitle|lower ~ '-body' %}
+          <a class="nav-item img-contain p-0 m-0 size--tab-icon " id="lessons-home" href="/">
+            <img src="/images/tabs/home.png" alt="home" height="70%" width="70%"/>
+          </a>
+          {% for tabTypeId, tabInfo in tabs %}
+            {% set active = (tabTypeId == visibleTab|lower) ? 'active' : '' %}
+            {% set selected = (tabTypeId == visibleTab|lower) ? 'true' : 'false' %}
+            {% set tabId = tabTypeId ~ '-tab' %}
+            {% set body = tabTypeId ~ '-body' %}
             {{ block('navItem') }}
           {% endfor %}
         </div>
       </nav>
     </div>
+
+    {# MULTI-TAB CONTENT #}
     <div class="row">
       <div class="tab-content w-100" id="myTabContent">
-        {% for tabTitle, tabHtml in tabs %}
+        {% for tabTitle, tabInfo in tabs %}
+          {# CONTENT FOR EACH TAB #}
           {% set active = (tabTitle == visibleTab) ? 'show active' : '' %}
           {% set tabId = tabTitle|lower ~ '-tab' %}
           {% set bodyId = tabTitle|lower ~ '-body' %}
-          <div id="{{ bodyId }}" class="tab-pane fade {{ active }}" role="tabpanel" aria-labelledby="{{ tabId }}">{{ tabHtml |raw }}</div>
+          <div id="{{ bodyId }}" class="tab-pane fade {{ active }}" role="tabpanel" aria-labelledby="{{ tabId }}">{{ tabInfo.html |raw }}</div>
         {% endfor %}
       </div>
       {% else %} {# only one tab #}
         {% for tabTitle, tabHtml in tabs %}
+          {# CONTENT FOR A PAGE THAT HAS NO TABS #}
           <div class="container p-2">{{ tabHtml | raw }}</div>
         {% endfor %}
       {% endif %}
@@ -92,10 +98,9 @@ Mapping of Document class properties to twig variables in the Document::render m
 {% endblock %}
 
 {% block navItem %}
-  {% set dim = isSmallScreen ? '45' : '80' %}
   <a class="nav-item img-contain p-0 m-0 {{ active }} size--tab-icon " data-toggle="tab" id="{{ tabId }}" href="#{{ body }}"
      role="tab" aria-controls="{{ body }}" >
-    <img src="/images/tabs/{{ tabTitle|lower }}.png" alt="{{ tabTitle }}" height="70%" width="70%"/>
+    <img src="{{ tabInfo.imageFile }}" alt="{{ tabInfo.tabDisplayAs }}" height="70%" width="70%"/>
   </a>
 {% endblock %}
 

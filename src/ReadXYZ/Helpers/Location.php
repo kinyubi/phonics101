@@ -23,6 +23,7 @@ class Location
     public const LESSON_TAB_IMAGES_DIR = '/images/tabs/';
     public const SOUND_BOX_GAME = '/sound-box.php';
     public const TIC_TAC_TOE_GAME = '/tictactoe/tictac.php';
+    public const DICE_GAME = '/dice/rolldice-orig.php';
 
 
     public static function getGameThumbnail(string $gameTypeId): string

@@ -222,6 +222,10 @@ class Util
                 return 'fluency';
             case 'test':
                 return 'test';
+            case 'warmups':
+            case 'warmup':
+            case 'warm-ups':
+                return 'warmup';
             default:
                 error_log("$tabName is not a recognized tab name.");
 

@@ -46,7 +46,7 @@ Input:
   {% endblock scripts %}
 </head>
 
-<body style="max-width: 1000px;">
+<body >
 {#<div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; ">#}
 <div class="m-0 p-0">
   {# content comes from the page rendering of a template block like default_body_bs.html.twig. #}
@@ -57,11 +57,6 @@ Input:
   {% endblock body %}
 </div>
 
-{% set clientProperties = ['screen.width', 'screen.height', 'window.innerWidth', 'window.innerHeight'] %}
-{% for property in clientProperties %}
-<form method='POST' id='data' style='display:none'>
-{% endfor %}
-
 {% block jqueryReady %}
   <script>
       $(document).ready(function () {
@@ -70,16 +65,20 @@ Input:
 
         {# bootstrap customized accordion #}
           // Add minus icon for collapse element which is open by default
-          $(".collapse.show").each(function () {
-              $(this).prev(".card-header").find(".fas").addClass("fa-minus-cirle").removeClass("fa-plus-circle");
-          });
+          // $(".collapse.show").each(function () {
+          //     $(this).prev(".card-header").find(".fas").addClass("fa-minus-circle").removeClass("fa-plus-circle");
+          // });
+          //
+          // // Toggle plus minus icon on show hide of collapse element
+          // $(".collapse").on('show.bs.collapse', function () {
+          //     $(this).prev(".card-header").find(".fas").removeClass("fa-plus-circle").addClass("fa-minus-circle");
+          // }).on('hide.bs.collapse', function () {
+          //     $(this).prev(".card-header").find(".fas").removeClass("fa-minus-circle").addClass("fa-plus-circle");
+          // });
+
 
           // Toggle plus minus icon on show hide of collapse element
-          $(".collapse").on('show.bs.collapse', function () {
-              $(this).prev(".card-header").find(".fas").removeClass("fa-plus-circle").addClass("fa-minus-circle");
-          }).on('hide.bs.collapse', function () {
-              $(this).prev(".card-header").find(".fas").removeClass("fa-minus-circle").addClass("fa-plus-circle");
-          });
+
 
           $('[data-toggle="tooltip"]').tooltip();
 
@@ -127,8 +126,6 @@ Input:
           $( window ).resize(function() {
             setScreenCookie();
           });
-
-          $('[data-toggle="tooltip"]').tooltip();
 
       });
 

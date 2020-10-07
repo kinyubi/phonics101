@@ -1,4 +1,3 @@
-
 {#
 Build a page of available lessons. Each lesson is a link to the action handler with a P1 parameter
 containing the lesson name. If no action is specified, then the programs default action handler is
@@ -7,6 +6,7 @@ used by: ReadXYZ\Twig\Twigs::renderLessonList
 
 inputs:
     accordion[] : obtained by calling Lessons::getInstance()->getAccordionList()
+    displayAs[]
     studentName : obtained by calling Student::getInstance()->getStudentName()
     mostRecentLesson: lesson most recently worked on
     mostRecentTab: lesson tab most recently worked on
@@ -15,66 +15,75 @@ inputs:
 #}
 
 {% block body %}
-    {% set iconList = ['plus text-readxyz', 'check text-readxyz', 'star text-warning'] %}
-    {% if action|default('') is empty %}
-        {% set actionHandler = '/actions/processLessonSelection.php' %}
-    {% else %}
-        {# use a custom handler that #}
-        {% set actionHandler = '/actions/' ~ action %}
-    {% endif %}
-    <style>
-        a span {
-            font-stretch: 100%;
-            color: black;
-            font: bold 20px Muli, Century Gothic, sans-serif;
-        }
-    </style>
+  {% set iconList = ['nomastery', 'advancing', 'mastered'] %}
+  {% if action|default('') is empty %}
+    {% set actionHandler = '/actions/processLessonSelection.php' %}
+  {% else %}
+    {# use a custom handler that #}
+    {% set actionHandler = '/actions/' ~ action %}
+  {% endif %}
+  <style>
+      a span {
+          font-stretch: 100%;
+          color: black;
+          font: bold 20px Muli, Century Gothic, sans-serif;
+      }
+  </style>
+  <div class="list-group list-group-flush" id="groupedLessons">
     {% if mostRecentLesson %}
-        <ul class="nav nav-pills"><li class="nav-item mx-2 px-2 py-1 w-100">
-            <a class="nav-link bg-readxyz text-white border rounded w-100" href="{{ actionHandler }}?P1={{
-            mostRecentLesson|url_encode }}&P2={{ mostRecentTab }}">
-                <i class="fas fa-arrow-circle-right px-2 fa-lg fa-fw text-secondary"></i>
-                <span class="h6 p-2 mr-2">MOST RECENT LESSON</span>
-                <span class="h5 mr-5 text-white">{{ mostRecentLesson }}</span>
-            </a>
-            </li></ul>
+      <li class="list-group-item border-readxyz  mb-1">
+        <a class="nav-link bg-readxyz text-white border rounded w-100" href="{{ actionHandler }}?P1={{ mostRecentLesson|url_encode }}&P2={{ mostRecentTab }}">
+          <span class="h6 p-2 mr-2">RECENT</span>
+          <span class="h5 mr-5 text-white">{{ mostRecentLesson }}</span>
+        </a>
+      </li>
     {% endif %}
-    <div class="container text-left" id="groupedLessons">
-        {% for groupName in accordion|keys %}
-            {% set groupIndex = loop.index %}
-            {% set groupHeader = 'header-' ~ loop.index %}
-            {% set groupCollapse = 'collapse-' ~ loop.index %}
-            <div class="card text-left">
-                <div class="card-header" id="{{ groupHeader }}">
-                    <h2 class="mb-0">
-                        <a style="text-decoration: none !important;" data-toggle="collapse"
-                           href="#{{ groupCollapse }}" aria-controls="{{ groupCollapse }}" aria-expanded="false">
-                            <div class="d-flex align-items-center">
-                            <i class="fas fa-plus-circle px-2 fa-lg fa-fw text-secondary"></i>
-                            <span class="h5 ml-2 text-dark">{{ groupName }}</span>
-                            </div>
-                        </a>
-                    </h2>
-                </div>
-                <div id="{{ groupCollapse }}" class="collapse" data-parent="#groupedLessons"
-                     aria-labelledby="{{ groupHeader }}">
-                    <div class="card-body">
-                        <div class="d-flex flex-column flex-nowrap">
-                            {% for lessonName, masteryLevel in accordion[groupName] %}
-                                <div>
-                                    <a role="button" href="{{ actionHandler }}?P1={{ lessonName|url_encode }}">
-                                        <i class="fas fa-{{ iconList[masteryLevel] }}   fa-lg px-2 "></i>
-                                        <span>{{ lessonName }}</span>
-                                    </a>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+    {#  FOR EACH GROUP #}
+    {% for groupName in accordion|keys %}
+      {% set groupIndex = loop.index %}
+      {% set groupHeader = 'header-' ~ loop.index %}
+      {% set groupCollapse = 'collapse-' ~ loop.index %}
+      <li class="list-group-item border-readxyz  mb-1">
+        <a class="img-contain" data-toggle="collapse" href="#{{ groupCollapse }}" aria-controls="{{ groupCollapse }}" aria-expanded="false">
+          <div class="row d-flex flex-nowrap align-items-center mb-2">
+            <div class="col-1">
+              <img src="/images/lessonlist/accordion-unexpanded.png" alt="-" height="35" width="35" class="toggles"/>
             </div>
-        {% endfor %}
+            <div class="h5 ml-3 text-dark col-9">{{ displayAs[groupName] }}</div>
+            <div class="col-2">
+              <img src="/images/keychain/{{ loop.index }}.png" alt="animal" height="42" width="42"/>
+            </div>
+          </div>
 
-    </div>
+        </a>
+        <div id="{{ groupCollapse }}" class="collapse" data-parent="#groupedLessons"
+             aria-labelledby="{{ groupHeader }}">
+          <div class="bg-light">
+            <div class="d-flex flex-column flex-nowrap pl-5" style="width:100%; ">
+              {# FOR EACH LESSON IN A GROUP #}
+              {% for lessonName, masteryLevel in accordion[groupName] %}
+                <div>
+                  <div class="col-12">
+                  <a role="button" href="{{ actionHandler }}?P1={{ lessonName|url_encode }}" class="img-contain">
+                    <div class="row d-flex flex-nowrap align-items-center"
+                         style="height: 4em; background-image: linear-gradient(#f8f8f8, #e8e8e8)">
+                      <div class="col-1">
+                        <img src="/images/lessonlist/lesson-{{ iconList[masteryLevel] }}.png" alt="-" height="35" width="35"/>
+                      </div>
+                      <div class="h5 ml-2 text-dark col-9">{{ displayAs[lessonName] }}</div>
+                    </div>
+
+                  </a>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+
+  </div>
 {% endblock body %}
 
 
@@ -83,17 +92,17 @@ inputs:
     accordion[]
 #}
 {% block lessonDropDown %}
-    <form action="/{{ action }}">
-        <label for="lessons">Choose a lesson:</label>
-        <select name="lessons" id="lessons">
-            {% for groupName in accordion|keys %}
-                <optgroup label="{{ groupName }}">
-                    {% for lessonName, masteryLevel in accordion[groupName] %}
-                        <option value="{{ lessonName }}">{{ lessonName }}</option>
-                    {% endfor %}
-                </optgroup>
-            {% endfor %}
-        </select>
-    </form>
+  <form action="/{{ action }}">
+    <label for="lessons">Choose a lesson:</label>
+    <select name="lessons" id="lessons">
+      {% for groupName in accordion|keys %}
+        <optgroup label="{{ groupName }}">
+          {% for lessonName, masteryLevel in accordion[groupName] %}
+            <option value="{{ lessonName }}">{{ lessonName }}</option>
+          {% endfor %}
+        </optgroup>
+      {% endfor %}
+    </select>
+  </form>
 {% endblock lessonDropDown %}
 

@@ -23,6 +23,7 @@ class GameTypePOPO implements JsonSerializable
         $this->isUniversal = $builtIn;
         $this->ordering = $order;
         $this->universalGameUrl = '';
+        $this->thumbNailUrl = "/images/sidebar/$id.jpg";
     }
 
     /**

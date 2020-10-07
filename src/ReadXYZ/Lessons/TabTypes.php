@@ -10,7 +10,7 @@ class TabTypes
     private static TabTypes $instance;
 
     /** @var TabType[] */
-    private array $tabTypes;
+    private array $tabTypes = [];
 
     /**
      * TabTypes constructor. Creates an associative array of TabType object with the tabTypeId as key.

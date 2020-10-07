@@ -12,8 +12,8 @@ class Warmups
 {
     private static Warmups $instance;
 
-    private array $shell = [];
     private array $lessons = [];
+    private array $shell;
 
     private function __construct()
     {

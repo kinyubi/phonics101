@@ -23,24 +23,24 @@
         ],
         "games": [
           {
-            "gameTypeId": "whack-a-mole",
+            "game": "whackamole",
             "resource": "https://wordwall.net/resource/4601106",
-            "url": "https://wordwall.net/embed/c1ef0e503f1f42919c64a6ab2eb18048?themeId=49&templateId=45"
+            "iframe": "https://wordwall.net/embed/c1ef0e503f1f42919c64a6ab2eb18048?themeId=49&templateId=45"
           },
           {
-            "gameTypeId": "sort",
+            "game": "sort",
             "resource": "https://wordwall.net/resource/4601097",
-            "url": "https://wordwall.net/embed/b40b7c49233440a6b8173515b3ca0fa0?themeId=1&templateId=2"
+            "iframe": "https://wordwall.net/embed/b40b7c49233440a6b8173515b3ca0fa0?themeId=1&templateId=2"
           },
           {
-            "gameTypeId": "mastery",
+            "game": "mastery",
             "resource": "https://wordwall.net/resource/4601109",
-            "url": "https://wordwall.net/embed/e5fdab17040f445eb6fbac6acde03ff3?themeId=1&templateId=7"
+            "iframe": "https://wordwall.net/embed/e5fdab17040f445eb6fbac6acde03ff3?themeId=1&templateId=7"
           },
           {
-            "gameTypeId": "match",
+            "game": "match up",
             "resource": "https://wordwall.net/resource/4601095",
-            "url": "https://wordwall.net/embed/8082d42a20a441ee8078725fa2143997?themeId=1&templateId=3"
+            "iframe": "https://wordwall.net/embed/8082d42a20a441ee8078725fa2143997?themeId=1&templateId=3"
           }
         ],
         "tabs": [
@@ -84,24 +84,24 @@
         ],
         "games": [
           {
-            "gameTypeId": "whack-a-mole",
+            "game": "whackamole",
             "resource": "https://wordwall.net/resource/4604546",
-            "url": "https://wordwall.net/embed/acec36fa24d0427787793aeff1725d0b?themeId=49&templateId=45"
+            "iframe": "https://wordwall.net/embed/acec36fa24d0427787793aeff1725d0b?themeId=49&templateId=45"
           },
           {
-            "gameTypeId": "sort",
+            "game": "sort",
             "resource": "https://wordwall.net/resource/4604545",
-            "url": "https://wordwall.net/embed/b317cde1d77d468286bc3c346f68a1bd?themeId=1&templateId=2"
+            "iframe": "https://wordwall.net/embed/b317cde1d77d468286bc3c346f68a1bd?themeId=1&templateId=2"
           },
           {
-            "gameTypeId": "mastery",
+            "game": "mastery",
             "resource": "https://wordwall.net/resource/4604547",
-            "url": "https://wordwall.net/embed/466567e1644948c7a9c86681cf0b8075?themeId=1&templateId=7"
+            "iframe": "https://wordwall.net/embed/466567e1644948c7a9c86681cf0b8075?themeId=1&templateId=7"
           },
           {
-            "gameTypeId": "match",
+            "game": "match up",
             "resource": "https://wordwall.net/resource/4604544",
-            "url": "https://wordwall.net/embed/705b93284cf24ed794fb6edc24cb176c?themeId=1&templateId=3"
+            "iframe": "https://wordwall.net/embed/705b93284cf24ed794fb6edc24cb176c?themeId=1&templateId=3"
           }
         ],
         "tabs": [
@@ -145,24 +145,24 @@
         ],
         "games": [
           {
-            "gameTypeId": "whack-a-mole",
+            "game": "whackamole",
             "resource": "https://wordwall.net/resource/4604835",
-            "url": "https://wordwall.net/embed/7f029d7b88b24b0fbda6c1fda0ee12a5?themeId=49&templateId=45"
+            "iframe": "https://wordwall.net/embed/7f029d7b88b24b0fbda6c1fda0ee12a5?themeId=49&templateId=45"
           },
           {
-            "gameTypeId": "sort",
+            "game": "sort",
             "resource": "https://wordwall.net/resource/4604837",
-            "url": "https://wordwall.net/embed/2d6bea99b98a4544875e71f415be68f5?themeId=1&templateId=2"
+            "iframe": "https://wordwall.net/embed/2d6bea99b98a4544875e71f415be68f5?themeId=1&templateId=2"
           },
           {
-            "gameTypeId": "mastery",
+            "game": "mastery",
             "resource": "https://wordwall.net/resource/4604838",
-            "url": "https://wordwall.net/embed/bb4410c4d1f64f09b6a9c6ed617b23e7?themeId=1&templateId=7"
+            "iframe": "https://wordwall.net/embed/bb4410c4d1f64f09b6a9c6ed617b23e7?themeId=1&templateId=7"
           },
           {
-            "gameTypeId": "match",
+            "game": "match up",
             "resource": "https://wordwall.net/resource/4604831",
-            "url": "https://wordwall.net/embed/57bca9cc8634410593a82f32e7b7e4c9?themeId=1&templateId=3"
+            "iframe": "https://wordwall.net/embed/57bca9cc8634410593a82f32e7b7e4c9?themeId=1&templateId=3"
           }
         ],
         "tabs": [
@@ -206,18 +206,7 @@
           "ob og on ot om",
           "ut un up us ub "
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/4679126",
-            "url": "https://wordwall.net/embed/1ac6473495a1401ba0f2bc990000f3fc?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "Mastery",
-            "resource": "https://wordwall.net/resource/4679127",
-            "url": "https://wordwall.net/embed/ab2973f4a8604adaab9c168c94664db0?themeId=1&templateId=7"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -251,7 +240,7 @@
         "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat",
         "supplementalWordList": "",
         "contrastList": "",
-        "stretchList": "b-a-t/b-at/<s>bat<s>,c-a-t/c-at/cat,f-a-t/f-at/fat,h-a-t/h-at/hat,l-a-t/l-at/lat,m-a-t/m-at/mat,p-a-t/p-at/pat,r-a-t/r-at/rat,s-a-t/s-at/sat,t-a-t/t-at/tat,v-a-t/v-at/vat",
+        "stretchList": "b-a-t/b-at/bat,c-a-t/c-at/cat,f-a-t/f-at/fat,h-a-t/h-at/hat,l-a-t/l-at/lat,m-a-t/m-at/mat,p-a-t/p-at/pat,r-a-t/r-at/rat,s-a-t/s-at/sat,t-a-t/t-at/tat,v-a-t/v-at/vat",
         "fluencySentences": [
           "The rat sat on the cat.",
           "The cat sat on the mat.",
@@ -1489,7 +1478,7 @@
             "url": "https://wordwall.net/embed/ac8f6fb8a6324aaf9056464494241782?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "word-builder",
+            "gameTypeId": "wordbuilder",
             "url": "https://wordwall.net/embed/1db936620c8b4d439a383e675e328245?themeId=1&templateId=47"
           },
           {
@@ -2559,48 +2548,7 @@
         "fluencySentences": [
           "Bill will toss the ball to Jill. Will she miss the ball and fall? No. Jill is tall. She will get the ball and pass it off to Bess."
         ],
-        "games": [
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3636884",
-            "url": "https://wordwall.net/embed/c5e9036273294bdc9e389133e2804232?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3636879",
-            "url": "https://wordwall.net/embed/c07109c2ea5846078b08fce2521e0b53?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3636878",
-            "url": "https://wordwall.net/embed/189d4c2356ec4c7890032c24cc6dbdce?themeId=27&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4451326",
-            "url": "https://wordwall.net/embed/2eb57a1f70834414910202899a303a3b?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3636876",
-            "url": "https://wordwall.net/embed/be0b9dda0e724894afcb2ab59eba29d4?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3636877",
-            "url": "https://wordwall.net/embed/3e6e09feb44a4e78be2397e504a6d0ff?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3636882",
-            "url": "https://wordwall.net/embed/eb7a2a73c12843dea327df2c048cbafd?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3636880",
-            "url": "https://wordwall.net/embed/cee27223877b4ad9b4bb6b08482b94e2?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -2713,53 +2661,7 @@
           "Beth can rush to the shop.",
           "I wish we had cash for a dish and this fish."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3645453",
-            "url": "https://wordwall.net/embed/6028c1a041c04639b348e37900813875?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "Sort",
-            "resource": "https://wordwall.net/resource/3645449",
-            "url": "https://wordwall.net/embed/8a39fdaaa4be4f24ab4a4362411022a6?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3645448",
-            "url": "https://wordwall.net/embed/6a3cfea1a1ca40c68ef48578fd2d7cef?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3645456",
-            "url": "https://wordwall.net/embed/3e964c9baf2c4a1b8d94905c976acf17?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "Sentences",
-            "resource": "https://wordwall.net/resource/4462865",
-            "url": "https://wordwall.net/embed/250316d18f0843069957d7f06ea8baec?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3645445",
-            "url": "https://wordwall.net/embed/66b1e06f471f44ceba1e14d42e39c522?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "Alien",
-            "resource": "https://wordwall.net/resource/3645442",
-            "url": "https://wordwall.net/embed/d35ebbb1f0864db89148a93a47c20d24?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3645450",
-            "url": "https://wordwall.net/embed/0c2c479941114acf83746626842a3eae?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3643753",
-            "url": "https://wordwall.net/embed/6eb8ab60312d4eea8f5ac1f86c604d94?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -2799,53 +2701,7 @@
           "The dogs and cats are fun pets.",
           "Tim hops on logs with the ducks. "
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3638524",
-            "url": "https://wordwall.net/embed/4e856a1e4fff4f06b47fce712680c035?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "Sort",
-            "resource": "https://wordwall.net/resource/3638523",
-            "url": "https://wordwall.net/embed/49995f9f319d4d23ba2252017c1e4cc0?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3638525",
-            "url": "https://wordwall.net/embed/10ceda90cd2d4e0fb8969923820a4778?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3638517",
-            "url": "https://wordwall.net/embed/11b062c54bbe4c1f9fb43c33576b4f82?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4463436",
-            "url": "https://wordwall.net/embed/3546a8c6fce149578375f270bb3e75c2?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3638516",
-            "url": "https://wordwall.net/embed/1ca17064e41e4c4aa539be97a1fe444d?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3638515",
-            "url": "https://wordwall.net/embed/c7c782d5de96451abd1fc154ea514f9e?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3638521",
-            "url": "https://wordwall.net/embed/2c4cad5368f64921844ffd4e2b798a97?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3638519",
-            "url": "https://wordwall.net/embed/976a4f3029c1468684ecc79e32273b71?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -2886,53 +2742,7 @@
           "He is in the mud.",
           " He is muddy. "
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3578919",
-            "url": "https://wordwall.net/embed/0e8cdc66bcb844598ba83fc094771d91?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3579198",
-            "url": "https://wordwall.net/embed/912ec107399f4b44b8b371dccacaceea?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3578911",
-            "url": "https://wordwall.net/embed/1e9c4b5b3829488195ab35a25e97ba74?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3578901",
-            "url": "https://wordwall.net/embed/3edfd26f9bf14bbdaf530833dfb6b8a7?themeId=27&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4463678",
-            "url": "https://wordwall.net/embed/3001e3c8e79947f89d858406db66c48d?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3590483",
-            "url": "https://wordwall.net/embed/45c10cf062c9496880bf1295672de1be?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3578894",
-            "url": "https://wordwall.net/embed/5e04e6818a4a4134824ea3e423b732c6?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3578953",
-            "url": "https://wordwall.net/embed/6caedf4b51894772a5263c57e6004e1f?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3578947",
-            "url": "https://wordwall.net/embed/b398497982a048fda58dc729fabfd7af?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -2973,53 +2783,7 @@
           "TIm had a better dinner.",
           "He is the biggest."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3598309",
-            "url": "https://wordwall.net/embed/6dfa2080d108449f87291d3fc11f1999?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3598310",
-            "url": "https://wordwall.net/embed/fb40a43089b8498c842f29217150b026?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3598301",
-            "url": "https://wordwall.net/embed/56c9f44abc424f6f8544ef0241016569?themeId=27&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3598300",
-            "url": "https://wordwall.net/embed/cc84d78f9e8540cd9275ea8e35a926ca?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4464052 ",
-            "url": "https://wordwall.net/embed/1dca5252340d4a4d932371e57ba5e425?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3598290",
-            "url": "https://wordwall.net/embed/e4152c3ff3e340499b9cc3d254c48408?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3598294",
-            "url": "https://wordwall.net/embed/a2ee9befe65f49f1b388f8d4b75cb422?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3598306",
-            "url": "https://wordwall.net/embed/97b070eb6b29400089e6e772398b68bc?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3598303",
-            "url": "https://wordwall.net/embed/63115da0f38b4499b426302faf506e9a?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -3059,53 +2823,7 @@
           "He was missing Jan.",
           " Jan petted him and hugged him."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3642470",
-            "url": "https://wordwall.net/embed/216951f525b54c4a8eed2030d17e647b?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3642471",
-            "url": "https://wordwall.net/embed/0fbc5159b03e4aa8a35e299bf0cd932f?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3642466",
-            "url": "https://wordwall.net/embed/9702a028a5344bd7beed8e7ee9323ce8?themeId=27&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3642465",
-            "url": "https://wordwall.net/embed/a1b3a229438a4a1a94c172c1f1430c7f?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4464442",
-            "url": "https://wordwall.net/embed/91ca04b1a2d04043a8bc09c00c91cc3a?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3642464",
-            "url": "https://wordwall.net/embed/7f9785ec3f7141f5a1e463df57c844f1?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3642462",
-            "url": "https://wordwall.net/embed/1a2ef3bd203f4c81a8656e6d9a11c885?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3642469",
-            "url": "https://wordwall.net/embed/8dcce5a86e4e41ad8cb5c82ca60766d9?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3642467",
-            "url": "https://wordwall.net/embed/cd053e7a2d6046659fbdd3a8a3a5c18c?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -3144,48 +2862,7 @@
           "Rabbit and kitten went on a picnic. A bug is in the basket.",
           " It is hidden by the fabric napkin. "
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3643757",
-            "url": "https://wordwall.net/embed/128d3b647d3648659d3e9a7b3dec6135?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3643758",
-            "url": "https://wordwall.net/embed/05801ca734fe42f2a3560cd47d687e58?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3643752",
-            "url": "https://wordwall.net/embed/a5b658bf769c41efa64bcda44fab4fe7?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3643761",
-            "url": "https://wordwall.net/embed/bb51d3dd68424107b5c1c666fa70e000?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4464749",
-            "url": "https://wordwall.net/embed/2ec3d010d7d14817affe14aef9012765?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3643751",
-            "url": "https://wordwall.net/embed/a7f663a5edd54bf28bc13f4e3a2b0fb2?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3643750",
-            "url": "https://wordwall.net/embed/dc760987dcfe4a6d9a69a61198ad411c?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3643755",
-            "url": "https://wordwall.net/embed/d604cea6acc44403a2ab3bda42ec9a61?themeId=1&templateId=38"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -3709,53 +3386,7 @@
           "He got up at sunrise.",
           "He can go inside to escape the sunshine.  "
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3645776",
-            "url": "https://wordwall.net/embed/80d6054feb4243cdb388338e1ef7c945?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3645774",
-            "url": "https://wordwall.net/embed/54fc6e1e83a54bd1958b1be69f91035b?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3645773 ",
-            "url": "https://wordwall.net/embed/f8da3af332ee409aa27ae81ff4bd3a15?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3363305",
-            "url": "https://wordwall.net/embed/b933ae6eaa134515a16005c80aec9127?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3645780",
-            "url": "https://wordwall.net/embed/4701fc30366e47459692cb55e18cdff6?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4498068",
-            "url": "https://wordwall.net/embed/e2ee162d5ea34fe4b2e7309eb79ee469?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3645772",
-            "url": "https://wordwall.net/embed/ddc9578416ef41c2adf3c0aba68d1acc?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3645771",
-            "url": "https://wordwall.net/embed/40ee072fd3cb43faa350d5d75e670030?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3645775",
-            "url": "https://wordwall.net/embed/40c57f563be948608711b9233033a3bd?themeId=1&templateId=38"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -4058,55 +3689,9 @@
         "fluencySentences": [
           "The king did sing a song.",
           "Then he rang the gong.",
-          "Ding dong. Ding dong."
+          "DIng dong. DIng dong."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3653469",
-            "url": "https://wordwall.net/embed/700fc32880604290981b5ca98e87903a?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "Sort",
-            "resource": "https://wordwall.net/resource/3646231",
-            "url": "https://wordwall.net/embed/8d4700636a814926916f91b966e9f8be?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3646233",
-            "url": "https://wordwall.net/embed/08831e21c9064c51937e5a3d00dda3a2?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3646219",
-            "url": "https://wordwall.net/embed/62f4a94a0c384ff8bf1bd26913efa6b8?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4466028",
-            "url": "https://wordwall.net/embed/0a436fac215142fa82aba8c36fb89ae8?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3646220",
-            "url": "https://wordwall.net/embed/235be1573afc406da9a7e0563be71a2c?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/2763480",
-            "url": "https://wordwall.net/embed/24d926c76ad74b398cbd7cb160ec4a31?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3646218",
-            "url": "https://wordwall.net/embed/c780296ce8fd49a5a7997e999ade4392?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3651623",
-            "url": "https://wordwall.net/embed/a2da4c631988433d832fe56629d03912?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -4146,53 +3731,7 @@
           "He put the pink piggy bank in the fish tank.",
           "It sank and he cannot yank it back up."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3654118",
-            "url": "https://wordwall.net/embed/bfc58c4169cb4580895d178c1da8b159?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "Sort",
-            "resource": "https://wordwall.net/resource/3654130",
-            "url": "https://wordwall.net/embed/feb92d86a8b44455b8b7f71e3c8b71e0?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3654128",
-            "url": "https://wordwall.net/embed/3ecc71429aa84a83a315e74d7eda0bc6?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3654125",
-            "url": "https://wordwall.net/embed/fd54c97af8274482b0ef9ac13df6d7fa?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4466505",
-            "url": "https://wordwall.net/embed/cf011f19568840de9ac8de905101cac8?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3654126",
-            "url": "https://wordwall.net/embed/391d30124ea1433ab574e0221dcc193c?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3654122",
-            "url": "https://wordwall.net/embed/d6678370110c412bbbb1c7e2ec7345ff?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3654123",
-            "url": "https://wordwall.net/embed/2e158c4b6c7d462280d72530b92b4bb7?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3654120",
-            "url": "https://wordwall.net/embed/966b050b87914f4f9beb688069b05012?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -4513,48 +4052,7 @@
           "The car is parked far away.",
           "It is in the barn at the farm."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3685251",
-            "url": "https://wordwall.net/embed/9794f8817b6c4eb2b9b7bff250a0e6aa?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3685247",
-            "url": "https://wordwall.net/embed/070fe70365e548a59a176fedf0567023?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3685245",
-            "url": "https://wordwall.net/embed/74a8332864a641a8a15afc8a8f7160a2?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4466749",
-            "url": "https://wordwall.net/embed/26e2ad563ae249c2821434df122c63f1?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3685246",
-            "url": "https://wordwall.net/embed/54d7593c69ff4190ad1b91cbfd008696?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3685242",
-            "url": "https://wordwall.net/embed/0f774c3ed4e74597a96d792ce22668b9?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3685243",
-            "url": "https://wordwall.net/embed/d907a0deee2b4888a2dd3386e0c8e537?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3685250",
-            "url": "https://wordwall.net/embed/25c1e876557a461097dc977da124eabc?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -5295,53 +4793,7 @@
           "The flare will start a forest fire over there.",
           "The fire will scare the hare and the mare for sure."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3717761",
-            "url": "https://wordwall.net/embed/e5e8f584c56d432397d39ef7985db244?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3717758",
-            "url": "https://wordwall.net/embed/88b84140903d4bcbb4396fb665066bf9?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3717757 ",
-            "url": "https://wordwall.net/embed/4283a89b586d40289762d8a73f6d2e50?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3717762",
-            "url": "https://wordwall.net/embed/f8f2c3f2ae364c869fb8a241340bf0fa?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4498621",
-            "url": "https://wordwall.net/embed/2707bcfeadcf4984a4622990b149d8fe?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3717756",
-            "url": "https://wordwall.net/embed/013167f8b7094f0eb4cc5d88fe744a1b?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3717754",
-            "url": "https://wordwall.net/embed/ba5c5b1edf17422ba0ff9e0ff602f9fd?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3717752",
-            "url": "https://wordwall.net/embed/ae73d8372b86406ab06952a4aac0c12f?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3717752",
-            "url": "https://wordwall.net/embed/c186eff48f7349389e4d1e9214984768?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -5513,53 +4965,7 @@
           " cutest",
           "  and safest pet I have. Hiis fur is thicker and longer than my dog's fur.  My rabbit needs to be braver to get closer to my dog."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3729703",
-            "url": "https://wordwall.net/embed/1077f05ab0ab41cea46f3aca90a1d664?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3729701",
-            "url": "https://wordwall.net/embed/97332dfe3b584259bcaaf64cda18f05d?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3729700 ",
-            "url": "https://wordwall.net/embed/ed394568f7404f41bfde6cb6a9bc7472?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3729704",
-            "url": "https://wordwall.net/embed/18c88253e28c476aa66a4ddc5e016793?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4499296",
-            "url": "https://wordwall.net/embed/72ef604375e841fbb85473ee778ba41e?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3729699",
-            "url": "https://wordwall.net/embed/d0b19787f10c463d8c989fb7a2a49779?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3729698",
-            "url": "https://wordwall.net/embed/f90a585f088f4f98bc454c59a4f71247?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3729702",
-            "url": "https://wordwall.net/embed/4790beb98dec4193b6e4d51f01abbb8a?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3729696",
-            "url": "https://wordwall.net/embed/f3e2ab94da0a481aaf1dd7a6c7bffccb?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -5597,53 +5003,7 @@
         "fluencySentences": [
           "Jim rented a cabin. He texted Matt and asked him to go hunting and camping with him. He will be resting and fishing too."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3739052",
-            "url": "https://wordwall.net/embed/d3c305d7370d4bc6a9cf72fdd0e196ac?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3739050",
-            "url": "https://wordwall.net/embed/001e07bf59004a24b199882bbf1af623?themeId=1&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3739049",
-            "url": "https://wordwall.net/embed/a8fb1fb12f234fa09545879852055705?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3739053",
-            "url": "https://wordwall.net/embed/1a359e8d388649f5ab0bc0689965aff3?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4499631",
-            "url": "https://wordwall.net/embed/a81e0f37668a4e519273ad0185a30a0c?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3739047",
-            "url": "https://wordwall.net/embed/085c174188e84114ad29591ecdf1b528?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3739054",
-            "url": "https://wordwall.net/embed/216e152ffd384f6792da16e0bba997d9?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3739051",
-            "url": "https://wordwall.net/embed/1e317a56e2a84505863b2ca310605ccc?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3739046",
-            "url": "https://wordwall.net/embed/a17d37cc7a654eeba4a96ff0f8404e21?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",
@@ -5681,53 +5041,7 @@
         "fluencySentences": [
           "I loved racing cars and riding bikes when I lived in Texas. I hiked and camped too. I am hoping we can go tubing on the sledding hill now that I live  where it is colder."
         ],
-        "games": [
-          {
-            "gameTypeId": "whack-a-mole",
-            "resource": "https://wordwall.net/resource/3739390",
-            "url": "https://wordwall.net/embed/e0bbc33aef76415cb5dd6ea9f1c0999e?themeId=49&templateId=45"
-          },
-          {
-            "gameTypeId": "sort",
-            "resource": "https://wordwall.net/resource/3739375",
-            "url": "https://wordwall.net/embed/14c91db3682b4f4ebcf0fcf020b6e030?themeId=23&templateId=2"
-          },
-          {
-            "gameTypeId": "random",
-            "resource": "https://wordwall.net/resource/3739374",
-            "url": "https://wordwall.net/embed/eb4f8ff820ab42aa806152020e425fc1?themeId=42&templateId=70"
-          },
-          {
-            "gameTypeId": "mastery",
-            "resource": "https://wordwall.net/resource/3739393",
-            "url": "https://wordwall.net/embed/d7d39a1fda69460d86a8b661d486e6e9?themeId=1&templateId=7"
-          },
-          {
-            "gameTypeId": "sentences",
-            "resource": "https://wordwall.net/resource/4538402",
-            "url": "https://wordwall.net/embed/3f1cefaa90cb42709f09ddefc1ab3082?themeId=1&templateId=36"
-          },
-          {
-            "gameTypeId": "word-builder",
-            "resource": "https://wordwall.net/resource/3739373",
-            "url": "https://wordwall.net/embed/77a6277973b44cb493171b215f2d1269?themeId=1&templateId=47"
-          },
-          {
-            "gameTypeId": "alien",
-            "resource": "https://wordwall.net/resource/3739377",
-            "url": "https://wordwall.net/embed/786fa77fc82849faa95c11247e00f2b6?themeId=23&templateId=47"
-          },
-          {
-            "gameTypeId": "scramble",
-            "resource": "https://wordwall.net/resource/3739376",
-            "url": "https://wordwall.net/embed/a96d6fec01344694a11b4935a85ab1d8?themeId=1&templateId=38"
-          },
-          {
-            "gameTypeId": "match",
-            "resource": "https://wordwall.net/resource/3739369",
-            "url": "https://wordwall.net/embed/263ecdad7e5343eb88b10a5b39682edc?themeId=1&templateId=3"
-          }
-        ],
+        "games": [],
         "tabs": [
           "stretch",
           "words",

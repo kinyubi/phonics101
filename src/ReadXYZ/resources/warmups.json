@@ -1,32 +1,1109 @@
 {
   "lessons": [
     {
+      "lessonId": "vowels",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "ant",
+            "end",
+            "in"
+          ]
+        },
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "off",
+            "up"
+          ]
+        },
+        {
+          "directions": "What letter says:",
+          "parts": [
+            "/o/",
+            "/e/",
+            "/i/"
+          ]
+        },
+        {
+          "directions": "What letter says:",
+          "parts": [
+            "/a/",
+            "/u/"
+          ]
+        },
+        {
+          "directions": "What is a word that starts with:",
+          "parts": [
+            "a",
+            "e",
+            "o"
+          ]
+        },
+        {
+          "directions": "How many words are in the sentence?",
+          "parts": [
+            "I like cake.",
+            "I like chocolate cake.",
+            "Do you like cake too?"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "Consonants 1",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "sock",
+            "ten",
+            "pig"
+          ]
+        },
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "not",
+            "cup",
+            "king"
+          ]
+        },
+        {
+          "directions": "What letter says:",
+          "parts": [
+            "/h/",
+            "/r/",
+            "/m/"
+          ]
+        },
+        {
+          "directions": "What letter says:",
+          "parts": [
+            "/d/",
+            "/g/",
+            "/s/"
+          ]
+        },
+        {
+          "directions": "What is a word that starts with:",
+          "parts": [
+            "/t/",
+            "/p/",
+            "/c/"
+          ]
+        },
+        {
+          "directions": "How many words are in the sentence?",
+          "parts": [
+            "The mud is fun.",
+            "The bath is fun too.",
+            "Now I am clean."
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "Review",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "hot",
+            "ten",
+            "lake",
+            "chat"
+          ]
+        },
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "shore",
+            "then",
+            "pit",
+            "rug"
+          ]
+        },
+        {
+          "directions": "What letter says:",
+          "parts": [
+            "/w/",
+            "/s/",
+            "/a/",
+            "/r/"
+          ]
+        },
+        {
+          "directions": "What letter says:",
+          "parts": [
+            "/e/",
+            "/t/",
+            "/y/",
+            "/d/"
+          ]
+        },
+        {
+          "directions": "What is a word that starts with:",
+          "parts": [
+            "/p/",
+            "/n/",
+            "/b/",
+            "/c/"
+          ]
+        },
+        {
+          "directions": "How many words are in the sentence?",
+          "parts": [
+            "I am hungry!",
+            "What are we eating?",
+            "I love hamburgers."
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "Consonants 2",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "lock",
+            "fan",
+            "big",
+            "quack"
+          ]
+        },
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "thumb",
+            "shoe",
+            "chair"
+          ]
+        },
+        {
+          "directions": "What letter says:",
+          "parts": [
+            "/y/",
+            "/x/",
+            "/z/"
+          ]
+        },
+        {
+          "directions": "What letter says:",
+          "parts": [
+            "/d/",
+            "/g/",
+            "/s/"
+          ]
+        },
+        {
+          "directions": "What is a word that starts with:",
+          "parts": [
+            "/w/",
+            "/j/",
+            "/v/"
+          ]
+        },
+        {
+          "directions": "How many words are in the sentence?",
+          "parts": [
+            "Watch me dig.",
+            "The hole is deep.",
+            "Do not fall in."
+          ]
+        }
+      ]
+    },
+    {
       "lessonId": "at",
       "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
       "warmups": [
         {
           "directions": "Count the words in the sentence.",
           "parts": [
-            "The /rat/ ran fast.",
-            "The /cat/ /sat/.",
-            "The /rat/ has a /hat/."
+            "The rat ran fast.",
+            "The cat sat.",
+            "The rat has a hat."
           ]
         },
-
         {
           "directions": "What is the first sound you hear in...",
           "parts": [
             "cat",
             "fat",
-            "bat"
-          ]},
+            "bat",
+            "mat"
+          ]
+        },
         {
-          "directions": "/Fat/ and /cat/ rhyme because they both end in /at/.",
+          "directions": "What rhymes with pat?",
+          "parts": []
+        },
+        {
+          "directions": "Fat and cat rhyme because they both end in /at/. Do the following words rhyme?",
           "parts": [
-            "What else rhymes with /fat/?"
+            "fat/fan",
+            "sat/pat",
+            "rat/ran"
+          ]
+        },
+        {
+          "directions": "How many syllables are in the following words?",
+          "parts": [
+            "sat",
+            "wombat",
+            "acrobat",
+            "cattle"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "batman",
+            "catnip",
+            "combat"
           ]
         }
-
+      ]
+    },
+    {
+      "lessonId": "ap",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "Count the words in the sentence.",
+          "parts": [
+            "What is that?",
+            "It looks like a monster!",
+            "It is a big bear."
+          ]
+        },
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "lap",
+            "map",
+            "tap",
+            "rap"
+          ]
+        },
+        {
+          "directions": "What rhymes with cat?",
+          "parts": []
+        },
+        {
+          "directions": "Cap and sap rhyme because they both end in /ap/. Do the following words rhyme?",
+          "parts": [
+            "lap/pap",
+            "tap/tan",
+            "yap/map",
+            "fat/cap"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "tapping",
+            "gap",
+            "mattress",
+            "capital"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "Capture",
+            "Wrapper",
+            "Happen"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "at + ap",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "cat",
+            "sap",
+            "lap",
+            "mat"
+          ]
+        },
+        {
+          "directions": "What rhymes with gap?",
+          "parts": []
+        },
+        {
+          "directions": "Map and tap rhyme because they both end in ap. Do the following words rhyme?",
+          "parts": [
+            "map/mat",
+            "zap/sap",
+            "cat/cap",
+            "rat/hat"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "catcher",
+            "pat",
+            "ratify",
+            "catfish"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "raptor",
+            "mapping",
+            "captain",
+            "cattle"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "capful",
+            "laptop",
+            "baptist",
+            "sapling"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "ag",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "lag",
+            "rag",
+            "tag",
+            "bag"
+          ]
+        },
+        {
+          "directions": "What rhymes with sag?",
+          "parts": []
+        },
+        {
+          "directions": "Tag and bag rhyme because they both end in ap. Do the following words rhyme?",
+          "parts": [
+            "bag/bat",
+            "rag/mag",
+            "sag/sap",
+            "hag/gag"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "baggage",
+            "magazine",
+            "dagger",
+            "rag"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "bagpipe",
+            "tagalong",
+            "wagon",
+            "jaguar"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "magnet",
+            "ragtop",
+            "magma",
+            "wagging"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "at + ag",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What is the last sound you hear in...",
+          "parts": [
+            "rat",
+            "rag",
+            "cap",
+            "sag"
+          ]
+        },
+        {
+          "directions": "What rhymes with bag?",
+          "parts": []
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "lag/mag",
+            "bat/bag",
+            "cat/sat",
+            "lap/cap"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "wagon",
+            "rattle",
+            "catnapper",
+            "saggy"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "magnet",
+            "tattle",
+            "magma",
+            "latitude"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "hazmat",
+            "bathmat",
+            "zigzag",
+            "ragtop"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "an",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What is the first sound you hear in...",
+          "parts": [
+            "ban",
+            "man",
+            "fan",
+            "Jan"
+          ]
+        },
+        {
+          "directions": "What rhymes with can?",
+          "parts": []
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "can/cat",
+            "ran/rat",
+            "ban/tan",
+            "lan/Dan"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "candle",
+            "bandana",
+            "fantastic",
+            "canyon"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "cannon",
+            "random",
+            "banjo",
+            "fancy"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "banish",
+            "sedan",
+            "handsome",
+            "sandle"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "an",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What are the sounds you hear in...",
+          "parts": [
+            "sat",
+            "can",
+            "gag",
+            "lap"
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "cap/sap",
+            "tan/can",
+            "rap/ran",
+            "tap/rag"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "planet",
+            "land",
+            "sandbox",
+            "sanitary"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "inland",
+            "santa",
+            "tanning",
+            "suntan"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "sailboat",
+            "flagpole",
+            "teacup",
+            "backpack"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say footprint. Say footprint again without saying foot.",
+            "goldfish withtout gold",
+            "mailbox without mail",
+            "raincoat without rain",
+            "snowman without snow"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "at + ap + ag + an",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What are the sounds you hear in...",
+          "parts": [
+            "ban",
+            "sag",
+            "rat",
+            "cap"
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "gap/rat",
+            "tap/lap",
+            "jag/zag",
+            "fan/fat"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "statue",
+            "lemonade",
+            "birthday",
+            "radio"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "cupcake",
+            "picnic",
+            "today",
+            "pretend"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "basement",
+            "hotdog",
+            "milkshake",
+            "bedroom"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say bluebird. Say bluebird again without saying blue.",
+            "starfish without star",
+            "sunset without set",
+            "bathtub without tub",
+            "sandbox without box"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "b-d-p for /a/",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What are the sounds you hear in...",
+          "parts": [
+            "dab",
+            "bad",
+            "pad",
+            "dad"
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "dad/dab",
+            "bad/dad",
+            "pad/sad",
+            "pap/pad"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "hairbrush",
+            "fantastic",
+            "sample",
+            "stop"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "rocket",
+            "ending",
+            "rescue",
+            "tornado"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "midnight",
+            "breakfast",
+            "beneath",
+            "hundred"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say seesaw. Say seesaw again without saying saw.",
+            "sunshine without shine",
+            "airplane without air",
+            "lunchbox without box",
+            "lipstick without lip"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "/a/ review",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What are the sounds you hear in...",
+          "parts": [
+            "max",
+            "ham",
+            "sad",
+            "lab"
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "wax/fax",
+            "had/has",
+            "bam/ram",
+            "jab/jag"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "bridge",
+            "grandparent",
+            "rescue",
+            "library"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "barnyard",
+            "cowboy",
+            "downtown",
+            "teaspoon"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "airport",
+            "grandma",
+            "snowflake",
+            "drumstick"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say suntan. Say suntan again without saying sun.",
+            "notebook without note",
+            "inside without in",
+            "myself without my",
+            "outside without out"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "it",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "What are the sounds you hear in...",
+          "parts": [
+            "zit",
+            "wit",
+            "lit",
+            "pit"
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "hit/fit",
+            "bit/bat",
+            "sit/cap",
+            "lit/pit"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "test",
+            "pajamas",
+            "sentence",
+            "video"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "birdhouse",
+            "homework",
+            "without",
+            "something"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "baseball",
+            "racetrack",
+            "handshake",
+            "toothbrush"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say sunburn. Say suntan again without saying burn.",
+            "<s>flash</s>light",
+            "text<s>book</s>",
+            "door<s>bell</s>",
+            "<s>row</s>boat"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "at + it",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "Listen carefully to figure out how the words change...",
+          "parts": [
+            "Say sat. Now say sat again, but say /i/ instead of /a/.",
+            "Say mat...",
+            "Say pat...",
+            "Say cat...",
+            "Say fat..."
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "hat/hit",
+            "kit/sit",
+            "fit/lit",
+            "rat/rag"
+          ]
+        },
+        {
+          "directions": "How many syllables are in...",
+          "parts": [
+            "superhero",
+            "dinosaur",
+            "crayon",
+            "pen"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "spaceship",
+            "anthill",
+            "backyard",
+            "daylight",
+            "earring"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "handstand",
+            "shoelace",
+            "sunrise",
+            "yearbook"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say playground. Say playground again without saying play.",
+            "team<s>mate</s>",
+            "<s>yard</s>stick",
+            "wind<s>shield</s>",
+            "week<s>end</s>"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "ig",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say bit. Now say bit again without saying /b/.",
+            "Say rig. Now say rig again without saying /r/.",
+            "Say pig. Now say pig again wihtout saying /p/.",
+            "Say kit. Now say kit again without saying /k/.",
+            "Say fit. Now say fit again wihout saying /f/."
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "fit/fig",
+            "dig/rig",
+            "sit/lit",
+            "big/bag"
+          ]
+        },
+        {
+          "directions": "What is the first sound in...",
+          "parts": [
+            "thin",
+            "text",
+            "dunk",
+            "fend",
+            "shook"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "homesick",
+            "mailbox",
+            "cardboard",
+            "downstairs",
+            "haircut"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "lifeguard",
+            "sidewalk",
+            "sunlight",
+            "toothpaste"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say earthquake. Say earthquake again without saying earth.",
+            "count<s>down</s>",
+            "<s>hill</s>side",
+            "bare<s>foot</s>",
+            "bath<s>robe</s>"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "ag + ig",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say bag. Now say bag again but say /i/ instead of /a/.",
+            "Say rag...",
+            "Say zag...",
+            "Say wag...",
+            "Say gag..."
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "bag/lag",
+            "rag/rig",
+            "big/jig",
+            "wag/zig"
+          ]
+        },
+        {
+          "directions": "What is the first sound in...",
+          "parts": [
+            "tent",
+            "slug",
+            "mask",
+            "plan",
+            "snake"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "classroom",
+            "roommate",
+            "dashboard",
+            "breakfast",
+            "shipwreck"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "tombstone",
+            "suitcase",
+            "surfboard",
+            "tiptoe",
+            "lighthouse"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say moonlight. Say moonlight again without saying light.",
+            "<s>coast</s>line",
+            "<s>man</s>kind",
+            "flash<s>back</s>",
+            "<s>heart</s>break"
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "it + ig + ip + in",
+      "instructions": "Script: \"I am going to ask you some questions. During this exercise, you will watch me and listen.\"",
+      "warmups": [
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say bit. Now say bit again but don't say /b/.",
+            "Say pig. Now say pig again but don't say /p/.",
+            "Say fin. Now say fin again but don't say /f/.",
+            "Say sip. Now say sip again but don't say /s/."
+          ]
+        },
+        {
+          "directions": "Do these rhyme?",
+          "parts": [
+            "bin/bit",
+            "big/dig",
+            "pin/nip",
+            "zag/tag"
+          ]
+        },
+        {
+          "directions": "What is the last sound in...",
+          "parts": [
+            "snake",
+            "shade",
+            "drop",
+            "crate",
+            "mask"
+          ]
+        },
+        {
+          "directions": "What is the first syllable in...",
+          "parts": [
+            "earache",
+            "viewpoint",
+            "throughout",
+            "darkroom",
+            "drawback"
+          ]
+        },
+        {
+          "directions": "What is the last syllable in...",
+          "parts": [
+            "landmark",
+            "landslide",
+            "windmill",
+            "homemade",
+            "sawdust"
+          ]
+        },
+        {
+          "directions": "Listen carefully...",
+          "parts": [
+            "Say skateboard. Say skateboard again without saying board.",
+            "new<s>born</s>",
+            "<s>pass</s>word",
+            "<s>half</s>way",
+            "day<s>dream</s>"
+          ]
+        }
       ]
     }
   ]
