@@ -134,7 +134,7 @@ class SideNote
         if (!empty($data)) {
             $learningCurve = new LearningCurve();
             $imgURL = $learningCurve->learningCurveChart($data);
-            $html = TwigFactory::getInstance()->renderBlock('timers', 'LearningCurve', ['imageUrl' => $imgURL]) ?? '';
+            $html = TwigFactory::getInstance()->renderBlock('timers2', 'LearningCurve', ['imageUrl' => $imgURL]) ?? '';
         }
 
         return $html;

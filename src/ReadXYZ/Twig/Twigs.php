@@ -84,6 +84,7 @@ class Twigs
         $args['sidebarHtml'] = $this->renderSideBar($tabTypeId);
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         $args['tabInfo'] = $tabInfo;
+        $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         if(empty($blockName)) {
             $blockName = ucfirst($id) . 'Tab';
         }
@@ -178,16 +179,16 @@ class Twigs
         $args['information'] = $info;
         switch ($tabTypeId) {
             case 'fluency':
-                $timerHtml = $this->factory->renderBlock('timers', 'fluencyTimer', $timerArgs);
+                $timerHtml = $this->factory->renderBlock('timers2', 'fluencyTimer', $timerArgs);
                 $curveHtml = $side->getLearningCurveHTML();
                 $args['timerHtml'] = $timerHtml . $curveHtml;
                 break;
             case 'practice':
-                $timerHtml = $this->factory->renderBlock('timers', 'practiceTimer', $timerArgs);
+                $timerHtml = $this->factory->renderBlock('timers2', 'practiceTimer', $timerArgs);
                 $args['timerHtml'] = $timerHtml;
                 break;
             case 'test':
-                $timerHtml = $this->factory->renderBlock('timers', 'testTimer', $timerArgs);
+                $timerHtml = $this->factory->renderBlock('timers2', 'testTimer', $timerArgs);
                 $curveHtml = $side->getTestCurveHTML();
                 $args['timerHtml'] = $timerHtml . $curveHtml;
                 break;
@@ -196,9 +197,9 @@ class Twigs
         }
         $html = $this->factory->renderBlock($this->lessonTemplate, 'SideBar', $args);
         if ('mastery' == $tabTypeId) {
-            $html .= $this->factory->renderBlock('timers', 'MasterySaveProgressButton');
+            $html .= $this->factory->renderBlock('timers2', 'MasterySaveProgressButton');
         } elseif ('test' == $tabTypeId) {
-            $html .= $this->factory->renderBlock('timers', 'testButtons');
+            $html .= $this->factory->renderBlock('timers2', 'testButtons');
         }
         return $html;
     }

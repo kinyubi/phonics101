@@ -251,7 +251,7 @@
         "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat",
         "supplementalWordList": "",
         "contrastList": "",
-        "stretchList": "b-a-t/b-at/<s>bat<s>,c-a-t/c-at/cat,f-a-t/f-at/fat,h-a-t/h-at/hat,l-a-t/l-at/lat,m-a-t/m-at/mat,p-a-t/p-at/pat,r-a-t/r-at/rat,s-a-t/s-at/sat,t-a-t/t-at/tat,v-a-t/v-at/vat",
+        "stretchList": "b-a-t/b-at/bat,c-a-t/c-at/cat,f-a-t/f-at/fat,h-a-t/h-at/hat,l-a-t/l-at/lat,m-a-t/m-at/mat,p-a-t/p-at/pat,r-a-t/r-at/rat,s-a-t/s-at/sat,t-a-t/t-at/tat,v-a-t/v-at/vat",
         "fluencySentences": [
           "The rat sat on the cat.",
           "The cat sat on the mat.",

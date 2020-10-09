@@ -10,13 +10,15 @@ function pad(val) {
 
 let myPracticeInterval = 0;
 let totalPracticeSeconds = 0;
+let practiceRunning = false;
 
 let myFluencyInterval = 0;
 let totalFluencySeconds = 0;
+let fluencyRunning = false;
 
 let myTestInterval = 0;
 let totalTestSeconds = 0;
-
+let testRunning = false;
 
 function displayPracticeTime() {
     totalPracticeSeconds++;
@@ -47,6 +49,15 @@ $(function() {
     $("#practiceStopButton").on("click", function(e) {
         clearInterval(myPracticeInterval);
     });
+    $("#practiceStartStopButton").on("click", function(e) {
+        if (practiceRunning) {
+            clearInterval(myPracticeInterval);
+            practiceRunning = false;
+        } else {
+            myPracticeInterval = setInterval(function() { displayPracticeTime()}, 1000);
+            practiceRunning = true;
+        }
+    });
     $("#practiceResetButton").on("click", function (e) {
         totalPracticeSeconds = 0;
         document.getElementById("practiceTime").innerHTML = "00:00";
@@ -57,6 +68,15 @@ $(function() {
     });
     $("#fluencyStopButton").on("click", function(e) {
         clearInterval(myFluencyInterval);
+    });
+    $("#fluencyStartStopButton").on("click", function(e) {
+        if (fluencyRunning) {
+            clearInterval(myFluencyInterval);
+            fluencyRunning = false;
+        } else {
+            myFluencyInterval = setInterval(function() { displayFluencyTime()}, 1000);
+            fluencyRunning = true;
+        }
     });
     $("#fluencyResetButton").on("click", function (e) {
         totalFluencySeconds = 0;
@@ -96,6 +116,15 @@ $(function() {
     $("#testStopButton").on("click", function(e) {
         clearInterval(myTestInterval);
         // document.getElementById("testStartButton").style.pointerEvents = 'auto';
+    });
+    $("#testStartStopButton").on("click", function(e) {
+        if (testRunning) {
+            clearInterval(myTestInterval);
+            testRunning = false;
+        } else {
+            myTestInterval = setInterval(function() { displayTestTime()}, 1000);
+            testRunning = true;
+        }
     });
     $("#testResetButton").on("click", function (e) {
         totalTestSeconds = 0;

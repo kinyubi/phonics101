@@ -145,13 +145,14 @@ class Page
         if ($this->navBar) {
             $pageArgs['menu'] = $this->navBar;
         }
-        $pageArgs['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
+        $isSmallScreen = ScreenCookie::isScreenSizeSmall();
+        $pageArgs['isSmallScreen'] = $isSmallScreen;
         if (not(isset($pageArgs['bodyBackgroundClass']))) {
             $pageArgs['bodyBackgroundClass'] = 'bg-transparent';
         }
         $this->addArguments($pageArgs);
         $html = $twig->renderBlock('default_body', 'body', $this->arguments);
-        $this->addBaseArguments(['content' => $html]);
+        $this->addBaseArguments(['content' => $html, 'isSmallScreen' => $isSmallScreen]);
         return $twig->renderTemplate('base', $this->baseArguments);
     }
 

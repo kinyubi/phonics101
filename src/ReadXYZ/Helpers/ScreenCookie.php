@@ -43,7 +43,7 @@ class ScreenCookie
     public static function isScreenSizeSmall(): bool
     {
         $sizes = self::getScreenInfo();
-        return ($sizes->windowWidth < 900);
+        return ($sizes->screenWidth < 800);
     }
 
     private static function makeObject(int $screenWidth, int $screenHeight, int $windowWidth, int $windowHeight, string $type)

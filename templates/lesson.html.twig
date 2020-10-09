@@ -1,23 +1,16 @@
 {% macro tabHeader(tabInfo) %}
-  <div class="row h1 text-readxyz d-flex flex-nowrap justify-content-center">
+  <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
     <div>{{ tabInfo.tabDisplayAs }}</div>
   </div>
   {% if tabInfo.script %}
-    <div class="row  d-flex flex-nowrap justify-content-start  m-2 p-2">
+    <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
 
-      <div class="text-readxyz h3">Script:&nbsp;</div>
-      <div class="text-secondary h3">&quot;{{ tabInfo.script }}&quot;</div>
+      <div class="text-readxyz ">Script:&nbsp;</div>
+      <div class="text-secondary ">&quot;{{ tabInfo.script }}&quot;</div>
     </div>
   {% endif %}
 {% endmacro %}
 
-{% macro modalAnchorCbox(game) %}
-  {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell', 'sound-box']) ? game.gameTypeId : 'games' %}
-  <a class="img-contain {{ class }}" href="{{ game.url }}">
-    <img src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
-         title="{{ game.gameTitle }}" width="{{ w }}" height="{{ h }}">
-  </a>
-{% endmacro %}
 
 {# input:
     tabInfo         : fields -> tabTypeId, tabDisplayAs, tabClassName, script, imageFile
@@ -63,16 +56,17 @@
         </td>
       </tr>
     {% endif %}
-    {#  GAMES #}
+    {# GAMES #}
     <table id="{{ tabId }}-sidebar-contents" class="table table-sm table-borderless">
       <tbody>
       {% set h =  isSmallScreen ? 68 : 115 %}
       {% set w = isSmallScreen  ? 75 : 150 %}
       {% for game in games %}
-        <tr class="d-flex">
+        <tr class="d-flex justify-content-center align-items-center">
           <td colspan="2">
+            {% set url = (game.gameTypeId == 'tic-tac-toe') and (h > 100) ? '/tictactoe/tictac-lg.php' : game.url  %}
             {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell', 'sound-box']) ? game.gameTypeId : 'games' %}
-            <a class="{{ class }}" href="{{ game.url }}">
+            <a class="{{ class }}" href="{{ url }}">
               <img src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
                    title="{{ game.gameTitle }}" width="{{ w }}" height="{{ h }}">
             </a>
@@ -96,7 +90,6 @@
         </div>
       </a>
     {% endif %}
-s
     {% if (tabId == 'intro') and isBdpLesson %}
       <a class="intro-image" href="{{ pronounceImage }}">
         <div class="bdp-thumb">
@@ -117,43 +110,49 @@ s
   {% set tabName = tabInfo.tabDisplayAs %}
   {% set dim = isSmallScreen ? 25 : 40 %}
   <div class="container" id="{{ tabId }}-container">
-    {{ _self.tabHeader(tabInfo) }}
-    <div class="row  d-flex flex-sm-wrap">
-      <div id="{{ tabId }}-accordion">
 
-        {% for warmup in warmups.warmupItems %}
-          <div class="card">
+    <div class="row  d-flex  flex-nowrap p-2 mx-auto">
+      <div id="{{ tabId }}-main" class="col-8 ">
+        {{ _self.tabHeader(tabInfo) }}
+        <div id="{{ tabId }}-accordion">
 
-            <div class="card-header" id="warmup-header{{ loop.index }}">
-              <div class="row d-flex flex-nowrap justify-content-start">
-                <div>
-                  <img src="/dice/images/dice{{ loop.index }}-150x150.jpg" alt="{{ loop.index }}" height="{{ dim }}" width="{{ dim }}"/>
+          {% for warmup in warmups.warmupItems %}
+            <div class="card">
+
+              <div class="card-header" id="warmup-header{{ loop.index }}">
+                <div class="row d-flex flex-nowrap justify-content-start">
+                  <div>
+                    <img src="/dice/images/dice{{ loop.index }}-150x150.jpg" alt="{{ loop.index }}" height="{{ dim }}" width="{{ dim }}"/>
+                  </div>
+                  <div class="mb-0 h5">
+                    <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content{{ loop.index }}"
+                            aria-expanded="false" aria-controls="warmup-content{{ loop.index }}">{{ warmup.directions }}
+                    </button>
+                  </div>
                 </div>
-                <div class="mb-0 h5">
-                  <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content{{ loop.index }}"
-                          aria-expanded="false" aria-controls="warmup-content{{ loop.index }}">{{ warmup.directions }}
-                  </button>
+              </div>
+
+              <div id="warmup-content{{ loop.index }}" class="collapse" aria-labelledby="warmup-header{{ loop.index }}"
+                   data-parent="#{{ tabId }}-accordion">
+                <div class="card-body">
+                  <ul class="list-group">
+                    {% for part in warmup.parts %}
+                      <li class="list-group-item list-group-item-readxyz">{{ part }}</li>
+                    {% endfor %}
+                  </ul>
                 </div>
               </div>
             </div>
+          {% endfor %}
 
-            <div id="warmup-content{{ loop.index }}" class="collapse" aria-labelledby="warmup-header{{ loop.index }}"
-                 data-parent="#{{ tabId }}-accordion">
-              <div class="card-body">
-                <ul class="list-group">
-                  {% for part in warmup.parts %}
-                    <li class="list-group-item list-group-item-readxyz">{{ part }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+        </div>
 
       </div>
-    </div>
-    <div class="row justify-content-center p-2 mx-auto">
-      <iframe src="/dice/rolldice-orig.php" height="160" width="200" style="border: none"></iframe>
+      <div id="{{ tabId }}-sidebar" class="col-4 mx-1 px-0 scaled">
+
+          <iframe src="/dice/rolldice-orig.php" height="160" width="200" style="border: none" ></iframe>
+
+      </div>
     </div>
   </div>
 {% endblock WarmupTab %}
@@ -167,10 +166,11 @@ s
 {% block IntroTab %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
-    {{ _self.tabHeader(tabInfo) }}
+
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 p-2">
-      <div id="{{ tabId }}-main" class="flex-grow-1 ">
+      <div id="{{ tabId }}-main" class="flex-grow-1 col-9">
+        {{ _self.tabHeader(tabInfo) }}
         <table class="table table-sm table-borderless">
           <tbody>
           {% set len = stretchList[0]|length %}
@@ -202,11 +202,11 @@ s
 {% block WriteTab %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
-    {{ _self.tabHeader(tabInfo) }}
+
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9  w-75">
-
+        {{ _self.tabHeader(tabInfo) }}
         <table class="table table-sm table-borderless">
           <tbody>
           {% for word in wordList %}
@@ -233,11 +233,11 @@ s
 {% block PracticeTab %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
-    {{ _self.tabHeader(tabInfo) }}
+
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9">
-
+        {{ _self.tabHeader(tabInfo) }}
         <table class="table table-sm table-borderless">
           <tbody>
           {% for i in range(0,20,3) %}
@@ -269,12 +269,13 @@ s
   {% set listIndex = listIndex ?? 0 %}
   {% set func = withE ? 'WSpin.wordSpinnerPlusE' : 'WSpin.wordSpinner' %}
   <div class="container">
-    {{ _self.tabHeader(tabInfo) }}
+
     {% set tabId = tabInfo.tabTypeId %}
     {# all encompassing row #}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       {# main column 75% wide #}
       <div class="col-9">
+        {{ _self.tabHeader(tabInfo) }}
         <div class="row d-flex flex-nowrap">
           {# Prefix letters column #}
           <div class="col-8 ">
@@ -358,10 +359,11 @@ s
       {% set scales = ['mast-5', 'mast-4', 'mast-3', 'mast-3'] %}
       {% set cols = ['col-4', 'col-4', 'col-4', 'col-4'] %}
       <div class="container">
-        {{ _self.tabHeader(tabInfo) }}
+
         {% set tabId = tabInfo.tabTypeId %}
         <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
           <div id="{{ tabId }}-main" class="col-9">
+            {{ _self.tabHeader(tabInfo) }}
             <div class="row">
               <form id="masteryform" name="masteryform" method="POST" action="/actions/updateMastery.php">
                 <div class="row d-flex flex-wrap">
@@ -398,10 +400,11 @@ s
     {% block FluencyTab %}
       {% set listIndex = listIndex ?? 0 %}
       <div class="container">
-        {{ _self.tabHeader(tabInfo) }}
+
         {% set tabId = tabInfo.tabTypeId %}
         <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
           <div id="{{ tabId }}-main" class="col-8 ">
+            {{ _self.tabHeader(tabInfo) }}
             <div class="wordlist">
               {% for sentence in fluencySentences %}
                 <span>{{ sentence }}</span><br>
@@ -423,10 +426,11 @@ s
     {% block TestTab %}
       {% set listIndex = listIndex ?? 0 %}
       <div class="container">
-        {{ _self.tabHeader(tabInfo) }}
+
         {% set tabId = tabInfo.tabTypeId %}
         <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
           <div id="{{ tabId }}-main" class="col-8">
+            {{ _self.tabHeader(tabInfo) }}
             <table class="table table-sm table-borderless">
               <tbody>
               {% for word in wordList %}

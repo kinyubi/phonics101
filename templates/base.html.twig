@@ -46,8 +46,8 @@ Input:
   {% endblock scripts %}
 </head>
 
-<body >
-{#<div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; ">#}
+<body>
+{# <div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; "> #}
 <div class="m-0 p-0">
   {# content comes from the page rendering of a template block like default_body_bs.html.twig. #}
   {{ block('statusModals', 'modal.html.twig') }}
@@ -58,59 +58,42 @@ Input:
 </div>
 
 {% block jqueryReady %}
+  {% set gameDim = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
+  {% set ticDim = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
+  {% set soundDim = isSmallScreen ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
   <script>
       $(document).ready(function () {
         {# when bootstrap modal is active, don't dim background #}
           $('.modal-backdrop').removeClass("modal-backdrop");
-
-        {# bootstrap customized accordion #}
-          // Add minus icon for collapse element which is open by default
-          // $(".collapse.show").each(function () {
-          //     $(this).prev(".card-header").find(".fas").addClass("fa-minus-circle").removeClass("fa-plus-circle");
-          // });
-          //
-          // // Toggle plus minus icon on show hide of collapse element
-          // $(".collapse").on('show.bs.collapse', function () {
-          //     $(this).prev(".card-header").find(".fas").removeClass("fa-plus-circle").addClass("fa-minus-circle");
-          // }).on('hide.bs.collapse', function () {
-          //     $(this).prev(".card-header").find(".fas").removeClass("fa-minus-circle").addClass("fa-plus-circle");
-          // });
-
-
-          // Toggle plus minus icon on show hide of collapse element
-
-
-          $('[data-toggle="tooltip"]').tooltip();
+          $('[data-toggle="tooltip"]').tooltip({'delay': { show: 1000, hide: 100 }});
 
         {{ otherJqueryReady|raw }}
       });
 
   </script>
   <script>
-
       $('document').ready(function () {
-        {% if lightbox == 'colorbox' %}
+
           $(".ajax").colorbox();
           $(".tic-tac-toe").colorbox({
-              iframe: true, innerWidth: "90%", maxWidth: "440px", innerHeight: "100%", maxHeight: "440px",
+              iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
               top: 20, overlayClose: false, scrolling: false
           });
-          $(".games").colorbox({iframe: true, width: "360px", maxWidth: "500px", height: "380px", top: 20, className: "gameFrame"});
+          // $(".tic-tac-toe").colorbox({
+          //     iframe: true, innerWidth: "90%", maxWidth: "440px", innerHeight: "100%", maxHeight: "440px",
+          //     top: 20, overlayClose: false, scrolling: false
+          // });
+          $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ gameDim }}});
           $(".sound-box").colorbox({
-              iframe: true, innerWidth: 450, innerHeight: 400, top: 100, left: 100,
-              scrolling: false, overlayClose: false
+              iframe: true, scrolling: false, overlayClose: false, {{ soundDim }}
           });
-          $(".advanced-spell").colorbox({
-              iframe: true, innerWidth: 1000, innerHeight: 600, top: 100, left: 100,
-              scrolling: false, overlayClose: false, escKey: false
-          });
+
           $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
           $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
           $(".inline").colorbox({inline: true, width: "50%"});
           $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
 
           $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
-        {% endif %}
 
           // disable parent scrolling when colorbox modal is active
           // reenable scrolling when colorbox modal is closed
@@ -123,17 +106,17 @@ Input:
 
           setScreenCookie();
 
-          $( window ).resize(function() {
-            setScreenCookie();
+          $(window).resize(function () {
+              setScreenCookie();
           });
 
       });
 
   </script>
 {% endblock jqueryReady %}
-<script>
-    window.history.replaceState(null,null); //avoid form warning if user clicks refresh
-</script>
+{#<script>#}
+{#    window.history.replaceState(null, null); //avoid form warning if user clicks refresh#}
+{#</script>#}
 </body>
 </html>
 

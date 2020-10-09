@@ -422,8 +422,9 @@ a.img-contain img {
 @media  (max-width: 575px) {
      .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 1.5rem !important;}
-     .scaled {transform:scale(.4, .4);}
+     .scaled {transform:scale(.5, .5);}
      .size--tab-icon {height: 40px; width: 40px}
+    .size--side-icon {height: 25px; width: 25px}
      .size--tab-icon-height {height: 40px;}
 }
 
@@ -434,6 +435,7 @@ a.img-contain img {
      .wordlist {font-size: 2rem !important;}
      .scaled {transform:scale(.6, .6);}
      .size--tab-icon {height: 40px; width: 40px}
+     .size--side-icon {height: 30px; width: 30px}
      .size--tab-icon-height {height: 40px;}
  }
 
@@ -443,6 +445,7 @@ a.img-contain img {
      .wordlist {font-size: 2.5rem !important;}
      .scaled {transform:scale(.75, .75);}
      .size--tab-icon {height: 70px; width: 70px}
+     .size--side-icon {height: 40px; width: 40px}
      .size--tab-icon-height {height: 70px;}
  }
  /* Large devices (desktops, 992px and up) */
@@ -451,6 +454,7 @@ a.img-contain img {
      .wordlist {font-size: 3rem !important;}
      .scaled {transform:scale(1.0, 1.0);}
      .size--tab-icon {height: 100px; width: 100px}
+     .size--side-icon {height: 50px; width: 50px}
      .size--tab-icon-height {height: 100px;}
  }
 

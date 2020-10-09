@@ -98,14 +98,14 @@ $cat = location::getTicTacToeAnimal($player2);
       }
 
       td {
-          margin: 2px;
-          width: 70px;
-          height: 70px;
+          margin: 4px;
+          width: 140px;
+          height: 140px;
       }
 
       h1 {
           font-family: "Rock Salt", Times, serif;
-          font-size: 26px;
+          font-size: 48px;
           color: #00aabe;
           padding: 5px;
           margin-bottom: 0;
@@ -120,27 +120,27 @@ $cat = location::getTicTacToeAnimal($player2);
           background-color: #00aabe;
           border: none;
           color: white;
-          padding: 5px;
+          padding: 10px;
           text-align: center;
           text-decoration: none;
           display: inline-block;
-          font-size: 10px;
-          margin: 15px 15px 0 0;
+          font-size: 18px;
+          margin: 24px 24px 0 0;
           cursor: pointer;
           border-radius: 8px;
-          width: 65px;
+          width: 120px;
       }
 
       .gamePiece {
-          width: 45px;
-          height: 45px;
+          width: 80px;
+          height: 80px;
           margin: 0;
           z-index: 100;
       }
       .gamePiece__wrapper {
-          width: 50px;
-          height: 50px;
-          margin: 2px;
+          width: 96px;
+          height: 96px;
+          margin: 4px;
       }
 
       .row__ticTacToe:after {
@@ -150,9 +150,9 @@ $cat = location::getTicTacToeAnimal($player2);
       }
 
       .square {
-          width: 70px;
-          height: 70px;
-          padding: 3px;
+          width: 120px;
+          height: 120px;
+          padding: 5px;
           border-collapse: collapse;
           font-family: serif;
           font-size: 40px;

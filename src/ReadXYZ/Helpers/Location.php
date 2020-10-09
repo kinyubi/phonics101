@@ -4,17 +4,13 @@
 namespace ReadXYZ\Helpers;
 
 
-use App\ReadXYZ\Helpers\ScreenCookie;
-use ReadXYZ\Models\Cookie;
-
 class Location
 {
     public const URL = 'url';
     public const FILE = 'file';
     public const RANDOM = 'random';
 
-    public const TIC_TAC_TOE_ANIMAL_DIR = '/images/animals/named/';
-    public const TIC_TAC_TOE_GRAYED_ANIMAL_DIR = '/images/animals/gray/';
+    public const TIC_TAC_TOE_ANIMAL_DIR = '/tictactoe/images/';
     public const BDP_DIR = '/images/bdp/';
     public const FAVICON_DIR = '/images/favicons/';
     public const LESSON_LIST_ICONS_DIR = '/images/lessonlist/';
@@ -28,12 +24,13 @@ class Location
 
     public static function getGameThumbnail(string $gameTypeId): string
     {
-        $isSmall = ScreenCookie::isScreenSizeSmall();
-        if ($isSmall) {
-            return self::SIDEBAR_IMAGES_DIR . $gameTypeId . '_sm.png';
-        } else {
-            return self::SIDEBAR_IMAGES_DIR . $gameTypeId . '.jpg';
-        }
+        // $isSmall = ScreenCookie::isScreenSizeSmall();
+        // if ($isSmall) {
+        //     $thumb = self::SIDEBAR_IMAGES_DIR . $gameTypeId . '_sm.png';
+        // } else {
+        //     $thumb = self::SIDEBAR_IMAGES_DIR . $gameTypeId . '.jpg';
+        // }
+        return self::SIDEBAR_IMAGES_DIR . $gameTypeId . '.jpg';
     }
 
     public static function getTicTacToeAnimal(string $name): string

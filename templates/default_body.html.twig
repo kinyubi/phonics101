@@ -53,7 +53,7 @@ Mapping of Document class properties to twig variables in the Document::render m
   {# create the tabs setting the initial tab as visible and active #}
   {# <div class="container p-0  id="thePage" style="max-width: 960px;"> #}
   <div class="container-fluid p-0" id="thePage" >
-    <div class="row m-0 p-0 justify-content-center {{ bodyBackgroundClass }}" style="width: auto;">
+    <div class="row m-0 p-0 justify-content-start {{ bodyBackgroundClass }}" style="width: auto;">
       {% set tabCount =  tabs | length %}
       {% set visibleTab = (initialTabName is empty) ? (tabs|keys|first) : initialTabName %}
 
@@ -77,7 +77,7 @@ Mapping of Document class properties to twig variables in the Document::render m
     </div>
 
     {# MULTI-TAB CONTENT #}
-    <div class="row">
+    <div class="row d-flex flex-lg-nowrap justify-content-start">
       <div class="tab-content w-100" id="myTabContent">
         {% for tabTitle, tabInfo in tabs %}
           {# CONTENT FOR EACH TAB #}
