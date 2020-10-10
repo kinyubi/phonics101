@@ -1,0 +1,57 @@
+{% import 'tabs/tab_macros.html.twig' as tab_macro %}
+
+{# input:
+    tabInfo
+    warmups
+#}
+{% block WarmupTab %}
+  {% set tabId = tabInfo.tabTypeId %}
+  {% set tabName = tabInfo.tabDisplayAs %}
+  {% set dim = isSmallScreen ? 25 : 40 %}
+  <div class="container" id="{{ tabId }}-container">
+
+    <div class="row  d-flex  flex-nowrap p-2 mx-auto">
+      <div id="{{ tabId }}-main" class="col-8 ">
+        {{ tab_macro.tabHeader(tabInfo) }}
+        <div id="{{ tabId }}-accordion">
+
+          {% for warmup in warmups.warmupItems %}
+            <div class="card">
+
+              <div class="card-header" id="warmup-header{{ loop.index }}">
+                <div class="row d-flex flex-nowrap justify-content-start">
+                  <div>
+                    <img src="/dice/images/dice{{ loop.index }}-150x150.jpg" alt="{{ loop.index }}" height="{{ dim }}" width="{{ dim }}"/>
+                  </div>
+                  <div class="mb-0 h5">
+                    <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content{{ loop.index }}"
+                            aria-expanded="false" aria-controls="warmup-content{{ loop.index }}">{{ warmup.directions }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="warmup-content{{ loop.index }}" class="collapse" aria-labelledby="warmup-header{{ loop.index }}"
+                   data-parent="#{{ tabId }}-accordion">
+                <div class="card-body">
+                  <ul class="list-group">
+                    {% for part in warmup.parts %}
+                      <li class="list-group-item list-group-item-readxyz">{{ part }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+      <div id="{{ tabId }}-sidebar" class="col-4 mx-1 px-0 scaled">
+
+          <iframe src="/dice/rolldice-orig.php" height="160" width="200" style="border: none" ></iframe>
+
+      </div>
+    </div>
+  </div>
+{% endblock WarmupTab %}

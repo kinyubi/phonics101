@@ -29,59 +29,72 @@ inputs:
           font: bold 20px Muli, Century Gothic, sans-serif;
       }
   </style>
-  <div class="list-group list-group-flush" id="groupedLessons">
+  <div class=" lesson-list--width" id="lesson-list">
+
+    {# DISPLAY MOST RECENT LESSON IF IT'S IN THE COOKIE #}
     {% if mostRecentLesson %}
-      <li class="list-group-item border-readxyz  mb-1">
-        <a class="nav-link bg-readxyz text-white border rounded w-100" href="{{ actionHandler }}?P1={{ mostRecentLesson|url_encode }}&P2={{ mostRecentTab }}">
-          <span class="h6 p-2 mr-2">RECENT</span>
-          <span class="h5 mr-5 text-white">{{ mostRecentLesson }}</span>
-        </a>
-      </li>
-    {% endif %}
-    {#  FOR EACH GROUP #}
-    {% for groupName in accordion|keys %}
-      {% set groupIndex = loop.index %}
-      {% set groupHeader = 'header-' ~ loop.index %}
-      {% set groupCollapse = 'collapse-' ~ loop.index %}
-      <li class="list-group-item border-readxyz  mb-1">
-        <a class="img-contain" data-toggle="collapse" href="#{{ groupCollapse }}" aria-controls="{{ groupCollapse }}" aria-expanded="false">
-          <div class="row d-flex flex-nowrap align-items-center mb-2">
-            <div class="col-1">
-              <img src="/images/lessonlist/accordion-unexpanded.png" alt="-" height="35" width="35" class="toggles"/>
-            </div>
-            <div class="h5 ml-3 text-dark col-9">{{ displayAs[groupName] }}</div>
-            <div class="col-2">
-              <img src="/images/keychain/{{ loop.index }}.png" alt="animal" height="42" width="42"/>
-            </div>
-          </div>
-
-        </a>
-        <div id="{{ groupCollapse }}" class="collapse" data-parent="#groupedLessons"
-             aria-labelledby="{{ groupHeader }}">
-          <div class="bg-light">
-            <div class="d-flex flex-column flex-nowrap pl-5" style="width:100%; ">
-              {# FOR EACH LESSON IN A GROUP #}
-              {% for lessonName, masteryLevel in accordion[groupName] %}
-                <div>
-                  <div class="col-12">
-                  <a role="button" href="{{ actionHandler }}?P1={{ lessonName|url_encode }}" class="img-contain">
-                    <div class="row d-flex flex-nowrap align-items-center"
-                         style="height: 4em; background-image: linear-gradient(#f8f8f8, #e8e8e8)">
-                      <div class="col-1">
-                        <img src="/images/lessonlist/lesson-{{ iconList[masteryLevel] }}.png" alt="-" height="35" width="35"/>
-                      </div>
-                      <div class="h5 ml-2 text-dark col-9">{{ displayAs[lessonName] }}</div>
-                    </div>
-
-                  </a>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
+      <div id="most-recent" class="card bg-readlite">
+        <div class="card-header">
+          <div class="row d-flex flex-nowrap just align-items-center ">
+            <i class="fa fa-bolt text-warning fa-2x mx-3" aria-hidden="true"></i>
+            <div class="h3 text-dark mx-4">{{ mostRecentLesson }}</div>
           </div>
         </div>
-      </li>
-    {% endfor %}
+      </div>
+
+    {% endif %}
+    {#  FOR EACH GROUP #}
+    <div id="lesson-accordion">
+      {% for groupName in accordion|keys %}
+        {% set groupIndex = loop.index %}
+        {% set groupHeader = 'header-' ~ loop.index %}
+        {% set groupCollapse = 'collapse-' ~ loop.index %}
+        <div class="card bg-white border-readxyz">
+          <div class="card-header bg-white" id="{{ groupHeader }}">
+            <a class="card-link" data-toggle="collapse" data-target="#{{ groupCollapse }}"
+               aria-controls="{{ groupCollapse }}" aria-expanded="false" style="cursor: pointer">
+              <div class="row d-flex flex-nowrap align-items-center mb-2">
+                <div class="col-1">
+                  <img src="/images/lessonlist/accordion-unexpanded.png" alt="-" class="size--list-icon"/>
+                </div>
+                <div class="h5 ml-3 text-dark col-6">{{ displayAs[groupName] }}</div>
+                <div class="col-4 accordion--image" style="background-image: url(/images/keychain/{{ loop.index }}.png")>
+{#                  <img src="/images/keychain/{{ loop.index }}.png" alt="animal" class="img-scale"/>#}
+                </div>
+              </div>
+
+            </a>
+          </div>
+          <div id="{{ groupCollapse }}" class="collapse" data-parent="#lesson-accordion"
+               aria-labelledby="{{ groupHeader }}">
+            <div class="card-body">
+              <div class="bg-light">
+                <ul class="d-flex flex-column flex-nowrap pl-5" style="width:100%; ">
+
+                  {# FOR EACH LESSON IN A GROUP #}
+                  {% for lessonName, masteryLevel in accordion[groupName] %}
+                    <li class="list-group-item list-group-item-white">
+                      <div class="col-12">
+                      <a role="button" href="{{ actionHandler }}?P1={{ lessonName|url_encode }}" class="img-contain">
+                        <div class="row d-flex flex-nowrap align-items-center"
+                             style="height: 2em; ">
+                          <div class="col-1 mastery--image mastery--{{ iconList[masteryLevel] }}"></div>
+                          <div class="h5 ml-2 text-dark col-9">{{ displayAs[lessonName] }}</div>
+                        </div>
+
+                      </a>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
 
   </div>
 {% endblock body %}

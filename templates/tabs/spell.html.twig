@@ -1,0 +1,89 @@
+{% import 'tabs/tab_macros.html.twig' as tab_macro %}
+
+{# inputs
+    tabName
+    spinner
+    sidebarHtml
+    games
+    withE           : has a 4th file for an ending e
+#}
+{% block SpellTab %}
+  {% set listIndex = listIndex ?? 0 %}
+  {% set func = withE ? 'WSpin.wordSpinnerPlusE' : 'WSpin.wordSpinner' %}
+  <div class="container">
+
+    {% set tabId = tabInfo.tabTypeId %}
+    {# all encompassing row #}
+    <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+      {# main column 75% wide #}
+      <div class="col-9">
+        {{ tab_macro.tabHeader(tabInfo) }}
+        <div class="row d-flex flex-nowrap">
+          {# Prefix letters column #}
+          <div class="col-8 ">
+            <div class="row ">
+              <div class="h3 py-3 tac col-12 d-sm-block d-none" role="heading">First</div>
+            </div>
+            <div class="row ">
+              <div class="d-flex flex-wrap align-items-center tac "
+                   role="group" data-toggle="tooltip" data-placement="top"
+                   title="Select a letter from each group to make a word.">
+                {% for letter in spinner.prefixList %}
+                  {% set clickFunc = func ~ "('p','" ~ letter ~ "')" %}
+                  <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button"
+                          onclick="{{ clickFunc }}">
+                    {{ letter }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+
+          </div>
+
+          {# Vowel column #}
+          <div class="col-2">
+            <div class="row">
+              <div class="h3 py-3 tal d-sm-block d-none">Vowel</div>
+            </div>
+            <div class="row">
+              <div class="d-flex flex-wrap align-items-center tac" role="group">
+                {% for letter in spinner.vowel %}
+                  {% set clickFunc = func ~ "('v','" ~ letter ~ "')" %}
+                  <button class="btn btn-outline-danger rounded m-1 p-1 tac col-12"
+                          type="button" onclick="{{ clickFunc }}">{{ letter }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          {# Suffix letters column #}
+          <div class="col-2">
+            <div class="row">
+              <div class="h3 py-3 tar  d-sm-block d-none">Last</div>
+            </div>
+            <div class="row">
+              <div class="d-flex flex-wrap align-items-center tac" role="group">
+                {% for letter in spinner.suffixList %}
+                  {% set clickFunc = func ~ "('s','" ~ letter ~ "')" %}
+                  <button class="btn btn-outline-primary rounded m-1 p-1 tac col-12"
+                          type="button" onclick="{{ clickFunc }}">{{ letter }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div id="spinResult" class="col-md-12 wordlist border-secondary border mt-2 p-1" style="height: 1.75em">
+          </div>
+        </div>
+      </div>
+
+      {# sidebar column 25% #}
+      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+        {{ sidebarHtml|raw }}
+      </div>
+    </div>
+  </div>
+{% endblock SpellTab %}

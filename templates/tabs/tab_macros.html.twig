@@ -1,0 +1,17 @@
+{#
+  tabHeader macro: Displays the tab name as a heading as well as the teacher's script instructions
+
+      parameter tabInfo: TabType class object (tabTypeId, tabDisplayAs, script, etc)
+#}
+{% macro tabHeader(tabInfo) %}
+  <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
+    <div>{{ tabInfo.tabDisplayAs }}</div>
+  </div>
+  {% if tabInfo.script %}
+    <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
+
+      <div class="text-readxyz ">Script:&nbsp;</div>
+      <div class="text-secondary ">&quot;{{ tabInfo.script }}&quot;</div>
+    </div>
+  {% endif %}
+{% endmacro %}

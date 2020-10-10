@@ -36,7 +36,7 @@ class TwigFactory
         $options['autoescape'] = false;
 //      $options['optimizations'] = 0;
         $path = Util::getProjectPath('templates');
-        $loader = new FilesystemLoader([$path, "$path/parts"]);
+        $loader = new FilesystemLoader([$path, "$path/parts", "$path/tabs"]);
         $this->twigEnvironment = new Environment($loader, $options);
         if (Util::isLocal()) {
             $this->twigEnvironment->addExtension(new DebugExtension());

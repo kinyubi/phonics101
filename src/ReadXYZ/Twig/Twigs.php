@@ -76,7 +76,7 @@ class Twigs
         }
     }
 
-    private function baseRender(string $id, array $argsIn, Page $page, string $blockName = ''): void
+    private function baseRender(string $id, array $argsIn, Page $page, string $blockName = '', $templateName = ''): void
     {
         $tabTypeId = $id;
         $tabInfo = TabTypes::getInstance()->getTabInfo($tabTypeId);
@@ -85,10 +85,13 @@ class Twigs
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
         $args['tabInfo'] = $tabInfo;
         $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
-        if(empty($blockName)) {
+        if(empty($blockName)) { // by convention block name is capitalized id + 'Tab'
             $blockName = ucfirst($id) . 'Tab';
         }
-        $html = $this->factory->renderBlock($this->lessonTemplate, $blockName, $args);
+        if (empty($templateName)) { // by convention, template name is same as $id
+            $templateName = $id;
+        }
+        $html = $this->factory->renderBlock($templateName, $blockName, $args);
         $page->addTab($tabInfo, $html);
     }
 
@@ -195,7 +198,7 @@ class Twigs
             default:
                 break;
         }
-        $html = $this->factory->renderBlock($this->lessonTemplate, 'SideBar', $args);
+        $html = $this->factory->renderBlock('sidebar', 'SideBar', $args);
         if ('mastery' == $tabTypeId) {
             $html .= $this->factory->renderBlock('timers2', 'MasterySaveProgressButton');
         } elseif ('test' == $tabTypeId) {

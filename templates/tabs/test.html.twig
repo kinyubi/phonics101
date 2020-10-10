@@ -1,0 +1,34 @@
+
+{% import 'tabs/tab_macros.html.twig' as tab_macro %}
+
+{# inputs
+    tabName
+    wordList
+    sidebarHtml
+#}
+{% block TestTab %}
+  {% set listIndex = listIndex ?? 0 %}
+  <div class="container">
+
+    {% set tabId = tabInfo.tabTypeId %}
+    <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+      <div id="{{ tabId }}-main" class="col-8">
+        {{ tab_macro.tabHeader(tabInfo) }}
+        <table class="table table-sm table-borderless">
+          <tbody>
+          {% for word in wordList %}
+            <tr class="d-flex">
+              <td id="TM{{ loop.index0 }}" class="wordlist col-12 mx-2">{{ word }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+        {{ sidebarHtml|raw }}
+      </div>
+    </div>
+  </div>
+
+{% endblock TestTab %}
+

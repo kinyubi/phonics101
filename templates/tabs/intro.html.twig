@@ -1,0 +1,38 @@
+
+{% import 'tabs/tab_macros.html.twig' as tab_macro %}
+
+{# input:
+    tabName
+    stretchList
+    sidebarHtml
+    games
+#}
+{% block IntroTab %}
+  {% set listIndex = listIndex ?? 0 %}
+  <div class="container">
+
+    {% set tabId = tabInfo.tabTypeId %}
+    <div class="row  d-flex flex-nowrap  m-2 p-2">
+      <div id="{{ tabId }}-main" class="flex-grow-1 col-9">
+        {{ tab_macro.tabHeader(tabInfo) }}
+        <table class="table table-sm table-borderless">
+          <tbody>
+          {% set len = stretchList[0]|length %}
+          {% set colsz = (len <= 4) ? 'col-3' : ((len < 6) ? 'col-2' : 'col-1') %}
+          {% for wordSets in stretchList %}
+            <tr class="d-flex">
+              {% for word in wordSets|slice(0,3) %}
+                <td class="wordlist col-4 mx-2 px-0">{{ word }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0 ">
+        {{ sidebarHtml|raw }}
+      </div>
+    </div>
+  </div>
+
+{% endblock IntroTab %}

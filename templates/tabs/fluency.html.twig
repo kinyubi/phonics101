@@ -1,0 +1,29 @@
+
+{% import 'tabs/tab_macros.html.twig' as tab_macro %}
+
+{# inputs
+    tabName
+    fluencySentences
+    games
+    sidebarHtml
+#}
+{% block FluencyTab %}
+  {% set listIndex = listIndex ?? 0 %}
+  <div class="container">
+
+    {% set tabId = tabInfo.tabTypeId %}
+    <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+      <div id="{{ tabId }}-main" class="col-8 ">
+        {{ tab_macro.tabHeader(tabInfo) }}
+        <div class="wordlist">
+          {% for sentence in fluencySentences %}
+            <span>{{ sentence }}</span><br>
+          {% endfor %}
+        </div>
+      </div>
+      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
+        {{ sidebarHtml|raw }}
+      </div>
+    </div>
+  </div>
+{% endblock FluencyTab %}

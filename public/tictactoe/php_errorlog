@@ -1,0 +1,4 @@
+[07-Oct-2020 16:53:15 CST6CDT] PHP Fatal error:  Uncaught Error: Class 'ReadXYZ\Helpers\Location' not found in /home/readxyz0/public_html/testing/public/tictactoe/tictac.php:62
+Stack trace:
+#0 {main}
+  thrown in /home/readxyz0/public_html/testing/public/tictactoe/tictac.php on line 62

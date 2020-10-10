@@ -420,12 +420,14 @@ a.img-contain img {
 
  /* 0 - 575 pixels wide - phone */
 @media  (max-width: 575px) {
-     .sfp {font-size: .75rem !important;}
-     .wordlist {font-size: 1.5rem !important;}
-     .scaled {transform:scale(.5, .5);}
-     .size--tab-icon {height: 40px; width: 40px}
+    .sfp {font-size: .75rem !important;}
+    .wordlist {font-size: 1.5rem !important;}
+    .scaled {transform:scale(.5, .5);}
+    .size--tab-icon {height: 40px; width: 40px}
     .size--side-icon {height: 25px; width: 25px}
-     .size--tab-icon-height {height: 40px;}
+    .size--key-icon {height: 35px; width: 35px}
+    .size--list-icon {height: 18px; width: 18px}
+    .size--tab-icon-height {height: 40px;}
 }
 
 
@@ -436,6 +438,8 @@ a.img-contain img {
      .scaled {transform:scale(.6, .6);}
      .size--tab-icon {height: 40px; width: 40px}
      .size--side-icon {height: 30px; width: 30px}
+     .size--key-icon {height: 45px; width: 45px}
+     .size--list-icon {height: 24px; width: 24px}
      .size--tab-icon-height {height: 40px;}
  }
 
@@ -446,6 +450,8 @@ a.img-contain img {
      .scaled {transform:scale(.75, .75);}
      .size--tab-icon {height: 70px; width: 70px}
      .size--side-icon {height: 40px; width: 40px}
+     .size--key-icon {height: 60px; width: 60px}
+     .size--list-icon {height: 30px; width: 30px}
      .size--tab-icon-height {height: 70px;}
  }
  /* Large devices (desktops, 992px and up) */
@@ -455,6 +461,8 @@ a.img-contain img {
      .scaled {transform:scale(1.0, 1.0);}
      .size--tab-icon {height: 100px; width: 100px}
      .size--side-icon {height: 50px; width: 50px}
+     .size--key-icon {height: 75px; width: 75px}
+     .size--list-icon {height: 35px; width: 35px}
      .size--tab-icon-height {height: 100px;}
  }
 
@@ -496,10 +504,10 @@ a.img-contain img {
 
 /* classes to handle background images in accordion */
 .accordion--image {
-  height: 20px; /* You must set a specified height */
+  height: 7vh;
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
-  background-size: cover; /* Resize the background image to cover the entire container */
+  background-size: contain; /* Resize the background image to cover the entire container */
 }
 .accordion--expanded {
     background-image: url("/images/lessonlist/accordion-expanded.png");
@@ -507,4 +515,26 @@ a.img-contain img {
 
 .accordion--collapsed {
     background-image: url("/images/lessonlist/accordion-unexpanded.png");
+}
+
+.lesson-list--width {
+    max-width: 500px !important;
+    width: 90%
+}
+
+.mastery--image {
+  height: 2em;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: contain; /* Resize the background image to cover the entire container */
+}
+
+.mastery--nomastery {
+    background-image: url("/images/lessonlist/lesson-nomastery.png");
+}
+.mastery--advancing {
+    background-image: url("/images/lessonlist/lesson-advancing.png");
+}
+.mastery--mastered {
+    background-image: url("/images/lessonlist/lesson-mastered.png");
 }
