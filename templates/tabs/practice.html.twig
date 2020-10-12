@@ -1,5 +1,4 @@
 
-{% import 'tabs/tab_macros.html.twig' as tab_macro %}
 {# inputs
     tabName
     wordList
@@ -7,13 +6,14 @@
     games
 #}
 {% block PracticeTab %}
+  {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
 
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9">
-        {{ tab_macro.tabHeader(tabInfo) }}
+        {{ tabHeader(tabInfo) }}
         <table class="table table-sm table-borderless">
           <tbody>
           {% for i in range(0,20,3) %}

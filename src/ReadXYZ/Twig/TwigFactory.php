@@ -29,12 +29,10 @@ class TwigFactory
         $options = [];
         $options['debug'] =  Util::isLocal();
         $options['auto_reload'] = Util::isLocal();
-        if (Util::isLocal()) {
-            $options['cache'] = Util::getReadXyzSourcePath('cache');
-        }
-
+        $options['cache'] = Util::getReadXyzSourcePath('cache');
+        // $options['cache'] = false;
         $options['autoescape'] = false;
-//      $options['optimizations'] = 0;
+        $options['optimizations'] = 0;
         $path = Util::getProjectPath('templates');
         $loader = new FilesystemLoader([$path, "$path/parts", "$path/tabs"]);
         $this->twigEnvironment = new Environment($loader, $options);

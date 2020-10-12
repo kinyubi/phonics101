@@ -1,6 +1,4 @@
 
-{% import 'tabs/tab_macros.html.twig' as tab_macro %}
-
 {# input:
     tabName
     stretchList
@@ -8,13 +6,14 @@
     games
 #}
 {% block IntroTab %}
+  {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
 
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 p-2">
       <div id="{{ tabId }}-main" class="flex-grow-1 col-9">
-        {{ tab_macro.tabHeader(tabInfo) }}
+        {{ tabHeader(tabInfo) }}
         <table class="table table-sm table-borderless">
           <tbody>
           {% set len = stretchList[0]|length %}

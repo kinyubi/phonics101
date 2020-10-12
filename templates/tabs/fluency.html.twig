@@ -1,6 +1,4 @@
-
-{% import 'tabs/tab_macros.html.twig' as tab_macro %}
-
+{# Repeated Reading (Fluency) tab #}
 {# inputs
     tabName
     fluencySentences
@@ -8,13 +6,14 @@
     sidebarHtml
 #}
 {% block FluencyTab %}
+  {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
 
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-8 ">
-        {{ tab_macro.tabHeader(tabInfo) }}
+        {{ tabHeader(tabInfo) }}
         <div class="wordlist">
           {% for sentence in fluencySentences %}
             <span>{{ sentence }}</span><br>

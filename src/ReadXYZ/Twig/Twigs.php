@@ -111,7 +111,14 @@ class Twigs
     private function renderWriteTab(Page $page): void
     {
         $id = 'write';
-        $args = ['wordList' => $this->lesson->getWordLists($id, Cookie::getInstance()->getListIndex($id))];
+        $args = [];
+        $args['wordList'] = $this->lesson->getWordLists($id, Cookie::getInstance()->getListIndex($id));
+        $args['lessonName'] = $this->lesson->getLessonName();
+        $cookie = $_COOKIE['readxyz_sound_box'] ?? '3blue';
+        $cookieCount = intval(substr($cookie,0, 1));
+        $cookieColor = substr($cookie, 1);
+        $args['color'] = $cookieColor;
+        $args['count'] = $cookieCount;
         $this->baseRender($id, $args,  $page);
     }
 
@@ -164,7 +171,6 @@ class Twigs
         $side = SideNote::getInstance();
         $args = [];
 
-        $timerArgs = ['action' => '/actions/timers.php'];
         $groupName = $this->lesson->getGroupId();
         $args['tabInfo'] = $tabInfo;
         $args['games'] = $this->lesson->getGamesForTab($tabTypeId);
@@ -182,16 +188,16 @@ class Twigs
         $args['information'] = $info;
         switch ($tabTypeId) {
             case 'fluency':
-                $timerHtml = $this->factory->renderBlock('timers2', 'fluencyTimer', $timerArgs);
+                $timerHtml = $this->factory->renderBlock('timers2', 'fluencyTimer');
                 $curveHtml = $side->getLearningCurveHTML();
                 $args['timerHtml'] = $timerHtml . $curveHtml;
                 break;
             case 'practice':
-                $timerHtml = $this->factory->renderBlock('timers2', 'practiceTimer', $timerArgs);
+                $timerHtml = $this->factory->renderBlock('timers2', 'practiceTimer');
                 $args['timerHtml'] = $timerHtml;
                 break;
             case 'test':
-                $timerHtml = $this->factory->renderBlock('timers2', 'testTimer', $timerArgs);
+                $timerHtml = $this->factory->renderBlock('timers2', 'testTimer');
                 $curveHtml = $side->getTestCurveHTML();
                 $args['timerHtml'] = $timerHtml . $curveHtml;
                 break;

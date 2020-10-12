@@ -21,7 +21,7 @@ if (!$cookie->tryContinueSession()) {
 $student = Student::getInstance();
 $studentName = $student->getCapitalizedStudentName();
 $currentLessonName = $cookie->getCurrentLesson();
-
+$student->saveLessonSelection($currentLessonName);
 $source = $_REQUEST['source'] ?? 'unknown';
 $seconds = $_REQUEST['seconds'] ?? 0;
 $twigs = Twigs::getInstance();

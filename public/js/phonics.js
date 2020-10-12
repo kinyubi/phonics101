@@ -1,9 +1,4 @@
 
-$( document ).ready(function() {
-    // use this to initialize all the functions that require an clear on each page
-	WSpin.init();
-});
-
 // ====================================================
 // Word Spinner
 // ====================================================
@@ -31,27 +26,6 @@ WSpin = {		// Word Spinner
     wordSpinnerPlusE: function (pvs,letters){this.spinIt(pvs, letters, "e");}
 }
 
-function scaleIframe(gameId)
-{
-    const wrapper = $("#" + gameId + "-iframe-wrapper");
-    let _wrapWidth = wrapper.width();
-    let _frameWidth = $(wrapper[0].contentDocument).width();
-
-    if(!this.contentLoaded) this.initialWidth=_frameWidth;
-    this.contentLoaded=true;
-    let frame = wrapper[0];
-
-    let percent = (_wrapWidth/this.initialWidth).toString(10);
-
-    frame.style.width=100.0/percent+"%";
-    frame.style.height=100.0/percent+"%";
-
-    frame.style.zoom=percent;
-    frame.style.MozTransform="scale(" + percent + ")";
-    frame.style.MozTransformOrigin='top left';
-    frame.style.oTransform='scale('+percent+')';
-    frame.style.oTransformOrigin='top left';
-  }
 
 // see https://www.geeksforgeeks.org/how-to-disable-scrolling-temporarily-using-javascript/
 function disableScroll() {
@@ -70,3 +44,84 @@ function setScreenCookie() {
     Cookies.set(cookieName, cookieValue, { expires: 1 });
 }
 
+// ---------------------------------------------------
+// Sound Boxes
+// ---------------------------------------------------
+let soundBoxColor = 'blue';
+let soundBoxCount = 3;
+
+function moveBall(num) {
+    let ball = document.getElementById('ball-' + num.toString());
+    let box = document.getElementById('box-' + num.toString());
+    box.appendChild(ball)
+}
+
+/**
+ * Keeps track of sound-box settings cookie 'readxyz_sound_box'
+ * @param cookieValue first char is # of balls, rest of string is html color of balls
+ * @param daysToExpire
+ */
+function setCookie(cookieValue, daysToExpire) {
+    let d = new Date();
+    d.setTime(d.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = "readxyz_sound_box=" + cookieValue + ";" + expires + ";path=/";
+}
+
+/**
+ * find the cookie we're looking for and decode it
+ * @returns {string}
+ */
+function getCookie() {
+    let name = "readxyz_sound_box=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let parts = decodedCookie.split(';');
+    for (let i = 0; i < parts.length; i++) {
+        let cookieValue = parts[i].trim();
+
+        if (cookieValue.indexOf(name) === 0) {
+            return cookieValue.substring(name.length, cookieValue.length);
+        }
+    }
+    return "";
+}
+
+/**
+ * We try to get the cookie. If we can't find it we create one with default values.
+ * We return the values into the global variables color and soundBoxCount
+ */
+function checkCookie() {
+    let cookieValue = getCookie();
+    if (cookieValue !== "") {
+        soundBoxCount = parseInt(cookieValue.substring(0, 1));
+        soundBoxColor = cookieValue.substring(1);
+    } else {
+        soundBoxCount = 3;
+        soundBoxColor = 'blue'
+        cookieValue = '3blue';
+        setCookie(cookieValue, 30);
+    }
+}
+
+function setColor(newColor) {
+    soundBoxColor = newColor;
+    reload();
+}
+
+function setCount(newCount) {
+    soundBoxCount = newCount;
+    reload();
+}
+
+function reload() {
+    let countStr = soundBoxCount.toString();
+    let cookieValue = countStr + soundBoxColor;
+    setCookie(cookieValue, 30);
+    let lessonName = document.getElementById('soundbox-lesson-name').innerText;
+    window.location.href = '/actions/processLessonSelection.php?lessonName=' + lessonName + '&initialTabName=write';
+}
+
+$(document).ready(function () {
+    checkCookie();
+    WSpin.init();
+});

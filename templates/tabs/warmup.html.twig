@@ -1,10 +1,11 @@
-{% import 'tabs/tab_macros.html.twig' as tab_macro %}
+
 
 {# input:
     tabInfo
     warmups
 #}
 {% block WarmupTab %}
+  {% from "macros.html.twig" import tabHeader  %}
   {% set tabId = tabInfo.tabTypeId %}
   {% set tabName = tabInfo.tabDisplayAs %}
   {% set dim = isSmallScreen ? 25 : 40 %}
@@ -12,7 +13,9 @@
 
     <div class="row  d-flex  flex-nowrap p-2 mx-auto">
       <div id="{{ tabId }}-main" class="col-8 ">
-        {{ tab_macro.tabHeader(tabInfo) }}
+
+        {{ tabHeader(tabInfo) }}
+
         <div id="{{ tabId }}-accordion">
 
           {% for warmup in warmups.warmupItems %}

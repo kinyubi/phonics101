@@ -1,0 +1,113 @@
+{# replaces lesson_timer.html.twig #}
+
+{# inputs:
+    timerName: the name of the timer (i.e. practice, fluency or test)
+#}
+
+
+
+
+{# testTimer block
+    Displays the timer buttons and the minutes:seconds text
+    @param action  the action
+#}
+{% block testTimer %}
+  {% from "macros.html.twig" import timerButton, timerText %}
+  {% set tab = 'test' %}
+  <div class="container mx-0 px-0">
+    <div class="row d-flex flex-wrap justify-content-center">
+      {# {{ timerButton(tab, 'StartStop', 'start/stop timer' ) }} #}
+      {{ timerButton(tab, 'Start', 'start timer' ) }}
+      {{ timerButton(tab, 'Stop', 'stop timer' ) }}
+      <div class="w-100"></div>
+      {{ timerButton(tab, 'Reset', 'reset timer') }}
+      {{ timerButton(tab, 'Save', 'save time and display in graph') }}
+    </div>
+    {{ timerText(tab) }}
+    <div class="row">
+      <form name="testMasteryForm" id="testMasteryForm" data-ajax="false" method="post" action="/actions/timers.php">
+        <div class="d-flex flex-wrap">
+          <input class="col" type="hidden" name="masteryType" value=""/>
+          <input class="col" type="hidden" name="testWords" value=""/>
+          <input class="col" type="hidden" name="source" value="testMastery"/>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+{# inputs: action #}
+{% block testButtons %}
+  {% set btnSz = 'col-9 m-1 btn-sm' %}
+  <div class="container mx-0 px-0">
+    <div class="row d-flex flex-wrap justify-content-center">
+      <button id="testAdvancingButton" class="btn btn-outline-info {{ btnSz }}"
+              data-toggle="tooltip" data-placement="left"
+              title="Press to indicate that the student is advancing but has not yet mastered the lesson">Advancing
+      </button>
+      <button id="testMasteredButton" class="btn btn-outline-info {{ btnSz }}"
+              data-toggle="tooltip" data-placement="left"
+              title="Press to indicate that the student has mastered the lesson">Mastered
+      </button>
+    </div>
+  </div>
+  <form name="testTimerForm" id="testTimerForm" data-ajax="false" method="post" action="/actions/timers.php">
+    <input type="hidden" name="seconds" value=0/>
+    <input type="hidden" name="source" value="test"/>
+  </form>
+{% endblock %}
+
+
+{# inputs: action #}
+{% block fluencyTimer %}
+  {% from "macros.html.twig" import timerButton, timerText %}
+  {% set tab = 'fluency' %}
+  <div class="container">
+    <div class="row d-flex flex-wrap justify-content-center">
+      {# {{ timerButton(tab, 'StartStop', 'start/stop timer' ) }} #}
+      {{ timerButton(tab, 'Start', 'start timer' ) }}
+      {{ timerButton(tab, 'Stop', 'stop timer' ) }}
+      <div class="w-100"></div>
+      {{ timerButton(tab, 'Reset', 'reset timer') }}
+      {{ timerButton(tab, 'Save', 'save time and display in graph') }}
+    </div>
+    {{ timerText(tab) }}
+  </div>
+
+  <form name="fluencyTimerForm" id="fluencyTimerForm" data-ajax="false" method="post" action="/actions/timers.php">
+    <input type="hidden" name="seconds" value=0/>
+    <input type="hidden" name="source" value="fluency"/>
+  </form>
+{% endblock %}
+
+{# inputs: none #}
+{% block practiceTimer %}
+  {% from "macros.html.twig" import timerButton, timerText %}
+  {% set tab = 'practice' %}
+  <div class="container mx-0 px-0">
+    <div class="row d-flex flex-nowrap justify-content-center">
+      {# {{ timerButton(tab, 'StartStop', 'start/stop timer' ) }} #}
+      {{ timerButton(tab, 'Start', 'start timer' ) }}
+      {{ timerButton(tab, 'Stop', 'stop timer' ) }}
+      {{ timerButton(tab, 'Reset', 'reset timer') }}
+      <div class="{{ btnSz }}"></div>
+    </div>
+    {{ timerText(tab) }}
+  </div>
+{% endblock %}
+
+{% block MasterySaveProgressButton %}
+  <div class="container mx-0 px-0">
+    <div class="row tac">
+      <div id="saveMasteryProgressButton" class="btn btn-outline-readxyz mx-auto sfp">
+        Save Progress
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{# inputs: imageUrl #}
+{% block LearningCurve %}
+  <img src="{{ imageUrl }}" alt="Learning Curve" style="border: 0 solid gray; max-width: 100%">
+{% endblock %}
+

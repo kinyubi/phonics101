@@ -10,7 +10,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/3rdParty/Peekmo" isTestSource="false" packagePrefix="Peekmo\" />
       <excludeFolder url="file://$MODULE_DIR$/_gsdata_" />
       <excludeFolder url="file://$MODULE_DIR$/deprecated" />
-      <excludeFolder url="file://$MODULE_DIR$/src/ReadXYZ/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/egulias/email-validator" />

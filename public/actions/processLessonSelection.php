@@ -9,6 +9,7 @@ use ReadXYZ\Helpers\Util;
 use ReadXYZ\Lessons\Lessons;
 use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Identity;
+use ReadXYZ\Models\Student;
 use ReadXYZ\Twig\Twigs;
 
 require 'autoload.php';
@@ -36,5 +37,6 @@ if (!($lessons->lessonExists($lessonName))) {
     throw new InvalidArgumentException("$lessonName is not a valid lesson name.");
 }
 
+Student::getInstance()->saveLessonSelection($lessonName);
 $html = $twigs->renderLesson($lessonName, $initialTabName, $useNextLessonButton);
 echo $html;

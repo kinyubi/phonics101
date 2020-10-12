@@ -1,0 +1,38 @@
+{#
+  @name tabHeader macro:
+  Displays the tab name as a heading as well as the teacher's script instructions
+  @param tabInfo: TabType class object (tabTypeId, tabDisplayAs, script, etc)
+#}
+{% macro tabHeader(tabInfo) %}
+  <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
+    <div>{{ tabInfo.tabDisplayAs }}</div>
+  </div>
+  {% if tabInfo.script %}
+    <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
+
+      <div class="text-readxyz ">Script:&nbsp;</div>
+      <div class="text-secondary ">&quot;{{ tabInfo.script }}&quot;</div>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+
+{# @name timerButton
+   Display a timer button
+   @param tab     the tab the timer is on (i.e. practice, fluency or test)
+   @param name    button name: Start, Stop, Reset, Save, StartStop (the png icon base name should match this name
+   @param tooltip the tooltip to display on hover
+#}
+{% macro timerButton(tab, name, tooltip) %}
+  {% set filename = '/images/sidebar/' ~ name ~ '.png' %}
+    <div class="size--side-icon m-1" data-toggle="tooltip" data-placement="left"
+    title="{{ tooltip }}" id="{{ tab }}{{ name }}Button"
+    style="background: url({{ filename }}) no-repeat; background-size: contain;">
+    </div>
+{% endmacro %}
+
+{% macro timerText(tab) %}
+    <div class="row">
+        <div id="{{ tab }}Time" class="tac col-sm-10 col-12">00:00</div>
+    </div>
+{% endmacro %}

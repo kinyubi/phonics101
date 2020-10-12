@@ -1,6 +1,4 @@
 
-{% import 'tabs/tab_macros.html.twig' as tab_macro %}
-
 {# inputs
     tabName
     wordList
@@ -8,6 +6,7 @@
     games
 #}
 {% block MasteryTab %}
+  {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
   {% set listCount = max(wordlist|length,99) %}
   {% set listIndex = listCount // 25 %}
@@ -18,7 +17,7 @@
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9">
-        {{ tab_macro.tabHeader(tabInfo) }}
+        {{ tabHeader(tabInfo) }}
         <div class="row">
           <form id="masteryform" name="masteryform" method="POST" action="/actions/updateMastery.php">
             <div class="row d-flex flex-wrap">
