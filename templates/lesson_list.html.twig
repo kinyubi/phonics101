@@ -17,7 +17,7 @@ inputs:
 {% block body %}
   {% set iconList = ['nomastery', 'advancing', 'mastered'] %}
   {% if action|default('') is empty %}
-    {% set actionHandler = '/actions/processLessonSelection.php' %}
+    {% set actionHandler = '/lesson' %}
   {% else %}
     {# use a custom handler that #}
     {% set actionHandler = '/actions/' ~ action %}

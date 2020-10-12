@@ -118,7 +118,7 @@ function reload() {
     let cookieValue = countStr + soundBoxColor;
     setCookie(cookieValue, 30);
     let lessonName = document.getElementById('soundbox-lesson-name').innerText;
-    window.location.href = '/actions/processLessonSelection.php?lessonName=' + lessonName + '&initialTabName=write';
+    window.location.href = '/lesson?lessonName=' + lessonName + '&initialTabName=write';
 }
 
 $(document).ready(function () {

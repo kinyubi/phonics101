@@ -79,8 +79,8 @@
    {# Balls Row -- Start #}
    <div class="row d-flex justify-content-center flex-nowrap">
      {% for i in range(0,count -1) %}
-       <div class="box">
-         <div id="ball-{{ i }}" class="m-1 p-0" onclick="moveBall({{ i }})">
+       <div class="box p-2">
+         <div id="ball-{{ i }}" class="m-2 p-0" onclick="moveBall({{ i }})">
            <i class="fas fa-circle  tac" style="color:{{ colors[loop.index0] }}; font-size: {{ ballDim }}"></i>
          </div>
        </div>

@@ -97,7 +97,7 @@ class RouteMe
 
 
         $requestUri = parse_url($_SERVER['REQUEST_URI']);
-        $parameters = $requestUri['query'] ?? [];
+        $parameters = [];
         $posts = $_REQUEST ?? [];
         foreach($posts as $key => $value) {
             $parameters[$key] = $value;
@@ -124,8 +124,12 @@ class RouteMe
                 break;
             case '/login':
                 echo Twigs::getInstance()->login();
-
-
+                break;
+            case '/lesson':
+                $lessonName = $parameters['P1'] ?? $parameters['lessonName'] ?? $cookie->getCurrentLesson() ?? '';
+                $initialTabName = $parameters['P2'] ?? $parameters['initialTabName'] ?? $cookie->getCurrentTab() ?? '';
+                $useNextLessonButton = ($parameters['P3'] ?? '0') != '0';
+                echo Twigs::getInstance()->renderLesson($lessonName, $initialTabName, $useNextLessonButton);
         }
     }
 }

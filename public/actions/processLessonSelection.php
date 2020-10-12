@@ -23,7 +23,7 @@ if (!Cookie::getInstance()->tryContinueSession()) {
     echo $twigs->login('Login has expired (1).');
     exit;
 }
-$lessonName = '';
+
 $lessonName = $_REQUEST['P1'] ?? $_REQUEST['lessonName'] ?? '';
 $initialTabName = $_REQUEST['P2'] ?? $_REQUEST['initialTabName'] ?? '';
 $useNextLessonButton = ($_REQUEST['P3'] ?? '0') != '0';
