@@ -37,16 +37,19 @@ class Lessons
         $inputFile = Util::getReadXyzSourcePath('resources/unifiedLessons.json');
         $json = file_get_contents($inputFile);
         $this->store = new JsonStore($json);
-        $groups = $this->store->get('$.lessons.blending.*.groupId', true);
-        foreach ($groups as $index => $group) {
-            $this->groupNames[] = $group;
+        $all = json_decode($json);
+        foreach ($all->groups as $group) {
+            $this->groupNames[$group->groupId] = $group->displayAs;
+        }
+        foreach ($this->groupNames as $index => $group) {
             $this->accordion[$group] = [];
         }
-        $all = json_decode($json);
+
         foreach ($all->lessons->blending as $key => $lessonArray) {
             $lesson = new Lesson($lessonArray);
             $this->blendingLessons[$key] = $lesson;
-            $this->accordion[$lesson->getGroupId()][$lesson->getLessonName()] = 0;
+            $groupName = $this->getGroupName($lesson->getGroupId());
+            $this->accordion[$groupName][$lesson->getLessonName()] = 0;
             $this->lessonNames[] = $key;
         }
 
@@ -68,6 +71,11 @@ class Lessons
     public function lessonExists(string $lessonName): bool
     {
         return in_array($lessonName, $this->lessonNames);
+    }
+
+    public function getGroupName(string $groupId): string
+    {
+        return $this->groupNames[$groupId] ?? $groupId;
     }
 
     /**
@@ -99,7 +107,6 @@ class Lessons
         }
     }
 
-    // ============ GETTERS ===========
 
     /**
      * for the current student, we determine which lessons have been mastered.
@@ -117,7 +124,8 @@ class Lessons
                     $lessonName = Util::convertLessonKeyToLessonName($key);
                     $realName = $this->alternateNameMap[$lessonName] ?? '';
                     if ($realName) {
-                        $groupName = $this->blendingLessons[$realName]->getGroupId() ?? '';
+                        $groupId = $this->blendingLessons[$realName]->getGroupId() ?? '';
+                        $groupName = $this->getGroupName($groupId);
                         if ($groupName && key_exists($realName, $this->accordion[$groupName])) {
                             $this->accordion[$groupName][$realName] = $value;
                         }

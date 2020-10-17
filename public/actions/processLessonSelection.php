@@ -10,6 +10,7 @@ use ReadXYZ\Lessons\Lessons;
 use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Identity;
 use ReadXYZ\Models\Student;
+use ReadXYZ\Twig\LessonTemplate;
 use ReadXYZ\Twig\Twigs;
 
 require 'autoload.php';
@@ -17,16 +18,14 @@ require 'autoload.php';
 if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
-$twigs = Twigs::getInstance();
 
 if (!Cookie::getInstance()->tryContinueSession()) {
-    echo $twigs->login('Login has expired (1).');
-    exit;
+    throw new RuntimeException('Unable to find session.');
 }
 
 $lessonName = $_REQUEST['P1'] ?? $_REQUEST['lessonName'] ?? '';
 $initialTabName = $_REQUEST['P2'] ?? $_REQUEST['initialTabName'] ?? '';
-$useNextLessonButton = ($_REQUEST['P3'] ?? '0') != '0';
+
 if (empty($lessonName)) {
     throw new InvalidArgumentException('No parameter for lesson name found.');
 }
@@ -38,5 +37,5 @@ if (!($lessons->lessonExists($lessonName))) {
 }
 
 Student::getInstance()->saveLessonSelection($lessonName);
-$html = $twigs->renderLesson($lessonName, $initialTabName, $useNextLessonButton);
-echo $html;
+$lessonTemplate = new LessonTemplate($lessonName, $initialTabName);
+$lessonTemplate->displayLesson();

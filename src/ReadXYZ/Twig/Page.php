@@ -2,7 +2,7 @@
 
 namespace ReadXYZ\Twig;
 
-use App\ReadXYZ\Helpers\ScreenCookie;
+use ReadXYZ\Helpers\ScreenCookie;
 use InvalidArgumentException;
 use ReadXYZ\Lessons\Game;
 use ReadXYZ\Lessons\TabType;
@@ -135,7 +135,7 @@ class Page
      * @param array $pageArgs
      * @return string
      */
-    protected function baseRender(array $pageArgs): string
+    protected function defaultBodyRender(array $pageArgs): string
     {
         $twig = TwigFactory::getInstance();
         $pageArgs['pageTitle'] = $this->pageTitle;
@@ -172,7 +172,17 @@ class Page
         $pageArgs = [];
         $pageArgs['tabs'] = ['Main' => $html];
         $pageArgs['initialTabName'] = 'Main';
-        return $this->baseRender($pageArgs);
+        return $this->defaultBodyRender($pageArgs);
+    }
+
+    public function display(string $template): void
+    {
+        $pageArgs['pageTitle'] = $this->pageTitle;
+        $pageArgs['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
+        if ($this->errors) {$pageArgs['errorMessage'] = $this->errors;}
+        if ($this->navBar) {$pageArgs['menu'] = $this->navBar;}
+        $this->addArguments($pageArgs);
+        echo TwigFactory::getInstance()->renderTemplate($template, $this->arguments);
     }
 
 }

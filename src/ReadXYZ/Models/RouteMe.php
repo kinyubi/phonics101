@@ -3,25 +3,26 @@
 
 namespace ReadXYZ\Models;
 
-use ReadXYZ\Database\OneTimePass;
 use ReadXYZ\Database\StudentTable;
 use ReadXYZ\Helpers\Util;
+use ReadXYZ\Twig\LessonListTemplate;
+use ReadXYZ\Twig\LessonTemplate;
 use ReadXYZ\Twig\Twigs;
 use Throwable;
 
 class RouteMe
 {
-    private static function httpPost($url, $data){
-    	$options = array(
-    		'http' => array(
-         		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            	'method'  => 'POST',
-            	'content' => http_build_query($data)
-        	)
-        );
-    	$context  = stream_context_create($options);
-    	return file_get_contents($url, false, $context);
-    }
+    // private static function httpPost($url, $data){
+    // 	$options = array(
+    // 		'http' => array(
+    //      		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+    //         	'method'  => 'POST',
+    //         	'content' => http_build_query($data)
+    //     	)
+    //     );
+    // 	$context  = stream_context_create($options);
+    // 	return file_get_contents($url, false, $context);
+    // }
 
     public static function generatePassword()
     {
@@ -39,9 +40,9 @@ class RouteMe
 
     /**
      * After a user has been validated this takes him to the proper screen
-     * @return string HTML for a student list or lesson list as appropriate
+     * @return void HTML for a student list or lesson list as appropriate is displayed
      */
-    public static function autoLogin(): string
+    public static function autoLoginDisplay(): void
     {
         $twigs = Twigs::getInstance();
         Util::sessionContinue();
@@ -49,16 +50,12 @@ class RouteMe
         $studentTable = StudentTable::getInstance();
         $allStudents = $studentTable->GetAllStudents();
         if ($identity->hasMultipleStudents()) {
-            return $twigs->renderStudentList($allStudents);
+            echo $twigs->renderStudentList($allStudents);
         } else {
             $studentId = $allStudents[0]['studentID'];
             $identity->setStudent($studentId);
             $identity->savePersistentState();
-            $cookie = Cookie::getInstance();
-            $args = [];
-            $args['mostRecentLesson'] = $cookie->getCurrentLesson();
-            $args["mostRecentTab"] = $cookie->getCurrentTab();
-            return $twigs->renderLessonList($args);
+            (new LessonListTemplate())->display();
         }
     }
 
@@ -71,8 +68,7 @@ class RouteMe
         $identity->clearIdentity();
         $username = $parameters['username'] ?? $parameters['P1'] ?? '';
         $password = $parameters['password'] ?? $parameters['P2']  ??'';
-        $action = $parameters['action'] ?? $parameters['P3'] ?? '';
-        $errorMessage = '';
+
         $twigs = Twigs::getInstance();
         if (empty($username) or empty($password) ) {
             echo $twigs->login('Username and password must both be provided.');
@@ -83,7 +79,7 @@ class RouteMe
             echo $twigs->login($result->getErrorMessage());
             exit;
         }
-        echo self::autoLogin();
+        self::autoLoginDisplay();
     }
 
     public static function parseRoute()
@@ -106,7 +102,7 @@ class RouteMe
         switch ($path) {
             case '/':
                 if ($foundSession) {
-                    echo self::autoLogin();
+                    self::autoLoginDisplay();
                 } else {
                     echo Twigs::getInstance()->login();
                 }
@@ -128,8 +124,8 @@ class RouteMe
             case '/lesson':
                 $lessonName = $parameters['P1'] ?? $parameters['lessonName'] ?? $cookie->getCurrentLesson() ?? '';
                 $initialTabName = $parameters['P2'] ?? $parameters['initialTabName'] ?? $cookie->getCurrentTab() ?? '';
-                $useNextLessonButton = ($parameters['P3'] ?? '0') != '0';
-                echo Twigs::getInstance()->renderLesson($lessonName, $initialTabName, $useNextLessonButton);
+                $lessonTemplate = new LessonTemplate($lessonName, $initialTabName);
+                $lessonTemplate->displayLesson();
         }
     }
 }

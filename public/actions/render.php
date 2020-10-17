@@ -4,11 +4,12 @@ use ReadXYZ\Database\StudentTable;
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Lessons\Lessons;
 use ReadXYZ\Models\Cookie;
+use ReadXYZ\Twig\LessonListTemplate;
+use ReadXYZ\Twig\LessonTemplate;
 use ReadXYZ\Twig\Twigs;
 
 require 'autoload.php';
 
-$USE_NEXT_LESSON_BUTTON = true;
 
 if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
@@ -21,7 +22,7 @@ $twigs = Twigs::getInstance();
 
 switch (Util::convertCamelToSnakeCase($pageToRender)) {
     case 'lesson_list':
-        echo $twigs->renderLessonList();
+        (new LessonListTemplate())->display();
         break;
     case 'lesson':
         // We handle refresh index updating here.
@@ -31,7 +32,8 @@ switch (Util::convertCamelToSnakeCase($pageToRender)) {
         $refresh = ('1' == ($_REQUEST['refresh'] ?? '0'));
 
         Cookie::getInstance()->updateListIndex($tab);
-        echo $twigs->renderLesson($lesson, $tab, $USE_NEXT_LESSON_BUTTON);
+        $lessonTemplate = new LessonTemplate($lesson, $tab);
+        $lessonTemplate->displayLesson();
         break;
     case 'student_list':
         $studentTable = StudentTable::getInstance();
@@ -39,8 +41,8 @@ switch (Util::convertCamelToSnakeCase($pageToRender)) {
         echo $twigs->renderStudentList($allStudents);
         break;
     case 'next_lesson':
-        $nextLesson = Lessons::getInstance()->getNextLessonName();
-        echo $twigs->renderLesson($nextLesson, '', $USE_NEXT_LESSON_BUTTON);
+        $lessonTemplate = new LessonTemplate(Lessons::getInstance()->getNextLessonName(), '');
+        $lessonTemplate->displayLesson();
         break;
     case 'login':
         $message = $_REQUEST['P2'] ?? '';

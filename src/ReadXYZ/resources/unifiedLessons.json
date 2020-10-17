@@ -1,4 +1,18 @@
 {
+  "groups": [
+    {"groupId": "Letters", "displayAs": "Alphabet Letters"},
+    {"groupId": "/a/", "displayAs": "Short /a/ sounds"},
+    {"groupId": "/i/", "displayAs": "Short /i/ sounds"},
+    {"groupId": "/o/", "displayAs": "Short /o/ sounds"},
+    {"groupId": "/u/", "displayAs": "Short /u/ sounds"},
+    {"groupId": "/e/", "displayAs": "Short /e/ sounds"},
+    {"groupId": "CVC Wrap-up", "displayAs": "CVC Wrap-up"},
+    {"groupId": "Simple Magic e", "displayAs": "Magic /e/"},
+    {"groupId": "Consonant Clusters", "displayAs": "Consonant Clusters"},
+    {"groupId": "Harder Magic e", "displayAs": "Magic /e/ Revisited"},
+    {"groupId": "Blend Warp-up", "displayAs": "Blend Warp-up"},
+    {"groupId": "Phonics", "displayAs": "Phonics"}
+  ],
   "lessons": {
     "blending": {
       "Vowels": {

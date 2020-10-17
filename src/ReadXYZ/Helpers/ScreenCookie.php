@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\ReadXYZ\Helpers;
+namespace ReadXYZ\Helpers;
 
 
 class ScreenCookie

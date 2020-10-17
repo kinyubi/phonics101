@@ -1,11 +1,6 @@
-{#
-Input:
-  Required
-    content - raw html which is the default content of the body block
 
-    otherJQueryReady - additional javascript to execute on document.ready
-#}
 
+{# defined blocks: title, modals, titleBar, navBar, tabBar, body, otherJqueryReady #}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,110 +8,97 @@ Input:
   <meta charset="UTF-8">
   <title>{% block title %}ReadXYZ{% endblock %}</title>
 
-  {% block metadata %}
-    {% set bootstrap = bootstrap ?? true %}
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  {% endblock metadata %}
-  {{ block('favicons', 'blocks.html.twig') }}
-  {% block stylesheets %}
-    <script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
 
-    <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
+  <!--[if IE]> <link rel="shortcut icon" href="/images/favicons/favicon.ico"><![endif]-->
+  <link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
 
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/css/phonics.css" media="all">
+  <script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
 
-  {% endblock stylesheets %}
-  {% block scripts %}
-    <script src="/js/jquery-3.5.1.js"></script>
-    <script src="/js/jquery.colorbox.js"></script>
-    <script src="/js/popper.min.js"></script>
-    <script src="/js/bootstrap4-custom/bootstrap.bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-    <script src="/js/phonics.js"></script>
-    <script src="/js/timers.js"></script>
+  <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
 
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/phonics.css" media="all">
 
-
-  {% endblock scripts %}
+  <script src="/js/jquery-3.5.1.js"></script>
+  <script src="/js/jquery.colorbox.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap4-custom/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+  <script src="/js/phonics.js"></script>
+  <script src="/js/timers.js"></script>
 </head>
 
 <body>
 {# <div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; "> #}
-<div class="m-0 p-0">
+<div class="m-0 p-0 container-fluid">
   {# content comes from the page rendering of a template block like default_body_bs.html.twig. #}
-  {{ block('statusModals', 'modal.html.twig') }}
-
-  {% block body %}
-    {{ content | raw }}
-  {% endblock body %}
+  {% block modals   %}{% endblock %}
+  {% block titleBar %}{% endblock %}
+  {% block navBar   %}{% endblock %}
+  {% block tabBar   %}{% endblock %}
+  {% block body     %}{% endblock %}
 </div>
+{% set gameDim = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
+{% set ticDim = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
+{% set soundDim = isSmallScreen ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
+<script>
+    $(document).ready(function () {
+      {# when bootstrap modal is active, don't dim background #}
+        $('.modal-backdrop').removeClass("modal-backdrop");
+        $('[data-toggle="tooltip"]').tooltip({'delay': {show: 1000, hide: 100}});
 
-{% block jqueryReady %}
-  {% set gameDim = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
-  {% set ticDim = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
-  {% set soundDim = isSmallScreen ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
-  <script>
-      $(document).ready(function () {
-        {# when bootstrap modal is active, don't dim background #}
-          $('.modal-backdrop').removeClass("modal-backdrop");
-          $('[data-toggle="tooltip"]').tooltip({'delay': { show: 1000, hide: 100 }});
+      {{ otherJqueryReady|raw }}
+    });
 
-        {{ otherJqueryReady|raw }}
-      });
+</script>
+<script>
+    $('document').ready(function () {
+        {% block otherJqueryReady %}{% endblock %}
+        $(".ajax").colorbox();
+        $(".tic-tac-toe").colorbox({
+            iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
+            top: 20, overlayClose: false, scrolling: false
+        });
 
-  </script>
-  <script>
-      $('document').ready(function () {
+        $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ gameDim }}});
+        $(".sound-box").colorbox({
+            iframe: true, scrolling: false, overlayClose: false, {{ soundDim }}
+        });
 
-          $(".ajax").colorbox();
-          $(".tic-tac-toe").colorbox({
-              iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
-              top: 20, overlayClose: false, scrolling: false
-          });
-          // $(".tic-tac-toe").colorbox({
-          //     iframe: true, innerWidth: "90%", maxWidth: "440px", innerHeight: "100%", maxHeight: "440px",
-          //     top: 20, overlayClose: false, scrolling: false
-          // });
-          $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ gameDim }}});
-          $(".sound-box").colorbox({
-              iframe: true, scrolling: false, overlayClose: false, {{ soundDim }}
-          });
+        $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
+        $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
+        $(".inline").colorbox({inline: true, width: "50%"});
+        $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
 
-          $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
-          $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
-          $(".inline").colorbox({inline: true, width: "50%"});
-          $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
+        $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
 
-          $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
+        // disable parent scrolling when colorbox modal is active
+        // reenable scrolling when colorbox modal is closed
+        // see: https://www.geeksforgeeks.org/how-to-disable-scrolling-temporarily-using-javascript/
+        $(document).bind('cbox_open', function () {
+            $('html').addClass("body__scroll_disable");
+        }).bind('cbox_cleanup', function () {
+            $('html').removeClass("body__scroll_disable");
+        });
 
-          // disable parent scrolling when colorbox modal is active
-          // reenable scrolling when colorbox modal is closed
-          // see: https://www.geeksforgeeks.org/how-to-disable-scrolling-temporarily-using-javascript/
-          $(document).bind('cbox_open', function () {
-              $('html').addClass("body__scroll_disable");
-          }).bind('cbox_cleanup', function () {
-              $('html').removeClass("body__scroll_disable");
-          });
+        setScreenCookie();
 
-          setScreenCookie();
+        $(window).resize(function () {
+            setScreenCookie();
+        });
 
-          $(window).resize(function () {
-              setScreenCookie();
-          });
+    });
 
-      });
+</script>
 
-  </script>
-{% endblock jqueryReady %}
-{#<script>#}
-{#    window.history.replaceState(null, null); //avoid form warning if user clicks refresh#}
-{#</script>#}
 </body>
 </html>
 

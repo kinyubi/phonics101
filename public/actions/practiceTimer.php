@@ -4,7 +4,7 @@
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Student;
-use ReadXYZ\Twig\Twigs;
+use ReadXYZ\Twig\LessonTemplate;
 
 require 'autoload.php';
 
@@ -13,8 +13,7 @@ if (Util::isLocal()) {
 }
 $cookie = Cookie::getInstance();
 if (!$cookie->tryContinueSession()) {
-    echo Twigs::getInstance()->login('Login has expired (fluency timer).');
-    exit;
+    throw new RuntimeException("Session not found.");
 }
 $student = Student::getInstance();
 
@@ -30,5 +29,5 @@ $seconds = $_REQUEST['seconds'] ?? 0;
 //     error_log("Fluency timed test for $studentName was 0.");
 // }
 
-$USE_NEXT_LESSON_BUTTON = true;
-Twigs::getInstance()->renderLesson($currentLessonName, 'fluency', $USE_NEXT_LESSON_BUTTON);
+$lessonTemplate = new LessonTemplate($currentLessonName, 'fluency');
+$lessonTemplate->displayLesson();

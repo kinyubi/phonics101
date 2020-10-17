@@ -13,11 +13,9 @@ class Util
 
     public static function addSoundClass(string $lessonName): string
     {
-        $pattern = '#/([a-zA-Z]+)/#';
-
-        $result = preg_replace($pattern, '<span class="sound">$1</span>', $lessonName);
-
-        return $result;
+        return $lessonName;
+        // $pattern = '#/([a-zA-Z]+)/#';
+        // return preg_replace($pattern, '<span class="sound">$1</span>', $lessonName);
     }
 
     public static function alert(string $message): void

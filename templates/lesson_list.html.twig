@@ -1,9 +1,13 @@
+{% extends 'base.html.twig' %}
 {#
 Build a page of available lessons. Each lesson is a link to the action handler with a P1 parameter
 containing the lesson name. If no action is specified, then the programs default action handler is
 used specifying Lessons::renderLesson to handle
-used by: ReadXYZ\Twig\Twigs::renderLessonList
+used by: ReadXYZ\Twig\LessonListTemplate
 
+inherited inputs:
+    pageTitle
+    menu        : key value pairs of title => link for navbar
 inputs:
     accordion[] : obtained by calling Lessons::getInstance()->getAccordionList()
     displayAs[]
@@ -13,6 +17,20 @@ inputs:
     isLocal     : obtained by Util::isLocal()
     action      : if specified a file in /actions, otherwise we do legacy treatment
 #}
+
+{# inherited blocks: title, modals, titleBar, navBar, tabBar, body, otherJqueryReady #}
+
+{% block title %}ReadXYZ Lessons{% endblock title %}
+
+{% block titleBar %}
+  <div class="row bg-white  d-flex justify-content-start title-bar--height align-middle h1 px-2" id="readxyz-title">
+    <div class="p-2 col-3 bg-image--title"></div>
+    {% for title, link in menu %}
+      <a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
+    {% endfor %}
+  </div>
+{% endblock titleBar %}
+
 
 {% block body %}
   {% set iconList = ['nomastery', 'advancing', 'mastered'] %}
@@ -29,7 +47,8 @@ inputs:
           font: bold 20px Muli, Century Gothic, sans-serif;
       }
   </style>
-  <div class=" lesson-list--width" id="lesson-list">
+  <div class="row d-flex bg-readultra justify-content-center">
+  <div class=" lesson-list--width bg-readultra" id="lesson-list">
 
     {# DISPLAY MOST RECENT LESSON IF IT'S IN THE COOKIE #}
     {% if mostRecentLesson %}
@@ -38,6 +57,7 @@ inputs:
           <div class="row d-flex flex-nowrap just align-items-center ">
             <i class="fa fa-bolt text-warning fa-2x mx-3" aria-hidden="true"></i>
             <div class="h3 text-dark mx-4">{{ mostRecentLesson }}</div>
+            <div class="text-secondary">(most recent lesson)</div>
           </div>
         </div>
       </div>
@@ -95,27 +115,8 @@ inputs:
       {% endfor %}
     </div>
 
-
+  </div>
   </div>
 {% endblock body %}
 
-
-{# inputs:
-    action - the php file that is the target of the form
-    accordion[]
-#}
-{% block lessonDropDown %}
-  <form action="/{{ action }}">
-    <label for="lessons">Choose a lesson:</label>
-    <select name="lessons" id="lessons">
-      {% for groupName in accordion|keys %}
-        <optgroup label="{{ groupName }}">
-          {% for lessonName, masteryLevel in accordion[groupName] %}
-            <option value="{{ lessonName }}">{{ lessonName }}</option>
-          {% endfor %}
-        </optgroup>
-      {% endfor %}
-    </select>
-  </form>
-{% endblock lessonDropDown %}
 

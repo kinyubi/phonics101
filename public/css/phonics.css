@@ -428,6 +428,7 @@ a.img-contain img {
     .size--key-icon {height: 35px; width: 35px}
     .size--list-icon {height: 18px; width: 18px}
     .size--tab-icon-height {height: 40px;}
+    .title-bar--height {height: 60px}
 }
 
 
@@ -441,6 +442,7 @@ a.img-contain img {
      .size--key-icon {height: 45px; width: 45px}
      .size--list-icon {height: 24px; width: 24px}
      .size--tab-icon-height {height: 40px;}
+     .title-bar--height {height: 50px}
  }
 
  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
@@ -453,6 +455,7 @@ a.img-contain img {
      .size--key-icon {height: 60px; width: 60px}
      .size--list-icon {height: 30px; width: 30px}
      .size--tab-icon-height {height: 70px;}
+     .title-bar--height {height: 60px}
  }
  /* Large devices (desktops, 992px and up) */
  @media (min-width: 992px) {
@@ -464,6 +467,7 @@ a.img-contain img {
      .size--key-icon {height: 75px; width: 75px}
      .size--list-icon {height: 35px; width: 35px}
      .size--tab-icon-height {height: 100px;}
+     .title-bar--height {height: 60px}
  }
 
  input[type="checkbox"] {
@@ -537,4 +541,25 @@ a.img-contain img {
 }
 .mastery--mastered {
     background-image: url("/images/lessonlist/lesson-mastered.png");
+}
+
+.bg-image {
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain; /* Resize the background image to cover the entire container */
+}
+
+.bg-position--left {
+    background-position: left;
+}
+
+.bg-position--center {
+    background-position: center; /* Center the image */
+}
+
+.bg-image--title {
+    background-image: url("/images/readxyzlogo2-2020.png");
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain; /* Resize the background image to cover the entire container */
+    background-position: center;
+    margin-left: .5rem;
 }

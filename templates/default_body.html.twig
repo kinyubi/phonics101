@@ -8,6 +8,10 @@ Mapping of Document class properties to twig variables in the Document::render m
    $errorMessage    -> errorMessage     set with $document->appendToErrorMessage(html)
    $systemMessage   -> systemMessage    set with $document->appendToSystemMessage(html)
 
+Optional Arguments
+    studentName (LessonPage)
+    bodyBackgroundClass (LessonPage)
+
    The HTML returned from the TwigFactory::renderBlock call is put into the variable $content.
    $args is set to ['content' => $content. The call to TwigFactory::renderTemplate is as follows:
        TwigFactory::renderTemplate('base.html.twig', $args)
@@ -28,13 +32,24 @@ Mapping of Document class properties to twig variables in the Document::render m
     For an untabbed page you can create another block template for the body block and use that
 #}
 
+{% block title %}ReadXYZ Lesson{% enblock title %}
+
 {% block body %}
+  {{ block('errors') }}
+
   {% set dim = isSmallScreen ? '45' : '80' %}
 
-  {# NAVBAR #}
+  {# TITLE BAR #}
   {# our logo, menu items, and title that span the entire width of the page #}
-  <div class="container-fluid m-0 p-0">
-{#    <div class="row m-0 p-0 ">#}
+
+    {# ROW - Title bar #}
+    <div class="row bg-readultra  d-flex justify-content-start title-bar--height align-middle h1 px-2" id="readxyz-title">
+      <div class="p-2 col-3 bg-image--title"></div>
+
+    </div>
+
+    {# NAVBAR #}
+    <div class="row">
 {#      <div class="col-12 p-0">#}
         <nav class="navbar bg-readlite m-0 px-1" style=" border-bottom: 2px solid var(--readxyz);">
           <img class="navbar-brand" style="max-height:50px" alt="ReadXYZ" src="/images/reader-no-text.png">
@@ -45,13 +60,12 @@ Mapping of Document class properties to twig variables in the Document::render m
           <span class="navbar-text text-secondary h5 px-2">{{ pageTitle }}</span>
         </nav>
 {#      </div>#}
-{#    </div>#}
-  </div>
-  {{ block('errors') }}
+    </div>
+
+
   <div class="container-fluid m-0 p-0 {{ bodyBackgroundClass }}" style="height: 4px;"></div>
   {#  TAB BAR #}
-  {# create the tabs setting the initial tab as visible and active #}
-  {# <div class="container p-0  id="thePage" style="max-width: 960px;"> #}
+
   <div class="container-fluid p-0" id="thePage" >
     <div class="row m-0 p-0 justify-content-start {{ bodyBackgroundClass }}" style="width: auto;">
       {% set tabCount =  tabs | length %}

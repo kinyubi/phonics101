@@ -166,6 +166,15 @@ class Student
         return $currentLessonName;
     }
 
+    public function updateLearningCurveCargo(string $lessonName, int $seconds)
+    {
+        $this->cargo['currentLessons'][$lessonName]['testCurve'][time()] = $seconds;
+            while (count($this->cargo['currentLessons'][$lessonName]['testCurve']) > 8) {
+                array_shift($this->cargo['currentLessons'][$lessonName]['testCurve']);
+            }
+            $this->saveSession();
+    }
+
     /**
      * the target method for the fluencyTimerForm when fluencySaveButton is pressed.
      */
@@ -202,15 +211,8 @@ class Student
         }
 
         if (isset($postData['seconds'])) {
-            $seconds = intval(
-                $postData['seconds'] ?? '0'
-            );
-            $this->cargo['currentLessons'][$currentLessonName]['testCurve'][time()] = $seconds;
-            while (count($this->cargo['currentLessons'][$currentLessonName]['testCurve']) > 8) {
-                array_shift($this->cargo['currentLessons'][$currentLessonName]['testCurve']);
-            }
-
-            $this->saveSession();
+            $seconds = intval($postData['seconds'] ?? '0');
+            $this->updateLearningCurveCargo($currentLessonName, $seconds);
         } elseif (isset($postData['masteryType'])) {
             $masteryType = $postData['masteryType'] ?? ($postData['P1'] ?? '');
             $lessonResult = LessonResults::getInstance();

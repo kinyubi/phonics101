@@ -5,6 +5,7 @@
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Identity;
+use ReadXYZ\Twig\LessonListTemplate;
 use ReadXYZ\Twig\Twigs;
 
 require 'autoload.php';
@@ -22,9 +23,5 @@ $identity = Identity::getInstance();
 $identity->setStudent($studentId);
 $identity->savePersistentState();
 
-$cookie = Cookie::getInstance();
-$args = [];
-$args['mostRecentLesson'] = $cookie->getCurrentLesson();
-$args["mostRecentTab"] = $cookie->getCurrentTab();
-
-echo Twigs::getInstance()->renderLessonList($args);
+$lessonList = new LessonListTemplate();
+$lessonList->display();

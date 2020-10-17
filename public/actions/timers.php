@@ -6,7 +6,7 @@ use ReadXYZ\Database\LessonResults;
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Student;
-use ReadXYZ\Twig\Twigs;
+use ReadXYZ\Twig\LessonTemplate;
 
 require 'autoload.php';
 
@@ -24,8 +24,9 @@ $currentLessonName = $cookie->getCurrentLesson();
 $student->saveLessonSelection($currentLessonName);
 $source = $_REQUEST['source'] ?? 'unknown';
 $seconds = $_REQUEST['seconds'] ?? 0;
-$twigs = Twigs::getInstance();
-$USE_NEXT_LESSON_BUTTON = true;
+$tab = ('fluency' == $source) ? 'fluency' : 'test';
+
+$lessonTemplate = new LessonTemplate($currentLessonName, $tab);
 
 if ('fluency' == $source) {
     if ($seconds) {
@@ -39,16 +40,13 @@ if ('fluency' == $source) {
     }
 
 
-    echo $twigs->renderLesson($currentLessonName, 'fluency', $USE_NEXT_LESSON_BUTTON);
+    $lessonTemplate->displayLesson();
 } elseif ('test' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $seconds = intval($_REQUEST['seconds'] ?? '0');
-    $student->cargo['currentLessons'][$currentLessonName]['testCurve'][time()] = $seconds;
-    while (count($student->cargo['currentLessons'][$currentLessonName]['testCurve']) > 8) {
-        array_shift($student->cargo['currentLessons'][$currentLessonName]['testCurve']);
-    }
-    $student->saveSession();
-    echo $twigs->renderLesson($currentLessonName, 'test', $USE_NEXT_LESSON_BUTTON);
+    $student->updateLearningCurveCargo($assumedLessonName, $seconds);
+
+    $lessonTemplate->displayLesson();
 } elseif ('testMastery' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $masteryType = $_REQUEST['masteryType'];
@@ -76,7 +74,7 @@ if ('fluency' == $source) {
             assert(false, "Did not expect '$masteryType' as a submit type");
     }
     $student->saveSession();
-    echo $twigs->renderLesson($currentLessonName, 'test', $USE_NEXT_LESSON_BUTTON);
+    $lessonTemplate->displayLesson();
 
 } else {
     $message = "Call to timers.php with unrecognized source $source";

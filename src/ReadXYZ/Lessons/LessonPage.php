@@ -30,6 +30,6 @@ class LessonPage extends Page
         if ($initialTabName) {
             $pageArgs['initialTabName'] = $initialTabName;
         }
-        return $this->baseRender($pageArgs);
+        return $this->defaultBodyRender($pageArgs);
     }
 }
