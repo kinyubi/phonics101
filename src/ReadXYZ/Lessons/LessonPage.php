@@ -4,7 +4,9 @@
 namespace ReadXYZ\Lessons;
 
 
+use ReadXYZ\Helpers\ScreenCookie;
 use ReadXYZ\Twig\Page;
+use ReadXYZ\Twig\TwigFactory;
 
 class LessonPage extends Page
 {
@@ -15,21 +17,16 @@ class LessonPage extends Page
         $this->studentName = $studentName;
     }
 
-    /**
-     * Renders a lesson's tabs
-     * @param string $initialTabName
-     * @return string
-     */
+
     public function lessonRender(string $initialTabName = ''): string
     {
-        $pageArgs = [];
-        $pageArgs['studentName'] = $this->studentName;
-        $pageArgs['pageTitle'] = $this->pageTitle;
-        $pageArgs['bodyBackgroundClass'] = 'bg-readlite';
-        $pageArgs['tabs'] = $this->tabs;
-        if ($initialTabName) {
-            $pageArgs['initialTabName'] = $initialTabName;
-        }
-        return $this->defaultBodyRender($pageArgs);
+        $this->arguments['pageTitle'] = $this->pageTitle;
+        $this->arguments['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
+        if ($this->errors) {$this->arguments['errorMessage'] = $this->errors;}
+        if ($this->navBar) {$this->arguments['menu'] = $this->navBar;}
+        $this->arguments['studentName'] = $this->studentName;
+        $this->arguments['tabs'] = $this->tabs;
+        if ($initialTabName) {$this->arguments['initialTabName'] = $initialTabName;}
+        echo TwigFactory::getInstance()->renderTemplate('lesson', $this->arguments);
     }
 }

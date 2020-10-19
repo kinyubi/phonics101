@@ -37,6 +37,7 @@ class Lesson implements JsonSerializable
     private ?array $wordLists;
     private array $wordListIndexForTab;
     private array $notes;
+    private array $allWords;
 
     /**
      * Lesson constructor. Called by the Lessons class when building an associative array of lessons.
@@ -55,6 +56,7 @@ class Lesson implements JsonSerializable
         $this->lessonDisplayAs = $lesson->lessonDisplayAs ?? $lesson->lessonId;
         $this->wordList = Util::csvStringToArray($lesson->wordList);
         $this->supplementalWordList = Util::csvStringToArray($lesson->supplementalWordList);
+        $this->allWords = array_merge($this->wordList ?? [], $this->supplementalWordList ?? []);
         $this->contrastList = Util::csvStringToArray($lesson->contrastList);
         $this->stretchList = Util::stretchListToArray($lesson->stretchList);
         $this->fluencySentences = $lesson->fluencySentences ?? null;
@@ -97,6 +99,10 @@ class Lesson implements JsonSerializable
         $this->tabNames = [];
         foreach ($lesson->tabs as $tab) {
             $this->tabNames[] = Util::fixTabName($tab);
+        }
+        // force warmup so we don't have to redo the json
+        if (! in_array('warmup', $this->tabNames)) {
+            array_unshift($this->tabNames,'warmup');
         }
         $this->spinner = null;
         $this->spinner = new Spinner($lesson->spinner->prefixList, $lesson->spinner->vowel ?? '', $lesson->spinner->suffixList ?? '');

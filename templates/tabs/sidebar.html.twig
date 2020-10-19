@@ -1,57 +1,44 @@
-
 {# input:
     tabInfo         : fields -> tabTypeId, tabDisplayAs, tabClassName, script, imageFile
-    information     : information that will display when hovering over the info icon
-    pronounceImage  : if present an image file name to be displayed as thumbnail
-    pronounceImageThumb
-    games[]         :
-    timerHtml       : any timer form/buttons html
-    isBdpLesson     : true if bdp-lesson
+
 #}
 {% block SideBar %}
   {% set tabId = tabInfo.tabTypeId %}
   {% set infoDim = isSmallScreen ? 30 : 50 %}
-  <div class="container p-0 m-0">
+  {% set information = sideNote.getNote(lesson.groupId, tabId) %}
+  {% set isBdpLesson = 'b-d-p' in lesson.lessonName %}
+
     {# Refresh and Info icon display #}
-    {% if information %}
+    {% if information|default is not empty %}
       <div class="row d-flex align-items-center justify-content-center">
-        <div class="info-container ">
+        <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true"
+             title="{{ information }}"></div>
           {# <a href="#"> #}
           {# <i class="fas fa-info-circle fa-2x text-info " aria-hidden="true"></i> #}
           {# <span class="shadow">{{ information|raw }}</span> #}
           {# </a> #}
-          <a href="#" data-toggle="tooltip" data-placement="left" data-html="true" title="{{ information }}" class="img-contain">
-            <img src="/images/sidebar/info.png" alt="info" height="{{ infoDim }}" width="{{ infoDim }}">
-          </a>
-        </div>
       </div>
     {% endif %}
     {# BDP Dice if applicable #}
     {% if (tabId == 'intro') and isBdpLesson %}
-      <div class="d-flex justify-content-center " style="width: 100%;">
+      <div class="row d-flex justify-content-center " style="width: 100%;">
         <div class="px-2 scaled">
           <iframe src="/dice/rolldice-orig.php?pips=bdpq" height="160" width="200"></iframe>
         </div>
       </div>
     {% endif %}
 
-    {# Timer if applicable #}
-    {% if timerHtml %}
-      <tr class="d-flex">
-        <td colspan="2">
-          {{ timerHtml|raw }}
-        </td>
-      </tr>
-    {% endif %}
+
     {# GAMES #}
     <table id="{{ tabId }}-sidebar-contents" class="table table-sm table-borderless">
       <tbody>
       {% set h =  isSmallScreen ? 68 : 115 %}
       {% set w = isSmallScreen  ? 75 : 150 %}
-      {% for game in games %}
+
+      {% for game in lesson.games[tabId]|default %}
         <tr class="d-flex justify-content-center align-items-center">
           <td colspan="2">
-            {% set url = (game.gameTypeId == 'tic-tac-toe') and (h > 100) ? '/tictactoe/tictac-lg.php' : game.url  %}
+            {% set url = (game.gameTypeId == 'tic-tac-toe') and (h > 100) ? '/tictactoe/tictac-lg.php' : game.url %}
             {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell', 'sound-box']) ? game.gameTypeId : 'games' %}
             <a class="{{ class }}" href="{{ url }}">
               <img src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
@@ -61,29 +48,39 @@
         </tr>
       {% endfor %}
 
-      {% if isBdpLesson %}
-        <tr class="d-flex">
-          <td colspan="2">
-            {{ timerHtml|raw }}
-          </td>
-        </tr>
-      {% endif %}
       </tbody>
     </table>
-    {% if (tabId == 'intro') and pronounceImage and (not isBdpLesson) %}
-      <a class="intro-image" href="{{ pronounceImage }}">
-        <div class="bdp-thumb">
-          <img src="{{ pronounceImageThumb }}" alt="pronounce">
-        </div>
-      </a>
-    {% endif %}
-    {% if (tabId == 'intro') and isBdpLesson %}
-      <a class="intro-image" href="{{ pronounceImage }}">
-        <div class="bdp-thumb">
-          <img src="{{ pronounceImageThumb }}" alt="b-d-p">
-        </div>
-      </a>
+
+  {# Timer if applicable #}
+  {% if tabId in ['fluency', 'test', 'practice'] %}
+    <div class="row d-flex py-2">
+      {{ block(tabId ~ 'Timer', 'timers2.html.twig')|raw }}
+    </div>
+    <div class="row d-flex">
+        {% if tabId == 'fluency' %}
+          {{ sideNote.getLearningCurveHTML() }}
+        {% endif %}
+        {% if tabId == 'test' %}
+          {{ sideNote.getTestCurveHTML() }}
+        {% endif %}
+    </div>
+  {% endif %}
+
+    {% if tabId == 'intro' %}
+      {% if (lesson.pronounceImage is not empty) and (not isBdpLesson) %}
+        <a class="intro-image" href="{{ pronounceImage }}">
+          <div class="bdp-thumb">
+            <img src="{{ lesson.pronounceImageThumb }}" alt="pronounce">
+          </div>
+        </a>
+      {% endif %}
+      {% if isBdpLesson %}
+        <a class="intro-image" href="{{ lesson.pronounceImage }}">
+          <div class="bdp-thumb">
+            <img src="{{ lesson.pronounceImageThumb }}" alt="b-d-p">
+          </div>
+        </a>
+      {% endif %}
     {% endif %}
 
-  </div>
 {% endblock SideBar %}

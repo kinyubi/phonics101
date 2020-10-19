@@ -8,6 +8,7 @@
 {% block PracticeTab %}
   {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
+  {% set wordList = lesson.getWordList() %}
   <div class="container">
 
     {% set tabId = tabInfo.tabTypeId %}
@@ -27,7 +28,7 @@
         </table>
       </div>
       <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
-        {{ sidebarHtml|raw }}
+        {{ block('SideBar', 'sidebar.html.twig') }}
       </div>
     </div>
   </div>

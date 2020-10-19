@@ -7,6 +7,7 @@ namespace ReadXYZ\Models;
 
 use ArrayObject;
 use ReadXYZ\Database\LessonResults;
+use ReadXYZ\Database\PhonicsDb;
 use ReadXYZ\Database\StudentTable;
 use ReadXYZ\Database\TrainingLog;
 use ReadXYZ\Helpers\Debug;
@@ -249,5 +250,13 @@ class Student
         } else {
             assert(false, 'POST data did not have required fields.');
         }
+    }
+
+    public function getMasteredWords(): array
+    {
+        $db = new PhonicsDb();
+        $query = "SELECT word from abc_usermastery WHERE studentID='{$this->studentID}'";
+        $result = $db->queryAndGetScalarArray($query);
+        return $result->wasSuccessful() ? $result->getResult() : [];
     }
 }

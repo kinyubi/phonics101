@@ -6,10 +6,12 @@
 #}
 {% block WarmupTab %}
   {% from "macros.html.twig" import tabHeader  %}
-  {% set tabId = tabInfo.tabTypeId %}
+
+{#  {% set tabId = 'warmup' %}#}
+{#  {% set tabInfo = tabTypes.getTabInfo(tabId) %}#}
   {% set tabName = tabInfo.tabDisplayAs %}
   {% set dim = isSmallScreen ? 25 : 40 %}
-  <div class="container" id="{{ tabId }}-container">
+  <div class="container bg-white" id="{{ tabId }}-container">
 
     <div class="row  d-flex  flex-nowrap p-2 mx-auto">
       <div id="{{ tabId }}-main" class="col-8 ">

@@ -4,21 +4,22 @@
     stretchList
     sidebarHtml
     games
+
+  defined by calling block: tabId, tabInfo
 #}
 {% block IntroTab %}
   {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
 
-    {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 p-2">
-      <div id="{{ tabId }}-main" class="flex-grow-1 col-9">
+      <div id="{{ tabId }}-main" class="col-9">
         {{ tabHeader(tabInfo) }}
         <table class="table table-sm table-borderless">
           <tbody>
-          {% set len = stretchList[0]|length %}
+          {% set len = lesson.stretchList[0]|length %}
           {% set colsz = (len <= 4) ? 'col-3' : ((len < 6) ? 'col-2' : 'col-1') %}
-          {% for wordSets in stretchList %}
+          {% for wordSets in lesson.stretchList %}
             <tr class="d-flex">
               {% for word in wordSets|slice(0,3) %}
                 <td class="wordlist col-4 mx-2 px-0">{{ word }}</td>
@@ -29,7 +30,7 @@
         </table>
       </div>
       <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0 ">
-        {{ sidebarHtml|raw }}
+        {{ block('SideBar', 'sidebar.html.twig') }}
       </div>
     </div>
   </div>

@@ -88,7 +88,7 @@ class SideNote
      */
     private function getGroupNote(string $group_name, string $tab_name)
     {
-        return $this->data['group_notes'][ucfirst($group_name)][ucfirst($tab_name)]?? '';
+        return $this->data['group_notes'][$group_name][$tab_name]?? '';
     }
 
     /**
@@ -100,7 +100,7 @@ class SideNote
      */
     private function getDefaultTabNote(string $tab_name)
     {
-        return $this->data['default_tab_notes'][ucfirst($tab_name)] ?? '';
+        return $this->data['default_tab_notes'][$tab_name] ?? '';
     }
 
 

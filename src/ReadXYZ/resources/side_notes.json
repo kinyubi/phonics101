@@ -23,7 +23,7 @@
         "test": "<b>Instructions:</b> Shoot for a goal of 15 seconds. (Be flexible for students with slow processing speed. Automaticity is more important than speed.)</br></br>Click <i>Mastered</i> if the student does not need to review the lesson again. Click <i>Advancing</i> if the student can move on but needs to revisit the lesson at a later date.",
         "fluency": "<b>Instructions:</b> Time the student reading the passage 3 times. <br/><br/>Define unfamiliar words. <br/><br/>Encourage fluency and accuracy over speed.",
         "mastery": "<b>Instructions:</b> Check off the word if the student reads it correctly. Review incorrect words when you get to the end of the list.",
-        "info": "Read across or down. Require clear pronunciation."
+        "intro": "Read across or down. Require clear pronunciation."
     },
     "group_notes": {
         "Letters": {

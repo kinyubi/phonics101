@@ -1,27 +1,24 @@
 {# Repeated Reading (Fluency) tab #}
 {# inputs
-    tabName
-    fluencySentences
-    games
-    sidebarHtml
+    tabId
+    tabInfo
 #}
 {% block FluencyTab %}
   {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
 
-    {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-8 ">
         {{ tabHeader(tabInfo) }}
         <div class="wordlist">
-          {% for sentence in fluencySentences %}
+          {% for sentence in lesson.fluencySentences %}
             <span>{{ sentence }}</span><br>
           {% endfor %}
         </div>
       </div>
       <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
-        {{ sidebarHtml|raw }}
+        {{ block('SideBar', 'sidebar.html.twig') }}
       </div>
     </div>
   </div>

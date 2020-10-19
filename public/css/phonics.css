@@ -556,6 +556,16 @@ a.img-contain img {
     background-position: center; /* Center the image */
 }
 
+.bg-info {
+    background-image: url("/images/sidebar/info.png");
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain; /* Resize the background image to cover the entire container */
+    background-position: center;
+    background-color: transparent !important;
+    height: 50px;
+    width: 50px;
+}
+
 .bg-image--title {
     background-image: url("/images/readxyzlogo2-2020.png");
     background-repeat: no-repeat; /* Do not repeat the image */

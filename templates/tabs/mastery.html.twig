@@ -1,28 +1,26 @@
 
 {# inputs
-    tabName
-    wordList
-    sidebarHtml
-    games
+  tabId
+  tabInfo
+  lesson
 #}
 {% block MasteryTab %}
   {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
-  {% set listCount = max(wordlist|length,99) %}
+  {% set listCount = max(lesson.wordlist|length,99) %}
   {% set listIndex = listCount // 25 %}
   {% set scales = ['mast-5', 'mast-4', 'mast-3', 'mast-3'] %}
   {% set cols = ['col-4', 'col-4', 'col-4', 'col-4'] %}
   <div class="container">
 
-    {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9">
         {{ tabHeader(tabInfo) }}
         <div class="row">
           <form id="masteryform" name="masteryform" method="POST" action="/actions/updateMastery.php">
             <div class="row d-flex flex-wrap">
-              {% for word in wordList %}
-                {% set checked = (word in alreadyMasteredWords) ? 'checked' : '' %}
+              {% for word in lesson.wordList %}
+                {% set checked = (word in masteredWords) ? 'checked' : '' %}
                 <div class="checkbox col-6 col-md-4 col-lg-3 mt-1 mast-3">
                   <input type="checkbox" name="word1[]"
                          id="wordId{{ loop.index }}"
@@ -30,14 +28,14 @@
                   <label class="mx-2" for="wordId{{ loop.index }}">{{ word }}</label>
                 </div>
               {% endfor %}
-              <input type="hidden" name="wordlist" value="{{ lessonWords|join(',') }}"/>
+              <input type="hidden" name="wordlist" value="{{ lesson.allWords|join(',') }}"/>
 
             </div>
           </form>
         </div>
       </div>
       <div id="{{ tabId }}-sidebar" class="col-3 mx-1 ">
-        {{ sidebarHtml|raw }}
+        {{ block('SideBar', 'sidebar.html.twig') }}
       </div>
     </div>
 

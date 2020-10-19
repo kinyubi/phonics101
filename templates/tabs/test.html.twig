@@ -1,21 +1,20 @@
 
 {# inputs
-    tabName
-    wordList
-    sidebarHtml
+    tabId
+    tabInfo
+    lesson
 #}
 {% block TestTab %}
   {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
   <div class="container">
 
-    {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-8">
         {{ tabHeader(tabInfo) }}
         <table class="table table-sm table-borderless">
           <tbody>
-          {% for word in wordList %}
+          {% for word in lesson.wordList %}
             <tr class="d-flex">
               <td id="TM{{ loop.index0 }}" class="wordlist col-12 mx-2">{{ word }}</td>
             </tr>
@@ -24,7 +23,7 @@
         </table>
       </div>
       <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0">
-        {{ sidebarHtml|raw }}
+        {{ block('SideBar', 'sidebar.html.twig') }}
       </div>
     </div>
   </div>

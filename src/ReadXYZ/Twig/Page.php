@@ -130,58 +130,10 @@ class Page
         $this->pageTitle = $title;
     }
 
-    /**
-     * Renders the default_body.html.twig template which is then fed to the base.html.twig template
-     * @param array $pageArgs
-     * @return string
-     */
-    protected function defaultBodyRender(array $pageArgs): string
-    {
-        $twig = TwigFactory::getInstance();
-        $pageArgs['pageTitle'] = $this->pageTitle;
-        if ($this->errors) {
-            $pageArgs['errorMessage'] = $this->errors;
-        }
-        if ($this->navBar) {
-            $pageArgs['menu'] = $this->navBar;
-        }
-        $isSmallScreen = ScreenCookie::isScreenSizeSmall();
-        $pageArgs['isSmallScreen'] = $isSmallScreen;
-        if (not(isset($pageArgs['bodyBackgroundClass']))) {
-            $pageArgs['bodyBackgroundClass'] = 'bg-transparent';
-        }
-        $this->addArguments($pageArgs);
-        $html = $twig->renderBlock('default_body', 'body', $this->arguments);
-        $this->addBaseArguments(['content' => $html, 'isSmallScreen' => $isSmallScreen]);
-        return $twig->renderTemplate('base', $this->baseArguments);
-    }
-
-    /**
-     * Renders the specified template which is passed up to the default_body.html.twig and base.html.twig templates
-     * @param string $template The template to use
-     * @param string $block    The block to use in the template (default is body)
-     * @param array  $args     The arguments associated with the template block
-     *
-     * @return string The rendered HTML code
-     */
-    public function simpleRender(string $template, string $block = 'body', array $args = []): string
-    {
-        $twig = TwigFactory::getInstance();
-        $html = $twig->renderBlock($template, $block, $args);
-
-        $pageArgs = [];
-        $pageArgs['tabs'] = ['Main' => $html];
-        $pageArgs['initialTabName'] = 'Main';
-        return $this->defaultBodyRender($pageArgs);
-    }
-
     public function display(string $template): void
     {
-        $pageArgs['pageTitle'] = $this->pageTitle;
-        $pageArgs['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
-        if ($this->errors) {$pageArgs['errorMessage'] = $this->errors;}
-        if ($this->navBar) {$pageArgs['menu'] = $this->navBar;}
-        $this->addArguments($pageArgs);
+        $this->arguments['page'] = $this;
+        $this->arguments['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         echo TwigFactory::getInstance()->renderTemplate($template, $this->arguments);
     }
 

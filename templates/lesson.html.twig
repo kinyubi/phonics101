@@ -1,0 +1,87 @@
+{#
+
+   $navbar          -> menu             set with $document->addToNavbar() or $doucment->addLinkToNavBar()
+   $tabArray        -> tabs             add a tab with $document->writeTab(title, html)
+   $initialTabName  -> initialTabName   set with $document->setInitialTab(tabName)
+
+handled in base.html.twig
+   $errorMessage    -> errorMessage     set with $document->appendToErrorMessage(html)
+   $systemMessage   -> systemMessage    set with $document->appendToSystemMessage(html)
+
+Optional Arguments
+    studentName (LessonPage)
+    bodyBackgroundClass (LessonPage)
+
+   The HTML returned from the TwigFactory::renderBlock call is put into the variable $content.
+   $args is set to ['content' => $content. The call to TwigFactory::renderTemplate is as follows:
+       TwigFactory::renderTemplate('base.html.twig', $args)
+#}
+
+{# variable consumed by body block
+    errorMessage:
+    systemMessage:
+    initialTabName: Title of the tab to be initially displayed (defaults to first tab)
+    pageTitle: array of titles
+    menu: array of menu items (key value pairs of title=>link)
+    isSmallScreen
+
+    For a tabbed page
+    -----------------
+    tabs associative array: key is tab title, value is html
+
+    For an untabbed page you can create another block template for the body block and use that
+#}
+
+{# inherited blocks: title, modals, titleBar, navBar, tabBar, body, otherJqueryReady #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+  {% set dim = isSmallScreen ? '45' : '80' %}
+
+  <div class="container-fluid p-0 bg-readultra" id="thePage" >
+    <div class="row m-0 p-0 justify-content-center bg-white" style="width: auto;">
+      {% set tabCount =  lesson.tabNames | length %}
+      {% set visibleTab = (initialTabName is empty) ? (lesson.tabNames|first) : page.initialTabName %}
+
+      {# TAB BAR #}
+      <nav>
+        <div class="nav nav-tabs size--tab-icon-height bg-tab" id="nav-tab" role="tablist" >
+          <a class="nav-item img-contain p-0 m-0 size--tab-icon " id="lessons-home" href="/">
+            <img src="/images/tabs/home.png" alt="home" height="70%" width="70%"/>
+          </a>
+          {% for tabId in lesson.tabNames %}
+            {% set tabInfo = tabTypes.getTabInfo(tabId) %}
+            {% set active = (tabId == visibleTab|lower) ? 'active' : '' %}
+            {% set selected = (tabId == visibleTab|lower) ? 'true' : 'false' %}
+            {% set tabElemId = tabId ~ '-tab' %}
+            {% set body = tabId ~ '-body' %}
+            <a class="nav-item img-contain p-0 m-0 {{ active }} size--tab-icon " data-toggle="tab" id="{{ tabElemId }}" href="#{{ body }}"
+               role="tab" aria-controls="{{ body }}" >
+              <img src="{{ tabInfo.imageFile }}" alt="{{ tabInfo.tabDisplayAs }}" height="70%" width="70%"/>
+            </a>
+          {% endfor %}
+        </div>
+      </nav>
+    </div>
+
+    {# TAB CONTENT #}
+    <div class="row d-flex flex-lg-nowrap justify-content-start">
+      <div class="tab-content w-100" id="myTabContent">
+          {# CONTENT FOR EACH TAB #}
+        {% for tabId in lesson.tabNames %}
+          {% set tabInfo = tabTypes.getTabInfo(tabId) %}
+          {% set active = (tabId == visibleTab) ? 'show active' : '' %}
+          {% set bodyId = tabId ~ '-body' %}
+          {% set tabElemId = tabId ~ '-tab' %}
+          {% set blockName = tabId|capitalize ~ 'Tab' %}
+          <div id="{{ bodyId }}" class="tab-pane fade {{ active }}" role="tabpanel" aria-labelledby="{{ tabElemId }}" >
+            {{ block(blockName, tabId ~ '.html.twig') }}
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div> {# end container #}
+{% endblock body %}

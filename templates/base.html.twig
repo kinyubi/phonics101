@@ -1,19 +1,18 @@
-
-
 {# defined blocks: title, modals, titleBar, navBar, tabBar, body, otherJqueryReady #}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}ReadXYZ{% endblock %}</title>
+  <title>{% block title %}{{ page.pageTitle|default('ReadXYZ') }}{% endblock %}</title>
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
 
-  <!--[if IE]> <link rel="shortcut icon" href="/images/favicons/favicon.ico"><![endif]-->
+  <!--[if IE]>
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico"><![endif]-->
   <link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
   <link rel="shortcut icon" href="/images/favicons/favicon.ico">
   <link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
@@ -39,38 +38,87 @@
 <body>
 {# <div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; "> #}
 <div class="m-0 p-0 container-fluid">
-  {# content comes from the page rendering of a template block like default_body_bs.html.twig. #}
-  {% block modals   %}{% endblock %}
-  {% block titleBar %}{% endblock %}
-  {% block navBar   %}{% endblock %}
-  {% block tabBar   %}{% endblock %}
-  {% block body     %}{% endblock %}
+
+  {% block modals %}
+    {% if page.errors %}
+    <div class="modal" id="modalError" tabindex="-1" role="dialog"
+         aria-labelledby="modalErrorLabel" aria-hidden="true" style="width: 40%">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-light">
+                    <h5 class="modal-title" id="modalErrorLabel">{{ title }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalErrorText" class="modal-body">
+                    {{ modalErrorHtml|raw }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+  {% endblock %}
+
+  {# ERRORS BLOCK #}
+  {% block titleBar %}
+    <div class="row bg-white  d-flex justify-content-start title-bar--height align-middle h1 px-2" id="readxyz-title">
+      <div class="p-2 col-3 bg-image--title"></div>
+      {% for title, link in page.navBar %}
+        <a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
+      {% endfor %}
+    </div>
+  {% endblock titleBar %}
+
+  {% block errors %}
+    {# display any error messages #}
+    {% if page.errors|default %}
+      <div class="container border border-danger p-0">
+        <div class="row">
+          <h2 class="bg-danger text-white">ERROR</h2>
+          <p class="text-danger">{{ errorMessage | raw }}</p>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endblock errors %}
+
+  {% block navBar %} {% endblock %}
+  {% block tabBar %}{% endblock %}
+
+  {% block body %}{% endblock %}
+
 </div>
-{% set gameDim = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
-{% set ticDim = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
-{% set soundDim = isSmallScreen ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
+{% set game_dimensions__ = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
+{% set sound_box_dimensions__ = isSmallScreen ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
 <script>
     $(document).ready(function () {
       {# when bootstrap modal is active, don't dim background #}
         $('.modal-backdrop').removeClass("modal-backdrop");
-        $('[data-toggle="tooltip"]').tooltip({'delay': {show: 1000, hide: 100}});
+        $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
 
-      {{ otherJqueryReady|raw }}
+        {# show the modal if we have an error #}
+        {% if page.errors|default %}
+        $("#modalError").modal("show");
+        {% endif %}
     });
 
 </script>
 <script>
     $('document').ready(function () {
-        {% block otherJqueryReady %}{% endblock %}
+      {% block otherJqueryReady %}{% endblock %}
         $(".ajax").colorbox();
         $(".tic-tac-toe").colorbox({
             iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
             top: 20, overlayClose: false, scrolling: false
         });
 
-        $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ gameDim }}});
+        $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ game_dimensions__ }}});
         $(".sound-box").colorbox({
-            iframe: true, scrolling: false, overlayClose: false, {{ soundDim }}
+            iframe: true, scrolling: false, overlayClose: false, {{ sound_box_dimensions__ }}
         });
 
         $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});

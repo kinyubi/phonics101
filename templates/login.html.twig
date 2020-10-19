@@ -1,33 +1,26 @@
-
+{% extends 'base.html.twig' %}
 {#
 parameters: email (optional)
 
 form fields: username, password
 
 #}
-{% block login %}
+
+{% block title %}ReadXYZ Login{% endblock %}
+
+{% block body %}
     <style>.wlx {max-width: 25em;}</style>
     <img src="/images/logo.png" alt="ReadXYZ" style="width:40%;">
-    <form name="frm" method="POST" action="/actions/processUserLogin.php" id="frm" data-ajax="false">
+    <form name="frm" method="POST" action="/actions/processUserLogin.php" id="frm" data-ajax="false" autocomplete="on">
 
     <label for="username" class="pt-3">Email</label>
     <input type="text" name="username" id="username"  value="{{ email }}" autocomplete="email" class="form-control wlx" aria-describedby="emailHelp" placeholder="Enter email address">
-    <label for="password" class="pt-3" onautocomplete="current-password">Password</label>
-    <input type="password" name="password" id="password" value="" class="form-control wlx" placeholder="Password">
+    <label for="password" class="pt-3" >Password</label>
+    <input type="password" name="password" id="password" value="" class="form-control wlx"
+           autocomplete="current-password" placeholder="Password">
     <input type="submit" value="LOG IN" class="btn btn-primary mt-3">
     </form>
 {% endblock %}
 
-{# parameters:
-    studentLinks[] (keys: url, title)
-#}
-{% block selectStudent %}
-    <img src="/images/logo.png" alt="ReadXYZ" style="width:40%;">
-    <br><div class="h3 pt-3">Select a student:</div><br>
-    <div class="list-group p-3" style="max-width: 200px">
-        {% for student in studentLinks %}
-            {% set active = loop.first ? 'active' : '' %}
-            <a href="{{ student.url }}" class="list-group-item list-group-item-action {{ active }}">{{ student.title }}</a>
-        {% endfor %}
-    </div>
-{% endblock %}
+
+0
