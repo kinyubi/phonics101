@@ -21,9 +21,10 @@ class LessonListTemplate
 
     public function display()
     {
+        $cookie = new Cookie();
         LearningCurve::cleanUpOldGraphics();
-        if (!Cookie::getInstance()->tryContinueSession()) {
-            throw new RuntimeException('Session has expired');
+        if (!$cookie->tryContinueSession()) {
+            throw new RuntimeException("Session has expired.\n" . $cookie->getCookieString());
         }
         $lessons = Lessons::getInstance();
         $studentName = Student::getInstance()->getCapitalizedStudentName();
@@ -35,7 +36,7 @@ class LessonListTemplate
                 $displayAs[$lessonName] = Util::addSoundClass($lessonName);
             }
         }
-        $cookie = Cookie::getInstance();
+
         $args = [
             'accordion' => $accordion,
             'studentName' => $studentName,

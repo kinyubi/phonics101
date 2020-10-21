@@ -7,7 +7,8 @@ use ReadXYZ\Database\StudentTable;
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Twig\LessonListTemplate;
 use ReadXYZ\Twig\LessonTemplate;
-use ReadXYZ\Twig\Twigs;
+use ReadXYZ\Twig\LoginTemplate;
+use ReadXYZ\Twig\StudentListTemplate;
 use Throwable;
 
 class RouteMe
@@ -40,18 +41,17 @@ class RouteMe
 
     /**
      * After a user has been validated this takes him to the proper screen
+     * @param bool $forceStudentList
      * @return void HTML for a student list or lesson list as appropriate is displayed
      */
-    public static function autoLoginDisplay(): void
+    public static function autoLoginDisplay(bool $forceStudentList = false): void
     {
-        $twigs = Twigs::getInstance();
         Util::sessionContinue();
         $identity = Identity::getInstance();
-        $studentTable = StudentTable::getInstance();
-        $allStudents = $studentTable->GetAllStudents();
-        if ($identity->hasMultipleStudents()) {
-            echo $twigs->renderStudentList($allStudents);
+        if ($identity->hasMultipleStudents() || $forceStudentList) {
+            (new StudentListTemplate())->display();
         } else {
+            $allStudents = StudentTable::getInstance()->GetAllStudents();
             $studentId = $allStudents[0]['studentID'];
             $identity->setStudent($studentId);
             $identity->savePersistentState();
@@ -69,22 +69,21 @@ class RouteMe
         $username = $parameters['username'] ?? $parameters['P1'] ?? '';
         $password = $parameters['password'] ?? $parameters['P2']  ??'';
 
-        $twigs = Twigs::getInstance();
         if (empty($username) or empty($password) ) {
-            echo $twigs->login('Username and password must both be provided.');
+            (new LoginTemplate())->display('Username and password must both be provided.');
             exit;
         }
         $result = $identity->validateSignin($username, $password);
         if ($result->failed()) {
-            echo $twigs->login($result->getErrorMessage());
+            (new LoginTemplate())->display($result->getErrorMessage());
             exit;
         }
-        self::autoLoginDisplay();
+        self::autoLoginDisplay($password == 'zz');
     }
 
     public static function parseRoute()
     {
-        $cookie = Cookie::getInstance();
+        $cookie = new Cookie();
         try {
             $foundSession = $cookie->tryContinueSession();
         } catch (Throwable $ex) {
@@ -104,7 +103,7 @@ class RouteMe
                 if ($foundSession) {
                     self::autoLoginDisplay();
                 } else {
-                    echo Twigs::getInstance()->login();
+                    (new LoginTemplate())->display();
                 }
                 break;
             case '/wp':
@@ -113,19 +112,27 @@ class RouteMe
                 break;
             case '/otp':
                 $processor = new ProcessOneTimePassword();
-                echo $processor->handleRequestAndGetResponse($parameters);
+                $processor->handleRequestAndEchoResponse($parameters);
                 break;
             case '/timer':
                 include $_SERVER['DOCUMENT_ROOT'] . '/public/actions/timers.php';
                 break;
             case '/login':
-                echo Twigs::getInstance()->login();
+                (new LoginTemplate())->display();
                 break;
             case '/lesson':
                 $lessonName = $parameters['P1'] ?? $parameters['lessonName'] ?? $cookie->getCurrentLesson() ?? '';
                 $initialTabName = $parameters['P2'] ?? $parameters['initialTabName'] ?? $cookie->getCurrentTab() ?? '';
                 $lessonTemplate = new LessonTemplate($lessonName, $initialTabName);
-                $lessonTemplate->displayLesson();
+                $lessonTemplate->display();
+                break;
+            case '/lessonlist':
+
+                break;
+            case '/studentlist':
+                self::autoLoginDisplay(true);                                                ;
+                break;
+
         }
     }
 }

@@ -11,9 +11,9 @@ require 'autoload.php';
 if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
-$cookie = Cookie::getInstance();
+$cookie = new Cookie();
 if (!$cookie->tryContinueSession()) {
-    throw new RuntimeException("Session not found.");
+    throw new RuntimeException("Session not found.\n" . $cookie->getCookieString());
 }
 $student = Student::getInstance();
 
@@ -30,4 +30,4 @@ $seconds = $_REQUEST['seconds'] ?? 0;
 // }
 
 $lessonTemplate = new LessonTemplate($currentLessonName, 'fluency');
-$lessonTemplate->displayLesson();
+$lessonTemplate->display();

@@ -7,15 +7,16 @@ use ReadXYZ\Helpers\Util;
 use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Student;
 use ReadXYZ\Twig\LessonTemplate;
+use ReadXYZ\Twig\LoginTemplate;
 
 require 'autoload.php';
 
 if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
-$cookie = Cookie::getInstance();
+$cookie = new Cookie();
 if (!$cookie->tryContinueSession()) {
-    echo Twigs::getInstance()->login('Login has expired (fluency timer).');
+    (new LoginTemplate("Login has expired (fluency timer).\n" . $cookie->getCookieString()))->display();
     exit;
 }
 $student = Student::getInstance();
@@ -40,13 +41,13 @@ if ('fluency' == $source) {
     }
 
 
-    $lessonTemplate->displayLesson();
+    $lessonTemplate->display();
 } elseif ('test' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $seconds = intval($_REQUEST['seconds'] ?? '0');
     $student->updateLearningCurveCargo($assumedLessonName, $seconds);
 
-    $lessonTemplate->displayLesson();
+    $lessonTemplate->display();
 } elseif ('testMastery' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $masteryType = $_REQUEST['masteryType'];
@@ -74,7 +75,7 @@ if ('fluency' == $source) {
             assert(false, "Did not expect '$masteryType' as a submit type");
     }
     $student->saveSession();
-    $lessonTemplate->displayLesson();
+    $lessonTemplate->display();
 
 } else {
     $message = "Call to timers.php with unrecognized source $source";

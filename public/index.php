@@ -1,6 +1,7 @@
 <?php
 
 
+use ReadXYZ\Helpers\Util;
 use ReadXYZ\Models\RouteMe;
 use Symfony\Component\ErrorHandler\Debug;
 
@@ -10,5 +11,5 @@ if ($_SERVER['APP_DEBUG']) {
     umask(0000);
     Debug::enable();
 }
-
+Util::sessionContinue();
 RouteMe::parseRoute();

@@ -3,14 +3,13 @@
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Student;
-use ReadXYZ\Twig\Twigs;
 
 require 'autoload.php';
 
 if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
-Cookie::getInstance()->tryContinueSession();
+(new Cookie())->tryContinueSession();
 
 $error_message = '';
 
@@ -46,7 +45,6 @@ function sendResponse(int $http_code = 200, string $msg = 'OK'): void
 }
 
 
-$twigs = Twigs::getInstance();
 $conn = Util::dbConnect();
 
 if ($conn->connect_errno) {

@@ -12,7 +12,7 @@
     },
     {
         "tabTypeId": "practice",
-        "tabDisplayAs": "Word Practice",
+        "tabDisplayAs": "Practice",
         "tabClassName": "WordList",
         "columns": 3,
         "useFullStyle": false,
@@ -23,7 +23,7 @@
     },
     {
         "tabTypeId": "spell",
-        "tabDisplayAs": "Word Chain",
+        "tabDisplayAs": "Chain",
         "tabClassName": "WordSpinner",
         "columns": 1,
         "useFullStyle": true,
@@ -45,7 +45,7 @@
     },
     {
         "tabTypeId": "test",
-        "tabDisplayAs": "Lesson Test",
+        "tabDisplayAs": "Test",
         "tabClassName": "WordListTimed",
         "columns": 1,
         "useFullStyle": false,
@@ -56,7 +56,7 @@
     },
     {
         "tabTypeId": "write",
-        "tabDisplayAs": "Tap &amp; Write",
+        "tabDisplayAs": "Write",
         "tabClassName": "WordList",
         "columns": 1,
         "useFullStyle": true,
@@ -67,7 +67,7 @@
     },
     {
         "tabTypeId": "fluency",
-        "tabDisplayAs": "Repeated Reading",
+        "tabDisplayAs": "Reading",
         "tabClassName": "",
         "columns": 0,
         "useFullStyle": false,
@@ -78,7 +78,7 @@
     },
     {
         "tabTypeId": "mastery",
-        "tabDisplayAs": "Mastery Check",
+        "tabDisplayAs": "Mastery",
         "tabClassName": "",
         "columns": 0,
         "useFullStyle": false,
@@ -89,7 +89,7 @@
     },
     {
         "tabTypeId": "warmup",
-        "tabDisplayAs": "Phonological Awareness",
+        "tabDisplayAs": "Warmup",
         "tabClassName": "",
         "columns": 0,
         "useFullStyle": false,

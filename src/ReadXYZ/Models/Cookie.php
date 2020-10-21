@@ -8,7 +8,6 @@ use RuntimeException;
 
 class Cookie
 {
-    private static ?Cookie $instance = null;
     private static int $COOKIE_DURATION = 60 * 60 * 24 * 60; // 2 months
     private string $username;
     private string $studentId;
@@ -18,7 +17,7 @@ class Cookie
     private array  $listIndexes;
     private int $status;
 
-    private function __construct()
+    public function __construct()
     {
         Util::sessionContinue();
         if (not(isset($_COOKIE['readXYZ_user']))) {
@@ -40,30 +39,39 @@ class Cookie
         }
     }
 
-    public static function getInstance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new Cookie();
-        }
 
-        return self::$instance;
-    }
+    // private function clearCookie(): void
+    // {
+    //     $identity = Identity::getInstance();
+    //     $validUser = $identity->isValidUser();
+    //     $this->username = $validUser ? $identity->getUserName() : '';
+    //     $this->studentId = $validUser ? $identity->getStudentId() : '';
+    //     $this->sessionId = $validUser ? $identity->getSessionId() : '';
+    //     $this->currentTab = '';
+    //     if ($this->username and $this->studentId) {
+    //         $this->currentLesson = Lessons::getInstance()->getNextLessonName(); //gets the first lesson
+    //     } else {
+    //         $this->currentLesson = '';
+    //     }
+    //     $this->clearIndexes();
+    //     $this->setCookie();
+    // }
 
     private function clearCookie(): void
     {
-        $identity = Identity::getInstance();
-        $validUser = $identity->isValidUser();
-        $this->username = $validUser ? $identity->getUserName() : '';
-        $this->studentId = $validUser ? $identity->getStudentId() : '';
-        $this->sessionId = $validUser ? $identity->getSessionId() : '';
+        Identity::getInstance()->clearIdentity();
+        $this->username =  '';
+        $this->studentId = '';
+        $this->sessionId = '';
         $this->currentTab = '';
-        if ($this->username and $this->studentId) {
-            $this->currentLesson = Lessons::getInstance()->getNextLessonName(); //gets the first lesson
-        } else {
-            $this->currentLesson = '';
-        }
+        $this->currentLesson = '';
         $this->clearIndexes();
         $this->setCookie();
+    }
+
+    public function getCookieString(): string
+    {
+        return $_COOKIE['readXYZ_user'];
     }
 
     private function clearIndexes(): void
@@ -93,7 +101,7 @@ class Cookie
         if (Util::testingInProgress()) return;
 
         $json = json_encode($cookie);
-        setcookie('readXYZ_user', $json, time() + self::$COOKIE_DURATION);
+        setcookie('readXYZ_user', $json, time() + self::$COOKIE_DURATION,'/');
     }
 
     public function getListIndex(string $tabName): int
@@ -272,7 +280,7 @@ class Cookie
         $identity->validateSignin($this->username, 'xx');
         if ($identity->isValidUser() && not(empty($this->studentId))) {
             $identity->setStudent($this->studentId);
-
+            $identity->savePersistentState();
             return true;
         }
 

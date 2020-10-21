@@ -53,7 +53,7 @@ class Lessons
             $this->lessonNames[] = $key;
         }
 
-        $cookie = Cookie::getInstance();
+        $cookie = new Cookie();
         $this->nullGuard = null;
         $currentLessonName = $cookie->getCurrentLesson();
         if (not($this->lessonExists($currentLessonName))) {
@@ -89,7 +89,7 @@ class Lessons
         if (key_exists($lessonName, $this->blendingLessons)) {
             $this->currentLessonName = $lessonName;
             $this->currentLessonNameIndex = array_search($lessonName, $this->lessonNames);
-            Cookie::getInstance()->setCurrentLesson($lessonName);
+            (new Cookie())->setCurrentLesson($lessonName);
         } else {
             throw new InvalidArgumentException("$lessonName is not a valid lesson name.");
         }

@@ -103,7 +103,7 @@ class Student
     {
         // too simple, we simply update the cargo
         $this->cargo['currentLesson'] = $lessonKey;
-        $cookie = Cookie::getInstance();
+        $cookie = new Cookie();
         $sessionId = Identity::getInstance()->getSessionId();
         if (($cookie->getStudentId() != $this->studentID) or ($cookie->getSessionId() != $sessionId)) {
             $cookie->setStudentId($this->studentID, $sessionId);

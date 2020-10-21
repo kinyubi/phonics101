@@ -1,8 +1,8 @@
 <?php
 
 use ReadXYZ\Helpers\Util;
+use ReadXYZ\Twig\LoginTemplate;
 use ReadXYZ\Twig\Page;
-use ReadXYZ\Twig\Twigs;
 
 require 'autoload.php';
 
@@ -19,4 +19,5 @@ if ('incomplete' == $action) {
 } elseif ('fail' == $action) {
     $errorMessage = 'The specified username or password was incorrect.';
 }
-echo Twigs::getInstance()->login($errorMessage);
+(new LoginTemplate($errorMessage))->display();
+

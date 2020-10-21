@@ -1,6 +1,5 @@
 <?php
 
-// target for Twigs::renderLessonList
 // parameters:
 // P1: lessonName
 // P2: initialTabName
@@ -11,7 +10,6 @@ use ReadXYZ\Models\Cookie;
 use ReadXYZ\Models\Identity;
 use ReadXYZ\Models\Student;
 use ReadXYZ\Twig\LessonTemplate;
-use ReadXYZ\Twig\Twigs;
 
 require 'autoload.php';
 
@@ -19,8 +17,9 @@ if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
 
-if (!Cookie::getInstance()->tryContinueSession()) {
-    throw new RuntimeException('Unable to find session.');
+$cookie = new Cookie();
+if (!$cookie->tryContinueSession()) {
+    throw new RuntimeException("Unable to find session.\n" . $cookie->getCookieString());
 }
 
 $lessonName = $_REQUEST['P1'] ?? $_REQUEST['lessonName'] ?? '';
@@ -38,4 +37,4 @@ if (!($lessons->lessonExists($lessonName))) {
 
 Student::getInstance()->saveLessonSelection($lessonName);
 $lessonTemplate = new LessonTemplate($lessonName, $initialTabName);
-$lessonTemplate->displayLesson();
+$lessonTemplate->display();

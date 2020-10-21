@@ -206,6 +206,7 @@ class Identity
 
     public function savePersistentState(): void
     {    // may want to encrypt one day
+        Util::sessionContinue();
         if (!isset($_SESSION)) {
             $_SESSION = [];
         }
@@ -303,7 +304,7 @@ class Identity
         $this->deviceType = $deviceType;
 
         $this->isValidUser = true;    // congratulations
-        $cookie = Cookie::getInstance();
+        $cookie = new Cookie();
         if ($cookie->getUsername() != $this->userName) {
             $cookie->setUsername($this->userName);
         }
@@ -340,14 +341,16 @@ class Identity
         if (empty($this->studentId)) {  // we just set it, really just testing 'setUserProperty()'
             throw new RuntimeException('not valid studentID after setting');
         }
-        $cookie = Cookie::getInstance();
-        if ($cookie->getUsername() != $this->userName) {
-            $cookie->setUsername($this->userName);
-        }
-        if (($cookie->getStudentId() != $studentID) or ($this->sessionId != $cookie->getSessionId())) {
-            $cookie->setStudentId($studentID, $this->sessionId);
-        }
+        $cookie = new Cookie();
 
+        $cookie->setUsername($this->userName);
+        $cookie->setStudentId($studentID, $this->sessionId);
+        // if ($cookie->getUsername() != $this->userName) {
+        //     $cookie->setUsername($this->userName);
+        // }
+        // if (($cookie->getStudentId() != $studentID) or ($this->sessionId != $cookie->getSessionId())) {
+        //     $cookie->setStudentId($studentID, $this->sessionId);
+        // }
         return true;
     }
 

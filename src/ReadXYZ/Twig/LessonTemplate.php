@@ -21,6 +21,8 @@ use RuntimeException;
 
 class LessonTemplate
 {
+    private static LessonTemplate $instance;
+
 
     private ?Lesson $lesson;
     private LessonPage $page;
@@ -30,10 +32,10 @@ class LessonTemplate
 
     public function __construct(string $lessonName = '', string $initialTabName = '')
     {
-        $cookie = Cookie::getInstance();
+        $cookie = new Cookie();
         LearningCurve::cleanUpOldGraphics();
         if (!$cookie->tryContinueSession()) {
-            throw new RuntimeException("Session not found.");
+            throw new RuntimeException("Session not found.\n" . $cookie->getCookieString());
         }
         $this->factory = TwigFactory::getInstance();
         $this->lessonName = $lessonName;
@@ -61,7 +63,7 @@ class LessonTemplate
         $this->page = new LessonPage($lessonName, $studentName);
     }
 
-    public function displayLesson(): void
+    public function display(): void
     {
         $args = [];
         $args['students'] = StudentTable::getInstance()->GetAllStudents();
@@ -70,7 +72,7 @@ class LessonTemplate
         $args['lesson'] = $this->lesson;
         $args['tabTypes'] = TabTypes::getInstance();
         $args['gameTypes'] = GameTypes::getInstance();
-        $args['cookie'] = Cookie::getInstance();
+        $args['cookie'] = new Cookie();
         $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         $args['sideNote'] = SideNote::getInstance();
         $args['masteredWords'] = Student::getInstance()->getMasteredWords();

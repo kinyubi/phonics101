@@ -417,17 +417,18 @@ a.img-contain img {
 /*iframe {overflow: hidden;}*/
 
 /* classes based on screen size (if using max-midth order largest to smallest) */
+.nodec {text-decoration: none !important;}
 
  /* 0 - 575 pixels wide - phone */
 @media  (max-width: 575px) {
     .sfp {font-size: .75rem !important;}
     .wordlist {font-size: 1.5rem !important;}
     .scaled {transform:scale(.5, .5);}
-    .size--tab-icon {height: 40px; width: 40px}
+    .size--tab-icon {height: 50px; width: 50px}
     .size--side-icon {height: 25px; width: 25px}
     .size--key-icon {height: 35px; width: 35px}
     .size--list-icon {height: 18px; width: 18px}
-    .size--tab-icon-height {height: 40px;}
+    .tabbar-height {height: 50px;}
     .title-bar--height {height: 60px}
 }
 
@@ -437,11 +438,11 @@ a.img-contain img {
      .sfp {font-size: .9rem !important;}
      .wordlist {font-size: 2rem !important;}
      .scaled {transform:scale(.6, .6);}
-     .size--tab-icon {height: 40px; width: 40px}
+     .size--tab-icon {height: 50px; width: 50px}
      .size--side-icon {height: 30px; width: 30px}
      .size--key-icon {height: 45px; width: 45px}
      .size--list-icon {height: 24px; width: 24px}
-     .size--tab-icon-height {height: 40px;}
+     .tabbar-height {height: 50px;}
      .title-bar--height {height: 50px}
  }
 
@@ -454,7 +455,7 @@ a.img-contain img {
      .size--side-icon {height: 40px; width: 40px}
      .size--key-icon {height: 60px; width: 60px}
      .size--list-icon {height: 30px; width: 30px}
-     .size--tab-icon-height {height: 70px;}
+     .tabbar-height {height: 70px;}
      .title-bar--height {height: 60px}
  }
  /* Large devices (desktops, 992px and up) */
@@ -466,7 +467,7 @@ a.img-contain img {
      .size--side-icon {height: 50px; width: 50px}
      .size--key-icon {height: 75px; width: 75px}
      .size--list-icon {height: 35px; width: 35px}
-     .size--tab-icon-height {height: 100px;}
+     .tabbar-height {height: 100px;}
      .title-bar--height {height: 60px}
  }
 
