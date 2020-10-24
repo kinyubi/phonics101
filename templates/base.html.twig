@@ -26,6 +26,7 @@
 
   <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="/css/phonics.css" media="all">
+  <link rel="stylesheet" href="/pdfflip/pflip/css/pdfflip.css">
 
   <script src="/js/jquery-3.5.1.js"></script>
   <script src="/js/jquery.colorbox.js"></script>
@@ -34,12 +35,13 @@
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
   <script src="/js/phonics.js"></script>
   <script src="/js/timers.js"></script>
+  <script src="/pdfflip/pflip/js/pdfflip.js"></script>
 </head>
 
 <body>
 {# <div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; "> #}
 <div class="m-0 p-0 container-fluid">
-
+  {# MODALS BLOCK #}
   {% block modals %}
     {% if page.errors %}
     <div class="modal" id="modalError" tabindex="-1" role="dialog"
@@ -87,9 +89,7 @@
     {% endif %}
   {% endblock errors %}
 
-  {% block navBar %} {% endblock %}
   {% block tabBar %}{% endblock %}
-
   {% block body %}{% endblock %}
 
 </div>
@@ -143,6 +143,7 @@
         $(window).resize(function () {
             setScreenCookie();
         });
+
 
     });
 

@@ -421,49 +421,49 @@ a.img-contain img {
 
  /* 0 - 575 pixels wide - phone */
 @media  (max-width: 575px) {
-    .sfp {font-size: .75rem !important;}
+    .sfp {font-size: .6rem !important;}
     .wordlist {font-size: 1.5rem !important;}
     .scaled {transform:scale(.5, .5);}
     .size--tab-icon {height: 50px; width: 50px}
-    .size--side-icon {height: 25px; width: 25px}
+    .size--side-icon {height: 24px; width: 24px}
     .size--key-icon {height: 35px; width: 35px}
     .size--list-icon {height: 18px; width: 18px}
-    .tabbar-height {height: 50px;}
+    .tabbar-height {height: 140px;}
     .title-bar--height {height: 60px}
 }
 
 
  /* Small devices (landscape phones, 576px and up) */
  @media (min-width: 576px) and (max-width: 767px) {
-     .sfp {font-size: .9rem !important;}
+     .sfp {font-size: .6rem !important;}
      .wordlist {font-size: 2rem !important;}
      .scaled {transform:scale(.6, .6);}
      .size--tab-icon {height: 50px; width: 50px}
      .size--side-icon {height: 30px; width: 30px}
      .size--key-icon {height: 45px; width: 45px}
      .size--list-icon {height: 24px; width: 24px}
-     .tabbar-height {height: 50px;}
+     .tabbar-height {height: 140px;}
      .title-bar--height {height: 50px}
  }
 
  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
  @media (min-width: 768px) and (max-width: 991px) {
-     .sfp {font-size: .95rem !important;}
+     .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 2.5rem !important;}
      .scaled {transform:scale(.75, .75);}
-     .size--tab-icon {height: 70px; width: 70px}
+     .size--tab-icon {height: 42px; width: 42px}
      .size--side-icon {height: 40px; width: 40px}
      .size--key-icon {height: 60px; width: 60px}
      .size--list-icon {height: 30px; width: 30px}
-     .tabbar-height {height: 70px;}
+     .tabbar-height {height: 140px;}
      .title-bar--height {height: 60px}
  }
  /* Large devices (desktops, 992px and up) */
  @media (min-width: 992px) {
-     .sfp {font-size: 1rem !important;}
+     .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 3rem !important;}
      .scaled {transform:scale(1.0, 1.0);}
-     .size--tab-icon {height: 100px; width: 100px}
+     .size--tab-icon {height: 60px; width: 60px}
      .size--side-icon {height: 50px; width: 50px}
      .size--key-icon {height: 75px; width: 75px}
      .size--list-icon {height: 35px; width: 35px}
@@ -492,19 +492,19 @@ a.img-contain img {
 
 /* override navbar-nav active color */
 .nav-item.a:not(.active)  {
-    background-color: transparent;
+    background-color: var(--readlite) !important;
 }
  /*override navbar-nav active color */
 .nav-item.active  {
-    background-color: #00aabe;
+    background-color: var(--readxyz) !important;
 }
 
 .nav-item:focus .nav-item:hover  {
-    background-color: var(--readxyz);
+    background-color: var(--readxyz) !important;
 }
 
 .bg-tab {
-    background-color: var(--readlite);
+    background-color: var(--readlite) !important;
 }
 
 /* classes to handle background images in accordion */
@@ -573,4 +573,11 @@ a.img-contain img {
     background-size: contain; /* Resize the background image to cover the entire container */
     background-position: center;
     margin-left: .5rem;
+}
+
+.bg-contain {
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: contain; /* Resize the background image to cover the entire container */
+    background-position: center;
+    height: 70px !important;
 }

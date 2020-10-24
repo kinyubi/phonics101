@@ -10,7 +10,6 @@ use ReadXYZ\Display\LearningCurve;
 use ReadXYZ\Helpers\Util;
 use ReadXYZ\Lessons\GameTypes;
 use ReadXYZ\Lessons\Lesson;
-use ReadXYZ\Lessons\LessonPage;
 use ReadXYZ\Lessons\Lessons;
 use ReadXYZ\Lessons\SideNote;
 use ReadXYZ\Lessons\TabTypes;
@@ -33,7 +32,7 @@ class LessonTemplate
     public function __construct(string $lessonName = '', string $initialTabName = '')
     {
         $cookie = new Cookie();
-        LearningCurve::cleanUpOldGraphics();
+
         if (!$cookie->tryContinueSession()) {
             throw new RuntimeException("Session not found.\n" . $cookie->getCookieString());
         }
@@ -65,6 +64,7 @@ class LessonTemplate
 
     public function display(): void
     {
+        LearningCurve::cleanUpOldGraphics();
         $args = [];
         $args['students'] = StudentTable::getInstance()->GetAllStudents();
         $args['warmups'] = Warmups::getInstance()->getLessonWarmup($this->lessonName);
@@ -76,6 +76,7 @@ class LessonTemplate
         $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         $args['sideNote'] = SideNote::getInstance();
         $args['masteredWords'] = Student::getInstance()->getMasteredWords();
+
         echo TwigFactory::getInstance()->renderTemplate('lesson', $args);
     }
 

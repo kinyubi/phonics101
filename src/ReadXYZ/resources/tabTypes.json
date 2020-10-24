@@ -1,101 +1,56 @@
 [
     {
-        "tabTypeId": "instructions",
-        "tabDisplayAs": "Instructions",
-        "tabClassName": "InstructionPage",
-        "columns": 1,
-        "useFullStyle": false,
-        "isGenerated": false,
-        "reviewLesson": false,
-        "script": "",
-        "imageFile": "/images/tabs/instructions.png"
-    },
-    {
         "tabTypeId": "practice",
         "tabDisplayAs": "Practice",
-        "tabClassName": "WordList",
-        "columns": 3,
-        "useFullStyle": false,
-        "isGenerated": false,
-        "reviewLesson": false,
         "script": "Read each word out loud. We will use the timer and play the games in the sidebar for additional practice.",
         "imageFile": "/images/tabs/practice.png"
     },
     {
         "tabTypeId": "spell",
         "tabDisplayAs": "Chain",
-        "tabClassName": "WordSpinner",
-        "columns": 1,
-        "useFullStyle": true,
-        "isGenerated": false,
-        "reviewLesson": false,
         "script": "Click the letters to spell <say a word>. Now change the first letter to <pick a letter>. What word did you spell?",
         "imageFile": "/images/tabs/spell.png"
     },
     {
         "tabTypeId": "intro",
         "tabDisplayAs": "Stretch",
-        "tabClassName": "WordList",
-        "columns": 1,
-        "useFullStyle": true,
-        "isGenerated": false,
-        "reviewLesson": false,
         "script": "Today we are learning words that end with /at/. Let's read the words together.",
         "imageFile": "/images/tabs/intro.png"
     },
     {
         "tabTypeId": "test",
         "tabDisplayAs": "Test",
-        "tabClassName": "WordListTimed",
-        "columns": 1,
-        "useFullStyle": false,
-        "isGenerated": false,
-        "reviewLesson": false,
         "script": "Let's see how well you have learned the words in this lesson. (Mastery Goal: all words correct in 10 - 15 seconds.)",
         "imageFile": "/images/tabs/test.png"
     },
     {
         "tabTypeId": "write",
         "tabDisplayAs": "Write",
-        "tabClassName": "WordList",
-        "columns": 1,
-        "useFullStyle": true,
-        "isGenerated": false,
-        "reviewLesson": false,
         "script": "I will choose 4 words from the lesson. For each word, you will tap the sounds and then write the word.",
         "imageFile": "/images/tabs/write.png"
     },
     {
         "tabTypeId": "fluency",
         "tabDisplayAs": "Reading",
-        "tabClassName": "",
-        "columns": 0,
-        "useFullStyle": false,
-        "isGenerated": true,
-        "reviewLesson": false,
         "script": "You will read this 3 times. I will use the timer, but focus on reading the words smoothly and correctly.",
         "imageFile": "/images/tabs/fluency.png"
     },
     {
         "tabTypeId": "mastery",
         "tabDisplayAs": "Mastery",
-        "tabClassName": "",
-        "columns": 0,
-        "useFullStyle": false,
-        "isGenerated": true,
-        "reviewLesson": false,
         "script": "I will point to a word. If you read it correctly, I will check the box. If not, it is ok. We will practice it at the end.",
         "imageFile": "/images/tabs/mastery.png"
     },
     {
         "tabTypeId": "warmup",
         "tabDisplayAs": "Warmup",
-        "tabClassName": "",
-        "columns": 0,
-        "useFullStyle": false,
-        "isGenerated": true,
-        "reviewLesson": false,
         "script": "I am going to ask you some questions. During this exercise, you will watch me and listen.",
         "imageFile": "/images/tabs/warmup.png"
+    },
+    {
+        "tabTypeId": "book",
+        "tabDisplayAs": "Storytime",
+        "script": "",
+        "imageFile": "/images/tabs/book.png"
     }
 ]

@@ -38,6 +38,7 @@ class Lesson implements JsonSerializable
     private array $wordListIndexForTab;
     private array $notes;
     private array $allWords;
+    private string $book;
 
     /**
      * Lesson constructor. Called by the Lessons class when building an associative array of lessons.
@@ -61,6 +62,7 @@ class Lesson implements JsonSerializable
         $this->stretchList = Util::stretchListToArray($lesson->stretchList);
         $this->fluencySentences = $lesson->fluencySentences ?? null;
         $this->games = [];
+        $this->book = $lesson->book ?? '';
         // get the universal games added to the lesson
         $gameTypes = GameTypes::getInstance();
         $universalGames = $gameTypes->getUniversalGameTypes();
@@ -279,6 +281,11 @@ class Lesson implements JsonSerializable
     public function getPronounceImageThumb(): string
     {
         return $this->pronounceImageThumb;
+    }
+
+    public function getBook(): string
+    {
+        return $this->book;
     }
 
     /**

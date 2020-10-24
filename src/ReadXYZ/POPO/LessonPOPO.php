@@ -29,6 +29,7 @@ class LessonPOPO implements JsonSerializable
     public array $contrastImages = [];
     public int $ordering = 0;
     public bool $visible = false;
+    public string $book ='';
 
     public function jsonSerialize()
     {
@@ -51,7 +52,8 @@ class LessonPOPO implements JsonSerializable
             'pronounceImage' => $this->pronounceImage,
             'contrastImage' => $this->contrastImages,
             'ordering' => $this->ordering,
-            'visible' => $this->visible
+            'visible' => $this->visible,
+            'book' => $this->book
         ];
     }
 }

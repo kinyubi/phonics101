@@ -36,22 +36,18 @@ Optional Arguments
 
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
-  {% set dim = isSmallScreen ? '45' : '80' %}
-  {% set tpad = isSmallScreen ? 'pt-0' : 'pt-1' %}
+{% block tabBar %}
   <div class="container-fluid p-0 bg-readultra" id="thePage" >
-    <div class="row m-0 p-0 pt-2 justify-content-center bg-readlite" style="width: auto;">
-      {% set tabCount =  lesson.tabNames | length %}
-      {% set visibleTab = (initialTabName is empty) ? (lesson.tabNames|first) : page.initialTabName %}
+    <div class="row m-0 p-0 justify-content-center bg-readlite" style="width: auto;">
+      {% set visibleTab = (initialTabName is empty) ? (lesson.tabNames|first|lower) : page.initialTabName|lower %}
 
       {# TAB BAR #}
       <nav>
-        <div class="nav nav-tabs tabbar-height bg-tab bg-readlite py-1" id="nav-tab" role="tablist" >
-          <a class=" p-0 m-0 size--tab-icon " id="lessons-home" href="/" style="text-decoration: none !important;">
+        <div class="nav nav-tabs bg-tab bg-readlite" id="nav-tab" role="tablist" >
+          <a class=" p-2 size--tab-icon " id="lessons-home" href="/" style="text-decoration: none !important;">
             <div class="d-flex flex-column justify-content-between">
               <img src="/images/tabs/home.png" alt="home" height="60%" width="60%" class="m-auto "/>
-              <div class="text-white m-auto nodec sfp {{ tpad }}" style="vertical-align: bottom">Home</div>
+              <div class="text-white m-auto nodec sfp pt-1" style="vertical-align: bottom">Home</div>
             </div>
           </a>
           {% for tabId in lesson.tabNames %}
@@ -60,19 +56,32 @@ Optional Arguments
             {% set selected = (tabId == visibleTab|lower) ? 'true' : 'false' %}
             {% set tabElemId = tabId ~ '-tab' %}
             {% set body = tabId ~ '-body' %}
-            <a class=" nav-item m-0 {{ active }} size--tab-icon " data-toggle="tab" id="{{ tabElemId }}" href="#{{ body }}"
+            <a class=" nav-item p-2 {{ active }} size--tab-icon " data-toggle="tab" id="{{ tabElemId }}" href="#{{ body }}"
                role="tab" aria-controls="{{ body }}" style="text-decoration: none !important;">
               <div class="d-flex flex-column ">
                 <img src="{{ tabInfo.imageFile }}" alt="{{ tabInfo.tabDisplayAs }}" height="60%" width="60%" class="m-auto"/>
-                <div class="text-white m-auto nodec sfp {{ tpad }}" style="vertical-align: bottom">{{ tabInfo.tabDisplayAs }}</div>
+                <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">{{ tabInfo.tabDisplayAs }}</div>
               </div>
             </a>
           {% endfor %}
+          {% if lesson.book %}
+            {% set url = '/pdfflip/' ~ lesson.book ~ '.pdf' %}
+            {% set bgImage = 'url(/images/tabs/book.png)' %}
+            <a class="nav-item  p-2 _PDFF_link size--tab-icon" id="lessons-home" source="{{ url }}" style="text-decoration: none !important;">
+              <div class="d-flex flex-column">
+                <img src="/images/tabs/book.png" alt="home" height="60%" width="60%" class="m-auto "/>
+                <div class="text-white m-auto nodec sfp pt-1" style="vertical-align: bottom">Storytime</div>
+              </div>
+            </a>
+          {% endif %}
         </div>
       </nav>
     </div>
+    {% endblock tabBar %}
 
+    {% block body %}
     {# TAB CONTENT #}
+    {% set visibleTab = (initialTabName is empty) ? (lesson.tabNames|first|lower) : page.initialTabName|lower %}
     <div class="row d-flex flex-lg-nowrap justify-content-start">
       <div class="tab-content w-100" id="myTabContent">
           {# CONTENT FOR EACH TAB #}

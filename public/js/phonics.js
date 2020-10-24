@@ -61,7 +61,7 @@ function moveBall(num) {
  * @param cookieValue first char is # of balls, rest of string is html color of balls
  * @param daysToExpire
  */
-function setCookie(cookieValue, daysToExpire) {
+function setSoundBoxCookie(cookieValue, daysToExpire) {
     let d = new Date();
     d.setTime(d.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
     let expires = "expires=" + d.toUTCString();
@@ -72,7 +72,7 @@ function setCookie(cookieValue, daysToExpire) {
  * find the cookie we're looking for and decode it
  * @returns {string}
  */
-function getCookie() {
+function getSoundBoxCookie() {
     let name = "readxyz_sound_box=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let parts = decodedCookie.split(';');
@@ -90,8 +90,8 @@ function getCookie() {
  * We try to get the cookie. If we can't find it we create one with default values.
  * We return the values into the global variables color and soundBoxCount
  */
-function checkCookie() {
-    let cookieValue = getCookie();
+function checkSoundBoxCookie() {
+    let cookieValue = getSoundBoxCookie();
     if (cookieValue !== "") {
         soundBoxCount = parseInt(cookieValue.substring(0, 1));
         soundBoxColor = cookieValue.substring(1);
@@ -99,7 +99,7 @@ function checkCookie() {
         soundBoxCount = 3;
         soundBoxColor = 'blue'
         cookieValue = '3blue';
-        setCookie(cookieValue, 30);
+        setSoundBoxCookie(cookieValue, 30);
     }
 }
 
@@ -116,12 +116,12 @@ function setCount(newCount) {
 function reload() {
     let countStr = soundBoxCount.toString();
     let cookieValue = countStr + soundBoxColor;
-    setCookie(cookieValue, 30);
+    setSoundBoxCookie(cookieValue, 30);
     let lessonName = document.getElementById('soundbox-lesson-name').innerText;
     window.location.href = '/lesson?lessonName=' + lessonName + '&initialTabName=write';
 }
 
 $(document).ready(function () {
-    checkCookie();
+    checkSoundBoxCookie();
     WSpin.init();
 });
