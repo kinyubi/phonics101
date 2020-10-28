@@ -3,7 +3,6 @@
 namespace ReadXYZ\Models;
 
 use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\Lessons;
 use RuntimeException;
 
 class Cookie

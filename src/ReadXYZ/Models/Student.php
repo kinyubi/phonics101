@@ -176,6 +176,33 @@ class Student
             $this->saveSession();
     }
 
+    public function updateTestMastery(string $lessonKey, string $masteryType)
+    {
+        switch ($masteryType) {
+            case 'Advancing':
+                $this->cargo['currentLessons'][$lessonKey]['mastery'] = 1;
+                //If it was previously mastered get rid of the mastery entry;
+                if (isset($this->cargo['masteredLessons'][$lessonKey])) {
+                    unset($this->cargo['masteredLessons'][$lessonKey]);
+                }
+                break;
+            case 'Mastered':
+                // you can't just copy an array, you need to CLONE it
+                $cloneObject = new ArrayObject(
+                    $this->cargo['currentLessons'][$lessonKey]
+                );
+                $clone = $cloneObject->getArrayCopy();
+                $clone['mastery'] = 5;
+                $this->cargo['masteredLessons'][$lessonKey] = $clone;
+                unset($this->cargo['currentLessons'][$lessonKey]); // won't affect the clone
+                break;
+
+            default:
+                assert(false, "Did not expect '$$masteryType' as a submit type");
+        }
+        $this->saveSession();
+    }
+
     /**
      * the target method for the fluencyTimerForm when fluencySaveButton is pressed.
      */
@@ -200,7 +227,7 @@ class Student
      *
      * @param array $postData the form fields in an array
      */
-    public function testTimer($postData)
+    public function testTimer(array $postData)
     {
         $button = $postData['masteryType'] ?? '';
         // make sure there is a current lesson with the current name
@@ -222,31 +249,8 @@ class Student
             TrainingLog::getInstance()->insertLog('LessonResult', $lessonKey, $masteryType);
             $curLessonKey = $this->cargo['currentLesson'];
             assert(!empty($curLessonKey), 'Should never be empty because we just mastered it');
-
             // depending on how well the student did, move up his expertise
-            switch ($masteryType) {
-                case 'Advancing':
-                    $this->cargo['currentLessons'][$curLessonKey]['mastery'] = 1;
-                    //If it was previously mastered get rid of the mastery entry;
-                    if (isset($this->cargo['masteredLessons'][$curLessonKey])) {
-                        unset($this->cargo['masteredLessons'][$curLessonKey]);
-                    }
-                    break;
-                case 'Mastered':
-                    // you can't just copy an array, you need to CLONE it
-                    $cloneObject = new ArrayObject(
-                        $this->cargo['currentLessons'][$curLessonKey]
-                    );
-                    $clone = $cloneObject->getArrayCopy();
-                    $clone['mastery'] = 5;
-                    $this->cargo['masteredLessons'][$curLessonKey] = $clone;
-                    unset($this->cargo['currentLessons'][$curLessonKey]); // won't affect the clone
-                    break;
-
-                default:
-                    assert(false, "Did not expect '$button' as a submit type");
-            }
-            $this->saveSession();
+            $this->updateTestMastery($curLessonKey, $masteryType);
         } else {
             assert(false, 'POST data did not have required fields.');
         }

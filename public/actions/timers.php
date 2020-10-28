@@ -52,29 +52,7 @@ if ('fluency' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $masteryType = $_REQUEST['masteryType'];
     LessonResults::getInstance()->write($_POST);
-    switch ($masteryType) {
-        case 'Advancing':
-            $student->cargo['currentLessons'][$currentLessonName]['mastery'] = 1;
-            //If it was previously mastered get rid of the mastery entry;
-            if (isset($student->cargo['masteredLessons'][$currentLessonName])) {
-                unset($student->cargo['masteredLessons'][$currentLessonName]);
-            }
-            break;
-        case 'Mastered':
-            // you can't just copy an array, you need to CLONE it
-            $cloneObject = new ArrayObject(
-                $student->cargo['currentLessons'][$currentLessonName]
-            );
-            $clone = $cloneObject->getArrayCopy();
-            $clone['mastery'] = 5;
-            $student->cargo['masteredLessons'][$currentLessonName] = $clone;
-            unset($student->cargo['currentLessons'][$currentLessonName]); // won't affect the clone
-            break;
-
-        default:
-            assert(false, "Did not expect '$masteryType' as a submit type");
-    }
-    $student->saveSession();
+    $student->updateTestMastery($currentLessonName, $masteryType);
     $lessonTemplate->display();
 
 } else {
