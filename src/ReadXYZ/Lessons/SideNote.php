@@ -1,13 +1,13 @@
 <?php
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
 use Exception;
-use ReadXYZ\Display\LearningCurve;
-use ReadXYZ\Helpers\Debug;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Models\Student;
-use ReadXYZ\Twig\TwigFactory;
+use App\ReadXYZ\Display\LearningCurve;
+use App\ReadXYZ\Helpers\Debug;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\Student;
+use App\ReadXYZ\Twig\TwigFactory;
 
 /**
  * @copyright (c) 2020 ReadXYZ, LLC
@@ -114,9 +114,6 @@ class SideNote
 
         $ts = Student::getInstance();                   // pick up current session
         $cargo = $ts->cargo;
-        Debug::printNice('LC', 'The cargo we are going to graph');
-        // Debug::printNice('LC',$cargo);
-
         $currentLessonName = $cargo['currentLesson'];
 
         // we need to get our data

@@ -1,25 +1,14 @@
 <?php
 
-namespace ReadXYZ\Database;
+namespace App\ReadXYZ\Database;
 
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 class AbstractData extends FactoryData
 {
     public function __construct()
     { // constructor
         parent::__construct();
-    }
-
-    public function drop()
-    {
-        return assert($this->dropTable(), '{$this->tableName} is being dropped');
-    }
-
-    public function deleteByKey($key)
-    {
-        assert(is_string($key), 'Should be a string: ' . serialize($key));
-        $ret = $this->statement("delete from {$this->tableName} where {$this->primaryKey} = '$key'");
     }
 
     public function getCargoByKey($key)
@@ -54,7 +43,6 @@ class AbstractData extends FactoryData
         foreach ($this->secondaryKeys as $sKey) {
             if (!isset($cargo[$sKey])) {
                 assert(false, "Required secondary key '$sKey' is not set in cargo");
-                $cargo[$sKey] = $this->uuid(); // jam in something unique
             }
             $aArray[$sKey] = strval($cargo[$sKey]);
         }
@@ -110,10 +98,4 @@ class AbstractData extends FactoryData
         return $simpleArray;
     }
 
-    // delete all records in a table for a project (usally the test project)
-    public function deleteProject($project)
-    {
-        $safe = $this->quote_smart($project); // don't like injections
-        $resultSet = $this->statement("delete from {$this->tableName} where project = $safe");
-    }
 }

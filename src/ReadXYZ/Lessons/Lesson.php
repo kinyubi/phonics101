@@ -1,10 +1,10 @@
 <?php
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
 use JsonSerializable;
-use ReadXYZ\Helpers\Location;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Location;
+use App\ReadXYZ\Helpers\Util;
 use stdClass;
 
 class Lesson implements JsonSerializable
@@ -342,6 +342,11 @@ class Lesson implements JsonSerializable
     public function getWordList(): array
     {
         return $this->wordList;
+    }
+
+    public function getAllWords():array
+    {
+        return $this->allWords;
     }
 
     /**

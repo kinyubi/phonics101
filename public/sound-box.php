@@ -1,7 +1,7 @@
 <?php
 
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Twig\TwigFactory;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Twig\TwigFactory;
 
 require 'autoload.php';
 

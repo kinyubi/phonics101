@@ -1,9 +1,10 @@
 <?php
 
-namespace ReadXYZ\Database;
+namespace App\ReadXYZ\Data;
 
+use App\ReadXYZ\Models\BoolWithMessage;
 use mysqli;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 /**
  * Helper class for testing.
@@ -32,9 +33,9 @@ class PhonicsDb
             $count = $result->num_rows;
             $result->close();
 
-            return DbResult::GoodResult($count);
+            return DbResult::goodResult($count);
         } else {
-            return DbResult::BadResult($this->connection);
+            return DbResult::badResult($this->connection);
         }
     }
 
@@ -46,9 +47,9 @@ class PhonicsDb
             $returnValue = $row[0] ?? null;
             $result->close();
 
-            return DbResult::GoodResult($returnValue);
+            return DbResult::goodResult($returnValue);
         } else {
-            return DbResult::BadResult($this->connection);
+            return DbResult::badResult($this->connection);
         }
     }
 
@@ -85,9 +86,9 @@ class PhonicsDb
             }
             $result->close();
 
-            return DbResult::GoodResult($result_array);
+            return DbResult::goodResult($result_array);
         } else {
-            return DbResult::BadResult($this->connection);
+            return DbResult::badResult($this->connection);
         }
     }
 
@@ -99,19 +100,29 @@ class PhonicsDb
                 $result_array[] = $row[0];
             }
 
-            return DbResult::GoodResult($result_array);
+            return DbResult::goodResult($result_array);
         } else {
-            return DbResult::BadResult($this->connection);
+            return DbResult::badResult($this->connection);
         }
     }
 
-    public function queryStatement(string $query): bool
+    public function queryStatement(string $query): BoolWithMessage
     {
-        return false !== $this->connection->query($query);
+        $result = $this->connection->query($query);
+        if ($result === false) {
+            return BoolWithMessage::badResult($this->getErrorMessage());
+        } else {
+            return BoolWithMessage::goodResult();
+        }
     }
 
     public function getErrorMessage(): string
     {
         return $this->connection->error;
+    }
+
+    public function getConnection(): mysqli
+    {
+        return $this->connection;
     }
 }

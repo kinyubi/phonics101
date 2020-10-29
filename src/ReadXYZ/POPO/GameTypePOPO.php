@@ -1,9 +1,9 @@
 <?php
 
-namespace ReadXYZ\POPO;
+namespace App\ReadXYZ\POPO;
 
 use JsonSerializable;
-use ReadXYZ\Helpers\Location;
+use App\ReadXYZ\Helpers\Location;
 
 class GameTypePOPO implements JsonSerializable
 {

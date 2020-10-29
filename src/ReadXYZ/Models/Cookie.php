@@ -1,8 +1,8 @@
 <?php
 
-namespace ReadXYZ\Models;
+namespace App\ReadXYZ\Models;
 
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 use RuntimeException;
 
 class Cookie

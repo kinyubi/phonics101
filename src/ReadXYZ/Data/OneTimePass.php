@@ -1,8 +1,10 @@
 <?php
 
 
-namespace ReadXYZ\Database;
+namespace App\ReadXYZ\Data;
 
+
+use App\ReadXYZ\Data\PhonicsDb;
 
 class OneTimePass
 {
@@ -37,8 +39,9 @@ EOT;
     {
         $otp = md5($username . strval(time()));
         $query = "INSERT INTO {$this->tableName} VALUES ('$otp','$username')";
-        if (false === $this->phonicsDb->queryStatement($query)) {
-            error_log("unable to create OTP. " . $this->phonicsDb->getErrorMessage());
+        $result = $this->phonicsDb->queryStatement($query);
+        if ($result->failed()) {
+            error_log("unable to create OTP. " . $result->getErrorMessage());
         }
         return $otp;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 class GameTypes
 {

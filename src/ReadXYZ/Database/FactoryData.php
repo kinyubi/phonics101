@@ -1,9 +1,8 @@
 <?php
 
-namespace ReadXYZ\Database;
+namespace App\ReadXYZ\Database;
 
 use Exception;
-use ReadXYZ\Helpers\Debug;
 use RuntimeException;
 
 abstract class FactoryData
@@ -47,47 +46,6 @@ abstract class FactoryData
     public function query($query): array
     {
         return $this->dbo->query($query);
-    }
-
-    public function getListOfTables()
-    { // can use any object, they all return the same list
-        $resultSet = $this->query('show tables');
-        $result = [];
-        foreach ($resultSet as $r) { // resultSet is an array of arrays
-            $result[] = current($r); // we just want the table name
-        }
-
-        return $result;
-    }
-
-    public function dropTable()
-    {
-        $ret = $this->statement('DROP TABLE ' . $this->tableName);
-
-        if (false === $ret) {
-            throw new RuntimeException("Unable to drop table {$this->tableName}: " . mysqli_connect_errno());
-        }
-    }
-
-    public function createTable($createString)
-    {
-        $ret = $this->statement($createString);
-        if (false === $ret) {
-            throw new RuntimeException("Unable to create table {$this->tableName}: " . mysqli_connect_errno());
-        }
-    }
-
-    public function countRecords()
-    {
-        $resultSet = $this->query("select count(*) as count from {$this->tableName}");
-        if (empty($resultSet)) {
-            $count = 0;
-        } else {
-            $record = reset($resultSet); //a:1:{i:0;a:1:{i:0;s:1:"0";}}
-            $count = $record['count'];
-        }
-
-        return $count;
     }
 
     public function uuid()

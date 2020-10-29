@@ -1,12 +1,12 @@
 <?php
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
 use InvalidArgumentException;
 use Peekmo\JsonPath\JsonStore;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Models\Student;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Student;
 use Throwable;
 
 /**

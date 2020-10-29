@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\Database;
+namespace App\ReadXYZ\Database;
 
 class Users extends AbstractData implements IBasicTableFunctions
 {
@@ -25,25 +25,6 @@ class Users extends AbstractData implements IBasicTableFunctions
         }
 
         return self::$instance;
-    }
-
-    public function create()
-    {
-        $createString =
-            "CREATE TABLE IF NOT EXISTS `{$this->tableName}` (
-              `uuid`      	            varchar(16)  NOT NULL,
-              `UserName`                varchar(64)  NOT NULL,
-              `EMail`                   varchar(64)  NOT NULL,
-              `Project`                 varchar(32),
-              `cargo` 	                text,
-              `created`                 int(10) unsigned default 0,
-              `createdhuman`            varchar(32),
-              `lastupdate`              int(10) unsigned default 0,
-              `lastbackup`              int(10) unsigned default 0,
-              PRIMARY KEY  (`{$this->primaryKey}`)
-            ) DEFAULT CHARSET=utf8;";
-
-        return assert($this->createTable($createString), $this->tableName . ' table is being created');
     }
 
     public function insertUser($cargo)
@@ -84,7 +65,7 @@ class Users extends AbstractData implements IBasicTableFunctions
     public function getUserCargo($EMail)
     { // returns ONE record
         $safeUser = $this->quote_smart($EMail); // don't like injections
-        $resultSet = $this->query("select * from {$this->tableName} where EMail = $safeUser");
+        $resultSet = $this->query("select * from abc_Users where EMail = $safeUser");
 
         if (count($resultSet) > 1) {
             assert(false, "Seems to be a duplicate user '$EMail' - denying access");
@@ -95,7 +76,7 @@ class Users extends AbstractData implements IBasicTableFunctions
         //// if NO results, then we can try against userName
         if (0 == count($resultSet)) {
             $resultSet = $this->query(
-                "select * from {$this->tableName} where userName = $safeUser or EMail = $safeUser"
+                "select * from abc_Users where userName = $safeUser or EMail = $safeUser"
             );
             if (count($resultSet) > 1) {
                 // but don't ASSERT because our tester will fail, it just doesn't work
@@ -122,43 +103,43 @@ class Users extends AbstractData implements IBasicTableFunctions
         return $cargo;
     }
 
-    public function deleteUserEMail($EMail)
-    {
-        if ($result = $this->getUserCargo($EMail)) { // if exists and ONLY ONE
-            $safeUser = $this->quote_smart($EMail); // don't like injections
-            $resultSet = $this->query("delete from {$this->tableName} where EMail = $safeUser");
-        }
-    }
+    // public function deleteUserEMail($EMail)
+    // {
+    //     if ($result = $this->getUserCargo($EMail)) { // if exists and ONLY ONE
+    //         $safeUser = $this->quote_smart($EMail); // don't like injections
+    //         $resultSet = $this->query("delete from {$this->tableName} where EMail = $safeUser");
+    //     }
+    // }
 
-    public function getDistinctProjects()
-    {
-        $resultSet = $this->query("select distinct Project from {$this->tableName}");
-        $result = [];
-        foreach ($resultSet as $row) {
-            $result[] = $row['Project'];
-        }
+    // public function getDistinctProjects()
+    // {
+    //     $resultSet = $this->query("select distinct Project from {$this->tableName}");
+    //     $result = [];
+    //     foreach ($resultSet as $row) {
+    //         $result[] = $row['Project'];
+    //     }
+    //
+    //     return $result;
+    // }
 
-        return $result;
-    }
-
-    public function getUsersByProjects($project = '')
-    {
-        $where = '';
-        if (!empty($project)) {
-            $where = 'where Project = ' . $this->quote_smart($project);
-        }
-        // don't like injections
-
-        $resultSet = $this->query("select cargo from {$this->tableName} $where order by lastupdate desc");
-
-        $result = [];
-        foreach ($resultSet as $r) { // unpack the results into a single array
-            foreach ($r as $s) {
-                $result[] = unserialize($s);
-                //echo "returns resultSet ".$s.'<br><br>';
-            }
-        }
-
-        return $result;
-    }
+    // public function getUsersByProjects($project = '')
+    // {
+    //     $where = '';
+    //     if (!empty($project)) {
+    //         $where = 'where Project = ' . $this->quote_smart($project);
+    //     }
+    //     // don't like injections
+    //
+    //     $resultSet = $this->query("select cargo from {$this->tableName} $where order by lastupdate desc");
+    //
+    //     $result = [];
+    //     foreach ($resultSet as $r) { // unpack the results into a single array
+    //         foreach ($r as $s) {
+    //             $result[] = unserialize($s);
+    //             //echo "returns resultSet ".$s.'<br><br>';
+    //         }
+    //     }
+    //
+    //     return $result;
+    // }
 }

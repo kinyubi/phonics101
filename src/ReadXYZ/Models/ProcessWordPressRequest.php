@@ -1,14 +1,14 @@
 <?php
 
 
-namespace ReadXYZ\Models;
+namespace App\ReadXYZ\Models;
 
 
-use ReadXYZ\Database\OneTimePass;
-use ReadXYZ\Rest\RestTarget;
+use App\ReadXYZ\Data\OneTimePass;
+use App\ReadXYZ\Rest\RestTarget;
 use Exception;
 use mysqli;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 use stdClass;
 
 class ProcessWordPressRequest extends RestTarget

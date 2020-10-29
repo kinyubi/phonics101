@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\POPO;
+namespace App\ReadXYZ\POPO;
 
 
 class JsonDecoderFactory

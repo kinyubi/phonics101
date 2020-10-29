@@ -1,10 +1,10 @@
 <?php
 
-namespace ReadXYZ\Helpers;
+namespace App\ReadXYZ\Helpers;
 
 use mysqli;
-use ReadXYZ\Models\Identity;
-use ReadXYZ\Twig\TwigFactory;
+use App\ReadXYZ\Models\Identity;
+use App\ReadXYZ\Twig\TwigFactory;
 use Throwable;
 
 class Util

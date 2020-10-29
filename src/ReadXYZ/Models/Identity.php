@@ -1,14 +1,14 @@
 <?php
 
-namespace ReadXYZ\Models;
+namespace App\ReadXYZ\Models;
 
 define('TEST_USER', 'smile_123456@gmail.com');
 define('TEST_PASSWORD', 'xx');
 
-use ReadXYZ\Database\StudentTable;
-use ReadXYZ\Database\Users;
-use ReadXYZ\Helpers\Debug;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Database\StudentTable;
+use App\ReadXYZ\Database\Users;
+use App\ReadXYZ\Helpers\Debug;
+use App\ReadXYZ\Helpers\Util;
 use RuntimeException;
 
 class Identity
@@ -266,12 +266,7 @@ class Identity
 
     public function validateSignin($user, $pswd, $deviceType = ''): BoolWithMessage
     {
-        Debug::printNice('Identity', "validateSignin($user, $pswd, $deviceType)");
-        // back door password:   admin / ???????
-
         if (empty($user) or empty($pswd)) {        // these are not allowed
-            Debug::printNice('Identity', "Validate Signing for $user fails - empty");
-
             return BoolWithMessage::badResult('Username cannot be blank.');
         }
 
@@ -279,7 +274,6 @@ class Identity
 
         $userDB = Users::getInstance();
         $cargo = $userDB->getUserCargo($user);
-        Debug::printNice('Identity', $cargo);
 
         // no such user
         if (!$cargo) {
@@ -287,7 +281,6 @@ class Identity
                 unset($_SESSION['identity']);
                 error_log("Session Identity destroyed.");
             }
-            Debug::printNice('Identity', "Validate Signing for $user fails - no such user");
 
             return BoolWithMessage::badResult("$user is not a valid user.");
         }
@@ -315,7 +308,6 @@ class Identity
         if (count($students) < 1) {
             return BoolWithMessage::badResult("$user has no students. See administrator");
         }
-        Debug::printNice('Identity', "Validate Signing for $user succeeds");
 
         return BoolWithMessage::goodResult();    // true
     }

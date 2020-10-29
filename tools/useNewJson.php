@@ -1,7 +1,7 @@
 <?php
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lessons;
 
 require dirname(__DIR__) . '/src/ReadXYZ/autoload.php';
 

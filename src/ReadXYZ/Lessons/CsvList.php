@@ -1,9 +1,9 @@
 <?php
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
 use Exception;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 class CsvList
 {

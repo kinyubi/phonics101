@@ -8,7 +8,7 @@
 //   parameter: P1 username, P2 password (optional)
 //   used by: login::login template
 
-use ReadXYZ\Models\RouteMe;
+use App\ReadXYZ\Models\RouteMe;
 
 require 'autoload.php';
 

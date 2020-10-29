@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\Models;
+namespace App\ReadXYZ\Models;
 
 use InvalidArgumentException;
 

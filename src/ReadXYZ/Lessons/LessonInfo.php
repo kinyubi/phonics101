@@ -1,10 +1,10 @@
 <?php
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
 use Exception;
 use Peekmo\JsonPath\JsonStore;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 /**
  * @copyright (c) 2020 ReadXYZ, LLC

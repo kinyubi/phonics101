@@ -1,10 +1,11 @@
 <?php
 
-namespace ReadXYZ\Database;
+namespace App\ReadXYZ\Database;
 
 use Exception;
 use mysqli;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
+
 class DbConnect
 {
     public mysqli $dbConnector; // a connection

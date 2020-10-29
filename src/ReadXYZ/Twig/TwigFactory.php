@@ -1,8 +1,8 @@
 <?php
 
-namespace ReadXYZ\Twig;
+namespace App\ReadXYZ\Twig;
 
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 use Throwable;
 use Twig\Environment;
 use Twig\Error\LoaderError;

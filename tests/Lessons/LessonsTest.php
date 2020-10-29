@@ -1,10 +1,10 @@
 <?php
 
-namespace ReadXYZ\Tests\Lessons;
+namespace App\ReadXYZ\Tests\Lessons;
 
 use PHPUnit\Framework\TestCase;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lessons;
 
 class LessonsTest extends TestCase
 {

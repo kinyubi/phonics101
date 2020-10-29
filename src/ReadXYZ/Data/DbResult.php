@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\Database;
+namespace App\ReadXYZ\Data;
 
 use mysqli;
 
@@ -12,6 +12,9 @@ use mysqli;
 class DbResult
 {
     private bool $success; //bool
+    /**
+     * @var mixed
+     */
     private $result;
     private string $message;
 
@@ -29,7 +32,7 @@ class DbResult
      *
      * @return DbResult
      */
-    public static function BadResult($conn)
+    public static function badResult($conn)
     {
         return new self(null, false, $conn->error);
     }
@@ -41,7 +44,7 @@ class DbResult
      *
      * @return DbResult
      */
-    public static function GoodResult($value)
+    public static function goodResult($value)
     {
         return new self($value, true, '');
     }

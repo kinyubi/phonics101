@@ -1,12 +1,12 @@
 <?php
 
-namespace ReadXYZ\Twig;
+namespace App\ReadXYZ\Twig;
 
-use ReadXYZ\Helpers\ScreenCookie;
+use App\ReadXYZ\Helpers\ScreenCookie;
 use InvalidArgumentException;
-use ReadXYZ\Lessons\Game;
-use ReadXYZ\Lessons\TabType;
-use ReadXYZ\Models\KeyValuePair;
+use App\ReadXYZ\Lessons\Game;
+use App\ReadXYZ\Lessons\TabType;
+use App\ReadXYZ\Models\KeyValuePair;
 use stdClass;
 
 class Page

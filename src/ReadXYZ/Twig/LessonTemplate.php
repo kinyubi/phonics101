@@ -1,21 +1,21 @@
 <?php
 
 
-namespace ReadXYZ\Twig;
+namespace App\ReadXYZ\Twig;
 
 
-use ReadXYZ\Database\StudentTable;
-use ReadXYZ\Helpers\ScreenCookie;
-use ReadXYZ\Display\LearningCurve;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\GameTypes;
-use ReadXYZ\Lessons\Lesson;
-use ReadXYZ\Lessons\Lessons;
-use ReadXYZ\Lessons\SideNote;
-use ReadXYZ\Lessons\TabTypes;
-use ReadXYZ\Lessons\Warmups;
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Models\Student;
+use App\ReadXYZ\Database\StudentTable;
+use App\ReadXYZ\Helpers\ScreenCookie;
+use App\ReadXYZ\Display\LearningCurve;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\GameTypes;
+use App\ReadXYZ\Lessons\Lesson;
+use App\ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\Lessons\SideNote;
+use App\ReadXYZ\Lessons\TabTypes;
+use App\ReadXYZ\Lessons\Warmups;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Student;
 use RuntimeException;
 
 class LessonTemplate

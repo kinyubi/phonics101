@@ -1,10 +1,10 @@
 <?php
 
 
-namespace ReadXYZ\POPO;
+namespace App\ReadXYZ\POPO;
 
 
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 class Warmup
 {

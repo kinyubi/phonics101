@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ReadXYZ\Helpers;
+namespace App\ReadXYZ\Helpers;
 
 
 class Location

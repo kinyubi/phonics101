@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\POPO;
+namespace App\ReadXYZ\POPO;
 
 use JsonSerializable;
 
@@ -9,14 +9,14 @@ class SpellSpinner implements JsonSerializable
     public string $prefixList = '';
     public string $vowel = '';
     public string $suffixList = '';
-    
+
     public function __construct(string $prefix, string $vowel, string $suffix)
     {
         $this->prefixList = $prefix;
         $this->vowel = $vowel;
         $this->suffixList = $suffix;
     }
-    
+
     public function jsonSerialize()
     {
         return [

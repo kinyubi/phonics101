@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\POPO;
+namespace App\ReadXYZ\POPO;
 
 use JsonSerializable;
 
@@ -12,7 +12,7 @@ class LessonTab implements JsonSerializable
     public ?HTMLPage $html = null;
     public string $resource = ''; // may be a url, CSV list, json string, word, phoneme, or word list
     public array $resourceList = []; // right now, for list of fluency sentences
-    
+
     public function jsonSerialize()
     {
         return [

@@ -1,14 +1,14 @@
 <?php
 
 
-namespace ReadXYZ\Twig;
+namespace App\ReadXYZ\Twig;
 
 
-use ReadXYZ\Display\LearningCurve;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\Lessons;
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Models\Student;
+use App\ReadXYZ\Display\LearningCurve;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Student;
 use RuntimeException;
 
 class LessonListTemplate

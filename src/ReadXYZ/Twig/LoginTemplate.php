@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ReadXYZ\Twig;
+namespace App\ReadXYZ\Twig;
 
 
 class LoginTemplate

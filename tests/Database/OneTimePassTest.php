@@ -2,9 +2,9 @@
 
 namespace ReadXYZ\Tests\Database;
 
-use ReadXYZ\Database\OneTimePass;
+use App\ReadXYZ\Data\OneTimePass;
+use App\ReadXYZ\Data\PhonicsDb;
 use PHPUnit\Framework\TestCase;
-use ReadXYZ\Database\PhonicsDb;
 
 class OneTimePassTest extends TestCase
 {

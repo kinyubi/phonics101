@@ -1,9 +1,9 @@
 <?php
 
-namespace ReadXYZ\POPO;
+namespace App\ReadXYZ\POPO;
 
-use ReadXYZ\Helpers\Location;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Location;
+use App\ReadXYZ\Helpers\Util;
 
 /**
  * Class GameTypesPOPO - We use this class to create the GameTypes.json file. The Lessons\GameTypes class will use the json file.

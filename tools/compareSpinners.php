@@ -14,9 +14,9 @@ if (not(defined('CLASS'))) {
     define('NOTE', 6);
 }
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\BlendingInfo;
-use ReadXYZ\Lessons\LessonInfo;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\BlendingInfo;
+use App\ReadXYZ\Lessons\LessonInfo;
 
 function getBlendingWordLists(array $blendingLessons)
 {

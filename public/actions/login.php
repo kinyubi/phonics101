@@ -1,8 +1,8 @@
 <?php
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Twig\LoginTemplate;
-use ReadXYZ\Twig\Page;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Twig\LoginTemplate;
+use App\ReadXYZ\Twig\Page;
 
 require 'autoload.php';
 

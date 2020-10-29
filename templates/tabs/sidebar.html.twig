@@ -66,21 +66,25 @@
     </div>
   {% endif %}
 
-    {% if tabId == 'intro' %}
-      {% if (lesson.pronounceImage is not empty) and (not isBdpLesson) %}
-        <a class="intro-image" href="{{ pronounceImage }}">
-          <div class="bdp-thumb">
-            <img src="{{ lesson.pronounceImageThumb }}" alt="pronounce">
-          </div>
-        </a>
-      {% endif %}
-      {% if isBdpLesson %}
-        <a class="intro-image" href="{{ lesson.pronounceImage }}">
-          <div class="bdp-thumb">
-            <img src="{{ lesson.pronounceImageThumb }}" alt="b-d-p">
-          </div>
-        </a>
-      {% endif %}
+  {% if tabId == 'mastery' %}
+  {{ block('MasterySaveProgressButton', 'timers2.html.twig')|raw }}
+  {% endif %}
+
+  {% if tabId == 'intro' %}
+    {% if (lesson.pronounceImage is not empty) and (not isBdpLesson) %}
+      <a class="intro-image" href="{{ pronounceImage }}">
+        <div class="bdp-thumb">
+          <img src="{{ lesson.pronounceImageThumb }}" alt="pronounce">
+        </div>
+      </a>
     {% endif %}
+    {% if isBdpLesson %}
+      <a class="intro-image" href="{{ lesson.pronounceImage }}">
+        <div class="bdp-thumb">
+          <img src="{{ lesson.pronounceImageThumb }}" alt="b-d-p">
+        </div>
+      </a>
+    {% endif %}
+  {% endif %}
 
 {% endblock SideBar %}

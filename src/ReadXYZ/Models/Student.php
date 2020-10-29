@@ -1,19 +1,16 @@
 <?php
 
-namespace ReadXYZ\Models;
+namespace App\ReadXYZ\Models;
 
 //  a student is represented by a record in StudentTable
 //  the student and his training records are in a single record
 
 use ArrayObject;
-use ReadXYZ\Database\LessonResults;
-use ReadXYZ\Database\PhonicsDb;
-use ReadXYZ\Database\StudentTable;
-use ReadXYZ\Database\TrainingLog;
-use ReadXYZ\Helpers\Debug;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\Lesson;
-use ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\Data\PhonicsDb;
+use App\ReadXYZ\Database\StudentTable;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lesson;
+use App\ReadXYZ\Lessons\Lessons;
 
 class Student
 {
@@ -41,7 +38,6 @@ class Student
 
             if (!empty($this->cargo)) { // found the student, should do some more validations
                 $this->isValidStudent = true;
-                Debug::printNice('Student Cargo', $this->cargo);
             } else { // we have a studentID, but no record in the student table for it.
                 $this->isValidStudent = false;
             }
@@ -229,7 +225,7 @@ class Student
      */
     public function testTimer(array $postData)
     {
-        $button = $postData['masteryType'] ?? '';
+        // $button = $postData['masteryType'] ?? '';
         // make sure there is a current lesson with the current name
         // if its already mastered, it will be put back in current
         $currentLessonName = $this->prepareCurrentForUpdate();
@@ -243,10 +239,7 @@ class Student
             $this->updateLearningCurveCargo($currentLessonName, $seconds);
         } elseif (isset($postData['masteryType'])) {
             $masteryType = $postData['masteryType'] ?? ($postData['P1'] ?? '');
-            $lessonResult = LessonResults::getInstance();
-            $lessonResult->write($postData);
 
-            TrainingLog::getInstance()->insertLog('LessonResult', $lessonKey, $masteryType);
             $curLessonKey = $this->cargo['currentLesson'];
             assert(!empty($curLessonKey), 'Should never be empty because we just mastered it');
             // depending on how well the student did, move up his expertise

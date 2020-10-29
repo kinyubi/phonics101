@@ -3,13 +3,13 @@
 // using the compare.csv file as a base, this combines the information in the csv spreadsheet
 // with the LessonInfo and BlendingInfo data
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\BlendingInfo;
-use ReadXYZ\Lessons\CsvList;
-use ReadXYZ\Lessons\LessonInfo;
-use ReadXYZ\POPO\gamePOPO;
-use ReadXYZ\POPO\LessonPOPO;
-use ReadXYZ\POPO\SpellSpinner;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\BlendingInfo;
+use App\ReadXYZ\Lessons\CsvList;
+use App\ReadXYZ\Lessons\LessonInfo;
+use App\ReadXYZ\POPO\gamePOPO;
+use App\ReadXYZ\POPO\LessonPOPO;
+use App\ReadXYZ\POPO\SpellSpinner;
 
 require 'autoload.php';
 
@@ -18,45 +18,6 @@ function getNewLessonName(string $lessonName, array $csvMap): string
     $trimmedName = trim($lessonName);
 
     return $csvMap['realName'][$trimmedName] ?? $trimmedName;
-}
-
-function findCsvEntry($lessonName, $csvArray)
-{
-    foreach ($csvArray as &$item) {
-        if ($item['newLessonName'] == $lessonName) {
-            return $item;
-        }
-    }
-
-    return false;
-}
-
-/**
- * @param string $blendingLessonName
- *
- * @return bool|string[]
- */
-function getFluencyLessonsFromDatabase(string $blendingLessonName)
-{
-    $conn = Util::dbConnect();
-    if ($conn) {
-        $query = "SELECT * FROM abc_testcontent WHERE lessonKey = '$blendingLessonName' ";
-        $queryResult = mysqli_query($conn, $query);
-        if ($queryResult) {
-            $res = mysqli_fetch_array($queryResult);
-            if ($res) {
-                $pattern = ['#<p[^>]+>([^<]+)</p>#', '/\n/' . '/\r/'];
-                $strippedResult = preg_replace($pattern, '', $res['content']);
-                $strippedResult = str_replace('.', '.,', $strippedResult);
-                $array = explode(',', $strippedResult);
-                array_pop($array);
-
-                return $array;
-            }
-        }
-    }
-
-    return false;
 }
 
 try {
@@ -131,11 +92,6 @@ foreach ($csvLessons as $csvLesson) {
         $lesson->fluencySentences = explode(',', $csvLesson['Fluency']);
     } elseif (isset($oldLesson['fluency'])) {
         $lesson->fluencySentences = $oldLesson['fluency'];
-    } elseif (isset($blendingLesson) && $blendingLesson) {
-        $result = getFluencyLessonsFromDatabase($blendingLesson['lessonName']);
-        if (false !== $result) {
-            $lesson->fluencySentences = $result;
-        }
     }
     // SideImage, ContrastImage and games are only available for existing lessons
     if (not($newLesson)) {

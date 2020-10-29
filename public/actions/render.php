@@ -1,12 +1,12 @@
 <?php
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\Lessons;
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Twig\LessonListTemplate;
-use ReadXYZ\Twig\LessonTemplate;
-use ReadXYZ\Twig\LoginTemplate;
-use ReadXYZ\Twig\StudentListTemplate;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Twig\LessonListTemplate;
+use App\ReadXYZ\Twig\LessonTemplate;
+use App\ReadXYZ\Twig\LoginTemplate;
+use App\ReadXYZ\Twig\StudentListTemplate;
 
 require 'autoload.php';
 

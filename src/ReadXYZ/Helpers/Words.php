@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\Helpers;
+namespace App\ReadXYZ\Helpers;
 
 use Throwable;
 

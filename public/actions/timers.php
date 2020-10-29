@@ -2,12 +2,11 @@
 // This is the target for the fluency timer and test timer
 
 // we only use $_REQUEST['seconds']. We already know the current lesson and student.
-use ReadXYZ\Database\LessonResults;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Models\Student;
-use ReadXYZ\Twig\LessonTemplate;
-use ReadXYZ\Twig\LoginTemplate;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Student;
+use App\ReadXYZ\Twig\LessonTemplate;
+use App\ReadXYZ\Twig\LoginTemplate;
 
 require 'autoload.php';
 
@@ -51,7 +50,6 @@ if ('fluency' == $source) {
 } elseif ('testMastery' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $masteryType = $_REQUEST['masteryType'];
-    LessonResults::getInstance()->write($_POST);
     $student->updateTestMastery($currentLessonName, $masteryType);
     $lessonTemplate->display();
 

@@ -1,7 +1,7 @@
 <?php
 
 // This program goes through all of the b-*.jpg files
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 require dirname(dirname(__DIR__)) . '/autoload.php';
 

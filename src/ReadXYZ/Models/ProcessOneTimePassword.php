@@ -1,11 +1,11 @@
 <?php
 
 
-namespace ReadXYZ\Models;
+namespace App\ReadXYZ\Models;
 
 
-use ReadXYZ\Database\OneTimePass;
-use ReadXYZ\Twig\LoginTemplate;
+use App\ReadXYZ\Data\OneTimePass;
+use App\ReadXYZ\Twig\LoginTemplate;
 
 class ProcessOneTimePassword
 {

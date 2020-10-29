@@ -1,11 +1,11 @@
 <?php
 
-namespace ReadXYZ\Display;
+namespace App\ReadXYZ\Display;
 
 use Color;
 use Point;
-use ReadXYZ\Helpers\Debug;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Debug;
+use App\ReadXYZ\Helpers\Util;
 use VerticalBarChart;
 use XYDataSet;
 
@@ -56,7 +56,6 @@ class LearningCurve
     public static function cleanUpOldGraphics()
     {
         // clean up old files
-        Debug::printNice('LC', 'Called cleanUpOldGraphics()');
         $generatedCache = Util::getPublicPath('generated');
         if (!is_dir($generatedCache)) {
             mkdir($generatedCache);

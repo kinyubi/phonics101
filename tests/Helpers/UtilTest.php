@@ -1,9 +1,9 @@
 <?php
 
-namespace ReadXYZ\Tests\Helpers;
+namespace App\ReadXYZ\Tests\Helpers;
 
 use PHPUnit\Framework\TestCase;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 class UtilTest extends TestCase
 {

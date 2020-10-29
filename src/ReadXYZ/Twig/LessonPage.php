@@ -1,9 +1,9 @@
 <?php
 
 
-namespace ReadXYZ\Twig;
+namespace App\ReadXYZ\Twig;
 
-use ReadXYZ\Helpers\ScreenCookie;
+use App\ReadXYZ\Helpers\ScreenCookie;
 
 
 class LessonPage extends Page

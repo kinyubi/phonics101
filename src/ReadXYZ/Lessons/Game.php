@@ -1,10 +1,10 @@
 <?php
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
 use JsonSerializable;
-use ReadXYZ\Helpers\Location;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Location;
+use App\ReadXYZ\Helpers\Util;
 
 class Game implements JsonSerializable
 {

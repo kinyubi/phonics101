@@ -1,10 +1,10 @@
 <?php
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
 use Peekmo\JsonPath\JsonStore;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Models\Student;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\Student;
 
 if (not(defined('CLASS'))) {
     define('CLASS', 0);

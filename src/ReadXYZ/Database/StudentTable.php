@@ -1,10 +1,10 @@
 <?php
 
-namespace ReadXYZ\Database;
+namespace App\ReadXYZ\Database;
 
-use ReadXYZ\Helpers\Debug;
-use ReadXYZ\Models\Identity;
-use ReadXYZ\Models\Student;
+use App\ReadXYZ\Helpers\Debug;
+use App\ReadXYZ\Models\Identity;
+use App\ReadXYZ\Models\Student;
 
 class StudentTable extends AbstractData implements IBasicTableFunctions
 {
@@ -32,26 +32,6 @@ class StudentTable extends AbstractData implements IBasicTableFunctions
         return self::$instance;
     }
 
-    public function create()
-    {
-        $createString =
-            "CREATE TABLE IF NOT EXISTS `{$this->tableName}` (
-              `studentid`  	            varchar(32)  NOT NULL,
-              `cargo` 	                text,
-              `StudentName`             varchar(32),
-              `project`                 varchar(32),
-              `trainer1`                varchar(64),
-              `trainer2`                varchar(64),
-              `trainer3`                varchar(64),
-              `created`                 int(10) unsigned default 0,
-              `createdhuman`            varchar(32),
-              `lastupdate`              int(10) unsigned default 0,
-              `lastbackup`              int(10) unsigned default 0,
-              PRIMARY KEY  (`{$this->primaryKey}`)
-            ) DEFAULT CHARSET=utf8;";
-
-        $this->createTable($createString);
-    }
 
     // customm UPDATE BY KEY moves student name from cargo-enrollment to just cargo
     // check for special updates in each class, this is just a basic update
@@ -92,39 +72,6 @@ class StudentTable extends AbstractData implements IBasicTableFunctions
         return $this->getAllCargoByWhere($where, $order);
     }
 
-    public function getAllStudentsGlobal($order = 'lastupdate DESC')
-    {
-        // all students, sorted by parameter
-        //        $result = $this->getAllCargoByWhere('',$order);
-        //        return($result);
-
-        $query = <<<EOT
-            SELECT t1.studentid, t1.StudentName, t1.trainer1, t1.lastupdate, t1.cargo, t2.uuid, t2.EMail, t2.nextdate 
-            FROM {$this->tableName} t1 left outer join `abc_CRM` t2 on (t1.trainer1 = t2.EMail)
-            ORDER BY t1.lastupdate DESC
-EOT;
-
-        $resultSet = $this->query($query);
-        if (!is_array($resultSet) /*or !isset($resultSet['cargo'])*/) {
-            return [];
-        }
-        // special case of no results, we always return an array
-
-        // before returning, we need to unserialize every cargo element back into an array
-        $simpleArray = [];
-        foreach ($resultSet as $result) {
-            $cargo = unserialize($result['cargo']);
-            $simpleArray[] = array_merge(
-                $cargo,
-                ['uuid' => $result['uuid']],
-                ['EMail' => $result['EMail']],
-                ['NextDate' => $result['nextdate']],
-                ['StudentName' => $cargo['enrollForm']['StudentName']]
-            );
-        }
-        return $simpleArray;
-    }
-
     // this plugs in the current user as Trainer1
     public function insertNewStudent(Student $student, array $enrollForm)
     {
@@ -151,13 +98,4 @@ EOT;
         return parent::insert($cargo, false); // returns the primaryKey or false
     }
 
-    // would be safer if this were uncommented
-    //function drop(){assert(false,__METHOD__." is not supported.");}
-
-    public function getAllStudentsByProject($project)
-    {
-        $where = sprintf('project=%s', $this->quote_smart($project));
-
-        return $this->getAllCargoByWhere($where);
-    }
 }

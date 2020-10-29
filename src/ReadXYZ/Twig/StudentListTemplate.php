@@ -1,11 +1,11 @@
 <?php
 
 
-namespace ReadXYZ\Twig;
+namespace App\ReadXYZ\Twig;
 
 
-use ReadXYZ\Database\StudentTable;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Database\StudentTable;
+use App\ReadXYZ\Helpers\Util;
 
 class StudentListTemplate
 {

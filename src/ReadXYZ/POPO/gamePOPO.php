@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\POPO;
+namespace App\ReadXYZ\POPO;
 
 use JsonSerializable;
 
@@ -14,7 +14,7 @@ class gamePOPO implements JsonSerializable
         $this->gameTypeId = $gameTypeId;
         $this->url = $url;
     }
-    
+
     public function jsonSerialize()
     {
         return [

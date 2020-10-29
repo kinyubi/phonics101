@@ -1,11 +1,11 @@
 <?php
 
 
-namespace ReadXYZ\Rest;
+namespace App\ReadXYZ\Rest;
 
 
 use Exception;
-use ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\Util;
 
 /* HTTP Codes
 200 - OK

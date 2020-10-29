@@ -4,12 +4,12 @@
 // P1: lessonName
 // P2: initialTabName
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Lessons\Lessons;
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Models\Identity;
-use ReadXYZ\Models\Student;
-use ReadXYZ\Twig\LessonTemplate;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Identity;
+use App\ReadXYZ\Models\Student;
+use App\ReadXYZ\Twig\LessonTemplate;
 
 require 'autoload.php';
 

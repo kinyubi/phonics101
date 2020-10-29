@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\POPO;
+namespace App\ReadXYZ\POPO;
 
 use JsonSerializable;
 
@@ -12,7 +12,7 @@ class HtmlPage implements JsonSerializable
      */
     public array $html = [];
     public int $ordering = 0;
-    
+
     public function jsonSerialize()
     {
         return [

@@ -1,8 +1,10 @@
 <?php
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Models\Student;
+use App\ReadXYZ\Data\UserMastery;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\BoolWithMessage;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Student;
 
 require 'autoload.php';
 
@@ -11,31 +13,14 @@ if (Util::isLocal()) {
 }
 (new Cookie())->tryContinueSession();
 
-$error_message = '';
 
-function updateMastery(mysqli $conn): bool
+function updateMastery(): BoolWithMessage
 {
-    global $error_message;
-
     $studentID = Student::getInstance()->studentID;
-    $wordList = Util::quoteList($_REQUEST['wordlist']);
-    $conn->begin_transaction();
-    $query = "DELETE FROM abc_usermastery WHERE studentID = '$studentID' AND word IN ($wordList)";
-    if (!$conn->query($query)) {
-        $error_message = "Query failed: {$conn->error} ::: $query";
-        $conn->rollback();
-        return false;
-    }
-    foreach ($_REQUEST['word1'] as $word1) {
-        $query = "INSERT INTO abc_usermastery (studentID, word) VALUES ('$studentID', '$word1')";
-        if (true !== $conn->query($query)) {
-            $error_message = "Query failed: {$conn->error} ::: $query";
-            $conn->rollback();
-            return false;
-        }
-    }
-    $conn->commit();
-    return true;
+    $presentedWordList = $_REQUEST['wordlist'];
+    $masteredWords = $_REQUEST['word1'] ?? [];
+    $userMastery = new UserMastery();
+    return $userMastery->update($studentID, $presentedWordList, $masteredWords);
 }
 
 function sendResponse(int $http_code = 200, string $msg = 'OK'): void
@@ -45,21 +30,12 @@ function sendResponse(int $http_code = 200, string $msg = 'OK'): void
 }
 
 
-$conn = Util::dbConnect();
+$result = updateMastery();
 
-if ($conn->connect_errno) {
-    error_log('UpdateMastery failed to connect.');
-    sendResponse(500, 'Connect failed' . $conn->connect_error);
-    exit;
-}
-
-$result = updateMastery($conn);
-$conn->close();
-
-if ($result) {
+if ($result->wasSuccessful()) {
     sendResponse(200, 'Update successful');
 } else {
-    $msg = "Error: transaction rolled back. $error_message";
+    $msg = $result->getErrorMessage();
     error_log($msg);
     sendResponse(500, $msg);
 }

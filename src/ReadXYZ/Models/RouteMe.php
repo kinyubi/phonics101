@@ -1,14 +1,14 @@
 <?php
 
 
-namespace ReadXYZ\Models;
+namespace App\ReadXYZ\Models;
 
-use ReadXYZ\Database\StudentTable;
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Twig\LessonListTemplate;
-use ReadXYZ\Twig\LessonTemplate;
-use ReadXYZ\Twig\LoginTemplate;
-use ReadXYZ\Twig\StudentListTemplate;
+use App\ReadXYZ\Database\StudentTable;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Twig\LessonListTemplate;
+use App\ReadXYZ\Twig\LessonTemplate;
+use App\ReadXYZ\Twig\LoginTemplate;
+use App\ReadXYZ\Twig\StudentListTemplate;
 use Throwable;
 
 class RouteMe

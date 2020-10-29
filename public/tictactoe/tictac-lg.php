@@ -1,6 +1,6 @@
 <?php
 require dirname(__DIR__) . '/autoload.php';
-use ReadXYZ\Helpers\Location;
+use App\ReadXYZ\Helpers\Location;
 
 $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'cap,gap,lap,map,rap,sap,tap,zap,nap',

@@ -1,12 +1,12 @@
 <?php
 
 
-namespace ReadXYZ\Lessons;
+namespace App\ReadXYZ\Lessons;
 
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\POPO\WarmupItem;
-use ReadXYZ\POPO\Warmup;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\POPO\WarmupItem;
+use App\ReadXYZ\POPO\Warmup;
 
 class Warmups
 {

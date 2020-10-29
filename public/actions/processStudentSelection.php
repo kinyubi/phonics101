@@ -2,10 +2,10 @@
 
 // HTTP GET target: P1 studentId
 
-use ReadXYZ\Helpers\Util;
-use ReadXYZ\Models\Cookie;
-use ReadXYZ\Models\Identity;
-use ReadXYZ\Twig\LessonListTemplate;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Identity;
+use App\ReadXYZ\Twig\LessonListTemplate;
 
 require 'autoload.php';
 
