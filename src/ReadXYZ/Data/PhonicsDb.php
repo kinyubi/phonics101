@@ -4,7 +4,8 @@ namespace App\ReadXYZ\Data;
 
 use App\ReadXYZ\Models\BoolWithMessage;
 use mysqli;
-use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Secrets\Access;
+use RuntimeException;
 
 /**
  * Helper class for testing.
@@ -13,9 +14,12 @@ class PhonicsDb
 {
     protected mysqli $connection;
 
-    public function __construct()
+    public function __construct(int $version = 1)
     {
-        $this->connection = Util::dbConnect();
+        $this->connection = ($version == 1) ? Access::dbConnect() : Access::oldDbConnect();
+        if (mysqli_connect_errno()) {
+            throw new RuntimeException(mysqli_connect_error());
+        }
     }
 
     public function __destruct()
@@ -35,10 +39,15 @@ class PhonicsDb
 
             return DbResult::goodResult($count);
         } else {
-            return DbResult::badResult($this->connection);
+            return DbResult::badResult($this->getErrorMessage());
         }
     }
 
+    /**
+     * Handles a query that returns a single scalar value. Returns DbResult::badResult if not found.
+     * @param string $query
+     * @return DbResult
+     */
     public function queryAndGetScalar(string $query): DbResult
     {
         $returnValue = null;
@@ -47,9 +56,9 @@ class PhonicsDb
             $returnValue = $row[0] ?? null;
             $result->close();
 
-            return DbResult::goodResult($returnValue);
+            return $returnValue ? DbResult::goodResult($returnValue) : DbResult::badResult('Not Found');
         } else {
-            return DbResult::badResult($this->connection);
+            return DbResult::badResult($this->getErrorMessage());
         }
     }
 
@@ -71,7 +80,7 @@ class PhonicsDb
     }
 
     /**
-     * Given a query, returns an array of rows.
+     * Given a query, returns an array of rows. Each row is an associative array of fieldName=>value
      *
      * @param string $query
      *
@@ -88,10 +97,29 @@ class PhonicsDb
 
             return DbResult::goodResult($result_array);
         } else {
-            return DbResult::badResult($this->connection);
+            return DbResult::badResult($this->getErrorMessage());
         }
     }
 
+    /**
+     * If successful, return result as a DbResult which will contain an associative array or NULL (no match)
+     * @param string $query
+     * @return DbResult
+     */
+    public function queryRecord(string $query): DbResult
+    {
+        $result = $this->connection->query($query);
+        if ($result === false) return DbResult::badResult($this->getErrorMessage());
+        $row = $result->fetch_assoc();
+        $result->close();
+        return DbResult::goodResult($row);
+    }
+
+    /**
+     * Handles queries returning a single field from one or more records in a simple array.
+     * @param string $query
+     * @return DbResult
+     */
     public function queryAndGetScalarArray(string $query): DbResult
     {
         $result_array = [];
@@ -102,10 +130,15 @@ class PhonicsDb
 
             return DbResult::goodResult($result_array);
         } else {
-            return DbResult::badResult($this->connection);
+            return DbResult::badResult($this->getErrorMessage());
         }
     }
 
+    /**
+     * Handles queries that add, update or delete.
+     * @param string $query
+     * @return BoolWithMessage
+     */
     public function queryStatement(string $query): BoolWithMessage
     {
         $result = $this->connection->query($query);
@@ -121,8 +154,21 @@ class PhonicsDb
         return $this->connection->error;
     }
 
+    /**
+     * Gets the mysqli object associated with this PhonicsDb instance
+     * @return mysqli
+     */
     public function getConnection(): mysqli
     {
         return $this->connection;
+    }
+
+    public function getPreparedStatement(string $query)
+    {
+        $statement = $this->connection->prepare($query);
+        if ($statement === false) {
+            throw new RuntimeException($this->getErrorMessage());
+        }
+        return $statement;
     }
 }

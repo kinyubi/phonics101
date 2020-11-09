@@ -2,9 +2,8 @@
 
 namespace App\ReadXYZ\Helpers;
 
-use mysqli;
-use App\ReadXYZ\Models\Identity;
 use App\ReadXYZ\Twig\TwigFactory;
+use RuntimeException;
 use Throwable;
 
 class Util
@@ -172,33 +171,9 @@ class Util
         return $data;
     }
 
-    public static function dbConnect(): mysqli
-    {
-        $dbName = 'readxyz0_1';
 
-        return new mysqli('localhost', 'readxyz0_admin', 'doc123', $dbName);
-    }
 
-    public static function dbTestOnlyConnect(): mysqli
-    {
-        $dbName = 'readxyz0_2';
 
-        return new mysqli('localhost', 'readxyz0_admin', 'doc123', $dbName);
-    }
-
-    public static function fakeLogin(bool $multiStudent = false)
-    {
-        if (not(Util::isLocal())) {
-            return;
-        } // only allow in development environment
-        $identity = Identity::getInstance();
-        $user = $multiStudent ? 'hello@gmail.com' : 'carlb';
-        $studentId = $multiStudent ? '' : 'S5eb35006f2a1e';
-        $identity->validateSignin($user, 'xx');
-        if (not($multiStudent)) {
-            $identity->setStudent($studentId);
-        }
-    }
 
     public static function fixTabName($tabName): string
     {
@@ -225,9 +200,7 @@ class Util
             case 'warm-ups':
                 return 'warmup';
             default:
-                error_log("$tabName is not a recognized tab name.");
-
-                return 'unknown';
+                throw new RuntimeException("$tabName is not a recognized tab name.");
         }
     }
 
@@ -314,6 +287,12 @@ class Util
         return "'" . str_replace(',', "','", $csvList) . "'";
     }
 
+    public static function dbDate(int $time = 0): string
+    {
+        if ($time == 0 ) return date('Y-m-d H:i:s');
+        return date('Y-m-d H:i:s', $time);
+    }
+
     public static function redBox(string $message, Throwable $ex = null): string
     {
         $details = $trace = '';
@@ -342,18 +321,6 @@ class Util
     public static function testingInProgress(): bool
     {
         return defined('TESTING_IN_PROGRESS');
-    }
-
-    /**
-     * We never destroy the session so we are just continuing the existing one. Every page that
-     * gets rendered needs to have a session_start. Without it, $_SESSION variables aren't visible.
-     */
-    public static function sessionContinue(): void
-    {
-        if (self::testingInProgress()) return;
-        if (!isset($_SESSION)) { //You can't start a session that's already going
-            session_start(); // continues the existing session
-        }
     }
 
     /**

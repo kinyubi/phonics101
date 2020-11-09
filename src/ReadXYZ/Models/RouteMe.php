@@ -3,6 +3,7 @@
 
 namespace App\ReadXYZ\Models;
 
+use App\ReadXYZ\Data\UserMasteryData;
 use App\ReadXYZ\Database\StudentTable;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Twig\LessonListTemplate;
@@ -132,7 +133,10 @@ class RouteMe
             case '/studentlist':
                 self::autoLoginDisplay(true);                                                ;
                 break;
-
+            case '/update_mastery':
+                $mastery = new UserMasteryData();
+                $mastery->processRequest();
+                break;
         }
     }
 }

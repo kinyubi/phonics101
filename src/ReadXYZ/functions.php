@@ -25,16 +25,6 @@ function not(bool $expression): bool
     return !$expression;
 }
 
-function areEqual(bool $expression1, bool $expression2): bool
-{
-    return $expression1 == $expression2;
-}
-
-function areNotEqual(bool $expression1, bool $expression2): bool
-{
-    return $expression1 != $expression2;
-}
-
 /**
  * PHP equivalent of Python's __name__ == '__main__'.
  *

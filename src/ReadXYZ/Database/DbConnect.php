@@ -4,7 +4,7 @@ namespace App\ReadXYZ\Database;
 
 use Exception;
 use mysqli;
-use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Secrets\Access;
 
 class DbConnect
 {
@@ -22,7 +22,7 @@ class DbConnect
         if ($conn && defined('UNIT_TESTING')) {
             $this->dbConnector = $conn;
         } else {
-            $this->dbConnector = Util::dbConnect();
+            $this->dbConnector = Access::dbConnect();
             if (mysqli_connect_errno()) {
                 throw new Exception('Cannot connect to MySQL server:' . mysqli_connect_errno());
             }
@@ -61,14 +61,6 @@ class DbConnect
         return $data;
     }
 
-    public function query_bool($query, $file = '', $line = 0)
-    {
-        if (!$result = @mysqli_query($this->dbConnector, $query)) {
-            assert(false, 'Error <b>' . mysqli_connect_errno() . '</b> in query <b>' . $query . '</b>. In file ' . $file . ' in line ' . $line . '. Date: ' . date('Y-m-d H:i:s'));
-        }
-
-        return $result ? true : false;
-    }
 
     public function fetch_array($query)
     {

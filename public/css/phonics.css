@@ -430,6 +430,7 @@ a.img-contain img {
     .size--list-icon {height: 18px; width: 18px}
     .tabbar-height {height: 140px;}
     .title-bar--height {height: 60px}
+    .button-text {font-size: 1rem;}
 }
 
 
@@ -444,6 +445,7 @@ a.img-contain img {
      .size--list-icon {height: 24px; width: 24px}
      .tabbar-height {height: 140px;}
      .title-bar--height {height: 50px}
+     .button-text {font-size: 1rem;}
  }
 
  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
@@ -457,6 +459,7 @@ a.img-contain img {
      .size--list-icon {height: 30px; width: 30px}
      .tabbar-height {height: 140px;}
      .title-bar--height {height: 60px}
+     .button-text {font-size: 1.25rem;}
  }
  /* Large devices (desktops, 992px and up) */
  @media (min-width: 992px) {
@@ -469,11 +472,14 @@ a.img-contain img {
      .size--list-icon {height: 35px; width: 35px}
      .tabbar-height {height: 100px;}
      .title-bar--height {height: 60px}
+     .button-text {font-size: 1.5rem;}
  }
 
- input[type="checkbox"] {
-     vertical-align: middle;
- }
+
+ /*input[type="checkbox"] {*/
+ /*    vertical-align: middle;*/
+ /*}*/
+
  .float-input input{
    float:left;
  }

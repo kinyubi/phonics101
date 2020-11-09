@@ -103,43 +103,4 @@ class Users extends AbstractData implements IBasicTableFunctions
         return $cargo;
     }
 
-    // public function deleteUserEMail($EMail)
-    // {
-    //     if ($result = $this->getUserCargo($EMail)) { // if exists and ONLY ONE
-    //         $safeUser = $this->quote_smart($EMail); // don't like injections
-    //         $resultSet = $this->query("delete from {$this->tableName} where EMail = $safeUser");
-    //     }
-    // }
-
-    // public function getDistinctProjects()
-    // {
-    //     $resultSet = $this->query("select distinct Project from {$this->tableName}");
-    //     $result = [];
-    //     foreach ($resultSet as $row) {
-    //         $result[] = $row['Project'];
-    //     }
-    //
-    //     return $result;
-    // }
-
-    // public function getUsersByProjects($project = '')
-    // {
-    //     $where = '';
-    //     if (!empty($project)) {
-    //         $where = 'where Project = ' . $this->quote_smart($project);
-    //     }
-    //     // don't like injections
-    //
-    //     $resultSet = $this->query("select cargo from {$this->tableName} $where order by lastupdate desc");
-    //
-    //     $result = [];
-    //     foreach ($resultSet as $r) { // unpack the results into a single array
-    //         foreach ($r as $s) {
-    //             $result[] = unserialize($s);
-    //             //echo "returns resultSet ".$s.'<br><br>';
-    //         }
-    //     }
-    //
-    //     return $result;
-    // }
 }

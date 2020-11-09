@@ -1,11 +1,11 @@
 <?php
 
-use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Twig\TwigFactory;
 
 require 'autoload.php';
 
-(new Cookie())->tryContinueSession();
+Session::sessionContinue();
 
 $cookie = $_COOKIE['readxyz_sound_box'] ?? '3blue';
 $cookieCount = substr($cookie,0, 1);
@@ -20,6 +20,6 @@ $color = $_REQUEST['color'] ?? $query['color'] ?? $cookieColor;
 
 require __DIR__ . '/autoload.php';
 
-$args = ['count' => $objectCount, 'color' => $color, 'lessonName' => (new Cookie())->getCurrentLesson() ];
+$args = ['count' => $objectCount, 'color' => $color, 'lessonName' => Session::currentLesson() ];
 
 echo TwigFactory::getInstance()->renderBlock('sound_box', 'soundBox', $args);

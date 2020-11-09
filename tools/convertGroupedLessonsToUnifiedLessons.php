@@ -10,6 +10,7 @@ use App\ReadXYZ\Lessons\LessonInfo;
 use App\ReadXYZ\POPO\gamePOPO;
 use App\ReadXYZ\POPO\LessonPOPO;
 use App\ReadXYZ\POPO\SpellSpinner;
+use App\ReadXYZ\Secrets\Access;
 
 require 'autoload.php';
 
@@ -26,7 +27,7 @@ try {
     exit($ex->getMessage());
 }
 
-Util::fakeLogin();
+Access::fakeLogin();
 $blendingInfo = BlendingInfo::getInstance();
 $lessonInfo = LessonInfo::getInstance();
 $oldLessons = $lessonInfo->getAllLessons();
@@ -58,7 +59,7 @@ foreach ($csvLessons as $csvLesson) {
         }
     }
     $lesson->lessonKey = 'Blending.' . $realName;
-    $lesson->groupId = trim($csvLesson['Group']);
+    $lesson->groupName = trim($csvLesson['Group']);
     $lesson->script = 'Blending';
     $lesson->wordList = $csvLesson['PrimaryWordList'];
     $lesson->supplementalWordList = $csvLesson['SupplementalWordList'];

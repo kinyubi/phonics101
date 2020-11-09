@@ -2,6 +2,7 @@
 
 namespace App\ReadXYZ\Lessons;
 
+use App\ReadXYZ\Models\Log;
 use JsonSerializable;
 use App\ReadXYZ\Helpers\Location;
 use App\ReadXYZ\Helpers\Util;
@@ -15,7 +16,7 @@ class Lesson implements JsonSerializable
     private string $lessonKey;
     private string $script;
     private array $alternateNames;
-    private string $groupId;
+    private string $groupName;
     private string $lessonDisplayAs;
     private ?array $wordList;
     private ?array $supplementalWordList;
@@ -39,6 +40,7 @@ class Lesson implements JsonSerializable
     private array $notes;
     private array $allWords;
     private string $book;
+    private array $lengths;
 
     /**
      * Lesson constructor. Called by the Lessons class when building an associative array of lessons.
@@ -53,7 +55,7 @@ class Lesson implements JsonSerializable
         $this->lessonKey = $lesson->lessonKey;
         $this->script = $lesson->script ?? 'Blending';
         $this->alternateNames = $lesson->alternateNames ?? [$lesson->lessonName => $lesson->lessonName];
-        $this->groupId = $lesson->groupId;
+        $this->groupName = $lesson->groupName;
         $this->lessonDisplayAs = $lesson->lessonDisplayAs ?? $lesson->lessonId;
         $this->wordList = Util::csvStringToArray($lesson->wordList);
         $this->supplementalWordList = Util::csvStringToArray($lesson->supplementalWordList);
@@ -132,6 +134,17 @@ class Lesson implements JsonSerializable
                 $this->notes[$note['tab']] = $note['note'];
             }
         }
+        $this->lengths = [
+            'wordlist' => strlen($lesson->wordList),
+            'supplemental' => strlen($lesson->supplementalWordList),
+            'contrast' => strlen($lesson->contrastList),
+            'stretch' => strlen($lesson->stretchList)
+        ];
+    }
+
+    public function getLengths(): array
+    {
+        return $this->lengths;
     }
 
     /**
@@ -216,9 +229,9 @@ class Lesson implements JsonSerializable
     /**
      * @return string
      */
-    public function getGroupId()
+    public function getGroupName()
     {
-        return $this->groupId;
+        return $this->groupName;
     }
 
     /**
@@ -385,7 +398,7 @@ class Lesson implements JsonSerializable
         $initialWords = ($useSupplemental && $hasSupplemental) ? array_merge($this->wordList, $this->supplementalWordList) : $this->wordList;
         $words = $initialWords;
         if (not(is_array($words))) {
-            trigger_error('No wordlist');
+            LOG::error("No wordlist for tab $tabName in lesson {$this->lessonName}.");
         }
         while (count($words) < $tripleSize) {
             $words = array_merge($words, $initialWords);
@@ -428,7 +441,7 @@ class Lesson implements JsonSerializable
             'lessonKey' => $this->lessonKey,
             'script' => $this->script,
             'alternateNames' => $this->alternateNames,
-            'groupId' => $this->groupId,
+            'groupName' => $this->groupName,
             'lessonDisplayAs' => $this->lessonDisplayAs,
             'wordLists' => $this->wordLists,
             'supplementalWordList' => $this->supplementalWordList,

@@ -7,7 +7,6 @@ define('TEST_PASSWORD', 'xx');
 
 use App\ReadXYZ\Database\StudentTable;
 use App\ReadXYZ\Database\Users;
-use App\ReadXYZ\Helpers\Debug;
 use App\ReadXYZ\Helpers\Util;
 use RuntimeException;
 
@@ -16,30 +15,31 @@ class Identity
     // The singleton method
     private static Identity $instance;           // Hold a singleton instance of the class
     private bool $isValidUser = false;
-    private string $name = '';
-    private string $userName = '';        // use the access functions
-    private string $userRole = '';        //    don't access these directly from outside
-    private string $project = '';
-    private string $studentId = '';
-    private string $currentScript = 'Blending';
-    private string $sessionId = '';    // and the script we are training him on
-    private string $deviceType = '';        // ties together a training session
-    private string $request = '';        // 'phone', otherwise defaults to laptop
-    private array $varList = [        // make it easier to add a var
-        'name',
-        'userName',
-        'userRole',
-        'project',
-        'studentId',
-        'sessionId',
-        'deviceType',
-        'currentScript',
-        'request',
-    ];        // 'Assessment' or similar, we need to choose student before we deliver it
+    private Session $session;
+    // private string $name = '';
+    // private string $userName = '';        // use the access functions
+    // private string $userRole = '';        //    don't access these directly from outside
+    // private string $project = '';
+    // private string $studentId = '';
+    // // private string $currentScript = 'Blending';
+    // private string $sessionId = '';    // and the script we are training him on
+    // private string $deviceType = '';        // ties together a training session
+    // private string $request = '';        // 'phone', otherwise defaults to laptop
+    // private array $varList = [        // make it easier to add a var
+    //     'name',
+    //     'userName',
+    //     'userRole',
+    //     'project',
+    //     'studentId',
+    //     'sessionId',
+    //     'deviceType',
+    //     'currentScript',
+    //     'request',
+    // ];        // 'Assessment' or similar, we need to choose student before we deliver it
 
     public function __construct()
     {
-        $this->loadPersistentState();
+        $this->session = Session::getInstance();
     }
 
     // constructor only gets called the FIRST time the singleton is invoked
@@ -47,7 +47,7 @@ class Identity
     public function loadPersistentState(): void
     {    // may want to encrypt one day
         $this->resetProperties();        // sets them all empty
-        Util::sessionContinue();
+
         if (isset($_SESSION['identity'])
             and isset($_SESSION['identity']['userName'])) {    // identity is persistent through this session
             foreach ($this->varList as $var) {
@@ -57,15 +57,10 @@ class Identity
         $this->isValidUser = (!empty($this->userName));
     }
 
-    public function resetProperties()
-    {
-        foreach ($this->varList as $var) {
-            $this->$var = '';
-        }
-    }
 
     public static function getInstance()
     {
+        Session::sessionContinue();
         if (!isset(self::$instance)) {
             self::$instance = new Identity();
         }
@@ -279,7 +274,7 @@ class Identity
         if (!$cargo) {
             if (isset($_SESSION['identity'])) {
                 unset($_SESSION['identity']);
-                error_log("Session Identity destroyed.");
+                Log::info("Session Identity destroyed.");
             }
 
             return BoolWithMessage::badResult("$user is not a valid user.");
@@ -297,7 +292,7 @@ class Identity
         $this->deviceType = $deviceType;
 
         $this->isValidUser = true;    // congratulations
-        $cookie = new Cookie();
+        $session = new Session($this->userName, $studentName)
         if ($cookie->getUsername() != $this->userName) {
             $cookie->setUsername($this->userName);
         }

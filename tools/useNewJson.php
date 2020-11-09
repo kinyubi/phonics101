@@ -2,10 +2,11 @@
 
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\Secrets\Access;
 
 require dirname(__DIR__) . '/src/ReadXYZ/autoload.php';
 
-Util::fakeLogin();
+Access::fakeLogin();
 
 $lessons = Lessons::getInstance();
 $inputFile = Util::getReadXyzSourcePath('resources/unifiedLessons.json');

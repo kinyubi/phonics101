@@ -4,6 +4,8 @@
 namespace App\ReadXYZ\Helpers;
 
 
+use App\ReadXYZ\Models\Session;
+
 class ScreenCookie
 {
     public const PHONE_DEVICE = 'phone';
@@ -15,9 +17,7 @@ class ScreenCookie
 
     public static function getScreenInfo()
     {
-        if (!isset($_SESSION)) { //You can't start a session that's already going
-            session_start(); // continues the existing session
-        }
+        Session::sessionContinue();
         if (!isset($_COOKIE['readxyz_screen'])) {
             return self::makeObject(0,0,0, 0, self::UNKNOWN_DEVICE);
         }

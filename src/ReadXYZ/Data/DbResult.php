@@ -28,13 +28,13 @@ class DbResult
     /**
      * a static function that you can use to pass back an error result.
      *
-     * @param mysqli $conn
+     * @param string $msg
      *
      * @return DbResult
      */
-    public static function badResult($conn)
+    public static function badResult(string $msg)
     {
-        return new self(null, false, $conn->error);
+        return new self(null, false,  $msg);
     }
 
     /**

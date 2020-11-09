@@ -11,7 +11,7 @@ class LessonPOPO implements JsonSerializable
     public string $lessonKey = '';     // hopefully computed value: script.lessonName
     public string $script = '';        // hopefully computed value
     public array $alternateNames; //names this lesson has been known by in the past
-    public string $groupId = '';
+    public string $groupName = '';
     public string $lessonDisplayAs = '';
     public string $wordList = '';
     public string $supplementalWordList = '';
@@ -39,7 +39,7 @@ class LessonPOPO implements JsonSerializable
             'lessonKey' => $this->lessonKey,
             'script' => $this->script,
             'alternateNames' => $this->alternateNames,
-            'groupId' => $this->groupId,
+            'groupName' => $this->groupName,
             'lessonDisplayAs' => $this->lessonDisplayAs,
             'wordList' => $this->wordList,
             'supplementalWordList' => $this->supplementalWordList,

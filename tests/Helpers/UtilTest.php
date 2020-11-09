@@ -1,9 +1,10 @@
 <?php
 
-namespace App\ReadXYZ\Tests\Helpers;
+namespace Tests\Helpers;
 
 use PHPUnit\Framework\TestCase;
 use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Secrets\Access;
 
 class UtilTest extends TestCase
 {
@@ -68,13 +69,7 @@ class UtilTest extends TestCase
 
     public function testDbConnect()
     {
-        $sqlObj = Util::dbConnect();
-        $this->assertTrue(is_a($sqlObj, 'mysqli'));
-    }
-
-    public function testDbTestOnlyConnect()
-    {
-        $sqlObj = Util::dbTestOnlyConnect();
+        $sqlObj = Access::dbConnect();
         $this->assertTrue(is_a($sqlObj, 'mysqli'));
     }
 

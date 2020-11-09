@@ -2,6 +2,7 @@
 
 namespace App\ReadXYZ\Helpers;
 
+use App\ReadXYZ\Models\Log;
 use Exception;
 
 /**
@@ -110,6 +111,6 @@ class Debug
         if (Util::isLocal()()) {
             var_dump($ex->getTraceAsString());
         }
-        error_log(var_export($ex->getTraceAsString(), true));
+        Log::error(var_export($ex->getTraceAsString(), true));
     }
 }

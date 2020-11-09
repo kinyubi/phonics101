@@ -5,6 +5,7 @@ namespace App\ReadXYZ\Data;
 
 
 use App\ReadXYZ\Data\PhonicsDb;
+use RuntimeException;
 
 class OneTimePass
 {
@@ -41,7 +42,7 @@ EOT;
         $query = "INSERT INTO {$this->tableName} VALUES ('$otp','$username')";
         $result = $this->phonicsDb->queryStatement($query);
         if ($result->failed()) {
-            error_log("unable to create OTP. " . $result->getErrorMessage());
+            throw new RuntimeException("unable to create OTP. " . $result->getErrorMessage());
         }
         return $otp;
     }

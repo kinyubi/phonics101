@@ -8,7 +8,7 @@ use App\ReadXYZ\Data\OneTimePass;
 use App\ReadXYZ\Rest\RestTarget;
 use Exception;
 use mysqli;
-use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Secrets\Access;
 use stdClass;
 
 class ProcessWordPressRequest extends RestTarget
@@ -17,7 +17,7 @@ class ProcessWordPressRequest extends RestTarget
 
     public function __construct()
     {
-        $this->conn = Util::dbConnect();
+        $this->conn = Access::dbConnect();
     }
 
     private function createUserObject(string $userLogin): stdClass

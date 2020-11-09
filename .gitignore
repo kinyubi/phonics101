@@ -2,9 +2,11 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/.secrets.php
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /src/preload.php
+/src/ReadXYZ/Secrets/
 /var/
 /vendor/
 cache/

@@ -3,7 +3,6 @@
 // HTTP GET target: P1 studentId
 
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Models\Cookie;
 use App\ReadXYZ\Models\Identity;
 use App\ReadXYZ\Twig\LessonListTemplate;
 

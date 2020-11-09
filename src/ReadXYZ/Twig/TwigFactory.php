@@ -88,7 +88,6 @@ class TwigFactory
     {
         try {
             $template = $this->loadTemplate($templateName);
-            //error_log("Render Template: $templateName", 0);
             $html = $template->render($args);
         } catch (Throwable $ex) {
             $html = Util::redBox("Twig template render error: $templateName.", $ex);

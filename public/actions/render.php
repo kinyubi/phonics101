@@ -2,7 +2,7 @@
 
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
-use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Twig\LessonListTemplate;
 use App\ReadXYZ\Twig\LessonTemplate;
 use App\ReadXYZ\Twig\LoginTemplate;
@@ -14,8 +14,7 @@ require 'autoload.php';
 if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
-$cookie = new Cookie();
-$foundSession = $cookie->tryContinueSession();
+Session::sessionContinue();
 
 $pageToRender = ($_REQUEST['P1'] ?? $_REQUEST['page'] ?? $_REQUEST['target'] ??  'none');
 
@@ -29,7 +28,6 @@ switch (Util::convertCamelToSnakeCase($pageToRender)) {
         $tab = Util::fixTabName($_REQUEST['tab'] && '');
         $refresh = ('1' == ($_REQUEST['refresh'] ?? '0'));
 
-        $cookie->updateListIndex($tab);
         $lessonTemplate = new LessonTemplate($lesson, $tab);
         $lessonTemplate->display();
         break;

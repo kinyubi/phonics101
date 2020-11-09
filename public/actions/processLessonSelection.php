@@ -6,7 +6,7 @@
 
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
-use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Models\Identity;
 use App\ReadXYZ\Models\Student;
 use App\ReadXYZ\Twig\LessonTemplate;
@@ -17,10 +17,7 @@ if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
 
-$cookie = new Cookie();
-if (!$cookie->tryContinueSession()) {
-    throw new RuntimeException("Unable to find session.\n" . $cookie->getCookieString());
-}
+Session::currentLesson();
 
 $lessonName = $_REQUEST['P1'] ?? $_REQUEST['lessonName'] ?? '';
 $initialTabName = $_REQUEST['P2'] ?? $_REQUEST['initialTabName'] ?? '';

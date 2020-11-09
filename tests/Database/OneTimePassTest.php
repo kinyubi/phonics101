@@ -1,6 +1,6 @@
 <?php
 
-namespace ReadXYZ\Tests\Database;
+namespace Tests\Database;
 
 use App\ReadXYZ\Data\OneTimePass;
 use App\ReadXYZ\Data\PhonicsDb;

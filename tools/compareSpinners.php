@@ -14,9 +14,9 @@ if (not(defined('CLASS'))) {
     define('NOTE', 6);
 }
 
-use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\BlendingInfo;
 use App\ReadXYZ\Lessons\LessonInfo;
+use App\ReadXYZ\Secrets\Access;
 
 function getBlendingWordLists(array $blendingLessons)
 {
@@ -128,7 +128,7 @@ function printBlendingLessonNames()
     }
 }
 
-Util::fakeLogin();
+Access::fakeLogin();
 
 //$array = Util::csvFileToArray('c:/users/carlb/desktop/compare.csv');
 // makeSpinnerComparisionCsv($blendingInfo, $lessonInfo);

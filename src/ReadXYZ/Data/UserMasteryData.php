@@ -6,16 +6,19 @@ namespace App\ReadXYZ\Data;
 
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\BoolWithMessage;
+use App\ReadXYZ\Models\Log;
+use App\ReadXYZ\Models\Student;
 
-class UserMastery
+class UserMasteryData extends AbstractData
 {
 
     private PhonicsDb $db;
 
     public function __construct()
     {
-        $this->db = new PhonicsDb();
+        parent::__construct('abc_usermastery');
     }
+
 
     public function update(string $studentId, string $presentedWordList, array $masteredWords): BoolWithMessage
     {
@@ -40,6 +43,23 @@ class UserMastery
             $conn->commit();
             return BoolWithMessage::goodResult();
         }
+    }
+
+    public function processRequest()
+    {
+        $studentID = Student::getInstance()->studentID;
+        $presentedWordList = $_REQUEST['wordlist'];
+        $masteredWords = $_REQUEST['word1'] ?? [];
+        $result = $this->update($studentID, $presentedWordList, $masteredWords);
+
+        if ($result->wasSuccessful()) {
+            $this->sendResponse(200, 'Update successful');
+        } else {
+            $msg = $result->getErrorMessage();
+            Log::error($msg);
+            $this->sendResponse(500, $msg);
+        }
+        exit();
     }
 
 }

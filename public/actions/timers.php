@@ -3,7 +3,8 @@
 
 // we only use $_REQUEST['seconds']. We already know the current lesson and student.
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Log;
+use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Models\Student;
 use App\ReadXYZ\Twig\LessonTemplate;
 use App\ReadXYZ\Twig\LoginTemplate;
@@ -13,14 +14,10 @@ require 'autoload.php';
 if (Util::isLocal()) {
     error_reporting(E_ALL | E_STRICT);
 }
-$cookie = new Cookie();
-if (!$cookie->tryContinueSession()) {
-    (new LoginTemplate("Login has expired (fluency timer).\n" . $cookie->getCookieString()))->display();
-    exit;
-}
+Session::sessionContinue();
 $student = Student::getInstance();
 $studentName = $student->getCapitalizedStudentName();
-$currentLessonName = $cookie->getCurrentLesson();
+$currentLessonName = Session::currentLesson();
 $student->saveLessonSelection($currentLessonName);
 $source = $_REQUEST['source'] ?? 'unknown';
 $seconds = $_REQUEST['seconds'] ?? 0;
@@ -36,7 +33,7 @@ if ('fluency' == $source) {
         }
     } else {
         $studentName = $student->getCapitalizedStudentName();
-        error_log("Fluency timed test for $studentName was 0.");
+        Log::info("Fluency timed test for $studentName was 0.");
     }
 
 
@@ -55,7 +52,7 @@ if ('fluency' == $source) {
 
 } else {
     $message = "Call to timers.php with unrecognized source $source";
-    error_log($message);
+    Log::error($message);
     echo Util::redBox($message);
 }
 

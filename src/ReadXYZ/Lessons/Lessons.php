@@ -3,11 +3,9 @@
 namespace App\ReadXYZ\Lessons;
 
 use InvalidArgumentException;
-use Peekmo\JsonPath\JsonStore;
+
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Models\Cookie;
-use App\ReadXYZ\Models\Student;
-use Throwable;
+use App\ReadXYZ\Models\Session;
 
 /**
  * Class Lessons
@@ -22,50 +20,56 @@ class Lessons
     private ?Lesson $nullGuard;
     /** @var Lesson[] */
     private array $blendingLessons = [];
-    private JsonStore $store;
+
     /** @var string[] */
     private array $groupNames = [];
-    /** @var array structure is accordion[groupId][lessonName] => masteryLevel (0-none, 1-advancing, 2-mastered) */
+    /** @var array structure is accordion[groupName][lessonName] => masteryLevel (0-none, 1-advancing, 2-mastered) */
     private array $accordion = [];
     private string $currentLessonName;
     private array $alternateNameMap;
     private array $lessonNames = [];
     private int $currentLessonNameIndex;
 
+    private array $maxLengths;
+
     private function __construct()
     {
         $inputFile = Util::getReadXyzSourcePath('resources/unifiedLessons.json');
         $json = file_get_contents($inputFile);
-        $this->store = new JsonStore($json);
         $all = json_decode($json);
         foreach ($all->groups as $group) {
-            $this->groupNames[$group->groupId] = $group->displayAs;
+            $this->groupNames[$group->groupName] = $group->displayAs;
         }
         foreach ($this->groupNames as $index => $group) {
             $this->accordion[$group] = [];
         }
-
+        $this->maxLengths = ['wordlist' => 0, 'supplemental' => 0, 'contrast' => 0, 'stretch' =>0];
         foreach ($all->lessons->blending as $key => $lessonArray) {
             $lesson = new Lesson($lessonArray);
             $this->blendingLessons[$key] = $lesson;
-            $groupName = $this->getGroupName($lesson->getGroupId());
+            $groupName = $this->getGroupName($lesson->getGroupName());
             $this->accordion[$groupName][$lesson->getLessonName()] = 0;
             $this->lessonNames[] = $key;
+            $lengths = $lesson->getLengths();
+            foreach (array_keys($this->maxLengths) as $key) {
+                if($lengths[$key] > $this->maxLengths[$key]) $this->maxLengths[$key] = $lengths[$key];
+            }
+
         }
 
-        $cookie = new Cookie();
         $this->nullGuard = null;
-        $currentLessonName = $cookie->getCurrentLesson();
-        if (not($this->lessonExists($currentLessonName))) {
+        $session = new Session();
+        $currentLessonName = $session->getCurrentLesson();
+        if (empty($currentLessonName) || not($this->lessonExists($currentLessonName))) {
             $currentLessonName = $this->lessonNames[0];
             $this->setCurrentLesson($currentLessonName);
         }
         $this->createAlternateNameMap();
-        try {
-            $this->updateStudentMastery();
-        } catch (Throwable $exception) {
-            trigger_error('Unable to update student mastery at initial invocation of Lessons class.');
-        }
+    }
+
+    public function getMaxLengths(): array
+    {
+        return $this->maxLengths;
     }
 
     public function lessonExists(string $lessonName): bool
@@ -73,9 +77,17 @@ class Lessons
         return in_array($lessonName, $this->lessonNames);
     }
 
-    public function getGroupName(string $groupId): string
+    /**
+     * @return string[] an associative array of groupName => displayAs
+     */
+    public function getAllGroups(): array
     {
-        return $this->groupNames[$groupId] ?? $groupId;
+        return $this->groupNames;
+    }
+
+    public function getGroupName(string $groupName): string
+    {
+        return $this->groupNames[$groupName] ?? $groupName;
     }
 
     /**
@@ -89,10 +101,19 @@ class Lessons
         if (key_exists($lessonName, $this->blendingLessons)) {
             $this->currentLessonName = $lessonName;
             $this->currentLessonNameIndex = array_search($lessonName, $this->lessonNames);
-            (new Cookie())->setCurrentLesson($lessonName);
+            $session = new Session();
+            if ($session->isValid()) {
+                $session->updateLesson($lessonName);
+            }
         } else {
             throw new InvalidArgumentException("$lessonName is not a valid lesson name.");
         }
+    }
+
+    public function getRealLessonName(string $oldLessonName): string
+    {
+        $oldName = Util::convertLessonKeyToLessonName($oldLessonName);
+        return $this->alternateNameMap[$oldName] ?? '';
     }
 
     /**
@@ -108,32 +129,6 @@ class Lessons
     }
 
 
-    /**
-     * for the current student, we determine which lessons have been mastered.
-     */
-    private function updateStudentMastery(): void
-    {
-        $student = Student::getInstance();
-        $cargo = $student->cargo;
-        $lessonLocations = ['masteredLessons', 'currentLessons'];
-        foreach ($lessonLocations as $location) {
-            foreach ($cargo[$location] as $key => $item) {
-                if (isset($item['mastery'])) {
-                    // if it's not one of the current lessons, don't include it
-                    $value = $item['mastery'] > 1 ? 2 : $item['mastery'];
-                    $lessonName = Util::convertLessonKeyToLessonName($key);
-                    $realName = $this->alternateNameMap[$lessonName] ?? '';
-                    if ($realName) {
-                        $groupId = $this->blendingLessons[$realName]->getGroupId() ?? '';
-                        $groupName = $this->getGroupName($groupId);
-                        if ($groupName && key_exists($realName, $this->accordion[$groupName])) {
-                            $this->accordion[$groupName][$realName] = $value;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     /**
      * passes back the singleton instance for this class.
@@ -151,8 +146,6 @@ class Lessons
 
     public function getAccordionList(): array
     {
-        $this->updateStudentMastery();
-
         return $this->accordion;
     }
 
@@ -193,6 +186,11 @@ class Lessons
 
         $data = json_encode($fullLessons, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         file_put_contents($fileName, $data);
+    }
+
+    public function getAllLessons(): array
+    {
+        return $this->blendingLessons;
     }
 
     public function getAllLessonNames(): array

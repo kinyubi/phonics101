@@ -9,8 +9,6 @@
   {% set listIndex = listIndex ?? 0 %}
   {% set listCount = max(lesson.wordlist|length,99) %}
   {% set listIndex = listCount // 25 %}
-  {% set scales = ['mast-5', 'mast-4', 'mast-3', 'mast-3'] %}
-  {% set cols = ['col-4', 'col-4', 'col-4', 'col-4'] %}
   <div class="container">
 
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
@@ -18,14 +16,14 @@
         {{ tabHeader(tabInfo) }}
         <div class="row">
           <form id="masteryform" name="masteryform" method="POST" action="/actions/updateMastery.php">
-            <div class="row d-flex flex-wrap">
+            <div class="row d-flex flex-wrap ">
               {% for word in lesson.wordList %}
                 {% set checked = (word in masteredWords) ? 'checked' : '' %}
-                <div class="checkbox col-6 col-md-4 col-lg-3 mt-1 mast-3">
-                  <input type="checkbox" name="word1[]"
+                <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                  <input type="checkbox" name="word1[]" class="size--list-icon "
                          id="wordId{{ loop.index }}"
                          value="{{ word }}" {{ checked }}/>
-                  <label class="mx-2" for="wordId{{ loop.index }}">{{ word }}</label>
+                  <label class="mx-2 wordlist" for="wordId{{ loop.index }}">{{ word }}</label>
                 </div>
               {% endfor %}
               <input type="hidden" name="wordlist" value="{{ lesson.allWords|join(',') }}"/>

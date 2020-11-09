@@ -103,26 +103,6 @@ class Cookie
         setcookie('readXYZ_user', $json, time() + self::$COOKIE_DURATION,'/');
     }
 
-    public function getListIndex(string $tabName): int
-    {
-        $realTabName = Util::fixTabName($tabName);
-        $index = $this->listIndexes[$realTabName] ?? -1;
-        if (-1 == $index) {
-            error_log("Unable to find list index for $tabName tab");
-            $index = 0;
-        }
-
-        return $index;
-    }
-
-    public function updateListIndex(string $tabName): void
-    {
-        $realTabName = Util::fixTabName($tabName);
-        $index = $this->listIndexes[$realTabName];
-        $index = ($index + 1) % 3;
-        $this->listIndexes[$realTabName] = $index;
-        $this->setCookie();
-    }
 
     public function getStatus(): int
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ReadXYZ\Tests\Lessons;
+namespace Tests\Lessons;
 
 use App\ReadXYZ\Lessons\Warmups;
 use PHPUnit\Framework\TestCase;

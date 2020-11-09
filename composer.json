@@ -15,7 +15,8 @@
     "symfony/http-kernel": "5.1.*",
     "symfony/phpunit-bridge": "^3.4.3",
     "twig/twig": "^3.0",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-readline": "*"
   },
   "require-dev": {
     "ext-curl": "*",
@@ -32,15 +33,14 @@
       "src/3rdParty/libChart/classes/libChart.php"
     ],
     "psr-4": {
-      "ReadXYZ\\": "src/ReadXYZ/",
       "Peekmo\\": "src/3rdParty/Peekmo/",
       "JsonMapper\\": "src/3rdParty/JsonMapper",
-      "App\\": "src/"
+      "App\\": "src/",
+      "Tests\\":"tests/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ReadXYZ\\Tests\\": "tests/"
     }
   },
   "scripts": {

@@ -11,6 +11,7 @@ use App\ReadXYZ\Database\StudentTable;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lesson;
 use App\ReadXYZ\Lessons\Lessons;
+use RuntimeException;
 
 class Student
 {
@@ -22,7 +23,7 @@ class Student
     public array $cargo; // this is the cargo of the student record
 
     // optional properties
-    public int $prefDictationCount = 3;
+
     private string $currentScript;
 
     private function __construct()
@@ -70,7 +71,7 @@ class Student
         $lessonName = Util::convertLessonKeyToLessonName(rawurldecode($key)); // gets rid of %20, etc if they are there
         $lessons = Lessons::getInstance();
         if (not($lessons->lessonExists($lessonName))) {
-            trigger_error("SelectByName did not find '$lessonName' in lessons", E_USER_ERROR);
+            throw new RuntimeException("SelectByName did not find '$lessonName' in lessons");
         } else {
             $lessons->setCurrentLesson($lessonName);
 
@@ -99,15 +100,6 @@ class Student
     {
         // too simple, we simply update the cargo
         $this->cargo['currentLesson'] = $lessonKey;
-        $cookie = new Cookie();
-        $sessionId = Identity::getInstance()->getSessionId();
-        if (($cookie->getStudentId() != $this->studentID) or ($cookie->getSessionId() != $sessionId)) {
-            $cookie->setStudentId($this->studentID, $sessionId);
-        }
-        $lessonName = Util::convertLessonKeyToLessonName($lessonKey);
-        if ($cookie->getCurrentLesson() != $lessonName) {
-            $cookie->setCurrentLesson($lessonName);
-        }
         $this->saveSession();
     }
 

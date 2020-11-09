@@ -1,17 +1,17 @@
 {
   "groups": [
-    {"groupId": "Letters", "displayAs": "Alphabet Letters"},
-    {"groupId": "/a/", "displayAs": "Short /a/ sounds"},
-    {"groupId": "/i/", "displayAs": "Short /i/ sounds"},
-    {"groupId": "/o/", "displayAs": "Short /o/ sounds"},
-    {"groupId": "/u/", "displayAs": "Short /u/ sounds"},
-    {"groupId": "/e/", "displayAs": "Short /e/ sounds"},
-    {"groupId": "CVC Wrap-up", "displayAs": "CVC Wrap-up"},
-    {"groupId": "Simple Magic e", "displayAs": "Magic /e/"},
-    {"groupId": "Consonant Clusters", "displayAs": "Consonant Clusters"},
-    {"groupId": "Harder Magic e", "displayAs": "Magic /e/ Revisited"},
-    {"groupId": "Blend Warp-up", "displayAs": "Blend Warp-up"},
-    {"groupId": "Phonics", "displayAs": "Phonics"}
+    {"groupId": "G01", "groupName": "Letters", "displayAs": "Alphabet Letters"},
+    {"groupId": "G02", "groupName": "/a/", "displayAs": "Short /a/ sounds"},
+    {"groupId": "G03", "groupName": "/i/", "displayAs": "Short /i/ sounds"},
+    {"groupId": "G04", "groupName": "/o/", "displayAs": "Short /o/ sounds"},
+    {"groupId": "G05", "groupName": "/u/", "displayAs": "Short /u/ sounds"},
+    {"groupId": "G06", "groupName": "/e/", "displayAs": "Short /e/ sounds"},
+    {"groupId": "G07", "groupName": "CVC Wrap-up", "displayAs": "CVC Wrap-up"},
+    {"groupId": "G08", "groupName": "Simple Magic e", "displayAs": "Magic /e/"},
+    {"groupId": "G09", "groupName": "Consonant Clusters", "displayAs": "Consonant Clusters"},
+    {"groupId": "G10", "groupName": "Harder Magic e", "displayAs": "Magic /e/ Revisited"},
+    {"groupId": "G11", "groupName": "Blend Wrap-up", "displayAs": "Blend Wrap-up"},
+    {"groupId": "G12", "groupName": "Phonics", "displayAs": "Phonics"}
   ],
   "lessons": {
     "blending": {
@@ -24,7 +24,7 @@
           "Vowels",
           ""
         ],
-        "groupId": "Letters",
+        "groupName": "Letters",
         "lessonDisplayAs": "Vowels",
         "wordList": "a,e,i,o,u",
         "supplementalWordList": "A,E,I,O,U",
@@ -86,7 +86,7 @@
           "Consonants 1",
           ""
         ],
-        "groupId": "Letters",
+        "groupName": "Letters",
         "lessonDisplayAs": "Consonants 1",
         "wordList": "s,t,p,n,c,k,h,r,m,d,g",
         "supplementalWordList": "S,T,P,N,C,K,H,R,M,D,G",
@@ -148,7 +148,7 @@
           "Consonants 2",
           ""
         ],
-        "groupId": "Letters",
+        "groupName": "Letters",
         "lessonDisplayAs": "Consonants 2",
         "wordList": "l,f,b,q,j,z,w,v,y,x,ch,sh,th",
         "supplementalWordList": "L,F,B,Q,J,Z,W,V,Y,X,Ch,Sh,Th",
@@ -210,7 +210,7 @@
           "Review",
           ""
         ],
-        "groupId": "Letters",
+        "groupName": "Letters",
         "lessonDisplayAs": "Review",
         "wordList": "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,sh,ch,th",
         "supplementalWordList": "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z",
@@ -263,7 +263,7 @@
           "at",
           "Fat Cat Sat"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "at",
         "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat",
         "supplementalWordList": "",
@@ -337,7 +337,7 @@
           "ap",
           "Cap Gap Tap"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "ap",
         "wordList": "cap,gap,lap,map,rap,sap,tap,yap,wap,zap",
         "supplementalWordList": "",
@@ -415,7 +415,7 @@
           "at + ap",
           "Cat + Cap"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "at + ap",
         "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat,cap,gap,lap,map,rap,sap,tap,yap,wap,zap",
         "supplementalWordList": "",
@@ -493,7 +493,7 @@
           "ag",
           "Bag Nag Tag"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "ag",
         "wordList": "bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag",
         "supplementalWordList": "",
@@ -571,7 +571,7 @@
           "at + ag",
           "Bat + Bag"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "at + ag",
         "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag",
         "supplementalWordList": "",
@@ -644,7 +644,7 @@
           "an",
           "Fan Can Tan"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "an",
         "wordList": "ban,can,Dan,fan,Jan,man,pan,ran,tan,van",
         "supplementalWordList": "",
@@ -718,7 +718,7 @@
           "at + ap + ag + an",
           "Cat + Cap + Bag + Fan"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "at + ap + ag + an",
         "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat,cap,gap,lap,map,rap,sap,tap,yap,wap,zap,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag,ban,can,Dan,fan,Jan,man,pan,ran,tan,van",
         "supplementalWordList": "",
@@ -788,7 +788,7 @@
           "b-d-p for /a/",
           "b-d-p for /a/ words"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "b-d-p for <sound>a</sound>",
         "wordList": "bad,dad,dab,pad,pap",
         "supplementalWordList": "",
@@ -862,7 +862,7 @@
           "/a/ review",
           "All Cat Words"
         ],
-        "groupId": "/a/",
+        "groupName": "/a/",
         "lessonDisplayAs": "<sound>a</sound> review",
         "wordList": "bam,Dan,fab,fad,fax,gab,gas,had,ham,has,jab,jam,lab,Dan,fab,fad,fax,gas,had,ham,has,jab,jam,lab,lag,lap,mad,man,map,max,nab,Pam,rad,ram,sad,Sam,tab,wax,yak,yam",
         "supplementalWordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat,cap,gap,lap,map,rap,sap,tap,yap,wap,zap,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag,ban,can,Dan,fan,Jan,man,pan,ran,tan,van,bad,dad,dab,pad,pap",
@@ -936,7 +936,7 @@
           "it",
           "Bit Pit Sit"
         ],
-        "groupId": "/i/",
+        "groupName": "/i/",
         "lessonDisplayAs": "it",
         "wordList": "it,bit,fit,hit,kit,lit,mitt,pit,sit,wit,zit",
         "supplementalWordList": "",
@@ -1010,7 +1010,7 @@
           "at + it",
           "Bat + Bit"
         ],
-        "groupId": "/i/",
+        "groupName": "/i/",
         "lessonDisplayAs": "at + it",
         "wordList": "it,bit,fit,hit,kit,lit,mitt,pit,sit,wit,zit,fat,cat,hat,sat,mat,pat,bat,rat,vat,tat",
         "supplementalWordList": "",
@@ -1091,7 +1091,7 @@
           "ig",
           "Big Dig Fig"
         ],
-        "groupId": "/i/",
+        "groupName": "/i/",
         "lessonDisplayAs": "ig",
         "wordList": "big,dig,fig,gig,jig,pig,rig,wig,zig",
         "supplementalWordList": "",
@@ -1165,7 +1165,7 @@
           "ag + ig",
           "Bag + Big"
         ],
-        "groupId": "/i/",
+        "groupName": "/i/",
         "lessonDisplayAs": "ag + ig",
         "wordList": "bag,hag,jag,lag,nag,rag,sag,tag,wag,big,dig,fig,gig,jig,pig,rig,wig,zig",
         "supplementalWordList": "",
@@ -1248,7 +1248,7 @@
           "it + ig + ip + in",
           "Bit + Big"
         ],
-        "groupId": "/i/",
+        "groupName": "/i/",
         "lessonDisplayAs": "it + ig + ip + in",
         "wordList": "big,dig,fig,gig,jig,pig,rig,wig,zig,bit,fit,hit,kit,pit,sit,wit,zit,dip,hip,lip,nip,rip,sip,tip,yip,zip,bin,din,fin,gin,kin,pin,sin,tin,win",
         "supplementalWordList": "",
@@ -1331,7 +1331,7 @@
           "/a/ + /i/",
           "Contrast /a/ + /i/"
         ],
-        "groupId": "/i/",
+        "groupName": "/i/",
         "lessonDisplayAs": "<sound>a</sound> + <sound>i</sound>",
         "wordList": "bid,did,fib,nib,hid,lid,mid,rid,him,Jim,Kim,rim,bin,din,fin,kin,min,pin,tin,vin,lip,nip,pip,rip,sip,tip,yip,zip,sis,his",
         "supplementalWordList": "fab,jab,nab,had,lad,mad,rad,pal,gal,Hal,ham,jam,Cam,ram,ban,Dan,fan,can,man,pan,tan,van,lap,nap,pap,rap,sap,tap,yap,zap,has,bad,dad",
@@ -1413,7 +1413,7 @@
           "b-d-p for /i/",
           "b-d-p for /a/ and /i/ words"
         ],
-        "groupId": "/i/",
+        "groupName": "/i/",
         "lessonDisplayAs": "b-d-p for <sound>i</sound>",
         "wordList": "bib,dib,did,bid,pap,bad,pad,dad,bad",
         "supplementalWordList": "",
@@ -1488,7 +1488,7 @@
           "/i/ review",
           "All Bit Words"
         ],
-        "groupId": "/i/",
+        "groupName": "/i/",
         "lessonDisplayAs": "<sound>i</sound> review",
         "wordList": "bin,din,dim,dip,fib,fin,fix,him,hip,his,Jim,kid,lid,lip,mid,mix,nip,pin,rib,rid,rim,rip,sin,sip,sis,six,Tim,tin,tip,wiz,yip,zip",
         "supplementalWordList": "bib,bid,big,bit,dib,did,dig,fig,fit,gig,hit,jig,kit,mitt,pit,pig,rig,sit,wit,wig,zig,zit,bat,bag,bad,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,jazz,lab,lag,lap,mad,man,map,mat,max,nab,nag,nap,pad,Pam,pan,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tan,tap,van,vat,wag,wax,yap,zap",
@@ -1558,7 +1558,7 @@
           "ot",
           "Cot Dot Jot"
         ],
-        "groupId": "/o/",
+        "groupName": "/o/",
         "lessonDisplayAs": "ot",
         "wordList": "bot,cot,dot,got,hot,jot,lot,not,pot,rot,tot",
         "supplementalWordList": "",
@@ -1632,7 +1632,7 @@
           "ot + og + op",
           "Cot + Cog + Cop"
         ],
-        "groupId": "/o/",
+        "groupName": "/o/",
         "lessonDisplayAs": "ot + og + op",
         "wordList": "bot,cot,dot,got,hot,jot,lot,not,pot,rot,tot,bog,cog,dog,fog,hog,jog,log,pog,bop,cop,hop,lop,mop,pop,sop,top",
         "supplementalWordList": "",
@@ -1706,7 +1706,7 @@
           "/a/ + /i/ + /o/",
           "Contrast /a/ + /i/ + /o/"
         ],
-        "groupId": "/o/",
+        "groupName": "/o/",
         "lessonDisplayAs": "<sound>a</sound> + <sound>i</sound> + <sound>o</sound>",
         "wordList": "Bob,boss,box,cod,con,Don,fob,fox,gob,job,lob,mob,mod,mom,nod,non,pox,rob,rod,Ron,sob,sod,Tom",
         "supplementalWordList": "pod,pop,bad,dab,dad,Dan,fab,fad,fax,gab,gas,had,ham,has,jab,jam,lab,mad,man,max,nab,pad,Pam,ram,ran,sad,Sam,tab,wax,bib,bid,bin,dib,did,dim,fib,fin,fix,him,his,Jim,kid,lid,mid,mix,pin,rib,rid,rim,sid,sin,sis,six,Tim,tin,wiz",
@@ -1778,7 +1778,7 @@
           "b-d-p for /o/",
           "b-d-p for Bat-Bit-Bot Words"
         ],
-        "groupId": "/o/",
+        "groupName": "/o/",
         "lessonDisplayAs": "b-d-p for <sound>o</sound>",
         "wordList": "bob,pod,dob,pop,bop,bib,dib,bid,did,dip,pap,dad,dab,bad,pad",
         "supplementalWordList": "",
@@ -1851,7 +1851,7 @@
           "/o/ review",
           "All Cot Words"
         ],
-        "groupId": "/o/",
+        "groupName": "/o/",
         "lessonDisplayAs": "<sound>o</sound> review",
         "wordList": "Bob,bog,bop,box,dog,dot,fob,fog,fop,fox,gob,got,hog,hop,hot,job,jog,jot,lob,log,lot,mob,mod,mom,mop,nod,non,not,pod,pop,pot,pox,rob,rod,Ron,rot,sob,sod,sop,tom,top,tot",
         "supplementalWordList": "bat,bag,bad,bass,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,lab,lag,lap,mad,man,map,mat,max,nab,nag,nap,pad,Pam,pan,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tam,tan,tap,van,vat,wag,wax,zap,bib,big,bid,bin,bit,dib,did,dig,din,dim,dip,fib,fin,fig,fill,fit,fix,fizz,gig,hid,him,hip,his,hip,jig,Jim,kid,kit,lid,lip,mid,mix,nip,nit,pill,pin,pit,pig,rib,rid,rig,rim,rip,sid,sin,sip,sis,sit,six,Tim,tin,tip,wig,wit,wiz,yip,zig,zip,zit,bib,big,bid,bin,bit,dib,did,dig,din,dim,dip,fib,fin,fig,fit,fix,gig,hid,him,hip,his,hit,jig,Jim,kid,kit,lid,lip,mid,mix,nip,nit,pin,pit,pig,rib,rid,rig,rim,rip,sid,sin,sip,sis,sit,six,Tim,tin,tip,wig,wit,wiz,yip,zig,zip,zit",
@@ -1932,7 +1932,7 @@
           "ut + ug + up + un",
           "But Nut Rut"
         ],
-        "groupId": "/u/",
+        "groupName": "/u/",
         "lessonDisplayAs": "ut + ug + up + un",
         "wordList": "but,cut,gut,hut,jut,nut,rut,tut,bug,dug,hug,jug,lug,mug,pug,rug,cup,pup,sup,yup",
         "supplementalWordList": "bat,cat,fat,hat,mat,pat,rat,sat,tat,bit,fit,hit,kit,pit,sit,wit,zit,bot,cot,dot,got,hot,jot,lot,not,pot,rot,tot,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag,big,dig,fig,gig,jig,pig,rig,wig,zig,bog,cog,dog,fog,hog,jog,log,pog",
@@ -2005,7 +2005,7 @@
           "/u/ + /a/",
           "Contrast /a/ and /u/"
         ],
-        "groupId": "/u/",
+        "groupName": "/u/",
         "lessonDisplayAs": "<sound>u</sound> + <sound>a</sound>",
         "wordList": "bud,bus,bun,fun,pun,run,sun,dub,dud,hum,mud,mum,nub,nun,pus,pup,rum,sud",
         "supplementalWordList": "bad,bass,ban,dab,dad,ham,fab,fan,fad,fax,gab,gap,gas,had,ham,has,jab,jag,jam,lab,lat,lap,mad,man,map,max,nab,nap,pad,Pam,pan,ram,ran,rap,sad,Sam,tab,tan,tap,van,wax,yap,zap",
@@ -2082,7 +2082,7 @@
           "/u/ + i/ + /o/",
           "Contrast /i/ and /u/"
         ],
-        "groupId": "/u/",
+        "groupName": "/u/",
         "lessonDisplayAs": "<sound>u</sound> + i/ + <sound>o</sound>",
         "wordList": "bum,nub,rub,sub,Gus,bud,hub,bus,cup,cud,cub,pub,bus,rub,sud,sum,tub,tux",
         "supplementalWordList": "din,dim,dip,fin,fix,hid,him,hip,his,kid,lid,lip,mid,nit,pin,rib,rim,sid,sin,sip,sis,six,yip,bop,box,fop,fox,hop,job,lob,mob,mod,mom,mop,nod,non,not,pod,pop,pox,rob,rod,Ron,sob,sod",
@@ -2155,7 +2155,7 @@
           "b-d-p for /u/",
           "b-d-p for Bat-Bit-Bot-But Words"
         ],
-        "groupId": "/u/",
+        "groupName": "/u/",
         "lessonDisplayAs": "b-d-p for <sound>u</sound>",
         "wordList": "bud,dub,dud,pub,pug,pup,Bob,pod,pop,bop,bib,dib,bid,did,dip,pap,dad,bab,dab,bad,pad",
         "supplementalWordList": "",
@@ -2233,7 +2233,7 @@
           "/u/ review",
           "All Bug Words"
         ],
-        "groupId": "/u/",
+        "groupName": "/u/",
         "lessonDisplayAs": "<sound>u</sound> review",
         "wordList": "bud,bug,bum,bun,but,bus,dub,dud,dug,fun,hub,hug,hut,hum,jug,jut,lug,mud,mug,mum,nub,nun,nut,pub,pug,pun,pup,pus,run,rug,rut,sub,sum,sun,sup,tub,tug,tut,tux",
         "supplementalWordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,cap,gap,lap,map,rap,sap,tap,zap,bag,hag,jag,lag,nag,rag,sag,tag,wag,bit,fit,hit,kit,mitt,pit,sit,wit,zit,big,dig,fig,jig,pig,rig,wig,zig,dip,hip,lip,nip,pip,rip,sip,zip,cot,dot,got,hot,jot,lot,not,pot,rot,tot,bog,cog,dog,fog,hog,jog,log,cop,fop,hop,lop,pop,top",
@@ -2302,7 +2302,7 @@
           "et + eg + en",
           "Bet Get Jet"
         ],
-        "groupId": "/e/",
+        "groupName": "/e/",
         "lessonDisplayAs": "et + eg + en",
         "wordList": "bet,get,jet,let,met,net,pet,set,vet,wet,beg,keg,leg,Meg,peg,Ben,den,fen,hen,Jen,Ken,men,ten,pen",
         "supplementalWordList": "bat,cat,fat,hat,mat,pat,rat,sat,tat,vat,bit,fit,hit,kit,lit,pit,sit,wit,zit,bot,cot,dot,got,hot,jot,lot,not,pot,rot,tot,but,cut,gut,hut,jut,nut,rut,tut,bug,dug,hug,jug,lug,mug,pug,rug,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag,big,dig,fig,gig,jig,pig,rig,wig,zig,bog,cog,dog,fog,hog,jog,log,pog",
@@ -2375,7 +2375,7 @@
           "/e/ review",
           "Contrast /o/ and /e/"
         ],
-        "groupId": "/e/",
+        "groupName": "/e/",
         "lessonDisplayAs": "<sound>e</sound> review",
         "wordList": "Deb,Ned,Ted,den,pep,gem,gel,hem,pen,yep,hex,pep,bed,web,wed,Wes,yes,bed,fed,led,med,red,gel,Mel,hem,yep,rep,hex,Jed,ref,rep,yes",
         "supplementalWordList": "bad,fad,lad,mad,pad,rad,tad,gal,ham,pan,pap,rap,yap,bass,lid,mid,rid,big,pig,him,bin,din,fin,kin,pin,tin,pip,rip,yip,lit,,pit,wit,sit,dob,nod,don,pop,Jon,pod,bed,bod,med,mod,red,rod,beg,bog,leg,log,peg,pog,bot,bet,got,get,jot,jet,lot,let,not,net,pot,pet,gum,hum,pun,yup,pup,fun,bud,bun,pug,dub,mud,bug,lug,mug,bus,but,gut,jut,nut",
@@ -2452,7 +2452,7 @@
           "b-d-p for /e/",
           "b-d-p Review"
         ],
-        "groupId": "/e/",
+        "groupName": "/e/",
         "lessonDisplayAs": "b-d-p for <sound>e</sound>",
         "wordList": "bud,bug,bod,bad,bid,bed,bop,bog,bab,dub,dud,dug,dad,dab,did,dip,Deb,pad,pap,pip,pub,pup,pep",
         "supplementalWordList": "",
@@ -2525,7 +2525,7 @@
           "Grand Review",
           "Grand Review"
         ],
-        "groupId": "/e/",
+        "groupName": "/e/",
         "lessonDisplayAs": "Grand Review",
         "wordList": "bed,Ben,bet,beg,den,fed,fen,gem,gel,hen,hex,jet,led,leg,let,Meg,men,met,Ned,net,pen,peg,pet,set,ten,vet,web,wed,wet",
         "supplementalWordList": "bud,bug,bum,bun,but,bus,dub,dud,dug,dun,fun,hub,hug,hut,hum,jug,jut,lug,mud,mug,mum,nub,nun,nut,pub,pug,pun,pup,pus,run,rug,rut,sub,sum,sun,sup,tub,tug,tut,tux,bib,big,bid,bin,bit,dib,did,dig,din,dim,dip,fib,fin,fig,fit,fix,gig,hid,him,hip,his,hit,jib,jig,Jim,jip,kid,kit,lid,lip,mid,mix,nip,nit,pin,pit,pig,rib,rid,rig,rim,rip,sid,sin,sip,sis,sit,six,Tim,tin,tip,wig,wit,wiz,yip,zig,zip,zit,bat,bag,bad,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,lab,lag,lap,mad,man,map,mat,max,nab,nag,nap,pad,Pam,pan,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tam,tan,tap,van,vat,wag,wax,zap,Bob,bog,bop,box,dog,dot,fob,fog,fop,fox,gob,got,hog,hop,hot,job,jog,jot,lob,log,lot,mob,mod,mom,mop,nod,non,not,pod,pop,pot,pox,rob,rod,Ron,rot,sob,sod,sop,tom,top,tot",
@@ -2586,7 +2586,7 @@
           "FLOSS",
           ""
         ],
-        "groupId": "CVC Wrap-up",
+        "groupName": "CVC Wrap-up",
         "lessonDisplayAs": "FLOSS",
         "wordList": "well,sell,tell,bell,buzz,mess,less,fuss,puff,ruff,riff,toss,loss,hiss,miss,fizz,fuzz,jazz,fill,hill,mill,will,doll,buzz,buff,bass,mass,pass,cuff,off,kiss,ball,fall,tall,wall",
         "supplementalWordList": "huff,Bess,Tess,gill,Jill,till,cuss,duff,Jill,Bill,Ross,diss,hall,mall,dill,sill,muff,bill,till,pill,lass,sass,fuss,moss,boss",
@@ -2665,7 +2665,7 @@
           "-ck",
           "ck Endings"
         ],
-        "groupId": "CVC Wrap-up",
+        "groupName": "CVC Wrap-up",
         "lessonDisplayAs": "-ck",
         "wordList": "back,lack,pack,rack,sack,tack,yack,deck,kick,pick,sick,tick,wick,dock,hock,jock,lock,mock,rock,sock,duck,luck,tuck",
         "supplementalWordList": "Zack,hack,hick,bock,guck,muck,Jack,yack,suck",
@@ -2738,7 +2738,7 @@
           "sh + th + ch",
           ""
         ],
-        "groupId": "CVC Wrap-up",
+        "groupName": "CVC Wrap-up",
         "lessonDisplayAs": "sh + th + ch",
         "wordList": "bash,cash,dash,dish,fish,hush,mash,rash,rush,wish,bath,math,path,with,moth,ash,mash,shut,shop,chip,chat,chin,then,this,that   ",
         "supplementalWordList": "lush,posh,hath,Beth,hash,sham,chug,Josh,mesh,mush,moth,lash,chop,shot,thin",
@@ -2824,7 +2824,7 @@
           "-s for cvc",
           ""
         ],
-        "groupId": "CVC Wrap-up",
+        "groupName": "CVC Wrap-up",
         "lessonDisplayAs": "-s for cvc",
         "wordList": "cats,rags,maps,fans,pans,rams,pigs,ribs,kids,hills,pins,wins,rims,sobs,logs,cops,pots,pets,nets,legs,rugs,hugs,pups,hums,begs,runs,bells,sells,socks,rocks,ducks,kicks,sacks",
         "supplementalWordList": "buds,bugs,huts,jugs,mugs,nuns,nuts,tubs,tugs,bibs,bids,bits,digs,dips,fins,fills,hips,hits,kits,lips,pills,pits,tips,wigs,zips,bats,bags,fads,fans,gaps,hams,hats,mats,pads,rams,rats,vans,dogs,dolls,dots,hogs,hops,jobs,mobs,mops,nods,rods,rots,tops,packs,racks,docks,locks,decks",
@@ -2910,7 +2910,7 @@
           "-y for cvc",
           ""
         ],
-        "groupId": "CVC Wrap-up",
+        "groupName": "CVC Wrap-up",
         "lessonDisplayAs": "-y for cvc",
         "wordList": "happy,batty,buggy,sunny,funny,muggy,puppy,kitty,bunny,runny,bitty,witty,giddy,hippy,muddy,buddy,nutty,silly,putty,messy,missy,fuzzy,fizzy,mommy,daddy,penny,foggy,belly",
         "supplementalWordList": "saggy,baggy,puffy,jetty,peppy,dizzy,tizzy",
@@ -2997,7 +2997,7 @@
           "-er and -est for cvc",
           ""
         ],
-        "groupId": "CVC Wrap-up",
+        "groupName": "CVC Wrap-up",
         "lessonDisplayAs": "-er and -est for cvc",
         "wordList": "bigger,biggest,fatter,fattest,hotter,hottest,sadder,saddest,dimmer,dimmest,wetter,wettest,seller,letter,better,robber,zipper,dinner,winner",
         "supplementalWordList": "",
@@ -3084,7 +3084,7 @@
           "-ed and -ing for cvc",
           ""
         ],
-        "groupId": "CVC Wrap-up",
+        "groupName": "CVC Wrap-up",
         "lessonDisplayAs": "-ed and -ing for cvc",
         "wordList": "passed,passing,ripped,ripping,missed,missing,nodded,nodding,tossed,tossing,popped,popping,hugged,hugging,hummed,humming,messed,messing,petted,petting,tapped,tapping,robbed,robbing",
         "supplementalWordList": "hemmed,hemming,fitted,fitting,lapped,lapping,gagged,gagging,potted,potting,puffed,puffing,fussed,fussing,bagged,bagging",
@@ -3170,7 +3170,7 @@
           "cvc syllables",
           ""
         ],
-        "groupId": "CVC Wrap-up",
+        "groupName": "CVC Wrap-up",
         "lessonDisplayAs": "cvc syllables",
         "wordList": "sunset,kitten,hidden,bedbug,basket,picnic,helmet,mitten,cactus,napkin,pencil,tennis,magnet,cannot,fabric,mascot,velvet,submit,muffin",
         "supplementalWordList": "combat,goblet,musket,catnip,hubcap,mitten,pigpen,happen,nutmeg",
@@ -3250,7 +3250,7 @@
           "a_e",
           "a_e spelling of /ay/ spinner"
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "a_e",
         "wordList": "hate,mate,wade,tame,tape,fade,made,pane,rage,vane,bake,bale,cage,cake,came,daze,date,fade,fame,fate,game,gate,case,gape",
         "supplementalWordList": "haze,lake,late,male,mane,maze,page,pave,rake,rave,safe,sale,same,save,bane,kale,dame,gale,jade,rate,cane",
@@ -3307,7 +3307,7 @@
           "a_e + /a/",
           "Contrast a_e /ay/ and a /ah/"
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "a_e + <sound>a</sound>",
         "wordList": "haze,lake,late,male,mane,maze,page,pave,rake,rave,safe,sale,same,save,bane,kale,dame,gale,jade,rate,cane,face,race,pace,lace",
         "supplementalWordList": "hate,mate,wade,tame,tape,fade,made,pane,rage,vane,bake,bale,bane,cage,cake,came,daze,date,fade,fame,fate,game,gate,rat,bag,bad,bass,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,jazz,lab,lag,lap,mad,man,map,mass,mat,max,nab,nag,nap,pad,Pam,pan,pass,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tam,tan,tap,van,vat,wag,wax,zap",
@@ -3369,7 +3369,7 @@
           "i_e",
           "i_e spelling of /igh/"
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "i_e",
         "wordList": "mine,mite,nice,nine,pike,pine,pipe,rice,ride,ripe,rise,side,site,size,tide,tile,time,tire,wide,wife,wine,wipe,wire,wise,bide,bile,dire,jive",
         "supplementalWordList": "mime,mire,rile,vile,vibe,vice,dike,hive,Mike,bike,bite,dice,dime,dine,dive,file,fine,fire,five,hide,hike,hire,kite,lice,life,lime,line,mice,mile",
@@ -3432,7 +3432,7 @@
           "i_e + /i/",
           "Contrast i_e /igh/ and i /ih/"
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "i_e + <sound>i</sound>",
         "wordList": "mime,mire,rile,vile,vibe,vice,dike,hive,Mike,bide,bike,bite,dice,dime,dine,dive,file,fine,fire,five,hide,hike,hire,kite,lice,life,lime,line,mice,mile,jive",
         "supplementalWordList": "mine,mite,nice,nine,pike,pine,pipe,rice,ride,ripe,rise,side,site,size,tide,tile,time,tire,wide,wife,wine,wipe,wire,wise,bile,dire,bib,big,bid,Bill,bin,bit,dib,did,dig,dill,din,dim,diss,dip,fib,fin,fig,fill,fit,fix,fizz,gig,gill,hid,hill,him,hip,his,hiss,hit,jib,jig,Jim,jip,kid,kit,kiss,lid,lip,mid,miff,miss,mitt,mix,nip,nit,pill,pin,pit,pig,rib,rid,riff,rig,rim,rip,sid,sill,sin,sip,sis,sit,six,tiff,Tim,till,tin,tip,wig,will,wit,wiz,yip,zig,zip,zit",
@@ -3493,7 +3493,7 @@
           "o_e",
           "o_e spelling of /oh/"
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "o_e",
         "wordList": "bone,code,cone,come,dope,dose,doze,hole,home,hope,hose,joke,lobe,lope,mode,mole,mope,node,nope,nose,note,poke",
         "supplementalWordList": "pole,pose,robe,rode,role,rope,rose,tone,tote,vote,woke,yoke,zone,dole,dote,hone,hove,mote,pope,rote,rove,vole,wove,sole,coke,cove",
@@ -3552,7 +3552,7 @@
           "o_e + /o/",
           "Contrast o_e /h/ and o /aw/"
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "o_e + <sound>o</sound>",
         "wordList": "pole,pope,pose,robe,rode,role,rope,rose,rote,rove,sole,sore,tone,tote,vole,vote,woke,wove,yoke,zone",
         "supplementalWordList": "bone,code,coke,cone,core,cove,dole,come,dope,dose,dote,doze,fore,gore,hole,home,hone,hope,hose,hove,joke,lobe,lope,lore,mode,mole,mope,more,mote,node,nope,nose,note,poke,Bob,bog,boss,bop,box,dog,doff,doll,don,dot,fob,fog,fop,fox,gob,God,got,hog,hop,hot,job,jog,jot,lob,log,lot,loss,mob,mod,mom,moss,mop,nod,non,not,pod,pop,pot,pox,rob,rod,Ron,rot,sob,sod,sop,tom,toss,top,tot",
@@ -3613,7 +3613,7 @@
           "u_e",
           "u_e spelling of /ue/"
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "u_e",
         "wordList": "cube,cute,dude,duke,dune,dupe,fume,fuse,huge,jute,lube,luge,lute,mule,muse,mute,nuke,puke,rude,rule,tube,tune",
         "supplementalWordList": "",
@@ -3671,7 +3671,7 @@
           "u_e + /u/",
           "Contrast u_e /ue/ and u /uh/"
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "u_e + <sound>u</sound>",
         "wordList": "nuke,puke,rude,rule,tube,tune,cube,cute,dude,duke,dune,dupe,fume,fuse,huge,jute,lube,luge,lute,mule,muse,mute",
         "supplementalWordList": "bud,buff,bug,bum,bun,but,butt,bus,buzz,dub,dud,duff,dug,dun,fun,fuzz,hub,huff,hull,hug,hut,hum,jug,jut,lug,mud,muff,mug,mum,muss,nub,nun,nut,pub,puff,pug,pun,putt,pup,pus,run,ruff,rug,rut,sub,sum,sun,sup,tub,tug,tut,tux",
@@ -3734,7 +3734,7 @@
           "cvc + ?_e syllables",
           ""
         ],
-        "groupId": "Simple Magic e",
+        "groupName": "Simple Magic e",
         "lessonDisplayAs": "cvc + ?_e syllables",
         "wordList": "reptile,mistake,cupcake,pancake,mandate,combine,bonfire,sunshine,divide,confuse,costume,tadpole,vampire,sunrise,nickname,pollute",
         "supplementalWordList": "inhale,unmade,inline,inside,escape,umpire,alone,remote,arrive,immune,divide,update",
@@ -3820,7 +3820,7 @@
           "blend warmup",
           "Prefix Blend Warmup"
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "blend warmup",
         "wordList": "bl,cl,fl,gl,pl,sc,sl,sm,sn,sp,st,sw,tw,spl",
         "supplementalWordList": "",
@@ -3873,7 +3873,7 @@
           "prefix blends",
           "Prefix Clusters bl, cl, fl, ..."
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "prefix blends",
         "wordList": "black,clap,flax,flat,glass,plan,stab,snap,span,click,flip,glad,quit,quiz,skin,skip,stick,spit,spill,swim,twin,fled,sled,stem,blog,flop,slot,smog,spot,stop,club,plus,stub,club,still",
         "supplementalWordList": "clam,clan,flab,flap,glam,scab,slab,slam,slap,swam,snag,spat,scat,blip,clip,flip,flit,glib,snip,slit,slip,slim,spin,split,swig,bled,fled,Greg,shed,glen,pled,swell,blob,blot,clog,clot,flog,plod,plop,plot,slog,smog,snob,snot,plug,plum,snug,smug,slum,scum,stud,snub",
@@ -3942,7 +3942,7 @@
           "suffix blends",
           "Suffix Clusters"
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "suffix blends",
         "wordList": "band,camp,fact,gasp,half,hand,lamp,land,mask,ramp,raft,task,belt,bent,desk,felt,help,melt,rent,sent,text,went,last,best,lost,fast,test,fist,just,disk,film,gift,milk,wind,bomb,fund,hulk,hunt,jump,numb,punt,tusk",
         "supplementalWordList": "bump,dump,damp,cask,calf,daft,gash,haft,jamb,lamb,lank,pant,pact,rasp,tact,belt,bend,deft,dent,fend,heft,kelp,kept,lent,meld,mend,pent,tend,vent,welk,wept,cast,mast,past,vast,jest,zest,gist,bust,dust,nest,pest,rest,west,gust,wist,bilk,dint,gilt,kiln,limb,lint,lisp,ritz,sift,tilt,vint,wimp,wisp,dolf,fond,font,bulk,bunt,cult,cusp,duct,dumb,gulf,muck,musk,puck,pulp,lump,rump,sump",
@@ -4016,7 +4016,7 @@
           "suffix blends + s",
           "Suffix Clusters with s"
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "suffix blends + s",
         "wordList": "bands,camps,facts,hands,lambs,masks,pants,tasks,bends,dents,desks,helps,melts,rents,vents,films,gifts,gives,gasps,tilts,docks,socks,bumps,dusts,gusts,hunts,jumps,punts,tusks,casts",
         "supplementalWordList": "casks,hacks,lamps,lands,masts,pacts,ramps,rafts,rasps,belts,debts,jests,melds,mends,nests,pests,rests,tests,texts,disks,fists,kilns,limbs,lisps,sifts,wimps,winds,wisps,bombs,fonts,hocks,jocks,mocks,romps,bucks,bulks,bunts,busts,busks,cults,ducks,ducts,dumps,funds,gulfs,hulks,humps,lucks,lumps,mucks,musks,numbs,pulps,rumps",
@@ -4085,7 +4085,7 @@
           "-ng",
           ""
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "-ng",
         "wordList": "bang,bing,bong,ding,dung,fang,gang,gong,hang,hung,king,long,mung,ping,pong,rang,ring,rung,sang,sing,song,sung,wing,zing",
         "supplementalWordList": "",
@@ -4171,7 +4171,7 @@
           "-nk",
           ""
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "-nk",
         "wordList": "bank,bonk,bunk,dank,dunk,fink,funk,hank,junk,link,mink,monk,pink,punk,rank,rink,sank,sink,sunk,tank,yank,ink",
         "supplementalWordList": "",
@@ -4257,7 +4257,7 @@
           "-ngs + -nks",
           "Suffix Digraphs ngs, nks"
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "-ngs + -nks",
         "wordList": "bangs,dings,fangs,gangs,hangs,kings,rings,sings,songs,wings,banks,bonks,bunks,dunks,junks,links,monks,punks,ranks,rinks,sinks,tanks",
         "supplementalWordList": "yanks,bongs,pings,rungs,finks,minks",
@@ -4330,7 +4330,7 @@
           "r-controlled prefixes",
           "r-Controlled prefixes br, cr, fr, ..."
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "r-controlled prefixes",
         "wordList": "brag,crab,crack,grab,track,trap,drip,strip,trip,press,shred,dress,crop,drop,broth,brush,drum,truck,trust,scrub,brat,bran,cram,drug,drag,drab,drat,gram,sprat,scrim,scruff,track,trash,crash",
         "supplementalWordList": "tram,brim,crib,frill,grip,grim,grin,prim,prick,trim,bred,fret,prep,trek,frock,grog,prod,prom,trot,crud,crush,grub,shrug ",
@@ -4391,7 +4391,7 @@
         "visible": true
       },
       "digraph blends": {
-        "lessonId": "",
+        "lessonId": "digraph blends",
         "lessonName": "digraph blends",
         "lessonKey": "Blending.digraph blends",
         "script": "Blending",
@@ -4399,7 +4399,7 @@
           "digraph blends",
           "Digraphs in Prefix"
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "digraph blends",
         "wordList": "quit,quick,quack,quill,quip,quad,smith,squad,that,then,thick,thrush,whack,whiz,chin,check,chop,chest,chat,chill,chip,chap,chick,chock,chuck,thin,thump,them,throb,thrill,shush,shrub,shrill",
         "supplementalWordList": "with,whim,whip,shrug,this,thin,with,shod,shot,shop,sham,shut,ship,shin,chum",
@@ -4468,7 +4468,7 @@
           "prefix + suffix blends",
           "Prefix and suffix clusters"
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "prefix + suffix blends",
         "wordList": "blast,clasp,flash,grand,plant,snack,stamp,stand,splash,blunt,clump,plump,stump,stung,flint,slick,stick,splint,click,clock,stock,slept,spent,swept,tramp,crept,trust,brunch,trump,crumb,shrimp,quilt",
         "supplementalWordList": "grunt,bland,clash,gland,scalp,scamp,smack,stash,swath,blush,pluck,plumb,plush,slump,slush,stuck,blimp,flick,glint,glitz,block,flock,smock,cleft,smelt,speck,blend,tramp,sprint,crept,trend,frost,prompt,trust,trump,brunch,crumb,spritz,crest,Brent,front,frond,grunt,sloth,slosh,flush,crush,blush,plush",
@@ -4537,7 +4537,7 @@
           "r-controlled blends",
           ""
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "r-controlled blends",
         "wordList": "car,for,fir,her,dark,fork,word,fur,work,north,herd,firm,form,torn,darn,cart,part,harp,burn,hurt,turn,fern,star,spark,shark,stir,shirt,short,birth,dirt,girl,first,start,bird,march,card,church,third,skirt,swirl",
         "supplementalWordList": "bar,far,char,jar,mar,par,tar,war,nor,hark,lark,cork,dork,pork,lord,ford,forth,worth,perm,dorm,norm,mart,tart,carp,stark,stork,chart,hard,barn,arm,dart,art,worm,whirl,tarp,born,worn,bark,mark,park,per,yarn",
@@ -4619,7 +4619,7 @@
           "kn + gn + wr",
           "Silent Prefix Clusters kn-, gn-, wr- ..."
         ],
-        "groupId": "Consonant Clusters",
+        "groupName": "Consonant Clusters",
         "lessonDisplayAs": "kn + gn + wr",
         "wordList": "knot,knit,knack,knave,knee,knew,knight,knob,knock,know,gnat,gnaw,gnash,gnarl,gnome,gnu,wrack,wrap,wring,writ,wretch,wren,wrest,wrung",
         "supplementalWordList": "",
@@ -4680,7 +4680,7 @@
           "a_e harder",
           "a_e spelling of /ay/ harder"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "a_e harder",
         "wordList": "brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape,blade,blame,brake,shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale",
         "supplementalWordList": "rate,cane,bane,hate,mate,wade,tame,tape,fade,made,pane,rage,vane,bake,bale,bane,cage,cake,came,dame,daze,date,fade,fame,fate,gale,game,gate,haze,jade,kale,lake,late,male,mane,maze,page,pave,rake,rave,safe,sale,same,save",
@@ -4737,7 +4737,7 @@
           "a_e review",
           "a_e spelling of /ay/ mixed"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "a_e review",
         "wordList": "shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale,blade,blame,brake,brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape",
         "supplementalWordList": "rate,cane,bane,hate,mate,wade,tame,tape,fade,made,pane,rage,vane,bake,bale,bane,cage,cake,came,dame,daze,date,fade,fame,fate,gale,game,gate,haze,jade,kale,lake,late,male,mane,maze,page,pave,rake,rave,safe,sale,same,save,slat,shad,sham,slat,snack,stag,stat,glad,plan,scrap,brat,plat,trap,pram,gran,bat,bag,bad,bass,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,jazz,lab,lag,lap,mad,man,map,mass,mat,max,nab,nag,nap,pad,Pam,pan,pass,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tam,tan,tap,van,vat,wag,wax,zap",
@@ -4790,7 +4790,7 @@
           "i_e harder",
           "Contrast a_e and i_e"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "i_e harder",
         "wordList": "bribe,bride,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,spice,spike,spine,spire,spite,stile,tribe,trike",
         "supplementalWordList": "twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,brine,chide,smite,snide,snipe,tripe,trite,bide,bike,bile,bite,cite,dice,dike,dime,dine,dire,dive,file,fine,fire,five,hide,hike,hire,hive,jive,kite,lice,life,lime,line,mice,Mike,mile,mime,mine,mire,mite,nice,nine,pike,pine,pipe,rice,ride,rile,ripe,rise,side,site,size,tide,tile,time,tire,vibe,vice,vile,wide,wife,wine,wipe,wire,wise",
@@ -4848,7 +4848,7 @@
           "i_e mixed",
           "a_e spelling of /ay/ mixed"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "i_e mixed",
         "wordList": "twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,brine,chide,smite,snide,snipe,tripe,trite  ",
         "supplementalWordList": "bribe,bride,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,spice,spike,spine,spire,spite,stile,tribe,trike,snip,spit,spin,still,trick,trip,twin,win,wit,strip,big,bid,bin,bitdid,dig,dill,dim,diss,dip,fib,fin,fig,fill,fit,fix,fizz,gig,hid,hill,him,hip,his,hiss,hit,jig,kid,kit,kiss,lid,lip,mid,miff,miss,mitt,mix,nip,nit,pill,pin,pit,pig,rib,rid,riff,rig,rim,rip,sid,sill,sin,sip,sis,sit,six,till,tin,tip,wig,will,wit,wiz,yip,zig,zip,zit",
@@ -4901,7 +4901,7 @@
           "i_e review",
           "Contrast a, a_e and i, i_e"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "i_e review",
         "wordList": "bribe,bride,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,spice,spike,spine,spire,spite,stile,tribe,trike,twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,brine,chide,smite,snide,snipe,tripe,trite",
         "supplementalWordList": "shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale,blade,blame,brake,brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape",
@@ -4960,7 +4960,7 @@
           "o_e harder",
           "o_e spelling of /oh/ harder"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "o_e harder",
         "wordList": "broke,choke,chose,clone,close,clove,crone,drone,drove,froze,glove,phone,probe,prone,scone,scope,shone,slope,smoke,stole,stone,shole,wrote,chrome,throne,stroke,strode,strobe",
         "supplementalWordList": "bone,code,coke,cone,cove,dole,come,dope,dose,dote,doze,hole,home,hone,hope,hose,hove,joke,lobe,lope,mode,mole,mope,mote,node,nope,nose,note,poke,pole,pope,pose,robe,rode,role,rope,rose,rote,rove,sole,sore,tone,tote,vole,vote,woke,wove,yoke,zone",
@@ -5017,7 +5017,7 @@
           "o_e mixed",
           "o_e spelling of /oh/ mixed"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "o_e mixed",
         "wordList": "broke,choke,chose,clone,close,clove,crone,drone,drove,froze,glove,phone,probe,prone,scone,scope,shone,slope,smoke,stole,stone,shole,wrote,chrome,throne,stroke,strode,strobe",
         "supplementalWordList": "slop,clop,frog,clog,plot,slot,prom,clot,blog,trot,boss,bop,box,dog,doff,doll,don,dot,fob,fog,fop,fox,gob,God,got,hog,hop,hot,job,jog,jot,lob,log,lot,loss,mob,mod,mom,moss,mop,nod,non,not,pod,pop,pot,pox,rob,rod,Ron,rot,sob,sod,sop,tom,toss,top,tot",
@@ -5072,7 +5072,7 @@
           "o_e review",
           "Contrast a, a_e, i, i_e, and o, o_e"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "o_e review",
         "wordList": "broke,choke,chose,clone,close,clove,crone,drone,drove,froze,glove,phone,probe,prone,scone,scope,shone,slope,smoke,stole,stone,shole,wrote,chrome,throne,stroke,strode,strobe",
         "supplementalWordList": "brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape,blade,blame,brake,shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale,broke,choke,chose,clone,close,clove,crone,drone,drove,froze,glove,phone,probe,prone,scone,scope,shone,slope,smoke,stole,stone,shole,wrote,chrome,throne,stroke,strode,strobe,bribe,bride,brine,chide,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,smite,snide,snipe,spice,spike,spine,spire,spite,stile,tribe,trike,tripe,trite,twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive",
@@ -5134,7 +5134,7 @@
           "u_e mixed",
           "Contrast i_e, i, u_e, and u"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "u_e mixed",
         "wordList": "brute,chute,crude,fluke,flute,plume,prude,prune,truce,cube,cure,cute,dude,duke,dune,dupe,fume,fuse,huge,jute,lube,luge,lure,lute,mule,muse,mute,nuke,puke,pure,rude,rule,sure,tube,tune",
         "supplementalWordList": "shut,plum,truck,cub,cut,duck,bud,buff,bug,bum,bun,but,butt,bus,buzz,dub,dud,duff,dug,dun,fun,fuzz,hub,huff,hull,hug,hut,hum,jug,jut,lug,mud,muff,mug,mum,muss,nub,nun,nut,pub,puff,pug,pun,putt,pup,pus,run,ruff,rug,rut,sub,sum,sun,sup,tub,tug,tut,tux",
@@ -5196,7 +5196,7 @@
           "u_e review",
           "Contrast i_e and u_e"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "u_e review",
         "wordList": "brute,chute,crude,fluke,flute,plume,prude,prune,truce,cube,cure,cute,dude,duke,dune,dupe,fume,fuse,huge,jute,lube,luge,lure,lute,mule,muse,mute,nuke,puke,pure,rude,rule,tube,tune",
         "supplementalWordList": "bribe,bride,brine,chide,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,smite,snide,snipe,spice,spike,spine,spire,spite,stile,tribe,trike,tripe,trite,twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,broke,choke,chore,chose,clone,close,clove,crone,drone,drove,froze,glove,grope,phone,probe,prone,scone,scope,score,shone,shore,slope,smoke,stole,stone,store,swore,shole,wrote,chrome,throne,stroke,strode,strobe,blade,blame,brake,brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape,shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale",
@@ -5257,7 +5257,7 @@
           "e_e + /eh/",
           "Contrast e_e /ee/ and e /eh/"
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "e_e + <sound>eh</sound>",
         "wordList": "cede,gene,mete,grebe,plebe,scene,swede,theme,these,scheme",
         "supplementalWordList": "bed,bell,Ben,Bess,bet,beg,den,fed,fen,fez,gem,gel,hen,hex,jet,led,leg,let,less,Meg,men,met,mess,Ned,net,pen,peg,pet,set,sell,ten,Tess,tell,vet,web,wed,well,wet,bribe,bride,brine,chide,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,smite,snide,snipe,spice,spike,spine,spire,spite,stile,tribe,trike,tripe,trite,twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,broke,choke,chore,chose,clone,close,clove,crone,drone,drove,froze,glove,grope,phone,probe,prone,scone,scope,score,shone,shore,slope,smoke,stole,stone,store,swore,shole,wrote,chrome,throne,stroke,strode,strobe,blade,blame,brake,brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape,shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale",
@@ -5312,7 +5312,7 @@
         "visible": true
       },
       "r-controlled ?_e": {
-        "lessonId": "",
+        "lessonId": "r-controlled ?_e",
         "lessonName": "r-controlled ?_e",
         "lessonKey": "Blending.r-controlled ?_e",
         "script": "Blending",
@@ -5320,7 +5320,7 @@
           "r-controlled ?_e",
           ""
         ],
-        "groupId": "Harder Magic e",
+        "groupName": "Harder Magic e",
         "lessonDisplayAs": "r-controlled ?_e",
         "wordList": "bare,care,dare,fare,hare,mare,rare,core,more,pore,sore,tore,wore,fire,hire,tire,wire,here,were,cure,pure,sure,store,shore,score,chore,snore,spire,share,scare,flare,sware,stare,glare,there,where",
         "supplementalWordList": "bore,gore,lore,fore,yore,dire,mire,mere,swore,spore,snare,spare,shire,lure",
@@ -5406,7 +5406,7 @@
           "dge + nge",
           "Digraphs (dge,nge)"
         ],
-        "groupId": "Blend Wrap-up",
+        "groupName": "Blend Wrap-up",
         "lessonDisplayAs": "dge + nge",
         "wordList": "badge,budge,bridge,binge,dodge,drudge,dredge,edge,fridge,fudge,fringe,grudge,hedge,hinge,judge,lodge,ledge,lunge,Midge,pudge,pledge,plunge,sludge,range,trudge,wedge",
         "supplementalWordList": "",
@@ -5473,7 +5473,7 @@
           "nce + nse",
           "Digraphs nce"
         ],
-        "groupId": "Blend Wrap-up",
+        "groupName": "Blend Wrap-up",
         "lessonDisplayAs": "nce + nse",
         "wordList": "dance,dunce,fence,hence,mince,pence,since,vince,wince,chance,glance,prance,trance,stance,quince,prince,sense,tense,dense,sconce,rinse",
         "supplementalWordList": "",
@@ -5538,7 +5538,7 @@
           "-er and -est for blends",
           ""
         ],
-        "groupId": "Blend Wrap-up",
+        "groupName": "Blend Wrap-up",
         "lessonDisplayAs": "-er and -est for blends",
         "wordList": "long,longer,longest,short,shorter,shortest,thick,thicker,thickest,thin,thinner,thinnest,brave,braver,bravest,close,closer,closest,rude,ruder,rudest,tame,tamer,tamest,cute,cuter,cutest,safe,safer,safest,",
         "supplementalWordList": "",
@@ -5624,7 +5624,7 @@
           "-ed and -ing for blends",
           ""
         ],
-        "groupId": "Blend Wrap-up",
+        "groupName": "Blend Wrap-up",
         "lessonDisplayAs": "-ed and -ing for blends",
         "wordList": "camped,camping,landed,landing,jumped,jumping,hunted,hunting,fished,fishing,helped,helping,rented,renting,texted,texting,lasted,lasting,tested,testing,filmed,filming,dusted,dusting,nested,nesting,brushed,brushing",
         "supplementalWordList": "banked,banking,ranked,ranking,gasped,gasping,masked,masking,rafted,rafting,milked,milking,funded,funding,rested,resting,busted,busting",
@@ -5708,7 +5708,7 @@
           "-ed + -ing for magic e",
           "Suffix -ed and -ing"
         ],
-        "groupId": "Blend Wrap-up",
+        "groupName": "Blend Wrap-up",
         "lessonDisplayAs": "-ed + -ing for magic e",
         "wordList": "baked,baking,cared,caring,chased,chasing,dared,daring,dined,dining,hiked,hiking,hoped,hoping,lived,living,loved,loving,raced,racing,raged,raging,traded,trading,used,using,shared,sharing",
         "supplementalWordList": "sensed,sensing,blamed,blaming,tubed,tubing,closed,closing,smiled,smiling,biked,biking,placed,placing,joked,joking",
@@ -5792,7 +5792,7 @@
           "Contractions",
           "Contractions"
         ],
-        "groupId": "Blend Wrap-up",
+        "groupName": "Blend Wrap-up",
         "lessonDisplayAs": "Contractions",
         "wordList": "can't,aren't,don't,doesn't,didn't,haven't,hasn't,isn't,couldn't,wasn't,why'd,I'll,you'll,he'll,she'll,I'd,you'd,here's,how's,it's,that's,there's,what's,when's,where's,why's,who's,I've,you've,I'm,you're,he's,she's,we're,they're,let's,won't",
         "supplementalWordList": "shouldn't,wouldn't,we've,they've,could've,how'd,they'll,who'll,it'll,would've,we'll,should've,weren't,who'd,he'd,she'd,they'd",
@@ -5856,7 +5856,7 @@
           "/oh/",
           "oh"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>oh</sound>",
         "wordList": "most,host,post,toast,bow,low,slow,snow,toe,foe,Joe,doe,know,row,sow,tow,blown,flown,moat,cloak,coach,roach,roam,throat,coat,float,bloat,boast,coast,hoax,goat,loan,loaf,boat,road,roast,foam,soap,mow",
         "supplementalWordList": "",
@@ -5911,7 +5911,7 @@
           "/ow/",
           "ow"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>ow</sound>",
         "wordList": "howl,cow,how,now,wow,chow,fowl,crown,down,town,crowd,owl,jowl,prowl,town,out,loud,cloud,proud,round,grout,foul,brown,found,loud,count,pout,shout",
         "supplementalWordList": "",
@@ -5966,7 +5966,7 @@
           "/oy/",
           "oy"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>oy</sound>",
         "wordList": "boy,toy,soy,coy,joy,ploy,royal,alloy,loyal,enjoy,oil,boil,coil,foil,broil,foist,void,oink,roil,soil,toil,point,joint",
         "supplementalWordList": "",
@@ -6024,7 +6024,7 @@
           "Long /oo/",
           "Long oo"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "Long <sound>oo</sound>",
         "wordList": "roof,tooth,fool,room,shoot,zoo,blue,glue,clue,screw,crew,drew,brew,juice,cruise,suit,lose,move,whose,Tuesday,flute,prune,chute,cute,flew,stew,broom,cool,bruise,moon",
         "supplementalWordList": "grew,noon,pool,scoop,loop,smooth,through,truth,soup,do,group,two,you,who,true,school,loose,food,rooster",
@@ -6080,7 +6080,7 @@
           "Short /oo/",
           "Short oo"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "Short <sound>oo</sound>",
         "wordList": "book,put,could,would,should,cook,brook,shook,hook,good,hood,cookie,hoof,stood,took,look,wood,foot,woof,soot,nook,rook,soot,bush,push,bully,bull",
         "supplementalWordList": "",
@@ -6136,7 +6136,7 @@
           "/aw/",
           "aw"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>aw</sound>",
         "wordList": "dog,bop,brawl,crawl,claw,draw,fawn,gnaw,jaw,law,lawn,paw,pawn,saw,stalk,walk,thaw,yawn,ball,call,wall,small,sauce,August,stalk,talk,walk,chalk,fault,salt,also,almost,always,caught,ought,broad,awe",
         "supplementalWordList": "",
@@ -6192,7 +6192,7 @@
           "/ay/",
           "ay"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>ay</sound>",
         "wordList": "day,say,clay,play,spray,tray,pray,way,mail,tail,brain,paid,chain,rain,train,paint,stain,wait,gain,drain,sail,sprain,trail,plain,quail,eight,sleigh,neighbor,weight,angel,apron,basic,fatal,data,table,paper,break,steak,great,prey,they,grey,straight,veil,rein,fail",
         "supplementalWordList": "",
@@ -6249,7 +6249,7 @@
           "/air/",
           "air"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>air</sound>",
         "wordList": "care,bare,fare,fair,flair,lair,pair,hair,air,chair,stair,dairy,fairy,impair,repair,where,there,tear,bear,pear,wear,swear,their",
         "supplementalWordList": "",
@@ -6305,7 +6305,7 @@
           "/ee/ (ee, -e)",
           "ee (ee, -e)"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>ee</sound> (ee, -e)",
         "wordList": "green,seed,queen,free,tree,eel,feet,bee,beet,beef,feel,peel,peek,sheep,creek,cheek,deep,feed,meet,keep,sleep,sheet,street,sweet,teeth,teen,three,wheel,week,bleed,me,she,we,be,he,freed",
         "supplementalWordList": "",
@@ -6361,7 +6361,7 @@
           "/ee/ (ea)",
           "ee (ea)"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>ee</sound> (ea)",
         "wordList": "least,treat,eat,mean,scream,weak,beach,feast,meat,flea,neat,seal,cheat,heal,peach,seat,clean,jeans,speak,cream,leaf,reach,teach,dream,lean,read,each,reach",
         "supplementalWordList": "",
@@ -6418,7 +6418,7 @@
           "/eh/ (ea)",
           "eh (ea)"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>eh</sound> (ea)",
         "wordList": "bread,head,spread,health,stead,heaven,stealth,breath,instead,sweat,dead,lead,thread,leapt,threat,tread,deaf,meant,wealth,death,read,weapon",
         "supplementalWordList": "",
@@ -6475,7 +6475,7 @@
           "/ee/ (y, ey, ie)",
           "ee (y, ey, ie)"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>ee</sound> (y, ey, ie)",
         "wordList": "baby,study,rusty,lady,candy,skinny,lucky,study,hungry,party,ugly,easy,windy,creepy,key,monkey,chimney,hockey,honey,valley,donkey,money,jockey,cookie,baggie,genie",
         "supplementalWordList": "",
@@ -6535,7 +6535,7 @@
           "/ee/ (ie, ei)",
           "ee (ie, ei)"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>ee</sound> (ie, ei)",
         "wordList": "believe,belief,chief,frieze,piece,shield,brie,field,grief,siege,brief,fiend,niece,thief,ceiling,protein,receipt,receive,either,seize,relief",
         "supplementalWordList": "",
@@ -6598,7 +6598,7 @@
           "/igh/",
           "igh"
         ],
-        "groupId": "Phonics",
+        "groupName": "Phonics",
         "lessonDisplayAs": "<sound>igh</sound>",
         "wordList": "bribe,life,stripe,shine,write,hide,kite,crime,quite,high,sigh,bright,fight,flight,might,delight,night,tight,right,by,my,cry,dry,fly,spy,why,deny,reply,July,apply,cycle,rhyme,python,die,lie,pie,fries,replies,spies",
         "supplementalWordList": "",
