@@ -48,7 +48,7 @@ EOT;
     }
 
     /**
-     * Decodes a one-time password and returns the associated username
+     * Decodes a one-time password and returns the associated username. returns null if not found.
      * @param string $otp
      * @return string
      */

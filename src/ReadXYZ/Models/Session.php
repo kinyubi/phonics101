@@ -4,7 +4,10 @@
 namespace App\ReadXYZ\Models;
 
 
+use App\ReadXYZ\Data\LessonsData;
 use App\ReadXYZ\Data\StudentData;
+use App\ReadXYZ\Data\StudentsData;
+use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Data\UserData;
 use App\ReadXYZ\Helpers\Util;
 use LogicException;
@@ -25,18 +28,24 @@ class Session
     // $_SESSION[self::CURR_USERID] contains the current userId or studentId.
     // If it's a userId it means we don't have a student selected yet.
     const CURR_ID = 'currId';
-    const TEST_ID = 'S_TEST';
+    const TEST_ID = 9999999999;
 
     const VALIDITY_WINDOW = 60 * 60 * 24; // one day in seconds
 
     // $_SESSION[$_SESSION[self::CURR_STUDENT] contains the session object
-    private string $userId = '';
-    private string $studentId = '';
-    private string $studentName = '';
-    private string $currentLesson = '';
-    private int    $lastValidated = 0;
-    private bool   $isValid = false;
+    private int     $userId = 0;
+    private int     $studentId = 0;
+    private string  $currentLessonCode = '';
+    private string  $studentName = '';
+    private string  $currentLesson = '';
+    private int     $lastValidated = 0;
+    private bool    $isValid = false;
 
+    /**
+     * Session constructor.
+     * Normal flow - we make sure $_SESSION variables have been exposed with a start_session.
+     * We check for the existence of $_SESSION['currId'].
+     */
     public function __construct()
     {
         $underTest = self::testingInProgress();
@@ -51,79 +60,112 @@ class Session
             // If we have an active session we retrieve it, otherwise
             self::sessionContinue();
             $sessId = $_SESSION[self::CURR_ID] ?? '';
-            if (!Util::startsWith($sessId, 'S')) {
+
+            if (empty($sessId)) {
+                // we haven't set up $_SESSION['currId'] yet so return empty handed
+                return;
+            }
+            if (Util::startsWith($sessId, 'S')) {
+                // $_SESSION['currId'] contains a student id so we retrieve all the information
+                $this->retrieveSession($sessId);
+            } else {
+                // we assume $_SESSION['currId'] is a userId. We retrieve the id but session is still invalid
                 $this->userId = $sessId;
                 $this->isValid = false;
-            } else {
-                $this->retrieveSession($sessId);
             }
 
         }
 
     }
 
-    private function retrieveSession($studentId)
+    /**
+     * Copies the persisted session information into our Session object.
+     * @param int $studentId the student the data belongs to.
+     */
+    private function retrieveSession(int $studentId)
     {
-        if (!isset($_SESSION[$studentId]) ) {
+        $key ="S$studentId";
+        if (!isset($_SESSION[$key]) ) {
             Log::info("Nonexistent session $studentId. ");
         }
         // If we pass in a non-student id we will clear the object and invalidate it
-        $this->studentId = $_SESSION[$studentId]['STUDENT_ID'] ?? '';
-        $this->userId = $_SESSION[$studentId]['USER_ID'] ?? '';
-        $this->studentName = $_SESSION[$studentId]['STUDENT_NAME'] ?? '';
-        $this->currentLesson = $_SESSION[$studentId]['CURRENT_LESSON'] ?? '';
-        $this->lastValidated = $_SESSION[$studentId]['VALIDATE'] ?? 0;
-        $this->isValid = !empty($this->studentId);
+        $this->studentId = $_SESSION[$key]['STUDENT_ID'] ?? '';
+        $this->userId = $_SESSION[$key]['USER_ID'] ?? '';
+        $this->studentName = $_SESSION[$key]['STUDENT_NAME'] ?? '';
+        $this->currentLesson = $_SESSION[$key]['CURRENT_LESSON'] ?? '';
+        $this->currentLessonCode = $_SESSION[$key]['CURRENT_LESSON_CODE'] ?? '';
+        $this->lastValidated = $_SESSION[$key]['VALIDATE'] ?? 0;
+        $this->isValid = (new StudentsData())->doesStudentExist($studentId);
 
     }
-    private function persistSession($studentId)
+
+    /**
+     * Persist this object into session variables.
+     * @param int $studentId the student the data belongs to.
+     */
+    private function persistSession(int $studentId)
     {
-        if (!Util::startsWith($studentId, 'S')) {
-            throw new LogicException("Invalid student id: $studentId. Must start with 'S'.",);
-        }
-        $_SESSION[self::CURR_ID] = $studentId;
-        $_SESSION[$studentId]['USER_ID'] = $this->userId;
-        $_SESSION[$studentId]['STUDENT_ID'] = $this->studentId;
-        $_SESSION[$studentId]['STUDENT_NAME'] = $this->studentName;
-        $_SESSION[$studentId]['CURRENT_LESSON'] = $this->currentLesson;
-        $_SESSION[$studentId]['VALIDATE'] = $this->lastValidated;
+        $key = "S$studentId";
+        $_SESSION[self::CURR_ID] = $key;
+        $_SESSION[$key]['USER_ID'] = $this->userId;
+        $_SESSION[$key]['STUDENT_ID'] = $this->studentId;
+        $_SESSION[$key]['STUDENT_NAME'] = $this->studentName;
+        $_SESSION[$key]['CURRENT_LESSON'] = $this->currentLesson;
+        $_SESSION[$key]['CURRENT_LESSON_CODE'] = $this->currentLessonCode;
+        $_SESSION[$key]['VALIDATE'] = $this->lastValidated;
     }
 
-    public function updateUser(string $userId) {
+    /**
+     * Updates the Session with the given user id. If
+     * @param int $userId
+     */
+    public function updateUser(int $userId) {
         if (self::testingInProgress()) return;
-        $validUserId = Util::startsWith($userId, 'U') && (strlen($userId) == 14);
+        // a valid userId start with a U and is 14 characters long.
+        $validUserId = Util::startsWith($userId, 'U');
         if (!$validUserId) {
             throw new LogicException("$userId format is illegal.");
         }
-        $_SESSION[self::CURR_ID] = $userId;
-        $this->retrieveSession($$userId); // cheesy way to clear the object and invalidate it.
+
         // set userId after clearing the other fields
+        $this->clearSession();
+        $_SESSION[self::CURR_ID] = "U$userId";
         $this->userId = $userId;
     }
 
 
-    public function updateStudent(string $studentId)
+    /**
+     * If we have session variables associated with the specified student id we retrieve them.
+     * @param int $studentId
+     */
+    public function updateStudent(int $studentId)
     {
         if (self::testingInProgress()) return;
-        $_SESSION[self::CURR_ID] = $studentId;
+        if (!isset($_SESSION[self::CURR_ID])) {
+            throw new LogicException("Cannot update student session when no session key is present.");
+        }
+        $key = "S$studentId";
+        $_SESSION[self::CURR_ID] = $key;
         // if this matches the current session id just retrieve it
-        if (isset($_SESSION[$studentId])) {
+        if (isset($_SESSION[$key])) {
             $this->retrieveSession($studentId);
         } else {
             // validate the student record
-            $studentData = new StudentData();
-            $studentName = $studentData->getStudentName($studentId);
+            $studentsData = new StudentsData();
+            $studentName = $studentsData->getStudentName($studentId);
             if (empty($studentName)) {
                 throw new LogicException("$studentId is not a valid student Id.");
             }
             // validate the student's trainer
-            $teacherValidated = $studentData->studentHasTeacher($studentId, $this->userId);
+            $teacherValidated = $studentsData->isValidStudentTrainerPair($studentId, $this->userId);
             if (!$teacherValidated) {
-                throw new LogicException("{$this->userId} does not teach $studentName($studentId).");
+                $userName = (new TrainersData())->getUsername($this->userId);
+                throw new LogicException("$userName does not teach $studentName($studentId).");
             }
             $this->studentId = $studentId;
             $this->studentName = $studentName;
             $this->currentLesson = '';
+            $this->currentLessonCode = '';
             $this->lastValidated = time();
             $this->isValid = true;
             $this->persistSession($studentId);
@@ -136,10 +178,11 @@ class Session
             throw new LogicException("There is no session active for a student. Cannot update lesson.");
         }
         $this->currentLesson = $lessonName;
+        $this->currentLessonCode = (new LessonsData())->getLessonCode($lessonName);
         if (self::testingInProgress()) return;
-
-        $_SESSION[$this->studentId]['CURRENT_LESSON'] = $this->currentLesson;
-
+        $key = 'S' . strval($this->studentId);
+        $_SESSION[$key]['CURRENT_LESSON'] = $this->currentLesson;
+        $_SESSION[$key]['CURRENT_LESSON_CODE'] = $this->currentLessonCode;
     }
 
 
@@ -159,6 +202,11 @@ class Session
     public function getCurrentLesson(): string
     {
         return $this->currentLesson;
+    }
+
+    public function getCurrentLessonCode(): string
+    {
+        return $this->currentLessonCode;
     }
 
 
@@ -196,6 +244,7 @@ class Session
         $this->userId =  '';
         $this->studentName =  '';
         $this->currentLesson = '';
+        $this->currentLessonCode = '';
         $this->lastValidated =  0;
         $this->isValid = false;
     }
@@ -240,6 +289,23 @@ class Session
         if (self::testingInProgress()) return false;
         $sessId = $_SESSION[self::CURR_ID] ?? '';
         return Util::startsWith($sessId, 'U');
+    }
+
+    public static function hasActiveStudent(): bool
+    {
+        if (self::testingInProgress()) return true;
+        $sessId = $_SESSION[self::CURR_ID] ?? '';
+        return Util::startsWith($sessId, 'S');
+    }
+
+    public static function hasNoSession(): bool
+    {
+        return not(self::hasOnlyUser() || self::hasActiveStudent());
+    }
+
+    public function hasLesson(): bool
+    {
+        return $this->isValid && ($this->studentId > 0) && !empty($this->currentLessonCode);
     }
 
 }

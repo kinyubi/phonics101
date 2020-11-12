@@ -47,7 +47,7 @@ class RouteMe
      */
     public static function autoLoginDisplay(bool $forceStudentList = false): void
     {
-        Util::sessionContinue();
+        Session::sessionContinue();
         $identity = Identity::getInstance();
         if ($identity->hasMultipleStudents() || $forceStudentList) {
             (new StudentListTemplate())->display();

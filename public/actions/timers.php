@@ -41,7 +41,7 @@ if ('fluency' == $source) {
 } elseif ('test' == $source) {
     $assumedLessonName = $student->prepareCurrentForUpdate();
     $seconds = intval($_REQUEST['seconds'] ?? '0');
-    $student->updateLearningCurveCargo($assumedLessonName, $seconds);
+    $student->updateTestCurveCargo($seconds);
 
     $lessonTemplate->display();
 } elseif ('testMastery' == $source) {

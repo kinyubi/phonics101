@@ -87,6 +87,13 @@ EOT;
         return $this->db->queryStatement($query);
     }
 
-
-
+    public function getLessonCode(string $lessonName): string
+    {
+        $query = "SELECT lessonCode FROM abc_lessons WHERE lessonName = '$lessonName'";
+        $result = $this->db->queryAndGetScalar($query);
+        if ($result->failed()) {
+            throw new RuntimeException("Attempt to get lesson code for $lessonName failed. " . $result->getMessage());
+        }
+        return $result->getResult();
+    }
 }

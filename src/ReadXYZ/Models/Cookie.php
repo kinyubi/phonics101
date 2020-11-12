@@ -18,7 +18,7 @@ class Cookie
 
     public function __construct()
     {
-        Util::sessionContinue();
+        Session::sessionContinue();
         if (not(isset($_COOKIE['readXYZ_user']))) {
             $this->clearCookie();
         } else {
@@ -254,7 +254,7 @@ class Cookie
      */
     public function tryContinueSession(): bool
     {
-        Util::sessionContinue();
+        Session::sessionContinue();
         $identity = Identity::getInstance();
         $identity->validateSignin($this->username, 'xx');
         if ($identity->isValidUser() && not(empty($this->studentId))) {

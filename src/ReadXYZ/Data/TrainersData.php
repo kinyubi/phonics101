@@ -64,6 +64,13 @@ EOT;
 
     }
 
+    public function getUsername(int $trainerId): string
+    {
+        $query = "SELECT userName FROM abc_trainers WHERE trainerId = $trainerId";
+        $result = $this->db->queryAndGetScalar($query);
+        return $result->wasSuccessful() ? (int) $result->getResult() : 0;
+    }
+
     /**
      * Retrieves hash associated with username. Returns empty string if username doesn't exist
      * @param string $userName

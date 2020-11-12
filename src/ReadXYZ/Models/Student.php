@@ -5,6 +5,7 @@ namespace App\ReadXYZ\Models;
 //  a student is represented by a record in StudentTable
 //  the student and his training records are in a single record
 
+use App\ReadXYZ\Data\StudentLessonsData;
 use ArrayObject;
 use App\ReadXYZ\Data\PhonicsDb;
 use App\ReadXYZ\Database\StudentTable;
@@ -15,92 +16,46 @@ use RuntimeException;
 
 class Student
 {
-    // mandatory properties (make sure they are in the $cargoStuff list)
 
-    private static ?Student $instance = null; // should ONLY be false if we are about to add a new student
-    public bool $isValidStudent = false;
-    public string $studentID;
-    public array $cargo; // this is the cargo of the student record
+    private static Student $instance;
 
-    // optional properties
-
-    private string $currentScript;
+    private Session $session;
+    private bool    $isValidStudent;
 
     private function __construct()
     {
-        $identity = Identity::getInstance();
-        $studentID = $identity->getStudentId(); // hopefully not empty
-        $this->studentID = $studentID;
-        $this->currentScript = 'Blending'; // that's all we use now
-
-        $s = StudentTable::getInstance();
-        if (!empty($studentID)) {
-            $this->cargo = $s->getCargoByKey($studentID); //returns the student record
-
-            if (!empty($this->cargo)) { // found the student, should do some more validations
-                $this->isValidStudent = true;
-            } else { // we have a studentID, but no record in the student table for it.
-                $this->isValidStudent = false;
-            }
-        } else { // we don't have a student record for this studentID.
-            $this->isValidStudent = false;
-        }
+        $this->session = new Session();
+        $this->isValidStudent = SESSION::hasActiveStudent();
     }
 
     public static function getInstance()
     {
-        if (null == self::$instance) {
-            self::$instance = new Student();
-        }
-
+        self::$instance = new Student();
         return self::$instance;
     }
 
     public function getStudentName()
     {
-        return $this->cargo['enrollForm']['StudentName'];
+        return $this->session->getStudentName();
     }
 
     public function getCapitalizedStudentName(): string
     {
-        return ucfirst($this->cargo['enrollForm']['StudentName']);
+        return ucfirst($this->session->getStudentName());
     }
 
-    public function selectByName($key): Lesson
-    {
-        $lessonName = Util::convertLessonKeyToLessonName(rawurldecode($key)); // gets rid of %20, etc if they are there
-        $lessons = Lessons::getInstance();
-        if (not($lessons->lessonExists($lessonName))) {
-            throw new RuntimeException("SelectByName did not find '$lessonName' in lessons");
-        } else {
-            $lessons->setCurrentLesson($lessonName);
-
-            return $lessons->getCurrentLesson();
-        }
-    }
-
-    /**
-     * persists the student cargo to the database.
-     */
-    public function saveSession()
-    { // update changes to the student record
-        if ($this->isValidStudent) {
-            $identity = Identity::getInstance();
-            $s = StudentTable::getInstance();
-            $s->updateByKey($identity->getStudentId(), $this->cargo); // not serialized here
-        }
-    }
 
     /**
      * persists the specified lesson key as the current lesson.
      *
-     * @param string $lessonKey the lesson key we want to make current
+     * @param string $lessonName
      */
-    public function saveLessonSelection(string $lessonKey): void
+    public function saveLessonSelection(string $lessonName): void
     {
-        // too simple, we simply update the cargo
-        $this->cargo['currentLesson'] = $lessonKey;
-        $this->saveSession();
+        if (!$this->isValidStudent) {
+            throw new RuntimeException("Cannot save lesson selection without a student session.");
+        }
+        $this->session->updateLesson($lessonName);
     }
 
     /**
@@ -110,58 +65,15 @@ class Student
      */
     public function prepareCurrentForUpdate()
     {
-        $currentLessonName = $this->cargo['currentLesson'];
-
-        // make sure current lesson is set up.  the special case is if the lessons is in MASTERED and
-        //      not in CURRENT, then it is an old lesson that someone is adding to.  Copy it to CURRENT
-        //      before updating.
-        if (isset($this->cargo['masteredLessons'][$currentLessonName])) {
-            //it shouldn't be in both places but
-            if (!isset($this->cargo['currentLessons'][$currentLessonName])) {
-                $this->cargo['currentLessons'][$currentLessonName] = $this->cargo['masteredLessons'][$currentLessonName];
-            }
-            unset($this->cargo['masteredLessons'][$currentLessonName]);
-        }
-
-        // maybe we have never seen this lesson before...  create all the elements
-        if (!isset($this->cargo['currentLessons'][$currentLessonName])) {
-            $this->cargo['currentLessons'][$currentLessonName] = [
-                'timesPresented' => 0,
-                'mastery' => 0,
-                'learningCurve' => [],
-                'testCurve' => [],
-                'lastPresented' => '',
-                'lastPresentedHuman' => '',
-            ];
-        }
-
-        // make sure there is a 'learningCurve' record in the current lesson
-        if (!isset($this->cargo['currentLessons'][$currentLessonName]['learningCurve'])) { // older records might not have it set
-            $this->cargo['currentLessons'][$currentLessonName]['learningCurve'] = [];
-        }
-        // make sure there is a 'testCurve' record in the current lesson
-        if (!isset($this->cargo['currentLessons'][$currentLessonName]['testCurve'])) {
-            $this->cargo['currentLessons'][$currentLessonName]['testCurve'] = [];
-        }
-
-        // we have presented it so increment the count
-        if (!isset($this->cargo['currentLessons'][$currentLessonName]['timesPresented'])) {
-            $this->cargo['currentLessons'][$currentLessonName]['timesPresented'] = 0;
-        }
-        ++$this->cargo['currentLessons'][$currentLessonName]['timesPresented'];
-        $this->cargo['currentLessons'][$currentLessonName]['lastPresented'] = time();
-        $this->cargo['currentLessons'][$currentLessonName]['lastPresentedHuman'] = Util::getHumanReadableDateTime();
-
-        return $currentLessonName;
+        return $this->session->getCurrentLesson();
     }
 
-    public function updateLearningCurveCargo(string $lessonName, int $seconds)
+    public function updateTestCurveCargo(int $seconds)
     {
-        $this->cargo['currentLessons'][$lessonName]['testCurve'][time()] = $seconds;
-            while (count($this->cargo['currentLessons'][$lessonName]['testCurve']) > 8) {
-                array_shift($this->cargo['currentLessons'][$lessonName]['testCurve']);
-            }
-            $this->saveSession();
+        if ($this->session->getStudentId() == 0) {
+            throw new RuntimeException("Cannot update learning curve without an active student.");
+        }
+        (new StudentLessonsData())->updateTimedTest('test', $seconds);
     }
 
     public function updateTestMastery(string $lessonKey, string $masteryType)
@@ -188,7 +100,6 @@ class Student
             default:
                 assert(false, "Did not expect '$$masteryType' as a submit type");
         }
-        $this->saveSession();
     }
 
     /**
@@ -206,7 +117,6 @@ class Student
         $this->cargo['currentLessons'][$currentLessonName]['mastery'] = 5;
 
         // update the student record
-        $this->saveSession();
     }
 
     /**
@@ -228,7 +138,7 @@ class Student
 
         if (isset($postData['seconds'])) {
             $seconds = intval($postData['seconds'] ?? '0');
-            $this->updateLearningCurveCargo($currentLessonName, $seconds);
+            $this->updateTestgCurveCargo($seconds);
         } elseif (isset($postData['masteryType'])) {
             $masteryType = $postData['masteryType'] ?? ($postData['P1'] ?? '');
 

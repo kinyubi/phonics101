@@ -201,7 +201,7 @@ class Identity
 
     public function savePersistentState(): void
     {    // may want to encrypt one day
-        Util::sessionContinue();
+        Session::sessionContinue();
         if (!isset($_SESSION)) {
             $_SESSION = [];
         }

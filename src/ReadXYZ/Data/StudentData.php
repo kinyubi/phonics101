@@ -23,19 +23,20 @@ class StudentData extends AbstractData
     public function create()
     {
         $query = <<<EOT
-CREATE TABLE `abc_students` (
-	`studentId` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`trainerId` INT(10) UNSIGNED NULL DEFAULT NULL,
-	`studentName` VARCHAR(50) NOT NULL,
-	`avatarFileName` VARCHAR(50) NOT NULL DEFAULT '',
-	`createdDate` DATE NOT NULL,
-	`lastAccessedDate` DATE NOT NULL,
-	`validUntilDate` DATE NULL DEFAULT NULL,
-	`active` TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
-	PRIMARY KEY (`studentId`),
-	INDEX `FK_trainerId_students__trainers` (`trainerId`),
-	CONSTRAINT `FK_trainerId_students__trainers` FOREIGN KEY (`trainerId`) REFERENCES `abc_trainers` (`trainerId`) ON UPDATE CASCADE ON DELETE SET NULL
-) COMMENT='Replaces abc_Student' COLLATE='utf8_general_ci' ENGINE=InnoDB 
+CREATE TABLE `abc_student` (
+	`studentid` VARCHAR(32) NOT NULL,
+	`cargo` TEXT NULL,
+	`StudentName` VARCHAR(32) NULL DEFAULT NULL,
+	`project` VARCHAR(32) NULL DEFAULT NULL,
+	`trainer1` VARCHAR(64) NULL DEFAULT NULL,
+	`trainer2` VARCHAR(32) NULL DEFAULT NULL,
+	`trainer3` VARCHAR(32) NULL DEFAULT NULL,
+	`created` INT(10) UNSIGNED NULL DEFAULT '0',
+	`createdhuman` VARCHAR(32) NULL DEFAULT NULL,
+	`lastupdate` INT(10) UNSIGNED NULL DEFAULT '0',
+	`lastbackup` INT(10) UNSIGNED NULL DEFAULT '0',
+	PRIMARY KEY (`studentid`)
+) COMMENT='True name: abc_Student' COLLATE='utf8_general_ci' ENGINE=InnoDB ;
 EOT;
         $result = $this->db->queryStatement($query);
         if ($result->failed()) {
@@ -51,16 +52,16 @@ EOT;
      */
     public function getStudentId(string $username, string $studentName): string
     {
-        $query = 'SELECT studentid FROM abc_Student WHERE StudentName = ? AND trainer1 = ?';
-        $statement = $this->db->getPreparedStatement($query);
-        $statement->bind_param('ss', $studentName, $username);
-        $statement->execute();
-        $statement->bind_result($studentId);
-        $statement->fetch();
-        $statement->close();
-        return $studentId ?? ''; // fetch returns null if nothing found
+        $query = "SELECT studentid FROM abc_Student WHERE StudentName = '$studentName' AND trainer1 = '$username'";
+        $result = $this->db->queryAndGetScalar($query);
+        if ($result->wasSuccessful()) return $result->getResult();
+        throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
     }
 
+    /**
+     * Retrieve an array of studentId's
+     * @return array
+     */
     public function getAllStudentIds(): array
     {
         $query = 'SELECT studentid FROM abc_Student';

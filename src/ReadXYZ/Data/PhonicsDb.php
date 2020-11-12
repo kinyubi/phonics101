@@ -44,7 +44,7 @@ class PhonicsDb
     }
 
     /**
-     * Handles a query that returns a single scalar value. Returns DbResult::badResult if not found.
+     * Handles a query that returns a single scalar value. Returns null ::goodResult if not found.
      * @param string $query
      * @return DbResult
      */
@@ -56,7 +56,7 @@ class PhonicsDb
             $returnValue = $row[0] ?? null;
             $result->close();
 
-            return $returnValue ? DbResult::goodResult($returnValue) : DbResult::badResult('Not Found');
+            return DbResult::goodResult($returnValue);
         } else {
             return DbResult::badResult($this->getErrorMessage());
         }
