@@ -6,20 +6,31 @@ namespace App\ReadXYZ\Data;
 
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Session;
-use phpDocumentor\Reflection\Types\Mixed_;
 use RuntimeException;
 
 class StudentLessonsData extends AbstractData
 {
 
     private Session $session;
+    private int     $studentId;
+    private string  $quotedLessonCode;
+    private string  $whereClause;
 
+    /**
+     * StudentLessonsData constructor.
+     * This will look to session to provide the studentId or lessonCode whenever needed.
+     */
     public function __construct()
     {
         parent::__construct('abc_students');
         $this->session = new Session();
+        $this->studentId = $this->session->getStudentId();
+        $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
+        $this->whereClause = "studentId = {$this->studentId} AND lessonCode = {$this->quotedLessonCode}";
     }
 
+
+// ======================== PUBLIC METHODS =====================
     public function create()
     {
         $query = <<<EOT
@@ -46,19 +57,54 @@ EOT;
         }
     }
 
+    /**
+     * @param string|int $masteryValue 'none'|0, 'advancing'|1, 'mastered'|2
+     * @return BoolWithMessage
+     */
+    public function updateMastery($masteryValue): BoolWithMessage
+    {
+        if ( ! $this->session->hasLesson()) {
+            throw new RuntimeException('Attempt to update test time without a current lesson.');
+        }
+        $enumArray = ['none', 'advancing', 'mastered'];
+        if (is_numeric($masteryValue)) {
+            $masteryIndex = max(0, min(2, $masteryValue));
+            $enumValue = $enumArray[$masteryIndex];
+        } else {
+            if (is_string($masteryValue)) {
+                $enumValue = strtolower($masteryValue);
+                if ( ! in_array($enumValue, $enumArray)) {
+                    throw new RuntimeException("$enumValue is not a valid mastery value.");
+                }
+            } else {
+                throw new RuntimeException('masteryValue must be integer or string');
+            }
+        }
+        $this->createStudentLessonAsNeeded();
+
+
+        $query = "UPDATE abc_student_lesson SET masteryLevel = '$enumValue', masteryDate=NOW() WHERE {$this->whereClause}";
+        return $this->db->queryStatement($query);
+    }
+
+    /**
+     * @param string $type
+     * @param int $seconds
+     * @return BoolWithMessage
+     */
     public function updateTimedTest(string $type, int $seconds): BoolWithMessage
     {
-        if (!$this->session->hasLesson()) {
+        if ($seconds == 0) {
+            return BoolWithMessage::goodResult();
+        }
+        if ( ! $this->session->hasLesson()) {
             throw new RuntimeException('Attempt to update test time without a current lesson.');
         }
 
         $field = ($type == 'fluency') ? 'fluencyTimes' : 'testTimes';
-        $studentId = $this->session->getStudentId();
-        $lessonCode =  $this->smartQuotes($this->session->getCurrentLessonCode());
-        $whereClause = "WHERE studentId = $studentId AND lessonCode = $lessonCode";
-        $this->createStudentLessonAsNeeded($whereClause);
+        $this->createStudentLessonAsNeeded();
 
-        $times = $this->getTimedArray( $this->getField($field, $whereClause));
+        $times = $this->getTimedArray($this->getField($field));
         $seconds = min($seconds, 99);
         $count = count($times);
         if ($count > 7) {
@@ -66,41 +112,29 @@ EOT;
         }
         $times[] = $seconds;
         $newField = $this->setTimedField($times);
-        return $this->updateField($field, $newField, $whereClause);
-
+        return $this->updateField($field, $newField);
     }
 
-    public function updateMastery($masteryValue): BoolWithMessage
+// ======================== PRIVATE METHODS =====================
+
+    /**
+     * This gets run before a sql update to create the record if it doesn't already exist.
+     */
+    private function createStudentLessonAsNeeded(): void
     {
-        if (!$this->session->hasLesson()) {
-            throw new RuntimeException('Attempt to update test time without a current lesson.');
-        }
-        $studentId = $this->session->getStudentId();
-        $lessonCode =  $this->smartQuotes($this->session->getCurrentLessonCode());
-        $whereClause = "WHERE studentId = $studentId AND lessonCode = $lessonCode";
-        $this->createStudentLessonAsNeeded($whereClause);
-
-        $masteryIndex = max(0, min(2, $masteryValue));
-        $enumArray = ['none', 'advancing', 'mastered'];
-        $enumValue = $enumArray[$masteryIndex];
-        $query = "UPDATE abc_student_lesson SET masteryLevel = '$enumValue', masteryDate=NOW() $whereClause";
-        return $this->db->queryStatement($query);
-    }
-
-    public function createStudentLessonAsNeeded(string $whereClause): void
-    {
-
-        $query = "SELECT * FROM abc_student_lesson $whereClause";
+        $query = "SELECT * FROM abc_student_lesson WHERE {$this->whereClause}";
         $result = $this->db->queryAndGetCount($query);
         if ($result->failed()) {
             throw new RuntimeException($result->getMessage() . '.  ' . $query);
         }
-        if ($result->getResult() > 0) return;
+        if ($result->getResult() > 0) {
+            return;
+        }
     }
 
-    public function getField(string $fieldName, string $whereClause)
+    private function getField(string $fieldName)
     {
-        $query = "SELECT $fieldName FROM abc_student_lesson $whereClause";
+        $query = "SELECT $fieldName FROM abc_student_lesson WHERE {$this->whereClause}";
         $result = $this->db->queryAndGetScalar($query);
         if ($result->failed()) {
             throw new RuntimeException($result->getMessage() . '.  ' . $query);
@@ -108,28 +142,28 @@ EOT;
         return $result->getResult();
     }
 
-    public function getTimedArray(string $field): array
+    private function getTimedArray(string $field): array
     {
         $result = [];
-        for ($i = 0; $i<strlen($field); $i += 2) {
+        for ($i = 0; $i < strlen($field); $i += 2) {
             $result[] = intval(substr($field, $i, 2));
         }
         return $result;
     }
 
-    public function setTimedField(array $times): string
+    private function setTimedField(array $times): string
     {
         $result = '';
-        foreach($times as $time) {
+        foreach ($times as $time) {
             $result .= str_pad(strval($time), 2, '0', STR_PAD_LEFT);
         }
         return $result;
     }
 
-    private function updateField(string $fieldName, $value, string $whereClause): BoolWithMessage
+    private function updateField(string $fieldName, $value): BoolWithMessage
     {
         $smartValue = $this->smartQuotes($value);
-        $query = "UPDATE abc_student_lesson SET $fieldName = $smartValue $whereClause";
+        $query = "UPDATE abc_student_lesson SET $fieldName = $smartValue  WHERE {$this->whereClause}";
         return $this->db->queryStatement($query);
     }
 }

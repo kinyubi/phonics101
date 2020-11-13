@@ -116,23 +116,30 @@ EOT;
 
     }
 
-    public function updatePassword(string $userName, string $password): BoolWithMessage
+    /**
+     * @param string|int $user
+     * @param string $password
+     * @return BoolWithMessage
+     */
+    public function updatePassword($user, string $password): BoolWithMessage
     {
-        $date = Util::dbDate();
-        $trainerId = $this->getTrainerId($userName);
+        $where = is_numeric($user) ? "trainerId = $user" : "userName = '$user'";
+        $userName = is_numeric($user) ? $this->getUsername($user) : $user;
         $hash = $this->makeHash($userName, $password);
-        $query = 'UPDATE abc_trainers SET hash=?, dateModified=? WHERE trainerId=?';
-        $statement = $this->db->getPreparedStatement($query);
-        $statement->bind_param('ssi', $hash, $date, $trainerId);
-        $success = $statement->execute();
-        return $success ? BoolWithMessage::goodResult() : BoolWithMessage::badResult($statement->error);
+        $query = "UPDATE abc_trainers SET hash='$hash', dateModified=NOW(), dateLastAccessed=NOW() WHERE $where";
+        return $this->db->queryStatement($query);
     }
 
-    public function updateName(string $userName, string $firstName, string $lastName): BoolWithMessage
+    /**
+     * @param string|int $user userName or trainerId
+     * @param string $firstName
+     * @param string $lastName
+     * @return BoolWithMessage
+     */
+    public function updateName($user, string $firstName, string $lastName): BoolWithMessage
     {
-        $date = Util::dbDate();
-        $trainerId = $this->getTrainerId($userName);
-        $query = 'UPDATE abc_trainers SET firstName=?, lastName=?, dateModified=? WHERE trainerId=?';
+        $where = is_numeric($user) ? "trainerId = $user" : "userName = '$user'";
+        $query = "UPDATE abc_trainers SET firstName='$firstName', lastName='$lastName', dateModified=NOW() WHERE $where";
         $statement = $this->db->getPreparedStatement($query);
         $statement->bind_param('sssi', $firstName, $lastName, $date, $trainerId);
         $success = $statement->execute();
@@ -141,25 +148,25 @@ EOT;
 
     /**
      * delete will fail if user has students
-     * @param string $userName
+     * @param string|int $user userName or trainerId
      * @return BoolWithMessage
      */
-    public function delete(string $userName): BoolWithMessage
+    public function delete($user): BoolWithMessage
     {
-        $trainerId = $this->getTrainerId($userName);
-        $query = 'DELETE FROM abc_trainers WHERE trainerId=?';
-        $statement = $this->db->getPreparedStatement($query);
-        $statement->bind_param('i', $trainerId);
-        $success = $statement->execute();
-        return $success ? BoolWithMessage::goodResult() : BoolWithMessage::badResult($statement->error);
+        $where = is_numeric($user) ? "trainerId = $user" : "userName = '$user'";
+        $query = "DELETE FROM abc_trainers WHERE $where";
+        return $this->db->queryStatement($query);
     }
 
-    public function hasStudents($userName): DbResult
+    /**
+     * @param string|int $user userName or trainerId
+     * @return DbResult
+     */
+    public function hasStudents($user): DbResult
     {
-        $trainerId = $this->getTrainerId($userName);
-        if ($trainerId == 0) return DbResult::badResult("Username '$userName' does not exist.");
-
-        $result = $this->db->queryAndGetCount("SELECT * FROM abc_trainers WHERE trainerId=$trainerId");
+        $where = is_numeric($user) ? "trainerId = $user" : "userName = '$user'";
+        $query = "SELECT * FROM abc_trainers WHERE $where";
+        $result = $this->db->queryAndGetCount($query);
         if ($result->failed()) {
             return DbResult::badResult($result->getMessage());
         } else {
@@ -167,21 +174,39 @@ EOT;
         }
     }
 
-    public function updateActive(string $userName, bool $activeOrNot): BoolWithMessage
+    /**
+     * @param string|int $user userName or trainerId
+     * @param bool $activeOrNot
+     * @return BoolWithMessage
+     */
+    public function updateActive($user, bool $activeOrNot): BoolWithMessage
     {
-        $date = Util::dbDate();
-        $isActive = $activeOrNot ? 1 : 0;
-        $trainerId = $this->getTrainerId($userName);
-        $query = 'UPDATE abc_trainers SET active=? WHERE trainerId=?';
-        $statement = $this->db->getPreparedStatement($query);
-        $statement->bind_param('isi', $isActive,  $date, $trainerId);
-        $success = $statement->execute();
-        return $success ? BoolWithMessage::goodResult() : BoolWithMessage::badResult($statement->error);
+        $where = is_numeric($user) ? "trainerId = $user" : "userName = '$user'";
+        $active = $activeOrNot ? 1 : 0;
+        $query = "UPDATE abc_trainers SET active=$active, dateModified=NOW(), dateLastAccessed=NOW() WHERE $where";
+        return $this->db->queryStatement($query);
     }
 
+    /**
+     * @param string $userName
+     * @param string $password
+     * @return string
+     */
     private function makeHash(string $userName, string $password): string
     {
         return password_hash($userName . '|' . $password, PASSWORD_BCRYPT, ['cost' => 8]);
+    }
+
+    /**
+     * @param string|int $user userName or trainerId
+     * @return bool
+     */
+    public function isAdmin($user)
+    {
+        $where = is_numeric($user) ? "trainerId = $user" : "userName = '$user'";
+        $query = "SELECT trainerType FROM abc_trainers WHERE $where";
+        $result = $this->db->queryAndGetScalar($query);
+        return $result->wasSuccessful() && ($result->getResult() == 'admin');
     }
 
 }

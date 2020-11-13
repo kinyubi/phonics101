@@ -43,9 +43,42 @@ class TrainersDataTest extends TestCase
         $verified = $trainersData->verifyPassword('nobody', 'test');
         $this->assertFalse($verified);
     }
+
+    public function testName()
+    {
+    }
+
     public function testAdd()
     {
         $trainersData = new TrainersData();
         $result = $trainersData->add('test_user', 'FirstTest', 'LastTest', 'trainer', 'test');
+    }
+
+    public function testDelete()
+    {
+    }
+
+    public function testGetUsername()
+    {
+    }
+
+    public function testHasStudents()
+    {
+    }
+
+    public function testIsAdmin()
+    {
+    }
+
+    public function testUpdateActive()
+    {
+    }
+
+    public function testUpdateName()
+    {
+    }
+
+    public function testUpdatePassword()
+    {
     }
 }

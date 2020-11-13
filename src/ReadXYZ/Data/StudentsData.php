@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Models\Session;
 use RuntimeException;
 
 class StudentsData extends AbstractData
@@ -41,13 +42,13 @@ EOT;
      * Gets the userId associated with a given user name. Returns empty string if not found
      * @param string $username
      * @param string $studentName
-     * @return string the userId if found, otherwise the empty string
+     * @return int the studentId if found, otherwise 0
      */
-    public function getStudentId(string $username, string $studentName): string
+    public function getStudentId(string $username, string $studentName): int
     {
         $query = "SELECT studentid FROM abc_students WHERE StudentName = '$studentName' AND trainerId = '$username'";
         $result = $this->db->queryAndGetScalar($query);
-        if ($result->wasSuccessful()) return $result->getResult() ?? '';
+        if ($result->wasSuccessful()) return $result->getResult() ?? 0;
         throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
     }
 
@@ -58,20 +59,42 @@ EOT;
         return $result->wasSuccessful() && ($result->getResult() > 0);
     }
 
-    public function getStudentName(string $studentId): string
+    public function getStudentName(int $studentId): string
     {
-        $query = "SELECT studentName FROM abc_students WHERE studentId = '$studentId'";
+        $query = "SELECT studentName FROM abc_students WHERE studentId = $studentId";
         $result = $this->db->queryAndGetScalar($query);
         if ($result->wasSuccessful()) return $result->getResult() ?? '';
         throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
     }
 
-    public function getStudentsForUserName(string $username): array
+    /**
+     * @param string|int $user trainerId or userName
+     * @return array an associative array of studentId, studentName
+     */
+    public function getStudentsForUser($user=0): array
     {
-        $query = "SELECT studentId, studentName FROM vw_students_with_username WHERE userName = '$username'";
-        $result = $this->db->queryAndGetScalar($query);
-        if ($result->wasSuccessful()) return $result->getResult() ?? '';
-        throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
+        // We user the user of the current session if no user specified.
+        if (empty($user)) {
+            $session = new Session();
+            $user = $session->getTrainerId();
+            if($user== 0) {
+                throw new RuntimeException("User cannot be empty when no user present in session.");
+            }
+        }
+        $where = is_numeric($user) ? "trainerId = $user" : "userName = '$user'";
+        $query = "SELECT studentId studentName FROM vw_students_with_username WHERE $where";
+        $result = $this->db->queryRows($query);
+        if ($result->failed()) {
+            throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
+        } else {
+            return $result->getResult() ?? [];
+        }
+    }
+
+    public function getStudentNamesForUser($user): array
+    {
+        $assocArray = $this->getStudentsForUser($user='');
+        return (count($assocArray) > 0) ? array_column($assocArray, 'studentName') : [];
     }
 
     public function isValidStudentTrainerPair(string $student, string $user): bool

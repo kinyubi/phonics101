@@ -3,7 +3,6 @@
 // we only use $_REQUEST['seconds']. We already know the current lesson and student.
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\Session;
-use App\ReadXYZ\Models\Student;
 use App\ReadXYZ\Twig\LessonTemplate;
 
 require 'autoload.php';

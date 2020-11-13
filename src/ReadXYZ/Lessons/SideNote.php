@@ -2,12 +2,11 @@
 
 namespace App\ReadXYZ\Lessons;
 
-use Exception;
+use App\ReadXYZ\Data\StudentLessonsData;
 use App\ReadXYZ\Display\LearningCurve;
-use App\ReadXYZ\Helpers\Debug;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Models\Student;
 use App\ReadXYZ\Twig\TwigFactory;
+use Exception;
 
 /**
  * @copyright (c) 2020 ReadXYZ, LLC
@@ -37,21 +36,30 @@ class SideNote
         $str = file_get_contents($filename, false, null);
         $this->data = [];
         $this->data = json_decode($str, true);
-        if (!$this->data) {
+        if ( ! $this->data) {
             throw new Exception(json_last_error_msg());
         }
     }
 
+// ======================== PUBLIC METHODS =====================
     /**
      * @return SideNote an instance of this singleton class
      */
     public static function getInstance(): SideNote
     {
-        if (!isset(self::$instance)) {
+        if ( ! isset(self::$instance)) {
             self::$instance = new SideNote();
         }
 
         return self::$instance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLearningCurveHTML(): string
+    {
+        return $this->getCurveHTML('learningCurve');
     }
 
     /**
@@ -77,18 +85,48 @@ class SideNote
         return $note;
     }
 
-
     /**
-     * Looks for notes in 'group_notes" group in side_notes.json. Called by getNote.
-     *
-     * @param string $group_name
-     * @param string $tab_name
-     *
-     * @return mixed|string
+     * called by sidebar.html.twig
+     * @return string
      */
-    private function getGroupNote(string $group_name, string $tab_name)
+    public function getTestCurveHTML(): string
     {
-        return $this->data['group_notes'][$group_name][$tab_name]?? '';
+        return $this->getCurveHTML('testCurve');
+    }
+
+// ======================== PRIVATE METHODS =====================
+    /**
+     * @param string $index currently supported indexes are 'learningCurve' and 'testCurve'
+     *
+     * @return string learning curve HTML
+     */
+    private function getCurveHTML(string $index): string
+    {
+        $studentLessonData = new StudentLessonsData();
+        $studentLessonData->
+        $ts = Student::getInstance();                   // pick up current session
+        $cargo = $ts->cargo;
+        $currentLessonName = $cargo['currentLesson'];
+
+        // we need to get our data
+        $data = [];                                     // default is empty array
+        if (isset($cargo['currentLessons'][$currentLessonName])) {
+            $currentLesson = $cargo['currentLessons'][$currentLessonName];
+        }
+        // it is possible that this lesson has already been mastered
+        if (isset($cargo['masteredLessons'][$currentLessonName][$index])) {
+            $data = $cargo['masteredLessons'][$currentLessonName][$index];
+        } elseif (isset($currentLesson[$index])) {
+            $data = $currentLesson[$index];
+        }
+        $html = '';
+        if ( ! empty($data)) {
+            $learningCurve = new LearningCurve();
+            $imgURL = $learningCurve->learningCurveChart($data);
+            $html = TwigFactory::getInstance()->renderBlock('timers2', 'LearningCurve', ['imageUrl' => $imgURL]) ?? '';
+        }
+
+        return $html;
     }
 
     /**
@@ -103,55 +141,17 @@ class SideNote
         return $this->data['default_tab_notes'][$tab_name] ?? '';
     }
 
-
     /**
-     * @param string $index currently supported indexes are learningCurve and testCurve
+     * Looks for notes in 'group_notes" group in side_notes.json. Called by getNote.
      *
-     * @return string learning curve HTML
+     * @param string $group_name
+     * @param string $tab_name
+     *
+     * @return mixed|string
      */
-    private function getCurveHTML(string $index): string
+    private function getGroupNote(string $group_name, string $tab_name)
     {
-
-        $ts = Student::getInstance();                   // pick up current session
-        $cargo = $ts->cargo;
-        $currentLessonName = $cargo['currentLesson'];
-
-        // we need to get our data
-        $data = [];   // default is empty array
-        if (isset($cargo['currentLessons'][$currentLessonName])) {
-            $currentLesson = $cargo['currentLessons'][$currentLessonName];
-        }
-        // it is possible that this lesson has already been mastered
-        if (isset($cargo['masteredLessons'][$currentLessonName][$index])) {
-            $data = $cargo['masteredLessons'][$currentLessonName][$index];
-        } elseif (isset($currentLesson[$index])) {
-            $data = $currentLesson[$index];
-        }
-        $html = '';
-        if (!empty($data)) {
-            $learningCurve = new LearningCurve();
-            $imgURL = $learningCurve->learningCurveChart($data);
-            $html = TwigFactory::getInstance()->renderBlock('timers2', 'LearningCurve', ['imageUrl' => $imgURL]) ?? '';
-        }
-
-        return $html;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getTestCurveHTML(): string
-    {
-        return $this->getCurveHTML('testCurve');
-    }
-
-    /**
-     * @return string
-     */
-    public function getLearningCurveHTML(): string
-    {
-        return $this->getCurveHTML('learningCurve');
+        return $this->data['group_notes'][$group_name][$tab_name] ?? '';
     }
 
 }

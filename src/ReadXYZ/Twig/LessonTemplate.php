@@ -4,7 +4,8 @@
 namespace App\ReadXYZ\Twig;
 
 
-use App\ReadXYZ\Database\StudentTable;
+use App\ReadXYZ\Data\UserMasteryData;
+use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Display\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
@@ -14,7 +15,7 @@ use App\ReadXYZ\Lessons\Lessons;
 use App\ReadXYZ\Lessons\SideNote;
 use App\ReadXYZ\Lessons\TabTypes;
 use App\ReadXYZ\Lessons\Warmups;
-use App\ReadXYZ\Models\Cookie;
+use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Models\Student;
 use RuntimeException;
 
@@ -31,15 +32,12 @@ class LessonTemplate
 
     public function __construct(string $lessonName = '', string $initialTabName = '')
     {
-        $cookie = new Cookie();
+        $session = new Session();
 
-        if (!$cookie->tryContinueSession()) {
-            throw new RuntimeException("Session not found.\n" . $cookie->getCookieString());
-        }
         $this->factory = TwigFactory::getInstance();
         $this->lessonName = $lessonName;
         $this->initialTabName = $initialTabName;
-        $cookie->setCurrentLesson($lessonName);
+        $session->updateLesson($lessonName);
         $lessons = Lessons::getInstance();
 
         if (empty($lessonName)) {
@@ -66,16 +64,15 @@ class LessonTemplate
     {
         LearningCurve::cleanUpOldGraphics();
         $args = [];
-        $args['students'] = StudentTable::getInstance()->GetAllStudents();
+        $args['students'] = (new StudentsData())->getStudentNamesForUser();
         $args['warmups'] = Warmups::getInstance()->getLessonWarmup($this->lessonName);
         $args['page'] = $this->page;
         $args['lesson'] = $this->lesson;
         $args['tabTypes'] = TabTypes::getInstance();
         $args['gameTypes'] = GameTypes::getInstance();
-        $args['cookie'] = new Cookie();
         $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         $args['sideNote'] = SideNote::getInstance();
-        $args['masteredWords'] = Student::getInstance()->getMasteredWords();
+        $args['masteredWords'] = (new UserMasteryData())->getMasteredWords();
 
         echo TwigFactory::getInstance()->renderTemplate('lesson', $args);
     }

@@ -4,27 +4,21 @@
 namespace App\ReadXYZ\Twig;
 
 
-use App\ReadXYZ\Database\StudentTable;
+use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Helpers\Util;
 
 class StudentListTemplate
 {
 
-    private Page $page;
-
-    public function __construct()
-    {
-    }
-
     public function display(): void
     {
-        $allStudents = StudentTable::getInstance()->GetAllStudents();
+        $allStudents = (new StudentsData())->getStudentsForUser();
         $page = new Page('Select a student');
         $studentLinks = [];
         foreach ($allStudents as $student) {
             $studentLinks[] = [
-                'url'   => Util::buildActionsLink('processStudentSelection', ['P1' => $student['studentID']]),
-                'title' => ucfirst($student['enrollForm']['StudentName'])
+                'url'   => Util::buildActionsLink('processStudentSelection', ['P1' => $student['studentId']]),
+                'title' => ucfirst($student['StudentName'])
             ];
         }
         $args = ['page' => $page, 'studentLinks' => $studentLinks];

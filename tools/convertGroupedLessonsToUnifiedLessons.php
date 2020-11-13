@@ -4,13 +4,12 @@
 // with the LessonInfo and BlendingInfo data
 
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Lessons\BlendingInfo;
+use App\ReadXYZ\Lessons\OldBlendingInfo;
 use App\ReadXYZ\Lessons\CsvList;
 use App\ReadXYZ\Lessons\LessonInfo;
 use App\ReadXYZ\POPO\gamePOPO;
 use App\ReadXYZ\POPO\LessonPOPO;
 use App\ReadXYZ\POPO\SpellSpinner;
-use App\ReadXYZ\Secrets\Access;
 
 require 'autoload.php';
 
@@ -27,8 +26,7 @@ try {
     exit($ex->getMessage());
 }
 
-Access::fakeLogin();
-$blendingInfo = BlendingInfo::getInstance();
+$blendingInfo = OldBlendingInfo::getInstance();
 $lessonInfo = LessonInfo::getInstance();
 $oldLessons = $lessonInfo->getAllLessons();
 $csvLessons = $csvInfo->getArray();
@@ -57,6 +55,8 @@ foreach ($csvLessons as $csvLesson) {
         if ($foundLessonName) {
             $oldLesson = $lessonInfo->getCurrentLesson();
         }
+    } else {
+        $blendingLesson = false;
     }
     $lesson->lessonKey = 'Blending.' . $realName;
     $lesson->groupName = trim($csvLesson['Group']);
@@ -76,7 +76,7 @@ foreach ($csvLessons as $csvLesson) {
         if (isset($oldLesson['spinner'])) {
             $spinner = $oldLesson['spinner'];
             $lesson->spinner = new SpellSpinner($spinner['prefixes'], $spinner['vowel'], $spinner['suffix']);
-        } elseif ($blendingLesson ?? false) {
+        } elseif ($blendingLesson ) {
             $spinner = $blendingInfo->getSpinner($blendingLesson['lessonKey']);
             if ($spinner) {
                 $lesson->spinner = new SpellSpinner($spinner['prefixes'], $spinner['vowel'], $spinner['suffix']);

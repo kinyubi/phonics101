@@ -66,7 +66,8 @@ EOT;
 
     public function getGroupCode(string $groupName): DbResult
     {
-        $query = "SELECT groupCode FROM abc_groups WHERE groupName = {$this->smartQuotes($groupName)}";
+        $name = $this->smartQuotes($groupName);
+        $query = "SELECT groupCode FROM abc_groups WHERE groupName = $name OR  groupDisplayAs = $name";
         return $this->db->queryAndGetScalar($query);
     }
 

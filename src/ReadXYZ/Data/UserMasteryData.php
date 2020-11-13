@@ -7,7 +7,8 @@ namespace App\ReadXYZ\Data;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Log;
-use App\ReadXYZ\Models\Student;
+use App\ReadXYZ\Models\Session;
+use RuntimeException;
 
 class UserMasteryData extends AbstractData
 {
@@ -47,7 +48,11 @@ class UserMasteryData extends AbstractData
 
     public function processRequest()
     {
-        $studentID = Student::getInstance()->studentID;
+        $session = new Session();
+        if (!$session->hasLesson()) {
+            throw new RuntimeException('Cannot update user mastery without an active lesson.');
+        }
+        $studentID = $session->getStudentId();
         $presentedWordList = $_REQUEST['wordlist'];
         $masteredWords = $_REQUEST['word1'] ?? [];
         $result = $this->update($studentID, $presentedWordList, $masteredWords);
@@ -60,6 +65,18 @@ class UserMasteryData extends AbstractData
             $this->sendResponse(500, $msg);
         }
         exit();
+    }
+
+    public function getMasteredWords(): array
+    {
+        $session = new Session();
+        if (!$session->hasLesson()) {
+            throw new RuntimeException('Cannot get mastered words without an active lesson.');
+        }
+        $studentId = $session->getStudentId();
+        $query = "SELECT word from abc_usermastery WHERE studentID=$studentId";
+        $result = $this->db->queryAndGetScalarArray($query);
+        return $result->wasSuccessful() ? $result->getResult() : [];
     }
 
 }

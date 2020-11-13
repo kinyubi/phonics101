@@ -4,7 +4,6 @@ namespace App\ReadXYZ\Lessons;
 
 use Peekmo\JsonPath\JsonStore;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Models\Student;
 
 if (not(defined('CLASS'))) {
     define('CLASS', 0);
@@ -16,9 +15,9 @@ if (not(defined('CLASS'))) {
     define('NOTE', 6);
 }
 
-class BlendingInfo
+class OldBlendingInfo
 {
-    private static BlendingInfo $instance;
+    private static OldBlendingInfo $instance;
 
     private array $blending_shell = [];
     private array $groups = []; //lesson keys arranged by group
@@ -40,14 +39,12 @@ class BlendingInfo
             $this->lessonsGroup[$lessonKey] = $item['group'];
             $this->accordion[$groupName][$lessonName] = 0;
         }
-        $student = Student::getInstance();
-        $this->setStudentMastery();
     }
 
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
-            self::$instance = new BlendingInfo();
+            self::$instance = new OldBlendingInfo();
         }
 
         return self::$instance;
@@ -64,7 +61,6 @@ class BlendingInfo
                 $this->accordion[$groupName][$lessonName] = 0;
             }
         }
-        $this->setStudentMastery();
 
         return $this->accordion;
     }
@@ -127,13 +123,6 @@ class BlendingInfo
         return $this->lessons[$lessonKey] ?? false;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getLessonKeysByGroup(): array
-    {
-        return $this->groups;
-    }
 
     /**
      * @param string $lessonKey
@@ -159,23 +148,6 @@ class BlendingInfo
         return ($array['prefixes']) ? $array : [];
     }
 
-    // =========== PRIVATE METHODS ====
-    private function setStudentMastery(): void
-    {
-        $cargo = Student::getInstance()->cargo;
-        $lessonLocations = ['masteredLessons', 'currentLessons'];
-        foreach ($lessonLocations as $location) {
-            foreach ($cargo[$location] as $key => $item) {
-                $value = $item['mastery'] > 1 ? 2 : $item['mastery'];
-                $groupName = $this->lessonsGroup[$key] ?? '';
-                // if it's not one of the current lessons, don't include it
-                $lessonName = Util::convertLessonKeyToLessonName($key);
-                if ($lessonName && $groupName && key_exists($lessonName, $this->accordion[$groupName])) {
-                    $this->accordion[$groupName][$lessonName] = $value;
-                }
-            }
-        }
-    }
 
     // =========== PROTECTED/PUBLIC METHODS
 
@@ -201,7 +173,7 @@ class BlendingInfo
 // Only run this from command line (old Python trick)
 if (!count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS))) {
     require 'c:/laragon/www/bopp/public/phonics/202/autoload.php';
-    $blendingInfo = BlendingInfo::getInstance();
+    $blendingInfo = OldBlendingInfo::getInstance();
     $groupNames = $blendingInfo->getGroupNames();
     print_r($groupNames);
     $fatCatSatLessons = $blendingInfo->getGroupLessonKeys('Fat Cat Sat');

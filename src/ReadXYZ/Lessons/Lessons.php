@@ -59,7 +59,7 @@ class Lessons
 
         $this->nullGuard = null;
         $session = new Session();
-        $currentLessonName = $session->getCurrentLesson();
+        $currentLessonName = $session->getCurrentLessonName();
         if (empty($currentLessonName) || not($this->lessonExists($currentLessonName))) {
             $currentLessonName = $this->lessonNames[0];
             $this->setCurrentLesson($currentLessonName);

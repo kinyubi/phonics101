@@ -3,13 +3,14 @@
 
 namespace App\ReadXYZ\Models;
 
+use App\ReadXYZ\Data\StudentsData;
+use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Data\UserMasteryData;
-use App\ReadXYZ\Database\StudentTable;
-use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Twig\LessonListTemplate;
 use App\ReadXYZ\Twig\LessonTemplate;
 use App\ReadXYZ\Twig\LoginTemplate;
 use App\ReadXYZ\Twig\StudentListTemplate;
+use LogicException;
 use Throwable;
 
 class RouteMe
@@ -47,16 +48,27 @@ class RouteMe
      */
     public static function autoLoginDisplay(bool $forceStudentList = false): void
     {
-        Session::sessionContinue();
-        $identity = Identity::getInstance();
-        if ($identity->hasMultipleStudents() || $forceStudentList) {
+        $session = new Session();
+        $trainerId = $session->getTrainerId();
+        if ($trainerId == 0) {
+            throw new LogicException("We shouldn't get here without session user being set.");
+        }
+        $studentsData = new StudentsData();
+        $students = $studentsData->getStudentsForUser($trainerId);
+        if ((count($students) > 1) || $forceStudentList) {
             (new StudentListTemplate())->display();
-        } else {
-            $allStudents = StudentTable::getInstance()->GetAllStudents();
-            $studentId = $allStudents[0]['studentID'];
-            $identity->setStudent($studentId);
-            $identity->savePersistentState();
+        } else if (count($students) == 1) {
+            $studentId = $students[0]['studentID'];
+            $session->updateStudent($studentId);
             (new LessonListTemplate())->display();
+        } else {
+            $trainersData = new TrainersData();
+            if ($trainersData->isAdmin($trainerId)) {
+                throw new LogicException('Admin screen not yet implemented');
+            } else {
+                $userName = $trainersData->getUsername($trainerId);
+                throw new LogicException("Trainer $userName has no students.");
+            }
         }
     }
 

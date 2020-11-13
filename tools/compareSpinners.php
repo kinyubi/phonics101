@@ -14,9 +14,8 @@ if (not(defined('CLASS'))) {
     define('NOTE', 6);
 }
 
-use App\ReadXYZ\Lessons\BlendingInfo;
+use App\ReadXYZ\Lessons\OldBlendingInfo;
 use App\ReadXYZ\Lessons\LessonInfo;
-use App\ReadXYZ\Secrets\Access;
 
 function getBlendingWordLists(array $blendingLessons)
 {
@@ -70,7 +69,7 @@ function getTabNames(array $blendingLessons): array
 
 function makeWordListComparisionCsv(): void
 {
-    $blendingInfo = BlendingInfo::getInstance();
+    $blendingInfo = OldBlendingInfo::getInstance();
     $lessonInfo = LessonInfo::getInstance();
     $blendingLessons = $blendingInfo->getAllLessons();
     $blendingWordLists = getBlendingWordLists($blendingLessons);
@@ -83,7 +82,7 @@ function makeWordListComparisionCsv(): void
 
 function makeSpinnerComparisionCsv(): void
 {
-    $blendingInfo = BlendingInfo::getInstance();
+    $blendingInfo = OldBlendingInfo::getInstance();
     $lessonInfo = LessonInfo::getInstance();
     $blendingLessons = $blendingInfo->getAllLessons();
     printf("\n\nLessonKey, PrefixBlending, VowelBlending, SuffixBlending\n");
@@ -122,13 +121,11 @@ function printOldLessonNames(): void
 
 function printBlendingLessonNames()
 {
-    $lessonGroups = BlendingInfo::getInstance()->getAllLessonGroups();
+    $lessonGroups = OldBlendingInfo::getInstance()->getAllLessonGroups();
     foreach ($lessonGroups as $lesson => $group) {
         printf("%-25s: %s\n", $group, $lesson);
     }
 }
-
-Access::fakeLogin();
 
 //$array = Util::csvFileToArray('c:/users/carlb/desktop/compare.csv');
 // makeSpinnerComparisionCsv($blendingInfo, $lessonInfo);

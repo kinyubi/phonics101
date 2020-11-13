@@ -13,7 +13,7 @@ use RuntimeException;
  * @package App\ReadXYZ\Data
  * Provides routines to interact with abc_Students table
  */
-class StudentData extends AbstractData
+class OldStudentData extends AbstractData
 {
     public function __construct()
     {
