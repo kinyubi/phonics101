@@ -6,7 +6,7 @@
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\OldBlendingInfo;
 use App\ReadXYZ\Lessons\CsvList;
-use App\ReadXYZ\Lessons\LessonInfo;
+use App\ReadXYZ\Lessons\OldLessonInfo;
 use App\ReadXYZ\POPO\gamePOPO;
 use App\ReadXYZ\POPO\LessonPOPO;
 use App\ReadXYZ\POPO\SpellSpinner;
@@ -27,7 +27,7 @@ try {
 }
 
 $blendingInfo = OldBlendingInfo::getInstance();
-$lessonInfo = LessonInfo::getInstance();
+$lessonInfo = OldLessonInfo::getInstance();
 $oldLessons = $lessonInfo->getAllLessons();
 $csvLessons = $csvInfo->getArray();
 

@@ -5,12 +5,13 @@ namespace App\ReadXYZ\Models;
 
 
 use App\ReadXYZ\Data\OneTimePass;
+use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Twig\LoginTemplate;
 
 class ProcessOneTimePassword
 {
 
-    public function handleRequestAndEchoResponse(array $parameters): string
+    public function handleRequestAndEchoResponse(array $parameters): void
     {
         $loginTemplate = new LoginTemplate();
         $otp = $parameters['otp'] ?? '';
@@ -22,12 +23,11 @@ class ProcessOneTimePassword
         if (!$username) {
             $loginTemplate->display('Invalid one-time password' . $otp . '. Try logging in manually.');
         }
-        $identity = Identity::getInstance();
-        $identity->clearIdentity();
-        $result = $identity->validateSignin($username, 'xx');
-        if ($result->failed()) {
-            $loginTemplate->display("Username validation failed for $username.");
-        }
+        $userId = (new TrainersData())->getTrainerId($username);
+        $session = new Session();
+        $session->clearSession();
+        $session->updateUser($userId);
+        RouteMe::autoLoginDisplay();
     }
 
 

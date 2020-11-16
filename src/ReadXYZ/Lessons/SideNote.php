@@ -4,6 +4,7 @@ namespace App\ReadXYZ\Lessons;
 
 use App\ReadXYZ\Data\StudentLessonsData;
 use App\ReadXYZ\Display\LearningCurve;
+use App\ReadXYZ\Enum\TimerType;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Twig\TwigFactory;
 use Exception;
@@ -59,7 +60,7 @@ class SideNote
      */
     public function getLearningCurveHTML(): string
     {
-        return $this->getCurveHTML('learningCurve');
+        return $this->getCurveHTML(new TimerType(TimerType::FLUENCY));
     }
 
     /**
@@ -91,42 +92,26 @@ class SideNote
      */
     public function getTestCurveHTML(): string
     {
-        return $this->getCurveHTML('testCurve');
+        return $this->getCurveHTML(new TimerType(TimerType::TEST));
     }
 
 // ======================== PRIVATE METHODS =====================
+
     /**
-     * @param string $index currently supported indexes are 'learningCurve' and 'testCurve'
+     * @param TimerType $timerType currently supported indexes are 'learningCurve' and 'testCurve'
      *
      * @return string learning curve HTML
      */
-    private function getCurveHTML(string $index): string
+    private function getCurveHTML(TimerType $timerType): string
     {
         $studentLessonData = new StudentLessonsData();
-        $studentLessonData->
-        $ts = Student::getInstance();                   // pick up current session
-        $cargo = $ts->cargo;
-        $currentLessonName = $cargo['currentLesson'];
+        $data = $studentLessonData->getTimedTest($timerType);
+        if (count($data) == 0) return '';
 
-        // we need to get our data
-        $data = [];                                     // default is empty array
-        if (isset($cargo['currentLessons'][$currentLessonName])) {
-            $currentLesson = $cargo['currentLessons'][$currentLessonName];
-        }
-        // it is possible that this lesson has already been mastered
-        if (isset($cargo['masteredLessons'][$currentLessonName][$index])) {
-            $data = $cargo['masteredLessons'][$currentLessonName][$index];
-        } elseif (isset($currentLesson[$index])) {
-            $data = $currentLesson[$index];
-        }
-        $html = '';
-        if ( ! empty($data)) {
-            $learningCurve = new LearningCurve();
-            $imgURL = $learningCurve->learningCurveChart($data);
-            $html = TwigFactory::getInstance()->renderBlock('timers2', 'LearningCurve', ['imageUrl' => $imgURL]) ?? '';
-        }
+        $learningCurve = new LearningCurve();
+        $imgURL = $learningCurve->learningCurveChart($data);
+        return TwigFactory::getInstance()->renderBlock('timers2', 'LearningCurve', ['imageUrl' => $imgURL]) ?? '';
 
-        return $html;
     }
 
     /**

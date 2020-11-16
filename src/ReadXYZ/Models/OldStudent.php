@@ -9,10 +9,10 @@ use App\ReadXYZ\Data\StudentLessonsData;
 use App\ReadXYZ\Data\StudentsData;
 use RuntimeException;
 
-class Student
+class OldStudent
 {
 
-    private static Student $instance;
+    private static OldStudent $instance;
 
     private Session $session;
     private bool    $isValidStudent;
@@ -23,24 +23,11 @@ class Student
         $this->isValidStudent = SESSION::hasActiveStudent();
     }
 
-    public static function getInstance()
-    {
-        self::$instance = new Student();
-        return self::$instance;
-    }
 
     public function getStudentName()
     {
-        return $this->session->getStudentName();
-    }
-
-
-
-    public function getCapitalizedStudentName(): string
-    {
         return ucfirst($this->session->getStudentName());
     }
-
 
     /**
      * persists the specified lesson key as the current lesson.

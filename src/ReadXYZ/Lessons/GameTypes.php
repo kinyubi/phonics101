@@ -2,7 +2,7 @@
 
 namespace App\ReadXYZ\Lessons;
 
-use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Data\GameTypesData;
 
 class GameTypes
 {
@@ -13,11 +13,8 @@ class GameTypes
 
     private function __construct()
     {
-        $json = file_get_contents(Util::getReadXyzSourcePath('resources/gameTypes.json'));
-        $gameTypes = json_decode($json);
-        foreach ($gameTypes as $gameType) {
-            $this->gameTypes[$gameType->gameTypeId] = new GameType($gameType);
-        }
+        $data = new GameTypesData();
+        $this->gameTypes = $data->getAll();
     }
 
     public static function getInstance()
@@ -36,9 +33,8 @@ class GameTypes
      */
     public function getGameInfo(string $gameTypeId): ?GameType
     {
-        $gameType = $this->gameTypes[$gameTypeId] ?? null;
-
-        return $gameType;
+        $lowerGameType = strtolower($gameTypeId);
+        return $this->gameTypes[$lowerGameType] ?? null;
     }
 
     /**
@@ -50,11 +46,16 @@ class GameTypes
     {
         $games = [];
         foreach ($this->gameTypes as $gameType) {
-            if ($gameType->isUniversal()) {
+            if ($gameType->isUniversal) {
                 $games[] = $gameType;
             }
         }
 
         return $games;
+    }
+
+    public function isValid(string $gameTypeId) {
+        $lowerGameType = strtolower($gameTypeId);
+        return array_key_exists($lowerGameType, $this->gameTypes);
     }
 }

@@ -69,16 +69,16 @@ class Lesson implements JsonSerializable
         $gameTypes = GameTypes::getInstance();
         $universalGames = $gameTypes->getUniversalGameTypes();
         foreach ($universalGames as $game) {
-            $url = $game->getUniversalGameUrl();
-            if ($game->getGameTypeId() == 'tic-tac-toe') {
+            $url = $game->universalGameUrl;
+            if ($game->gameTypeId == 'tic-tac-toe') {
                 $wordlist = join('_', $this->getTicTacToeWords());
                 $url .= '?wordlist=' . $wordlist;
             }
-            $this->games[$game->getBelongsOnTab()][] = new Game(
-                $game->getGameTypeId(),
-                $game->getGameDisplayAs(),
-                $game->getThumbNailUrl(),
-                $game->getBelongsOnTab(),
+            $this->games[$game->belongsOnTab][] = new Game(
+                $game->gameTypeId,
+                $game->gameDisplayAs,
+                $game->thumbNailUrl,
+                $game->belongsOnTab,
                 $url
             );
         }
@@ -91,12 +91,12 @@ class Lesson implements JsonSerializable
             if (null == $gameType) {
                 continue;
             }
-            $gameTag = $gameType->getBelongsOnTab();
+            $gameTag = $gameType->belongsOnTab;
             $this->games[$gameTag][] = new Game(
-                $gameType->getGameTypeId(),
-                $gameType->getGameDisplayAs(),
-                $gameType->getThumbNailUrl(),
-                $gameType->getBelongsOnTab(),
+                $gameType->gameTypeId,
+                $gameType->gameDisplayAs,
+                $gameType->thumbNailUrl,
+                $gameType->belongsOnTab,
                 $game->url
             );
         }

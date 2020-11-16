@@ -8,6 +8,7 @@ class TabType
 {
     public string $tabTypeId;
     public string $tabDisplayAs;
+    public string $alias;
     public string $script;
     public string $imageFile;
     public string $html;
@@ -17,6 +18,7 @@ class TabType
     {
         $this->tabTypeId = $other->tabTypeId;
         $this->tabDisplayAs = $other->tabDisplayAs;
+        $this->alias = $other->alias;
         $this->script = $other->script;
         $this->imageFile = $other->imageFile;
         $this->html = '';

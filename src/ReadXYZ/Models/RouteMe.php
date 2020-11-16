@@ -77,8 +77,8 @@ class RouteMe
      */
     public static function processLogin(array $parameters)
     {
-        $identity = Identity::getInstance();
-        $identity->clearIdentity();
+        $session = new Session();
+        $session->clearSession();
         $username = $parameters['username'] ?? $parameters['P1'] ?? '';
         $password = $parameters['password'] ?? $parameters['P2']  ??'';
 
@@ -86,24 +86,17 @@ class RouteMe
             (new LoginTemplate())->display('Username and password must both be provided.');
             exit;
         }
-        $result = $identity->validateSignin($username, $password);
-        if ($result->failed()) {
-            (new LoginTemplate())->display($result->getErrorMessage());
+        $validationStatus= (new TrainersData())->verifyPassword($username, $password);
+        if (false == $validationStatus) {
+            (new LoginTemplate())->display('Invalid user name or password.');
             exit;
         }
-        self::autoLoginDisplay($password == 'zz');
+        self::autoLoginDisplay(false);
     }
 
     public static function parseRoute()
     {
-        $cookie = new Cookie();
-        try {
-            $foundSession = $cookie->tryContinueSession();
-        } catch (Throwable $ex) {
-            $foundSession = false;
-        }
-
-
+        $session = new Session();
         $requestUri = parse_url($_SERVER['REQUEST_URI']);
         $parameters = [];
         $posts = $_REQUEST ?? [];
@@ -113,7 +106,11 @@ class RouteMe
         $path = $requestUri['path'] ?? '/';
         switch ($path) {
             case '/':
-                if ($foundSession) {
+                if ($session->hasLesson()) {
+                    (new LessonTemplate($session->getCurrentLessonName(), ''))->display();
+                } else if ($session->hasStudent()) {
+                    (new LessonListTemplate())->display();
+                } else if ($session->hasTrainer()) {
                     self::autoLoginDisplay();
                 } else {
                     (new LoginTemplate())->display();
@@ -134,8 +131,8 @@ class RouteMe
                 (new LoginTemplate())->display();
                 break;
             case '/lesson':
-                $lessonName = $parameters['P1'] ?? $parameters['lessonName'] ?? $cookie->getCurrentLesson() ?? '';
-                $initialTabName = $parameters['P2'] ?? $parameters['initialTabName'] ?? $cookie->getCurrentTab() ?? '';
+                $lessonName = $parameters['P1'] ?? $parameters['lessonName'] ?? $session->getCurrentLessonName() ?? '';
+                $initialTabName = $parameters['P2'] ?? $parameters['initialTabName']  ?? '';
                 $lessonTemplate = new LessonTemplate($lessonName, $initialTabName);
                 $lessonTemplate->display();
                 break;

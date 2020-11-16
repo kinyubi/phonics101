@@ -87,12 +87,35 @@ EOT;
         return $this->db->queryStatement($query);
     }
 
+    /**
+     * returns lessonCode associated with lessonName.
+     * @param string $lessonName
+     * @return string
+     * @throws RuntimeException when not found or SQL query fails.
+     */
     public function getLessonCode(string $lessonName): string
     {
         $query = "SELECT lessonCode FROM abc_lessons WHERE lessonName = '$lessonName'";
         $result = $this->db->queryAndGetScalar($query);
-        if ($result->failed()) {
+        if ($result->failed() || $result->notFound()) {
             throw new RuntimeException("Attempt to get lesson code for $lessonName failed. " . $result->getMessage());
+        }
+        return $result->getResult();
+    }
+
+    /**
+     * returns lessonDisplayAs if query matches lessonCode or LessonName.
+     * @param string $lesson
+     * @return string
+     * @throws RuntimeException when not found or SQL query fails.
+     */
+    public function getLessonDisplayAs(string $lesson): string
+    {
+        $value = $this->smartQuotes($lesson);
+        $query = "SELECT lessonDisplayAs FROM abc_lessons WHERE lessonCode = $value OR lessonName = $value";
+        $result = $this->db->queryAndGetScalar($query);
+        if ($result->failed() || $result->notFound()) {
+            throw new RuntimeException("Attempt to get lesson display for $lesson failed. " . $result->getMessage());
         }
         return $result->getResult();
     }

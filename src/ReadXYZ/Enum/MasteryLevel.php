@@ -23,7 +23,7 @@ class MasteryLevel extends Enum
     }
 
     /**
-     * @return scalars instead of MasteryLevelObjects
+     * @return int[] scalars instead of MasteryLevelObjects
      */
     public static function getValues(): array
     {

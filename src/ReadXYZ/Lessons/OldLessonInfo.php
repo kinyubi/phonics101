@@ -17,9 +17,9 @@ use App\ReadXYZ\Helpers\Util;
  *
  * @package ReadXYZ\Lessons
  */
-class LessonInfo
+class OldLessonInfo
 {
-    private static LessonInfo $instance;           // Hold a singleton instance of the class
+    private static OldLessonInfo $instance;           // Hold a singleton instance of the class
 
     private JsonStore $lesson_shell;
     private array $lessons;
@@ -61,12 +61,12 @@ class LessonInfo
     /**
      * get the singleton instance of LessonInfo.
      *
-     * @return LessonInfo
+     * @return OldLessonInfo
      */
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
-            self::$instance = new LessonInfo();
+            self::$instance = new OldLessonInfo();
         }
 
         return self::$instance;

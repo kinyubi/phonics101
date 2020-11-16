@@ -2,8 +2,6 @@
 
 namespace App\ReadXYZ\Data;
 
-use mysqli;
-
 /**
  * Class DbResult.
  *
@@ -27,6 +25,7 @@ class DbResult
 
     /**
      * a static function that you can use to pass back an error result.
+     * Sets value to null, success to false and message to the query's error message.
      *
      * @param string $msg
      *
@@ -39,6 +38,7 @@ class DbResult
 
     /**
      * a static function that encapsulates a mysqli query result.
+     * Sets value to fetched query, success to true and message to empty string.
      *
      * @param mixed $value
      *
@@ -46,7 +46,7 @@ class DbResult
      */
     public static function goodResult($value)
     {
-        return new self($value, true, '');
+        return new self($value, true, ($value == null) ? 'Not found' : '');
     }
 
     public function wasSuccessful(): bool
@@ -67,5 +67,10 @@ class DbResult
     public function getMessage(): string
     {
         return $this->message;
+    }
+
+    public function notFound(): bool
+    {
+        return $this->result == null;
     }
 }

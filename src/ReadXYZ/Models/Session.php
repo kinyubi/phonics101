@@ -26,7 +26,7 @@ class Session
     // $_SESSION[self::CURR_USERID] contains the current userId or studentId.
     // If it's a userId it means we don't have a student selected yet.
     const CURR_ID = 'currId';
-    const TEST_ID = 9999999999;
+    const TEST_ID = 9999999;
 
     const VALIDITY_WINDOW = 60 * 60 * 24; // one day in seconds
 
@@ -52,7 +52,10 @@ class Session
             $this->userId = self::TEST_ID;
             $this->studentId = self::TEST_ID;
             $this->studentName = self::TEST_ID;
+            $this->currentLessonCode = 'TEST';
+            $this->currentLesson = 'test';
             $this->lastValidated = time();
+            $this->isValid = true;
             //When testing we don't use the $_SESSION variable
         } else {
             // If we have an active session we retrieve it, otherwise
@@ -204,6 +207,14 @@ class Session
     {
         // TODO refactor to merge with isValid()
         return $this->isValid() && ($this->studentId > 0);
+    }
+
+    /**
+     * @return bool true if session has at least a user, otherwise false.
+     */
+    public function hasTrainer(): bool
+    {
+        return $this->userId != 0;
     }
 
     /**

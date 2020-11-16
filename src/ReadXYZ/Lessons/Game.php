@@ -6,6 +6,11 @@ use JsonSerializable;
 use App\ReadXYZ\Helpers\Location;
 use App\ReadXYZ\Helpers\Util;
 
+/**
+ * Class Game
+ * @package App\ReadXYZ\Lessons
+ * the fields are public because this is just plain old data.
+ */
 class Game implements JsonSerializable
 {
     public string $gameTypeId;

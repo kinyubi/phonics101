@@ -16,7 +16,6 @@ use App\ReadXYZ\Lessons\SideNote;
 use App\ReadXYZ\Lessons\TabTypes;
 use App\ReadXYZ\Lessons\Warmups;
 use App\ReadXYZ\Models\Session;
-use App\ReadXYZ\Models\Student;
 use RuntimeException;
 
 class LessonTemplate
@@ -40,14 +39,8 @@ class LessonTemplate
         $session->updateLesson($lessonName);
         $lessons = Lessons::getInstance();
 
-        if (empty($lessonName)) {
-            $lessonName = $lessons->getCurrentLessonName();
-        }
-        $student = Student::getInstance();
-        if (null === $student) {
-            throw new RuntimeException('Student should never be null here.');
-        }
-        $studentName = $student->getCapitalizedStudentName();
+
+        $studentName = $session->getStudentName();
 
         if (not($lessons->lessonExists($lessonName))) {
             return Util::redBox("A lesson named $lessonName does not exist.");

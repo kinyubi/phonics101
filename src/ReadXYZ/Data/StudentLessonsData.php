@@ -4,6 +4,8 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\MasteryLevel;
+use App\ReadXYZ\Enum\TimerType;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Session;
 use RuntimeException;
@@ -41,8 +43,8 @@ CREATE TABLE `abc_student_lesson` (
 	`timePresented` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
 	`masteryLevel` ENUM('none','advancing','mastered') NOT NULL DEFAULT 'none' COMMENT '0-none, 1-advancing, 2-mastered',
 	`masteryDate` DATE NULL DEFAULT NULL,
-	`fluencyTimes` VARCHAR(16) NOT NULL DEFAULT '0' COMMENT 'each char is a hex value. Array of up to 16 entries',
-	`testTimes` VARCHAR(16) NOT NULL DEFAULT '0' COMMENT '16 hex digit entries',
+	`fluencyTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT 'each 2 char is a decimal value 0-99. Array of up to 8 entries',
+	`testTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT 'each 2 char is a decimal value 0-99. Array of up to 8 entries',
 	`lastPresentedDate` DATE NULL DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	INDEX `studentId` (`studentId`),
@@ -58,41 +60,53 @@ EOT;
     }
 
     /**
-     * @param string|int $masteryValue 'none'|0, 'advancing'|1, 'mastered'|2
-     * @return BoolWithMessage
+     * Clears for times for the Fluency or Test timer for the current lesson
+     * @param TimerType $timerType
      */
-    public function updateMastery($masteryValue): BoolWithMessage
+    public function clearTimedTest(TimerType $timerType): void
     {
         if ( ! $this->session->hasLesson()) {
             throw new RuntimeException('Attempt to update test time without a current lesson.');
         }
-        $enumArray = ['none', 'advancing', 'mastered'];
-        if (is_numeric($masteryValue)) {
-            $masteryIndex = max(0, min(2, $masteryValue));
-            $enumValue = $enumArray[$masteryIndex];
-        } else {
-            if (is_string($masteryValue)) {
-                $enumValue = strtolower($masteryValue);
-                if ( ! in_array($enumValue, $enumArray)) {
-                    throw new RuntimeException("$enumValue is not a valid mastery value.");
-                }
-            } else {
-                throw new RuntimeException('masteryValue must be integer or string');
-            }
+        $result = $this->updateField($timerType->getSqlFieldName(),'');
+        if ($result->failed()) throw new RuntimeException($result->getErrorMessage());
+    }
+
+    /**
+     * fetches the timer times for the specified timer type
+     * @param TimerType $timerType
+     * @return int[]
+     */
+    public function getTimedTest(TimerType $timerType): array
+    {
+        $sqlFieldName = $timerType->getSqlFieldName();
+        $this->createStudentLessonAsNeeded();
+        return $this->getTimedArray($this->getField($sqlFieldName));
+    }
+
+    /**
+     * @param MasteryLevel $masteryLevel 'none'|0, 'advancing'|1, 'mastered'|2
+     * @return BoolWithMessage
+     */
+    public function updateMastery(MasteryLevel $masteryLevel): BoolWithMessage
+    {
+        if ( ! $this->session->hasLesson()) {
+            throw new RuntimeException('Attempt to update test time without a current lesson.');
         }
         $this->createStudentLessonAsNeeded();
 
-
-        $query = "UPDATE abc_student_lesson SET masteryLevel = '$enumValue', masteryDate=NOW() WHERE {$this->whereClause}";
+        $sqlEnumValue = $masteryLevel->getSqlValue();
+        $where = $this->whereClause;
+        $query = "UPDATE abc_student_lesson SET masteryLevel = '$sqlEnumValue', masteryDate=NOW() WHERE $where";
         return $this->db->queryStatement($query);
     }
 
     /**
-     * @param string $type
+     * @param TimerType $timerType
      * @param int $seconds
      * @return BoolWithMessage
      */
-    public function updateTimedTest(string $type, int $seconds): BoolWithMessage
+    public function updateTimedTest(TimerType $timerType, int $seconds): BoolWithMessage
     {
         if ($seconds == 0) {
             return BoolWithMessage::goodResult();
@@ -101,10 +115,10 @@ EOT;
             throw new RuntimeException('Attempt to update test time without a current lesson.');
         }
 
-        $field = ($type == 'fluency') ? 'fluencyTimes' : 'testTimes';
+        $sqlFieldName = $timerType->getSqlFieldName();
         $this->createStudentLessonAsNeeded();
 
-        $times = $this->getTimedArray($this->getField($field));
+        $times = $this->getTimedArray($this->getField($sqlFieldName));
         $seconds = min($seconds, 99);
         $count = count($times);
         if ($count > 7) {
@@ -112,7 +126,7 @@ EOT;
         }
         $times[] = $seconds;
         $newField = $this->setTimedField($times);
-        return $this->updateField($field, $newField);
+        return $this->updateField($sqlFieldName, $newField);
     }
 
 // ======================== PRIVATE METHODS =====================
@@ -142,15 +156,25 @@ EOT;
         return $result->getResult();
     }
 
-    private function getTimedArray(string $field): array
+    /**
+     * convert the VARCHAR(16) timer field to an array of up to 8 times with a range of 1..99
+     * @param string $fieldValuesString
+     * @return array
+     */
+    private function getTimedArray(string $fieldValuesString): array
     {
         $result = [];
-        for ($i = 0; $i < strlen($field); $i += 2) {
-            $result[] = intval(substr($field, $i, 2));
+        for ($i = 0; $i < strlen($fieldValuesString); $i += 2) {
+            $result[] = intval(substr($fieldValuesString, $i, 2));
         }
         return $result;
     }
 
+    /**
+     * convert an array of times to a string with each time 2 characters in length values '01'..'99'
+     * @param array $times
+     * @return string
+     */
     private function setTimedField(array $times): string
     {
         $result = '';
@@ -160,10 +184,10 @@ EOT;
         return $result;
     }
 
-    private function updateField(string $fieldName, $value): BoolWithMessage
+    private function updateField(string $sqlFieldName, $value): BoolWithMessage
     {
         $smartValue = $this->smartQuotes($value);
-        $query = "UPDATE abc_student_lesson SET $fieldName = $smartValue  WHERE {$this->whereClause}";
+        $query = "UPDATE abc_student_lesson SET $sqlFieldName = $smartValue  WHERE {$this->whereClause}";
         return $this->db->queryStatement($query);
     }
 }

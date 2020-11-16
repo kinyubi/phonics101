@@ -1,6 +1,27 @@
 <?php
 
 /**
+ * If an array entry exists, append to it, otherwise  set the value of it.
+ *
+ * @param array $array the array of interest
+ * @param string $key the key in the array we want to use
+ * @param mixed $value the value we want added or appended
+ */
+function addAssociative(array &$array, string $key, $value): void
+{
+    if (isset($array[$key])) {
+        $array[$key] .= $value;
+    } else {
+        $array[$key] = $value;
+    }
+}
+
+function clamp($current, $min, $max)
+{
+    return max($min, min($max, $current));
+}
+
+/**
  * global fatal error handler.
  */
 function fatal_handler(): void
@@ -18,23 +39,6 @@ function fatal_handler(): void
         echo 'CORE ERROR at unknown location. Shutting down, ';
     }
     exit('Fatal error');
-}
-
-function not(bool $expression): bool
-{
-    return !$expression;
-}
-
-/**
- * PHP equivalent of Python's __name__ == '__main__'.
- *
- * @see https://stackoverflow.com/questions/2413991/php-equivalent-of-pythons-name-main
- *
- * @return bool true if we are running the PHP standalone rather than part of a website
- */
-function runningStandalone(): bool
-{
-    return !count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
 }
 
 /**
@@ -59,18 +63,20 @@ function isAssociative($array): bool
     }
 }
 
-/**
- * If an array entry exists, append to it, otherwise  set the value of it.
- *
- * @param array  $array the array of interest
- * @param string $key   the key in the array we want to use
- * @param mixed  $value the value we want added or appended
- */
-function addAssociative(array &$array, string $key, $value): void
+function not(bool $expression): bool
 {
-    if (isset($array[$key])) {
-        $array[$key] .= $value;
-    } else {
-        $array[$key] = $value;
-    }
+    return ! $expression;
 }
+
+/**
+ * PHP equivalent of Python's __name__ == '__main__'.
+ *
+ * @see https://stackoverflow.com/questions/2413991/php-equivalent-of-pythons-name-main
+ *
+ * @return bool true if we are running the PHP standalone rather than part of a website
+ */
+function runningStandalone(): bool
+{
+    return ! count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+}
+

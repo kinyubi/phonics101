@@ -22,7 +22,8 @@ CREATE TABLE `abc_groups` (
 	`groupCode` VARCHAR(32) NOT NULL,
 	`groupName` VARCHAR(128) NOT NULL,
 	`groupDisplayAs` VARCHAR(128) NOT NULL,
-	`active` TINYINT(4) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'bool',
+	`active` ENUM('Y','N') NOT NULL DEFAULT 'Y' COMMENT 'use ActiveType class',
+	`ordinal` TINYINT(4) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`groupCode`)
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB ;
 EOT;
@@ -68,6 +69,36 @@ EOT;
     {
         $name = $this->smartQuotes($groupName);
         $query = "SELECT groupCode FROM abc_groups WHERE groupName = $name OR  groupDisplayAs = $name";
+        return $this->db->queryAndGetScalar($query);
+    }
+
+    public function getActiveGroupRecords()
+    {
+        $query = "SELECT groupCode, groupName, groupDisplayAs FROM abc_groups WHERE active='Y' ORDER BY ordinal";
+        $result = $this->db->queryRows($query);
+        if ($result->failed()) {
+            throw new RuntimeException($result->getMessage());
+        }
+        return $result->getResult();
+    }
+
+    /**
+     * @return string[] an associative array of groupName => displayAs
+     */
+    public function getAllActiveGroups()
+    {
+        $groups = $this->getActiveGroupRecords();
+        $array = [];
+        foreach ($groups as $group) {
+            $array[$group['groupName']] = $group['groupDisplayAs'];
+        }
+        return $array;
+    }
+
+    public function getGroupName(string $groupKey): DbResult
+    {
+        $name = $this->smartQuotes($groupKey);
+        $query = "SELECT groupName FROM abc_groups WHERE groupName = $name OR  groupDisplayAs = $name OR groupCode = $name";
         return $this->db->queryAndGetScalar($query);
     }
 

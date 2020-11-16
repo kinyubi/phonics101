@@ -191,63 +191,8 @@ abstract class FactoryData
         if (!is_numeric($value) || '0' == $value[0]) {
             $value = "'" . $this->dbo->dbConnector->real_escape_string($value) . "'";
         }
-        // backslash all existing quotes and add new ones
-
-        //Convert HTML
-        //$value = htmlspecialchars($value); //escape % and _ (Dangerous to SQL Like)
 
         return $value;
     }
 
-    public function formatResultSet($result, $title, $columns = [])
-    {
-        // typical usage
-        //   $table = singleton('identityTBL');
-        //   $query = "SELECT * FROM " . $table->TableName . " ORDER BY LastUpdate DESC";        // query can join other tables too
-        //   $result = $table->query($query);
-        //
-        //   echo $table->FormatResultSet($result, 'Contents of Identity Table');
-
-        $HTMLresult = '';
-
-        $HTMLresult .= "<br /><strong>$title</strong>";
-
-        if (empty($result)) {
-            $HTMLresult .= '<br />empty resultset';
-        } else {
-            $HTMLresult .= '<span style="font-size:9px;"><table class="gridtable">';
-
-            $firsttime = true;
-            foreach ($result as $row) { // we already have the first row, so do the fetchs at the end
-                if ($firsttime) {
-                    $HTMLresult .= '<tr>';
-
-                    if (empty($columns)) { // if not specified, then all columns
-                        $columns = array_keys($row);
-                    }
-
-                    // print the table header
-                    foreach ($columns as $col) {
-                        if (is_string($col)) { // filter out the numeric indexes - they are duplicates
-                            $HTMLresult .= "<td><strong>&nbsp; $col &nbsp;</strong></td>";
-                        }
-                    }
-                    $HTMLresult .= "</tr>\n";
-                    $firsttime = false;
-                }
-
-                $HTMLresult .= '<tr>';
-                foreach ($columns as $col) {
-                    $HTMLresult .= "<td nowrap>&nbsp; $row[$col] &nbsp;</td>"; // not a special name, so just display it
-                }
-                $HTMLresult .= "</tr>\n";
-            }
-            reset($result); // point back to the top of the array
-
-            $HTMLresult .= '</table></span>';
-            //echo mysql_real_escape_string($HTMLresult);
-        }
-
-        return $HTMLresult;
-    }
 }

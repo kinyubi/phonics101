@@ -11,9 +11,8 @@ inherited inputs:
 inputs:
     accordion[] : obtained by calling Lessons::getInstance()->getAccordionList()
     displayAs[]
-    studentName : obtained by calling Student::getInstance()->getStudentName()
+    studentName : obtained by calling $session->getStudentName()
     mostRecentLesson: lesson most recently worked on
-    mostRecentTab: lesson tab most recently worked on
     isLocal     : obtained by Util::isLocal()
     action      : if specified a file in /actions, otherwise we do legacy treatment
 #}

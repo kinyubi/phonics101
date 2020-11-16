@@ -7,9 +7,7 @@ namespace App\ReadXYZ\Twig;
 use App\ReadXYZ\Display\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
-use App\ReadXYZ\Models\Cookie;
-use App\ReadXYZ\Models\Student;
-use RuntimeException;
+use App\ReadXYZ\Models\Session;
 
 class LessonListTemplate
 {
@@ -21,32 +19,24 @@ class LessonListTemplate
 
     public function display()
     {
-        $cookie = new Cookie();
         LearningCurve::cleanUpOldGraphics();
-        if (!$cookie->tryContinueSession()) {
-            throw new RuntimeException("Session has expired.\n" . $cookie->getCookieString());
-        }
+        $session = new Session();
+
         $lessons = Lessons::getInstance();
-        $studentName = Student::getInstance()->getCapitalizedStudentName();
+
         $accordion = $lessons->getAccordionList();
         $displayAs = [];
-        foreach ($accordion as $group => $lessons) {
-            $displayAs[$group] = Util::addSoundClass($group);
-            foreach($lessons as $lessonName => $masteryLevel) {
-                $displayAs[$lessonName] = Util::addSoundClass($lessonName);
-            }
-        }
+
 
         $args = [
             'accordion' => $accordion,
-            'studentName' => $studentName,
+            'studentName' => $session->getStudentName(),
             'isLocal' => Util::isLocal(),
             'displayAs' => $displayAs,
-            'mostRecentLesson' => $cookie->getCurrentLesson(),
-            'mostRecentTab' => $cookie->getCurrentTab()
+            'mostRecentLesson' => $session->getCurrentLessonName()
         ];
 
-        $page = new Page($studentName);
+        $page = new Page($session->getStudentName());
         $page->addArguments($args);
 
         $page->display('lesson_list');

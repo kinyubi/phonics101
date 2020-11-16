@@ -15,7 +15,7 @@ if (not(defined('CLASS'))) {
 }
 
 use App\ReadXYZ\Lessons\OldBlendingInfo;
-use App\ReadXYZ\Lessons\LessonInfo;
+use App\ReadXYZ\Lessons\OldLessonInfo;
 
 function getBlendingWordLists(array $blendingLessons)
 {
@@ -70,7 +70,7 @@ function getTabNames(array $blendingLessons): array
 function makeWordListComparisionCsv(): void
 {
     $blendingInfo = OldBlendingInfo::getInstance();
-    $lessonInfo = LessonInfo::getInstance();
+    $lessonInfo = OldLessonInfo::getInstance();
     $blendingLessons = $blendingInfo->getAllLessons();
     $blendingWordLists = getBlendingWordLists($blendingLessons);
     $jsonWordLists = $lessonInfo->getAllWordLists();
@@ -83,7 +83,7 @@ function makeWordListComparisionCsv(): void
 function makeSpinnerComparisionCsv(): void
 {
     $blendingInfo = OldBlendingInfo::getInstance();
-    $lessonInfo = LessonInfo::getInstance();
+    $lessonInfo = OldLessonInfo::getInstance();
     $blendingLessons = $blendingInfo->getAllLessons();
     printf("\n\nLessonKey, PrefixBlending, VowelBlending, SuffixBlending\n");
     foreach ($blendingLessons as $blendingLesson) {
@@ -102,7 +102,7 @@ function makeSpinnerComparisionCsv(): void
 
 function printOldLessonNamesComplete(): void
 {
-    $lessonInfo = LessonInfo::getInstance();
+    $lessonInfo = OldLessonInfo::getInstance();
     $jsonLessons = $lessonInfo->getAllLessons();
     foreach ($jsonLessons as $lesson) {
         $groupName = $lessonInfo->getGroupName($lesson['lessonName']);
@@ -112,7 +112,7 @@ function printOldLessonNamesComplete(): void
 
 function printOldLessonNames(): void
 {
-    $lessonInfo = LessonInfo::getInstance();
+    $lessonInfo = OldLessonInfo::getInstance();
     $jsonLessons = $lessonInfo->getAllLessons();
     foreach ($jsonLessons as $lesson) {
         printf("%s\n", $lesson['alternateLessonNames'][0]);

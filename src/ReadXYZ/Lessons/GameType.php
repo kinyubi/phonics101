@@ -6,97 +6,34 @@ use stdClass;
 
 class GameType
 {
-    private string $gameTypeId;
-    private string $gameDisplayAs;
-    private string $thumbNailUrl;
-    private string $belongsOnTab;
-    private int $ordering;
-    private bool $isUniversal;
-    private string $universalGameUrl;
-
-
-    public function __construct(stdCLass $popoGameType)
-    {
-        $this->gameTypeId = $popoGameType->gameTypeId;
-        $this->gameDisplayAs = $popoGameType->gameDisplayAs;
-        $this->thumbNailUrl = $popoGameType->thumbNailUrl;
-        $this->belongsOnTab = $popoGameType->belongsOnTab;
-        $this->isUniversal = $popoGameType->isUniversal;
-        $this->ordering = $popoGameType->ordering;
-        $this->universalGameUrl = $popoGameType->universalGameUrl;
-    }
-
-    public function setUniversalGameUrl(string $url): void
-    {
-        $this->universalGameUrl = $url;
-    }
+    public string $gameTypeId;
+    public string $gameDisplayAs;
+    public string $thumbNailUrl;
+    public string $belongsOnTab;
+    public string $cssClass;
+    public bool $isUniversal;
+    public string $universalGameUrl;
 
     /**
-     * @return string
+     * GameType constructor.
+     * This is a plain old data class. The stdClass comes from the json file or the stdClass created
+     * by GamesTypesData in sqlToGameTime
+     * @param stdClass $stdGameType
      */
-    public function getGameTypeId(): string
+    public function __construct(stdCLass $stdGameType)
     {
-        return $this->gameTypeId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getGameDisplayAs(): string
-    {
-        return $this->gameDisplayAs;
-    }
-
-    /**
-     * @return string
-     */
-    public function getThumbNailUrl(): string
-    {
-        return $this->thumbNailUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBelongsOnTab(): string
-    {
-        return $this->belongsOnTab;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrdering(): int
-    {
-        return $this->ordering;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isUniversal(): bool
-    {
-        return $this->isUniversal;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUniversalGameUrl(): string
-    {
-        return $this->universalGameUrl;
-    }
-
-    public function getCssClass(): string
-    {
-        if ($this->gameTypeId == 'tic-tac-toe') {
-            return $this->gameTypeId;
-        } elseif ($this->gameTypeId == 'sound-box') {
-            return 'sound-box';
-        } elseif ($this->gameTypeId == 'advanced-spell') {
-            return 'advanced-spell';
+        $this->gameTypeId = $stdGameType->gameTypeId;
+        $this->gameDisplayAs = $stdGameType->gameDisplayAs;
+        $this->thumbNailUrl = $stdGameType->thumbNailUrl;
+        $this->belongsOnTab = $stdGameType->belongsOnTab;
+        $this->cssClass = $stdGameType->cssClass;
+        $isUniversal = $stdGameType->isUniversal;
+        if (is_string($isUniversal)) {
+            $this->isUniversal = $stdGameType->isUniversal == 'Y';
         } else {
-            return 'games';
+            $this->isUniversal = $isUniversal;
         }
+        $this->universalGameUrl = $stdGameType->universalGameUrl;
     }
+
 }
