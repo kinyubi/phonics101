@@ -3,6 +3,7 @@
 namespace App\ReadXYZ\Lessons;
 
 use App\ReadXYZ\Data\GameTypesData;
+use App\ReadXYZ\POPO\GameType;
 
 class GameTypes
 {

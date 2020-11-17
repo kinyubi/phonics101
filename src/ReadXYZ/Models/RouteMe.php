@@ -140,7 +140,7 @@ class RouteMe
 
                 break;
             case '/studentlist':
-                self::autoLoginDisplay(true);                                                ;
+                self::autoLoginDisplay(true);
                 break;
             case '/update_mastery':
                 $mastery = new UserMasteryData();

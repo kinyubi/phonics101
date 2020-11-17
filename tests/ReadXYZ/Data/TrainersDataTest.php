@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Data;
+namespace Tests\ReadXYZ\Data;
 
 use App\ReadXYZ\Data\TrainersData;
 use PHPUnit\Framework\TestCase;

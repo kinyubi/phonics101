@@ -168,7 +168,7 @@ EOT;
         $query = "SELECT * FROM abc_trainers WHERE $where";
         $result = $this->db->queryAndGetCount($query);
         if ($result->failed()) {
-            return DbResult::badResult($result->getMessage());
+            return DbResult::badResult($result->getErrorMessage());
         } else {
             return DbResult::goodResult($result->getResult() > 0);
         }

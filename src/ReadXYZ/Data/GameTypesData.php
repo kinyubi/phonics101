@@ -4,7 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
-use App\ReadXYZ\Lessons\GameType;
+use App\ReadXYZ\POPO\GameType;
 use App\ReadXYZ\Models\BoolWithMessage;
 use RuntimeException;
 use stdClass;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Enum;
+namespace Tests\ReadXYZ\Enum;
 
 use App\ReadXYZ\Enum\MasteryLevel;
 use PHPUnit\Framework\TestCase;

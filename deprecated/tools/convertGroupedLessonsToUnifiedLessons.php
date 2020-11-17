@@ -47,7 +47,7 @@ foreach ($csvLessons as $csvLesson) {
     $lesson->lessonId = trim($csvLesson['ID']);
     $lesson->lessonName = $realName;
     $lesson->visible = true;
-    $lesson->lessonDisplayAs = Util::addSoundClass($realName);
+    $lesson->lessonDisplayAs = $realName;
     $lesson->alternateNames = $csvInfo->getAlternateNames($realName);
     if (false == $newLesson) {
         $blendingLesson = $blendingInfo->findLesson($lesson->alternateNames);

@@ -139,7 +139,7 @@ EOT;
         $query = "SELECT * FROM abc_student_lesson WHERE {$this->whereClause}";
         $result = $this->db->queryAndGetCount($query);
         if ($result->failed()) {
-            throw new RuntimeException($result->getMessage() . '.  ' . $query);
+            throw new RuntimeException($result->getErrorMessage() . '.  ' . $query);
         }
         if ($result->getResult() > 0) {
             return;
@@ -151,7 +151,7 @@ EOT;
         $query = "SELECT $fieldName FROM abc_student_lesson WHERE {$this->whereClause}";
         $result = $this->db->queryAndGetScalar($query);
         if ($result->failed()) {
-            throw new RuntimeException($result->getMessage() . '.  ' . $query);
+            throw new RuntimeException($result->getErrorMessage() . '.  ' . $query);
         }
         return $result->getResult();
     }

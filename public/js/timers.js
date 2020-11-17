@@ -107,9 +107,9 @@ $(function () {
         /* read label on button pressed */
         let tempAction = e.target.firstChild.textContent;
         if (tempAction.startsWith('A')) {
-            tempAction = "Advancing"
+            tempAction = "advancing"
         } else {
-            tempAction = "Mastered";
+            tempAction = "mastered";
         }
         formObj.elements['masteryType'].value = tempAction;
         let csvWords = document.getElementById("TM0").innerHTML;

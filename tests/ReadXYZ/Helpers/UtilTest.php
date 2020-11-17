@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Helpers;
+namespace Tests\ReadXYZ\Helpers;
 
 use PHPUnit\Framework\TestCase;
 use App\ReadXYZ\Helpers\Util;
@@ -8,11 +8,6 @@ use App\ReadXYZ\Secrets\Access;
 
 class UtilTest extends TestCase
 {
-
-    public function testAddSoundClass()
-    {
-        $this->assertEquals('<sound>dog</sound>', Util::addSoundClass('/dog/'));
-    }
 
     public function testArrayToList()
     {
@@ -71,10 +66,6 @@ class UtilTest extends TestCase
     {
         $sqlObj = Access::dbConnect();
         $this->assertTrue(is_a($sqlObj, 'mysqli'));
-    }
-
-    public function testFixTabName()
-    {
     }
 
     public function testGetDateStamp()

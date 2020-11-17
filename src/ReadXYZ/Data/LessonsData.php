@@ -4,6 +4,8 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\RecordType;
+use App\ReadXYZ\POPO\Lesson;
 use App\ReadXYZ\Models\BoolWithMessage;
 use RuntimeException;
 use stdClass;
@@ -49,9 +51,7 @@ EOT;
     public function insertOrUpdate(stdClass $lesson, int $ordinal): BoolWithMessage
     {
         $groupTable = new GroupData();
-        $result = $groupTable->getGroupCode($lesson->groupName);
-        if ($result->failed()) throw new RuntimeException("Unable to find group code for {$lesson->groupName}.");
-        $groupCode = $result->getResult();
+        $groupCode = $groupTable->getGroupCode($lesson->groupName);
         $lessonCode = $groupCode . 'L' . str_pad(strval($ordinal), 2, '0', STR_PAD_LEFT);
         $flipbook = $lesson->book ?? '';
         $wordlist = isset($lesson->wordList) ? $this->encodeJsonQuoted($lesson->wordList) : 'NULL';
@@ -87,6 +87,29 @@ EOT;
         return $this->db->queryStatement($query);
     }
 
+    public function get(string $lesson): Lesson
+    {
+        $x = $this->smartQuotes($lesson);
+        $query = "SELECT * FROM abc_lessons WHERE lessonCode = $x OR lessonName = $x OR lessonDisplayAs = $x";
+        $object = $this->throwableQuery($query, RecordType::get(RecordType::SINGLE_OBJECT));
+        $jsonFields = ['alternateNames', 'fluencySentences', 'games','spinner', 'contrastImages'];
+
+        foreach($jsonFields as $field) {
+            $json = $object->$field;
+            $object->$field = ($json != null) ? json_decode($json) : null;
+        }
+        return new Lesson($object);
+    }
+
+    /**
+     * @return stdClass[]
+     */
+    public function getLessonsWithGroupFields(): array
+    {
+        $query = "SELECT * FROM vw_lessons_with_group_fields";
+        return $this->throwableQuery($query, new RecordType(RecordType::STDCLASS_OBJECTS));
+    }
+
     /**
      * returns lessonCode associated with lessonName.
      * @param string $lessonName
@@ -96,11 +119,7 @@ EOT;
     public function getLessonCode(string $lessonName): string
     {
         $query = "SELECT lessonCode FROM abc_lessons WHERE lessonName = '$lessonName'";
-        $result = $this->db->queryAndGetScalar($query);
-        if ($result->failed() || $result->notFound()) {
-            throw new RuntimeException("Attempt to get lesson code for $lessonName failed. " . $result->getMessage());
-        }
-        return $result->getResult();
+        return $this->throwableQuery($query, RecordType::get(RecordType::SCALAR));
     }
 
     /**
@@ -112,11 +131,9 @@ EOT;
     public function getLessonDisplayAs(string $lesson): string
     {
         $value = $this->smartQuotes($lesson);
+        $scalar = RecordType::get(RecordType::SCALAR);
         $query = "SELECT lessonDisplayAs FROM abc_lessons WHERE lessonCode = $value OR lessonName = $value";
-        $result = $this->db->queryAndGetScalar($query);
-        if ($result->failed() || $result->notFound()) {
-            throw new RuntimeException("Attempt to get lesson display for $lesson failed. " . $result->getMessage());
-        }
-        return $result->getResult();
+        return $this->throwableQuery($query, $scalar);
     }
+
 }

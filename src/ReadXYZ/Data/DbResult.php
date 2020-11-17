@@ -64,7 +64,7 @@ class DbResult
         return $this->result;
     }
 
-    public function getMessage(): string
+    public function getErrorMessage(): string
     {
         return $this->message;
     }

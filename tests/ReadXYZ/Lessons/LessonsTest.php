@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Lessons;
+namespace Tests\ReadXYZ\Lessons;
 
 use App\ReadXYZ\Helpers\Util;
 use Peekmo\JsonPath\JsonStore;
@@ -28,28 +28,6 @@ class LessonsTest extends TestCase
             $this->assertTrue($lessons->lessonExists($key));
         }
         $this->assertFalse($lessons->lessonExists(''));
-    }
-
-    public function testValidateLessonName()
-    {
-        // The difference between this and lessonExists is that if we pass in the empty string here
-        // it will get the current lesson name which should always be valid.
-        $lessons = Lessons::getInstance();
-        $this->assertTrue($lessons->validateLessonName(''));
-    }
-
-    public function testGetAndGetNextAndSetCurrentLesson()
-    {
-        $lessons = Lessons::getInstance();
-        $names = $lessons->getAllLessonNames();
-        for ($i=0; $i<count($names) -1; $i+=10) {
-            $setName = $names[$i];
-            $lessons->setCurrentLesson($setName);
-            $getName = $lessons->getCurrentLessonName();
-            $nextName = $lessons->getNextLessonName();
-            $this->assertEquals($setName, $getName);
-            $this->assertEquals($names[$i+1], $nextName);
-        }
     }
 
     public function testMaxLengths()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Lessons;
+namespace Tests\ReadXYZ\Lessons;
 
 use App\ReadXYZ\Lessons\TabTypes;
 use PHPUnit\Framework\TestCase;

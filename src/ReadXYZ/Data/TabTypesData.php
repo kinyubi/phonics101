@@ -4,7 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
-use App\ReadXYZ\Lessons\TabType;
+use App\ReadXYZ\POPO\TabType;
 use App\ReadXYZ\Models\BoolWithMessage;
 use RuntimeException;
 use stdClass;
@@ -52,6 +52,8 @@ EOT;
     }
 
     /**
+     * Creates an associative array of TabType objects. If an object has an alias then an index is
+     * creates for the alias as well as the tabTypeId enabling lookup by either name.
      * @return TabType[]
      */
     public function getAll(): array
@@ -74,6 +76,11 @@ EOT;
         return $tabTypes;
     }
 
+    /**
+     * fetch a tab type using either its tabTypeId or alias
+     * @param string $tabTypeId
+     * @return TabType
+     */
     public function get(string $tabTypeId): TabType
     {
         $query = "SELECT * FROM abc_tabtypes WHERE tabTypeId = '$tabTypeId' OR alias = '$tabTypeId'";

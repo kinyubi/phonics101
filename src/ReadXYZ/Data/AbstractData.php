@@ -4,7 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
-use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Enum\RecordType;
 use App\ReadXYZ\Models\BoolWithMessage;
 use RuntimeException;
 
@@ -38,6 +38,11 @@ abstract class AbstractData
 
     }
 
+    /**
+     * smart quotes for JSON object
+     * @param $object
+     * @return string suitable for use as the value of a mysql JSON field
+     */
     protected function encodeJsonQuoted($object)
     {
         if ($object == null) return "NULL";
@@ -66,5 +71,76 @@ abstract class AbstractData
 
         return $value;
     }
+
+    public function query(string $query, RecordType $recordType): DbResult
+    {
+        switch ($recordType->getValue()) {
+            case RecordType::ASSOCIATIVE_ARRAY:
+                return $this->db->queryRows($query);
+            case RecordType::STDCLASS_OBJECTS:
+                return $this->db->queryObjects($query);
+            case RecordType::SCALAR:
+                return $this->db->queryAndGetScalar($query);
+            case RecordType::RECORD_COUNT:
+                return $this->db->queryAndGetCount($query);
+            case RecordType::SCALAR_ARRAY:
+                return $this->db->queryAndGetScalarArray($query);
+            case RecordType::SINGLE_RECORD:
+                return $this->db->queryRecord($query);
+            case RecordType::SINGLE_OBJECT:
+                return $this->db->queryObject($query);
+            case RecordType::AFFECTED_COUNT:
+                return $this->db->queryAndGetAffectedCount($query);
+            case RecordType::STATEMENT:
+                $result = $this->db->queryStatement($query);
+                if ($result->wasSuccessful()) {
+                    return DbResult::goodResult(1);
+                } else {
+                    return DbResult::badResult($result->getErrorMessage());
+                }
+            default:
+                return DbResult::badResult($recordType->getValue() . ' is not a valid record type.');
+        }
+    }
+
+    /**
+     * executes the query, returns the result or throws if query failed or found no records.
+     * @param string $query
+     * @param RecordType $recordType
+     * @return mixed
+     */
+    public function throwableQuery(string $query, RecordType $recordType)
+    {
+        $result = $this->query($query, $recordType);
+        if ($result->wasSuccessful()) {
+            $goodResult = $result->getResult();
+            switch($recordType->getValue()) {
+                case RecordType::ASSOCIATIVE_ARRAY:
+                case RecordType::STDCLASS_OBJECTS:
+                case RecordType::SCALAR_ARRAY:
+                    if (count($goodResult) == 0) {
+                        throw new RuntimeException('Query found no records.');
+                    } else {
+                        return $goodResult;
+                    }
+                case RecordType::SCALAR:
+                case RecordType::SINGLE_RECORD:
+                case RecordType::SINGLE_OBJECT:
+                    if ($goodResult == null) {
+                        throw new RuntimeException('Query found no records.');
+                    } else {
+                        return $goodResult;
+                    }
+
+                case RecordType::RECORD_COUNT:
+                case RecordType::AFFECTED_COUNT:
+                    return $goodResult;
+                default:
+                    return DbResult::badResult($recordType->getValue() . ' is not a valid record type.');
+            }
+        } else {
+            throw new RuntimeException($result->getErrorMessage());
+    }
+}
 
 }

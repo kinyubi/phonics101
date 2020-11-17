@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\RecordType;
 use App\ReadXYZ\Models\BoolWithMessage;
 use RuntimeException;
 use stdClass;
@@ -65,11 +66,11 @@ EOT;
         return $this->db->queryStatement($query);
     }
 
-    public function getGroupCode(string $groupName): DbResult
+    public function getGroupCode(string $groupName): string
     {
         $name = $this->smartQuotes($groupName);
         $query = "SELECT groupCode FROM abc_groups WHERE groupName = $name OR  groupDisplayAs = $name";
-        return $this->db->queryAndGetScalar($query);
+        return $this->throwableQuery($query, RecordType::get(RecordType::SCALAR));
     }
 
     public function getActiveGroupRecords()
@@ -77,7 +78,7 @@ EOT;
         $query = "SELECT groupCode, groupName, groupDisplayAs FROM abc_groups WHERE active='Y' ORDER BY ordinal";
         $result = $this->db->queryRows($query);
         if ($result->failed()) {
-            throw new RuntimeException($result->getMessage());
+            throw new RuntimeException($result->getErrorMessage());
         }
         return $result->getResult();
     }

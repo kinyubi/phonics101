@@ -25,8 +25,8 @@ class Warmup
      */
     public function __construct(string $lessonName, string $instructions, array $items)
     {
-        $this->lessonName = Util::addSoundClass($lessonName);
-        $this->instructions = Util::addSoundClass($instructions);
+        $this->lessonName = $lessonName;
+        $this->instructions = $instructions;
         $this->warmupItems = $items;
     }
 }

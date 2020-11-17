@@ -3,7 +3,7 @@
 namespace App\ReadXYZ\Lessons;
 
 use App\ReadXYZ\Data\StudentLessonsData;
-use App\ReadXYZ\Display\LearningCurve;
+use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Enum\TimerType;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Twig\TwigFactory;

@@ -4,7 +4,7 @@
 namespace App\ReadXYZ\Twig;
 
 
-use App\ReadXYZ\Display\LearningCurve;
+use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
 use App\ReadXYZ\Models\Session;
@@ -25,7 +25,7 @@ class LessonListTemplate
         $lessons = Lessons::getInstance();
 
         $accordion = $lessons->getAccordionList();
-        $displayAs = [];
+        $displayAs = $lessons->getDisplayAs();
 
 
         $args = [

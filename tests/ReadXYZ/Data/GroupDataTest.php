@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Data;
+namespace Tests\ReadXYZ\Data;
 
 use App\ReadXYZ\Data\GroupData;
 use PHPUnit\Framework\TestCase;

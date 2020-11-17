@@ -1,10 +1,9 @@
 <?php
 
-namespace App\ReadXYZ\Display;
+namespace App\ReadXYZ\lessons;
 
 use Color;
 use Point;
-use App\ReadXYZ\Helpers\Debug;
 use App\ReadXYZ\Helpers\Util;
 use VerticalBarChart;
 use XYDataSet;

@@ -27,6 +27,8 @@ class PhonicsDb
         $this->connection->close();
     }
 
+
+
     /**
      * @param string $query
      * @return DbResult
@@ -62,21 +64,16 @@ class PhonicsDb
         }
     }
 
-    /**
-     * returns the number of records affected by a delete, update or insert.
-     *
-     * @param string $query the query
-     *
-     * @return int if successful, the number of records affected, otherwise -1
-     */
-    public function queryAndGetAffectedCount(string $query): int
+
+    public function queryAndGetAffectedCount(string $query): DbResult
     {
-        $count = -1;
         if ($result = $this->connection->query($query)) {
             $count = $this->connection->affected_rows;
+            $result->close();
+            return DbResult::goodResult($count);
         }
 
-        return $count;
+        return DbResult::badResult($this->getErrorMessage());
     }
 
     /**
@@ -101,6 +98,16 @@ class PhonicsDb
         }
     }
 
+    public function queryObjects(string $query): DbResult
+    {
+        $result = $this->queryRows($query);
+        if ($result->failed()) return $result;
+        $objects = [];
+        $records = $result->getResult();
+        foreach($records as $record) $objects[] = (object) $record;
+        return DbResult::goodResult($objects);
+    }
+
     /**
      * If successful, return result as a DbResult which will contain an associative array or NULL (no match)
      * @param string $query
@@ -113,6 +120,14 @@ class PhonicsDb
         $row = $result->fetch_assoc();
         $result->close();
         return DbResult::goodResult($row);
+    }
+
+    public function queryObject(string $query): DbResult
+    {
+        $result = $this->queryRecord($query);
+        if ($result->failed()) return $result;
+        $record = $result->getResult();
+        return DbResult::goodResult((object) $record);
     }
 
     /**

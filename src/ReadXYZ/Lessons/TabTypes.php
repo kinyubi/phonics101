@@ -3,6 +3,7 @@
 namespace App\ReadXYZ\Lessons;
 
 use App\ReadXYZ\Data\TabTypesData;
+use App\ReadXYZ\POPO\TabType;
 use RuntimeException;
 
 class TabTypes
@@ -34,6 +35,7 @@ class TabTypes
         return self::$instance;
     }
 
+
     /**
      * @param string $tabTypeId
      *
@@ -48,5 +50,14 @@ class TabTypes
     public function isValid(string $tabTypeId) {
         $lowerTabType = strtolower($tabTypeId);
         return array_key_exists($lowerTabType, $this->tabTypes);
+    }
+
+    public function fixTabName($tabName)
+    {
+        if (not($this->isValid($tabName))) {
+            throw new RuntimeException("$tabName is not a valid tab name or alias.");
+        }
+        // if it's an alias key, the tabTypeId will be the real
+        return $this->tabTypes[$tabName]->tabTypeId;
     }
 }

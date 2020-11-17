@@ -3,25 +3,12 @@
 namespace App\ReadXYZ\Helpers;
 
 use App\ReadXYZ\Twig\TwigFactory;
-use RuntimeException;
 use Throwable;
 
 class Util
 {
 
-
-    public static function addSoundClass(string $lessonName): string
-    {
-        return $lessonName;
-        // $pattern = '#/([a-zA-Z]+)/#';
-        // return preg_replace($pattern, '<span class="sound">$1</span>', $lessonName);
-    }
-
-    public static function alert(string $message): void
-    {
-        echo "<script type='text/javascript'>alert('$message');</script>";
-    }
-
+// ======================== STATIC METHODS =====================
 
     /**
      * Takes an array of words and converts it to a string list of single-quoted
@@ -49,8 +36,8 @@ class Util
     /**
      * Determine is a haystack contains a needle (or any needle in an array of needles).
      *
-     * @param string       $haystack the string to search
-     * @param string|array $needles  multiple needles may be specified
+     * @param string $haystack the string to search
+     * @param string|array $needles multiple needles may be specified
      *
      * @return bool returns true if $haystack contains $needle
      */
@@ -72,8 +59,8 @@ class Util
     /**
      * case insensitive version of contains() function.
      *
-     * @param string       $haystack the string to search for
-     * @param string|array $needles  the 'needle' or 'needles' to search for
+     * @param string $haystack the string to search for
+     * @param string|array $needles the 'needle' or 'needles' to search for
      *
      * @return bool returns true if $haystack contains $needle (case-insensitive)
      */
@@ -107,6 +94,7 @@ class Util
         }, $input));
         return $r;
     }
+
     public static function convertLessonKeyToLessonName(string $lessonKey): string
     {
         if (Util::startsWith($lessonKey, 'Blending.')) {
@@ -125,29 +113,17 @@ class Util
         }
     }
 
-    public static function csvStringToArray(string $list): ?array
-    {
-        if (empty($list)) {
-            return null;
-        }
-        try {
-            return array_map('trim', explode(',', $list));
-        } catch (Throwable $throwable) {
-            return null;
-        }
-    }
-
     /**
      * @see http://gist.github.com/385876
      *
-     * @param string $filename  The csv file
+     * @param string $filename The csv file
      * @param string $delimiter the delimiter (default is comma)
      *
      * @return array|bool if successful an array of key value pairs, otherwise false
      */
     public static function csvFileToArray(string $filename = '', string $delimiter = ',')
     {
-        if (!file_exists($filename) || !is_readable($filename)) {
+        if ( ! file_exists($filename) || ! is_readable($filename)) {
             return false;
         }
 
@@ -158,7 +134,7 @@ class Util
             while (false !== ($row = fgetcsv($handle,
                     10000,
                     $delimiter))) {
-                if (!$header) {
+                if ( ! $header) {
                     $header = $row;
                 } else {
                     $data[] = array_combine($header,
@@ -171,64 +147,24 @@ class Util
         return $data;
     }
 
-
-
-
-
-    public static function fixTabName($tabName): string
+    public static function csvStringToArray(string $list): ?array
     {
-        switch (strtolower($tabName)) {
-            case 'stretch':
-            case 'intro':
-                return 'intro';
-            case 'words':
-            case 'write':
-                return 'write';
-            case 'practice':
-                return 'practice';
-            case 'spell':
-            case 'spinner':
-                return 'spell';
-            case 'mastery':
-                return 'mastery';
-            case 'fluency':
-                return 'fluency';
-            case 'test':
-                return 'test';
-            case 'warmups':
-            case 'warmup':
-            case 'warm-ups':
-                return 'warmup';
-            default:
-                throw new RuntimeException("$tabName is not a recognized tab name.");
+        if (($list == null) || empty($list)) {
+            return null;
+        }
+        try {
+            return array_map('trim', explode(',', $list));
+        } catch (Throwable $throwable) {
+            return null;
         }
     }
 
-    public static function getDateStamp($date = ''): string
+    public static function dbDate(int $time = 0): string
     {
-        if ($date) {
-            return date('Y_md', $date);
-        } else {
-            return date('Y_md');
+        if ($time == 0) {
+            return date('Y-m-d H:i:s');
         }
-    }
-
-    public static function getHumanReadableDate($date = ''): string
-    {
-        if ($date) {
-            return date('Y-M-j', $date);
-        } else {
-            return date('Y-M-j');
-        }
-    }
-
-    public static function getHumanReadableDateTime($date = ''): string
-    {
-        if ($date) {
-            return date('Y-M-j H:i:s', $date);
-        } else {
-            return date('Y-M-j H:i:s');
-        }
+        return date('Y-m-d H:i:s', $time);
     }
 
     public static function getInput(string $prompt = '?'): string
@@ -238,25 +174,25 @@ class Util
         return trim(fgets(STDIN));
     }
 
+    public static function getProjectPath($filename = ''): string
+    {
+        return self::stripExtraSlashes(self::reslash($_SERVER['PROJECT_ROOT'] . $filename));
+    }
+
     public static function getPublicPath($filename = ''): string
     {
-        return self::stripExtraSlashes($_SERVER['DOCUMENT_ROOT'] .  $filename);
+        return self::stripExtraSlashes($_SERVER['DOCUMENT_ROOT'] . $filename);
     }
 
     public static function getReadXyzSourcePath($filename = ''): string
     {
-        return self::stripExtraSlashes(self::reslash($_SERVER['XYZ_SRC_ROOT'] .  $filename));
-    }
-
-    public static function getProjectPath($filename = ''): string
-    {
-        return self::stripExtraSlashes(self::reslash($_SERVER['PROJECT_ROOT'] .  $filename));
+        return self::stripExtraSlashes(self::reslash($_SERVER['XYZ_SRC_ROOT'] . $filename));
     }
 
     public static function isLocal(): bool
     {
         $host = $_SERVER['HTTP_HOST'] ?? '';
-        if (!$host) {
+        if ( ! $host) {
             return true;
         }
         return self::contains($host, ['.local', '.test']);
@@ -266,7 +202,7 @@ class Util
      * return first n chars in a string. $len defaults to 1 if not provided.
      *
      * @param string $string The target string to be searched
-     * @param int    $len    The length of the string to be returned
+     * @param int $len The length of the string to be returned
      *
      * @return false|string
      */
@@ -285,12 +221,6 @@ class Util
     public static function quoteList(string $csvList): string
     {
         return "'" . str_replace(',', "','", $csvList) . "'";
-    }
-
-    public static function dbDate(int $time = 0): string
-    {
-        if ($time == 0 ) return date('Y-m-d H:i:s');
-        return date('Y-m-d H:i:s', $time);
     }
 
     public static function redBox(string $message, Throwable $ex = null): string
@@ -318,15 +248,10 @@ class Util
         return str_replace('\\', '/', $path);
     }
 
-    public static function testingInProgress(): bool
-    {
-        return defined('TESTING_IN_PROGRESS');
-    }
-
     /**
      * returns true if 'string' starts with 'startString'.
      *
-     * @param string       $string      the target string being searched
+     * @param string $string the target string being searched
      * @param string|array $startString the 'startsWith' string we are looking for
      *
      * @return bool returns true if $string starts with $startString
@@ -352,7 +277,7 @@ class Util
     /**
      * case insensitive version of startsWith function.
      *
-     * @param string       $string      the string we want to search
+     * @param string $string the string we want to search
      * @param string|array $startString a substring or array of substrings we want to check against the start of the string
      *
      * @return bool returns true if $string starts with $startString (case-insensitive)
@@ -422,6 +347,7 @@ class Util
      * Removes the namespace from a class name.
      *
      * @param string $fullClassName strips the namespace from a fully-qualified class name
+     * @return string
      */
     public static function stripNameSpace(string $fullClassName): string
     {
@@ -432,5 +358,68 @@ class Util
 
         return substr($fullClassName, $pos + 1);
     }
+
+    public static function testingInProgress(): bool
+    {
+        return defined('TESTING_IN_PROGRESS');
+    }
+
+    //     public static function addSoundClass(string $lessonName): string
+    //     {
+    //         $pattern = '#/([a-zA-Z]+)/#';
+    //         return preg_replace($pattern, '<span class="sound">$1</span>', $lessonName);
+    //     }
+    //
+    //     public static function alert(string $message): void
+    //     {
+    //         echo "<script type='text/javascript'>alert('$message');</script>";
+    //     }
+
+    // public static function fixTabName($tabName): string
+    // {
+    //     switch (strtolower($tabName)) {
+    //         case 'stretch':
+    //         case 'intro':
+    //             return 'intro';
+    //         case 'words':
+    //         case 'write':
+    //             return 'write';
+    //         case 'practice':
+    //             return 'practice';
+    //         case 'spell':
+    //         case 'spinner':
+    //             return 'spell';
+    //         case 'mastery':
+    //             return 'mastery';
+    //         case 'fluency':
+    //             return 'fluency';
+    //         case 'test':
+    //             return 'test';
+    //         case 'warmups':
+    //         case 'warmup':
+    //         case 'warm-ups':
+    //             return 'warmup';
+    //         default:
+    //             throw new RuntimeException("$tabName is not a recognized tab name.");
+    //     }
+    // }
+
+    // public static function getHumanReadableDate($date = ''): string
+    // {
+    //     if ($date) {
+    //         return date('Y-M-j', $date);
+    //     } else {
+    //         return date('Y-M-j');
+    //     }
+    // }
+    //
+    // public static function getHumanReadableDateTime($date = ''): string
+    // {
+    //     if ($date) {
+    //         return date('Y-M-j H:i:s', $date);
+    //     } else {
+    //         return date('Y-M-j H:i:s');
+    //     }
+    // }
 
 }

@@ -7,7 +7,7 @@ namespace App\ReadXYZ\Twig;
 use App\ReadXYZ\Data\UserMasteryData;
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Helpers\ScreenCookie;
-use App\ReadXYZ\Display\LearningCurve;
+use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\GameTypes;
 use App\ReadXYZ\Lessons\Lesson;
@@ -45,8 +45,8 @@ class LessonTemplate
         if (not($lessons->lessonExists($lessonName))) {
             return Util::redBox("A lesson named $lessonName does not exist.");
         }
-        $lessons->setCurrentLesson($lessonName);
-        $this->lesson = $lessons->getCurrentLesson();
+        $session = new Session();
+        $this->lesson = $session->get();
         if (null === $this->lesson) {
             throw new RuntimeException('Lesson should never be null here.');
         }

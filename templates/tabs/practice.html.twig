@@ -8,7 +8,7 @@
 {% block PracticeTab %}
   {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
-  {% set wordList = lesson.getWordList() %}
+  {% set wordList = lesson.wordList() %}
   <div class="container">
 
     {% set tabId = tabInfo.tabTypeId %}

@@ -55,7 +55,7 @@ EOT;
         $query = "SELECT studentid FROM abc_Student WHERE StudentName = '$studentName' AND trainer1 = '$username'";
         $result = $this->db->queryAndGetScalar($query);
         if ($result->wasSuccessful()) return $result->getResult();
-        throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
+        throw new RuntimeException('Error: ' . $result->getErrorMessage() . '. ' . $query);
     }
 
     /**
@@ -146,7 +146,7 @@ EOT;
         $query = "SELECT * FROM abc_student WHERE studentid='$studentId'";
         $result = $this->db->queryRecord($query);
         if ($result->failed()) {
-            throw new \RuntimeException($result->getMessage());
+            throw new \RuntimeException($result->getErrorMessage());
         }
         $data = $result->getResult();
         $cargo = unserialize($data['cargo']);

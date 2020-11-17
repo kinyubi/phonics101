@@ -25,7 +25,7 @@ switch (Util::convertCamelToSnakeCase($pageToRender)) {
     case 'lesson':
         // We handle refresh index updating here.
         $lesson = $_REQUEST['lesson'] ?? 'unknown';
-        $tab = Util::fixTabName($_REQUEST['tab'] && '');
+        $tab = $_REQUEST['tab'] && '';
         $refresh = ('1' == ($_REQUEST['refresh'] ?? '0'));
 
         $lessonTemplate = new LessonTemplate($lesson, $tab);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ReadXYZ\Lessons;
+namespace App\ReadXYZ\POPO;
 
 use stdClass;
 

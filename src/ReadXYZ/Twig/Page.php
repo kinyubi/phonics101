@@ -5,7 +5,7 @@ namespace App\ReadXYZ\Twig;
 use App\ReadXYZ\Helpers\ScreenCookie;
 use InvalidArgumentException;
 use App\ReadXYZ\Lessons\Game;
-use App\ReadXYZ\Lessons\TabType;
+use App\ReadXYZ\POPO\TabType;
 use App\ReadXYZ\Models\KeyValuePair;
 use stdClass;
 

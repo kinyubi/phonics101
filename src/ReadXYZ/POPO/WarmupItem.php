@@ -17,9 +17,9 @@ class WarmupItem
 
     public function __construct(string $directions, array $parts)
     {
-        $this->directions = Util::addSoundClass($directions);
+        $this->directions = $directions;
         foreach ($parts as $part) {
-            $this->parts[] = Util::addSoundClass($part);
+            $this->parts[] = $part;
         }
     }
 }

@@ -49,7 +49,7 @@ EOT;
         $query = "SELECT studentid FROM abc_students WHERE StudentName = '$studentName' AND trainerId = '$username'";
         $result = $this->db->queryAndGetScalar($query);
         if ($result->wasSuccessful()) return $result->getResult() ?? 0;
-        throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
+        throw new RuntimeException('Error: ' . $result->getErrorMessage() . '. ' . $query);
     }
 
     public function doesStudentExist(int $studentId): bool
@@ -64,7 +64,7 @@ EOT;
         $query = "SELECT studentName FROM abc_students WHERE studentId = $studentId";
         $result = $this->db->queryAndGetScalar($query);
         if ($result->wasSuccessful()) return $result->getResult() ?? '';
-        throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
+        throw new RuntimeException('Error: ' . $result->getErrorMessage() . '. ' . $query);
     }
 
     /**
@@ -85,7 +85,7 @@ EOT;
         $query = "SELECT studentId studentName FROM vw_students_with_username WHERE $where";
         $result = $this->db->queryRows($query);
         if ($result->failed()) {
-            throw new RuntimeException('Error: ' . $result->getMessage() . '. ' . $query);
+            throw new RuntimeException('Error: ' . $result->getErrorMessage() . '. ' . $query);
         } else {
             return $result->getResult() ?? [];
         }
@@ -108,7 +108,7 @@ EOT;
         }
         $result = $this->db->queryAndGetCount($query);
         if ($result->failed()) {
-            throw new RuntimeException($result->getMessage());
+            throw new RuntimeException($result->getErrorMessage());
         }
         return $result->getResult();
     }
