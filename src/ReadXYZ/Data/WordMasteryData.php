@@ -4,28 +4,43 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Log;
 use App\ReadXYZ\Models\Session;
 use RuntimeException;
 
-class UserMasteryData extends AbstractData
+class WordMasteryData extends AbstractData
 {
 
     private PhonicsDb $db;
 
     public function __construct()
     {
-        parent::__construct('abc_usermastery');
+        parent::__construct('abc_word_mastery', 'id');
     }
 
+    public function _create()
+    {
+        $query = <<<EOT
+        CREATE TABLE `abc_word_mastery` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `studentCode` VARCHAR(32) NOT NULL,
+            `word` VARCHAR(16) NOT NULL,
+            `twice` TINYINT(1) NOT NULL DEFAULT '0',
+            PRIMARY KEY (`id`),
+            INDEX `studentCode` (`studentCode`)
+        ) COLLATE='utf8_general_ci' ENGINE=InnoDB ;
+EOT;
+        $this->throwableQuery($query, QueryType::STATEMENT);
+    }
 
-    public function update(string $studentId, string $presentedWordList, array $masteredWords): BoolWithMessage
+    public function update(string $studentCode, string $presentedWordList, array $masteredWords): BoolWithMessage
     {
         $conn = $this->db->getConnection();
         $quotedList = Util::quoteList($presentedWordList);
-        $query = "DELETE FROM abc_usermastery WHERE studentID = '$studentId' AND word IN ($quotedList)";
+        $query = "DELETE FROM abc_word_mastery WHERE studentCode = '$studentCode' AND word IN ($quotedList)";
         $conn->begin_transaction();
         $result = $this->db->queryStatement($query);
         if ($result->failed()) {
@@ -34,7 +49,7 @@ class UserMasteryData extends AbstractData
             return BoolWithMessage::badResult($error_message);
         } else {
             foreach ($masteredWords as $word) {
-                $query = "INSERT INTO abc_usermastery (studentID, word) VALUES ('$studentId', '$word')";
+                $query = "INSERT INTO abc_word_mastery (studentCode, word) VALUES ('$studentCode', '$word')";
                 $result =  $this->db->queryStatement($query);
                 if ($result->failed()) {
                     $conn->rollback();
@@ -52,10 +67,10 @@ class UserMasteryData extends AbstractData
         if (!$session->hasLesson()) {
             throw new RuntimeException('Cannot update user mastery without an active lesson.');
         }
-        $studentID = $session->getStudentId();
+        $studentCode = $session->getstudentCode();
         $presentedWordList = $_REQUEST['wordlist'];
         $masteredWords = $_REQUEST['word1'] ?? [];
-        $result = $this->update($studentID, $presentedWordList, $masteredWords);
+        $result = $this->update($studentCode, $presentedWordList, $masteredWords);
 
         if ($result->wasSuccessful()) {
             $this->sendResponse(200, 'Update successful');
@@ -73,10 +88,9 @@ class UserMasteryData extends AbstractData
         if (!$session->hasLesson()) {
             throw new RuntimeException('Cannot get mastered words without an active lesson.');
         }
-        $studentId = $session->getStudentId();
-        $query = "SELECT word from abc_usermastery WHERE studentID=$studentId";
-        $result = $this->db->queryAndGetScalarArray($query);
-        return $result->wasSuccessful() ? $result->getResult() : [];
+        $studentCode = $this->smartQuotes($session->getstudentCode());
+        $query = "SELECT word from abc_word_mastery WHERE studentCode = $studentCode";
+        return $this->throwableQuery($query, QueryType::SCALAR_ARRAY);
     }
 
 }

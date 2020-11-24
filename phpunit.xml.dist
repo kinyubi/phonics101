@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This file defines the configuration for phpunit. It defines where the tests are located
+     and where the bootstrap.php (autoloader) file is. It defines TESTING_IN_PROGRESS
+     and then calls the autoloader used normally. -->
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="tests/bootstrap.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         colors="true" bootstrap="tests/bootstrap.php">
   <coverage processUncoveredFiles="true">
     <include>
       <directory suffix=".php">src</directory>

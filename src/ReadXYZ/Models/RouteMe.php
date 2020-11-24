@@ -5,7 +5,8 @@ namespace App\ReadXYZ\Models;
 
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\TrainersData;
-use App\ReadXYZ\Data\UserMasteryData;
+use App\ReadXYZ\Data\WordMasteryData;
+use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Twig\LessonListTemplate;
 use App\ReadXYZ\Twig\LessonTemplate;
 use App\ReadXYZ\Twig\LoginTemplate;
@@ -49,24 +50,24 @@ class RouteMe
     public static function autoLoginDisplay(bool $forceStudentList = false): void
     {
         $session = new Session();
-        $trainerId = $session->getTrainerId();
-        if ($trainerId == 0) {
+        $trainerCode = $session->getTrainerCode();
+        if ($trainerCode == 0) {
             throw new LogicException("We shouldn't get here without session user being set.");
         }
         $studentsData = new StudentsData();
-        $students = $studentsData->getStudentsForUser($trainerId);
+        $students = $studentsData->getStudentsForUser($trainerCode);
         if ((count($students) > 1) || $forceStudentList) {
             (new StudentListTemplate())->display();
         } else if (count($students) == 1) {
-            $studentId = $students[0]['studentID'];
-            $session->updateStudent($studentId);
+            $studentCode = $students[0]['studentCode'];
+            $session->updateStudent($studentCode);
             (new LessonListTemplate())->display();
         } else {
             $trainersData = new TrainersData();
-            if ($trainersData->isAdmin($trainerId)) {
+            if ($trainersData->isAdmin($trainerCode)) {
                 throw new LogicException('Admin screen not yet implemented');
             } else {
-                $userName = $trainersData->getUsername($trainerId);
+                $userName = $trainersData->getUsername($trainerCode);
                 throw new LogicException("Trainer $userName has no students.");
             }
         }
@@ -103,9 +104,17 @@ class RouteMe
         foreach($posts as $key => $value) {
             $parameters[$key] = $value;
         }
-        $path = $requestUri['path'] ?? '/';
-        switch ($path) {
-            case '/':
+        $fullPath= trim($requestUri['path']);
+        $parms = [];
+        if (($fullPath == '') || ($fullPath == '/') || ($fullPath[0] != '/')) {
+            $parms[0] = '';
+        } else {
+            $parms = explode('/', substr($fullPath, 1));
+        }
+
+        $mainRoute = array_shift($parms);
+        switch ($mainRoute) {
+            case '':
                 if ($session->hasLesson()) {
                     (new LessonTemplate($session->getCurrentLessonName(), ''))->display();
                 } else if ($session->hasStudent()) {
@@ -116,36 +125,47 @@ class RouteMe
                     (new LoginTemplate())->display();
                 }
                 break;
-            case '/wp':
+            case 'wp':
                 $login = new ProcessWordPressRequest();
                 echo $login->handleRequestAndGetResponse($parameters);
                 break;
-            case '/otp':
+            case 'otp':
                 $processor = new ProcessOneTimePassword();
                 $processor->handleRequestAndEchoResponse($parameters);
                 break;
-            case '/timer':
+            case 'timer':
                 include $_SERVER['DOCUMENT_ROOT'] . '/public/actions/timers.php';
                 break;
-            case '/login':
+            case 'login':
                 (new LoginTemplate())->display();
                 break;
-            case '/lesson':
+            case 'lesson':
                 $lessonName = $parameters['P1'] ?? $parameters['lessonName'] ?? $session->getCurrentLessonName() ?? '';
                 $initialTabName = $parameters['P2'] ?? $parameters['initialTabName']  ?? '';
                 $lessonTemplate = new LessonTemplate($lessonName, $initialTabName);
                 $lessonTemplate->display();
                 break;
-            case '/lessonlist':
-
+            case 'lessonlist':
+                if (count($parms) > 1) {
+                    $trainerCode = $parms[0];
+                    //TODO: finish this
+                }
                 break;
-            case '/studentlist':
+            case 'studentlist':
                 self::autoLoginDisplay(true);
                 break;
             case '/update_mastery':
-                $mastery = new UserMasteryData();
+                $mastery = new WordMasteryData();
                 $mastery->processRequest();
                 break;
+            case 'test':
+                if (!Util::isLocal()) return;
+                if (empty($parms)) Util::redBox('test route requires additional parameters.');
+                switch($parms[0]) {
+                    case 'lesson-list':
+                        (new LessonListTemplate())->display();
+                        break;
+                }
         }
     }
 }

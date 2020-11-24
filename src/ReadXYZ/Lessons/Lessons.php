@@ -4,10 +4,13 @@ namespace App\ReadXYZ\Lessons;
 
 use App\ReadXYZ\Data\GroupData;
 use App\ReadXYZ\Data\LessonsData;
+use App\ReadXYZ\Data\StudentLessonsData;
+use App\ReadXYZ\Enum\MasteryLevel;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\POPO\Lesson;
 use InvalidArgumentException;
+use stdClass;
 
 /**
  * Class Lessons
@@ -22,27 +25,22 @@ class Lessons
     /** @var Lesson[] */
     private array $lessons = [];
 
-    /** @var string[] */
-    private array $groupNames;
+    /** @var stdClass[] fields: groupCode, groupName, groupDisplayAs, fileName (keychain), friendlyName */
+    private array $groupInfo;
+    private array $groupDisplayAs;
     /** @var array structure is accordion[groupName][lessonName] => masteryLevel (0-none, 1-advancing, 2-mastered) */
-    private array $accordionTemplate = []; // used as a starting point for mastery which is applied in student lesson
+    private array $accordion = []; // used as a starting point for mastery which is applied in student lesson
     private array $alternateNameMap = [];
     private array $lessonNames = [];
     private array $displayAs = [];
-
-
-    private array $maxLengths;
 
     private function __construct()
     {
         $groupData = new GroupData();
         $lessonsData = new LessonsData();
 
-        $this->groupNames = $groupData->getAllActiveGroups();
-        foreach ($this->groupNames as $groupName => $groupDisplayAs) {
-            $this->accordionTemplate[$groupName] = [];
-            $this->displayAs[$groupName] = $groupDisplayAs;
-        }
+        $this->groupInfo = $groupData->getGroupExtendedAssocArray();
+
         $lessonsWithGroupInfo = $lessonsData->getLessonsWithGroupFields();
 
         $ordinal = 0;
@@ -63,11 +61,10 @@ class Lessons
             $this->displayAs[$lessonName] = $lessonDisplay;
             $this->displayAs[$lessonDisplay] = $lessonDisplay;
 
-            $groupName = $this->getGroupName($lesson->groupName);
-            $this->accordionTemplate[$groupName][$lesson->lessonName] = 0;
+            $groupName = $lessonInfo->groupName;
+            if (! isset($this->accordion[$groupName])) $this->accordion[$groupName] = [];
+            $this->accordion[$groupName][$lesson->lessonName] = 0;
             $this->lessonNames[] = $lessonName;
-
-
         }
 
     }
@@ -75,7 +72,7 @@ class Lessons
 // ======================== STATIC METHODS =====================
 
     /**
-     * passes back the singleton instance for this class.
+     * passes back the singleton instance for this class. Refresh the mastery accordion with each student change.
      *
      * @return Lessons
      */
@@ -91,15 +88,18 @@ class Lessons
 // ======================== PUBLIC METHODS =====================
     public function getAccordionList(): array
     {
-        return $this->accordionTemplate;
+        $this->setAccordion();
+        return $this->accordion;
     }
 
     /**
-     * @return string[] an associative array of groupName => displayAs
+     * associative array of groupName => vw_groups_with_keychain objects
+     * fields include groupCode, groupName, groupDisplayAs, fileName (keychain), friendlyName
+     * @return stdClass[]
      */
-    public function getAllGroups(): array
+    public function getGroupDisplayAs(): array
     {
-        return $this->groupNames;
+        return $this->groupDisplayAs;
     }
 
     public function getAllLessonNames(): array
@@ -132,22 +132,24 @@ class Lessons
         return (new Session)->getCurrentLessonName();
     }
 
-    public function getGroupName(string $groupName): string
+    /**
+     * returns an assoc array of possibleLessonName => lessonDisplayAs
+     * @return array
+     */
+    public function getLessonDisplayAs(): array
     {
-        return $this->groupNames[$groupName] ?? $groupName;
+        return $this->displayAs;
     }
 
-    public function getMaxLengths(): array
+    public function getGroupName(string $groupName): string
     {
-        return $this->maxLengths;
+        return $this->groupInfo[$groupName] ?? $groupName;
     }
 
     /**
-     * @param string $LessonName if specified, overrides the actual current lesson
-     *
      * @return string the next lesson. If we were on the last lesson, loop around
      */
-    public function getNextLessonName(string $LessonName = ''): string
+    public function getNextLessonName(): string
     {
         $session = new Session;
         $currentLessonName = $this->getRealLessonName($session->getCurrentLessonName());
@@ -166,6 +168,16 @@ class Lessons
     public function lessonExists(string $lessonName): bool
     {
         return array_key_exists($lessonName, $this->alternateNameMap);
+    }
+
+    public function setAccordion()
+    {
+        $mastery = (new StudentLessonsData())->getLessonMastery();
+        foreach($mastery as $lesson) {
+            if (isset($this->accordion[$lesson->groupName][$lesson->lessonName])) {
+                $this->accordion[$lesson->groupName][$lesson->lessonName] = MasteryLevel::toIntegral($lesson->masteryLevel);
+            }
+        }
     }
 
     public function writeAllLessons(string $fileName): void

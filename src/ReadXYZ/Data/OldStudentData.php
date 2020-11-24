@@ -3,6 +3,7 @@
 
 namespace App\ReadXYZ\Data;
 
+use App\ReadXYZ\Enum\Sql;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
 use stdClass;
@@ -17,10 +18,10 @@ class OldStudentData extends AbstractData
 {
     public function __construct()
     {
-        parent::__construct('abc_students');
+        parent::__construct('abc_students', 'studentid', Sql::READXYZ0_1);
     }
 
-    public function create()
+    public function _create()
     {
         $query = <<<EOT
 CREATE TABLE `abc_student` (

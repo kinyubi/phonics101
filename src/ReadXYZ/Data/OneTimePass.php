@@ -4,7 +4,6 @@
 namespace App\ReadXYZ\Data;
 
 
-use App\ReadXYZ\Data\PhonicsDb;
 use RuntimeException;
 
 class OneTimePass

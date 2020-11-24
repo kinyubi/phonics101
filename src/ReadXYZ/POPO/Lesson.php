@@ -6,6 +6,7 @@ use App\ReadXYZ\Data\GroupData;
 use App\ReadXYZ\Helpers\Location;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\GameTypes;
+use App\ReadXYZ\Lessons\Groups;
 use App\ReadXYZ\Lessons\Spinner;
 use App\ReadXYZ\Lessons\Warmups;
 use App\ReadXYZ\Models\Log;
@@ -25,7 +26,6 @@ class Lesson implements JsonSerializable
     public string $lessonDisplayAs;
     public ?array $wordList;
     public ?array $supplementalWordList;
-    public ?array $contrastList;
     public ?array $stretchList;
     /** @var string[] */
     public ?array $fluencySentences;
@@ -62,13 +62,19 @@ class Lesson implements JsonSerializable
         $this->script = 'Blending';
         $this->alternateNames = $lesson->alternateNames;
         $this->groupCode = $lesson->groupCode;
-        $this->groupName = (new GroupData())->getGroupName($lesson->groupCode);
+        $this->groupName = Groups::getInstance()->getGroupName($lesson->groupCode);
         $this->lessonDisplayAs = $lesson->lessonDisplayAs;
-        $this->wordList = Util::csvStringToArray($lesson->wordList);
-        $this->supplementalWordList = Util::csvStringToArray($lesson->supplementalWordList);
+
+        $this->wordList = is_string($lesson->wordList) ? Util::csvStringToArray($lesson->wordList) : $lesson->wordList;
+        $this->supplementalWordList = is_string($lesson->supplementalWordList) ? Util::csvStringToArray($lesson->supplementalWordList) : $lesson->supplementalWordList;
         $this->allWords = array_merge($this->wordList ?? [], $this->supplementalWordList ?? []);
-        $this->contrastList = Util::csvStringToArray($lesson->contrastList);
-        $this->stretchList = Util::stretchListToArray($lesson->stretchList);
+        if (isset($lesson->contrastImages)) {
+            $this->contrastImages = $lesson->contrastImages;
+        } else if (isset($lesson->contrastList)) {
+            $this->contrastImages = Util::csvStringToArray($lesson->contrastList);
+        }
+
+        $this->stretchList = is_string($lesson->stretchList) ? Util::stretchListToArray($lesson->stretchList) : $lesson->stretchList;
         $this->fluencySentences = $lesson->fluencySentences;
         $this->games = [];
         $this->book = $lesson->flipBook ?? '';
@@ -161,7 +167,6 @@ class Lesson implements JsonSerializable
             'lessonDisplayAs'      => $this->lessonDisplayAs,
             'wordLists'            => $this->wordLists,
             'supplementalWordList' => $this->supplementalWordList,
-            'contrastList'         => $this->contrastList,
             'stretchList'          => $this->stretchList,
             'fluencySentences'     => $this->fluencySentences,
             'gameUrls'             => $this->games,

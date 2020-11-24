@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Models\Session;
 use RuntimeException;
 
@@ -11,106 +12,106 @@ class StudentsData extends AbstractData
 {
     public function __construct()
     {
-        parent::__construct('abc_students');
+        parent::__construct('abc_students', 'studentCode');
+        $this->booleanFields = ['active'];
     }
 
-    public function create()
+// ======================== PUBLIC METHODS =====================
+    public function _create()
     {
         $query = <<<EOT
-CREATE TABLE `abc_students` (
-	`studentId` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`trainerId` INT(10) UNSIGNED NULL DEFAULT NULL,
-	`studentName` VARCHAR(50) NOT NULL,
-	`avatarFileName` VARCHAR(50) NOT NULL DEFAULT '',
-	`createdDate` DATE NOT NULL,
-	`lastAccessedDate` DATE NOT NULL,
-	`validUntilDate` DATE NULL DEFAULT NULL,
-	`active` TINYINT(3) UNSIGNED NOT NULL DEFAULT '1',
-	PRIMARY KEY (`studentId`),
-	INDEX `FK_trainerId_students__trainers` (`trainerId`),
-	CONSTRAINT `FK_trainerId_students__trainers` FOREIGN KEY (`trainerId`) REFERENCES `abc_trainers` (`trainerId`) ON UPDATE CASCADE ON DELETE SET NULL
-) COMMENT='Replaces abc_Student' COLLATE='utf8_general_ci' ENGINE=InnoDB ;
+        CREATE TABLE `abc_students` (
+            `studentCode` VARCHAR(32) NOT NULL,
+            `userName` VARCHAR(100) NULL DEFAULT NULL,
+            `studentName` VARCHAR(50) NOT NULL,
+            `avatarFileName` VARCHAR(50) NOT NULL DEFAULT '',
+            `createdDate` DATE NOT NULL,
+            `lastAccessedDate` DATE NOT NULL,
+            `validUntilDate` DATE NULL DEFAULT NULL,
+            `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+            PRIMARY KEY (`studentCode`),
+            INDEX `fk_student__trainer` (`userName`),
+            CONSTRAINT `fk_student__trainer` FOREIGN KEY (`userName`) 
+                REFERENCES `abc_trainers` (`userName`) ON UPDATE CASCADE ON DELETE SET NULL
+        ) COMMENT='Replaces abc_Student' COLLATE='utf8_general_ci' ENGINE=InnoDB;
 EOT;
+        $this->throwableQuery($query, QueryType::STATEMENT);
+    }
 
-        $result = $this->db->queryStatement($query);
-        if ($result->failed()) {
-            throw new RuntimeException($this->db->getErrorMessage());
-        }
+    public function add(string $studentName, string $userName): DbResult
+    {
+        $studentCode = $this->smartQuotes(uniqid('S', true));
+        $query = "INSERT INTO abc_students(studentCode, userName, studentName,  createdDate, lastAccessedDate) VALUES($studentCode, '$userName', '$studentName', NOW(), NOW())";
+        return $this->query($query, QueryType::STATEMENT);
+    }
+
+    public function doesStudentExist(string $studentCode): bool
+    {
+        $query = "SELECT * FROM abc_students WHERE studentCode = '$studentCode' AND active = 'y'";
+        return $this->throwableQuery($query, QueryType::EXISTS);
     }
 
     /**
-     * Gets the userId associated with a given user name. Returns empty string if not found
+     * Gets the userName associated with a given user name. Returns empty string if not found
      * @param string $username
      * @param string $studentName
-     * @return int the studentId if found, otherwise 0
+     * @return string the studentCode if found, otherwise 0
      */
-    public function getStudentId(string $username, string $studentName): int
+    public function getStudentCode(string $username, string $studentName): string
     {
-        $query = "SELECT studentid FROM abc_students WHERE StudentName = '$studentName' AND trainerId = '$username'";
-        $result = $this->db->queryAndGetScalar($query);
-        if ($result->wasSuccessful()) return $result->getResult() ?? 0;
-        throw new RuntimeException('Error: ' . $result->getErrorMessage() . '. ' . $query);
+        $query = "SELECT studentCode FROM abc_students WHERE StudentName = '$studentName' AND (username = '$username' ";
+        return $this->throwableQuery($query, QueryType::SCALAR);
     }
 
-    public function doesStudentExist(int $studentId): bool
+    public function getStudentName(string $studentCode): string
     {
-        $query = "SELECT * FROM abc_students WHERE studentId = $studentId";
-        $result = $this->db->queryAndGetCount($query);
-        return $result->wasSuccessful() && ($result->getResult() > 0);
-    }
-
-    public function getStudentName(int $studentId): string
-    {
-        $query = "SELECT studentName FROM abc_students WHERE studentId = $studentId";
-        $result = $this->db->queryAndGetScalar($query);
-        if ($result->wasSuccessful()) return $result->getResult() ?? '';
-        throw new RuntimeException('Error: ' . $result->getErrorMessage() . '. ' . $query);
+        $query = "SELECT studentName FROM abc_students WHERE studentCode = '$studentCode'";
+        return $this->throwableQuery($query, QueryType::SCALAR);
     }
 
     /**
-     * @param string|int $user trainerId or userName
-     * @return array an associative array of studentId, studentName
+     * @param string $user trainerCode or userName
+     * @return string[] an associative array of studentCode, studentName
      */
-    public function getStudentsForUser($user=0): array
+    public function getStudentNamesForUser(string $user): array
     {
         // We user the user of the current session if no user specified.
         if (empty($user)) {
             $session = new Session();
-            $user = $session->getTrainerId();
-            if($user== 0) {
+            $user = $session->getTrainerCode();
+            if ( ! $user) {
                 throw new RuntimeException("User cannot be empty when no user present in session.");
             }
         }
-        $where = is_numeric($user) ? "trainerId = $user" : "userName = '$user'";
-        $query = "SELECT studentId studentName FROM vw_students_with_username WHERE $where";
-        $result = $this->db->queryRows($query);
-        if ($result->failed()) {
-            throw new RuntimeException('Error: ' . $result->getErrorMessage() . '. ' . $query);
-        } else {
-            return $result->getResult() ?? [];
-        }
+        $where = "(active = 'Y') AND (userName = '$user' OR trainerCode = '$user')";
+        $query = "SELECT studentName FROM vw_students_with_username WHERE $where";
+        return $this->throwableQuery($query, QueryType::SCALAR_ARRAY);
     }
 
-    public function getStudentNamesForUser($user): array
+    /**
+     * @param string|int $user trainerCode or userName
+     * @return array an associative array of studentCode, studentName
+     */
+    public function getStudentsForUser($user = 0): array
     {
-        $assocArray = $this->getStudentsForUser($user='');
-        return (count($assocArray) > 0) ? array_column($assocArray, 'studentName') : [];
+        // We user the user of the current session if no user specified.
+        if (empty($user)) {
+            $session = new Session();
+            $user = $session->getTrainerCode();
+            if ( ! $user) {
+                throw new RuntimeException("User cannot be empty when no user present in session.");
+            }
+        }
+        $where = "(active = 'Y') AND (userName = '$user' OR trainerCode = '$user')";
+        $query = "SELECT studentCode, studentName FROM vw_students_with_username WHERE $where";
+        return $this->throwableQuery($query, QueryType::ASSOCIATIVE_ARRAY);
     }
 
     public function isValidStudentTrainerPair(string $student, string $user): bool
     {
-        if (is_numeric($student) && is_numeric($user)) {
-            $query = "SELECT * FROM abc_students WHERE studentId = $student AND trainerId = $user";
-        } else if (is_string($student) && is_string($user)) {
-            $query = "SELECT * FROM vw_students_with_username WHERE userName='$user' AND studentName='$student'";
-        } else {
-            throw new RuntimeException("Inputs must both be numeric or both be string.");
-        }
-        $result = $this->db->queryAndGetCount($query);
-        if ($result->failed()) {
-            throw new RuntimeException($result->getErrorMessage());
-        }
-        return $result->getResult();
+        $where = "studentCode = '$student' AND active = 'y' AND (userName = '$user' OR trainerCode = '$user')";
+        $query = "SELECT * FROM abc_students WHERE $where";
+        return $this->throwableQuery($query, QueryType::EXISTS);
     }
 
 }

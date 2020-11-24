@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Twig;
 
 
+use App\ReadXYZ\Data\GroupData;
 use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
@@ -14,32 +15,29 @@ class LessonListTemplate
 
     public function __construct()
     {
-
+        LearningCurve::cleanUpOldGraphics();
     }
 
     public function display()
     {
-        LearningCurve::cleanUpOldGraphics();
-        $session = new Session();
-
         $lessons = Lessons::getInstance();
 
-        $accordion = $lessons->getAccordionList();
-        $displayAs = $lessons->getDisplayAs();
-
-
+        $session = new Session();
+        $studentName = $session->getStudentName();
         $args = [
-            'accordion' => $accordion,
-            'studentName' => $session->getStudentName(),
-            'isLocal' => Util::isLocal(),
-            'displayAs' => $displayAs,
-            'mostRecentLesson' => $session->getCurrentLessonName()
+            'accordion'         => $lessons->getAccordionList(),
+            'studentName'       => $studentName,
+            'mostRecentLesson'  => $session->getCurrentLessonCode(),
+            'groupInfo'         => (new GroupData())->getGroupExtendedAssocArray(),
+            'lessonDisplayAs'   => $lessons->getLessonDisplayAs(),
+            'isLocal' => Util::isLocal()
         ];
 
-        $page = new Page($session->getStudentName());
+        $page = new Page($studentName);
         $page->addArguments($args);
 
         $page->display('lesson_list');
     }
+
 
 }

@@ -4,9 +4,9 @@
 namespace App\ReadXYZ\Data;
 
 
-use App\ReadXYZ\Enum\RecordType;
+use App\ReadXYZ\Enum\QueryType;
+use App\ReadXYZ\Enum\Sql;
 use App\ReadXYZ\POPO\Lesson;
-use App\ReadXYZ\Models\BoolWithMessage;
 use RuntimeException;
 use stdClass;
 
@@ -15,10 +15,12 @@ class LessonsData extends AbstractData
 
     public function __construct()
     {
-        parent::__construct('abc_lessons');
+        parent::__construct('abc_lessons', 'lessonCode');
+        $this->booleanFields = ['active'];
+        $this->jsonFields = ['alternateNames', 'games', 'spinner', 'contrastImages'];
     }
 
-    public function create(): void
+    public function _create(): void
     {
         $query = <<<EOT
 CREATE TABLE `abc_lessons` (
@@ -42,13 +44,10 @@ CREATE TABLE `abc_lessons` (
 	CONSTRAINT `fk_groups__groupCode` FOREIGN KEY (`groupCode`) REFERENCES `abc_groups` (`groupCode`) ON UPDATE CASCADE ON DELETE SET NULL
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB ;
 EOT;
-        $result = $this->db->queryStatement($query);
-        if ($result->failed()) {
-            throw new RuntimeException($this->db->getErrorMessage());
-        }
+        $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
-    public function insertOrUpdate(stdClass $lesson, int $ordinal): BoolWithMessage
+    public function insertOrUpdate(stdClass $lesson, int $ordinal): DbResult
     {
         $groupTable = new GroupData();
         $groupCode = $groupTable->getGroupCode($lesson->groupName);
@@ -62,12 +61,12 @@ EOT;
         $games = isset($lesson->games) ? $this->encodeJsonQuoted($lesson->games) : 'NULL';
         $spinner = isset($lesson->spinner) ? $this->encodeJsonQuoted($lesson->spinner) : 'NULL';
         $contrastImages = isset($lesson->contrastImages) ? $this->encodeJsonQuoted($lesson->contrastImages) : 'NULL';
-
+        $active = isset($lesson->active) ? $this->boolToEnum($lesson->active) :  Sql::ACTIVE;
         $query = <<<EOT
-    INSERT INTO abc_lessons(lessonCode, lessonName, lessonDisplayAs, groupCode, lessonContent, wordList, supplementalWordList, stretchList, flipbook, alternateNames, fluencySentences, games, spinner, contrastImages, ordinal)
+    INSERT INTO abc_lessons(lessonCode, lessonName, lessonDisplayAs, groupCode, lessonContent, wordList, supplementalWordList, stretchList, flipbook, alternateNames, fluencySentences, games, spinner, contrastImages, ordinal, active)
         VALUES('$lessonCode', '{$lesson->lessonId}', '{$lesson->lessonDisplayAs}', '$groupCode', NULL,
             $wordlist, $supplemental, $stretch, '$flipbook', $alternateNames, $fluencySentences, $games,
-            $spinner, $contrastImages, $ordinal)
+            $spinner, $contrastImages, $ordinal, '$active')
         ON DUPLICATE KEY UPDATE 
         lessonName = '{$lesson->lessonId}',
         lessonDisplayAs = '{$lesson->lessonDisplayAs}',
@@ -82,16 +81,17 @@ EOT;
         games = $games,
         spinner = $spinner,
         contrastImages = $contrastImages,                                 
-        ordinal = $ordinal
+        ordinal = $ordinal,
+        active = '$active'
 EOT;
-        return $this->db->queryStatement($query);
+        return $this->query($query, QueryType::AFFECTED_COUNT);
     }
 
     public function get(string $lesson): Lesson
     {
         $x = $this->smartQuotes($lesson);
         $query = "SELECT * FROM abc_lessons WHERE lessonCode = $x OR lessonName = $x OR lessonDisplayAs = $x";
-        $object = $this->throwableQuery($query, RecordType::get(RecordType::SINGLE_OBJECT));
+        $object = $this->throwableQuery($query, QueryType::SINGLE_OBJECT);
         $jsonFields = ['alternateNames', 'fluencySentences', 'games','spinner', 'contrastImages'];
 
         foreach($jsonFields as $field) {
@@ -102,12 +102,13 @@ EOT;
     }
 
     /**
+     * object contains lessonCode, lessonName, lessonDisplayAs, groupCode, groupName, groupDisplayAs
      * @return stdClass[]
      */
     public function getLessonsWithGroupFields(): array
     {
         $query = "SELECT * FROM vw_lessons_with_group_fields";
-        return $this->throwableQuery($query, new RecordType(RecordType::STDCLASS_OBJECTS));
+        return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
     }
 
     /**
@@ -119,7 +120,7 @@ EOT;
     public function getLessonCode(string $lessonName): string
     {
         $query = "SELECT lessonCode FROM abc_lessons WHERE lessonName = '$lessonName'";
-        return $this->throwableQuery($query, RecordType::get(RecordType::SCALAR));
+        return $this->throwableQuery($query, QueryType::SCALAR);
     }
 
     /**
@@ -131,9 +132,8 @@ EOT;
     public function getLessonDisplayAs(string $lesson): string
     {
         $value = $this->smartQuotes($lesson);
-        $scalar = RecordType::get(RecordType::SCALAR);
         $query = "SELECT lessonDisplayAs FROM abc_lessons WHERE lessonCode = $value OR lessonName = $value";
-        return $this->throwableQuery($query, $scalar);
+        return $this->throwableQuery($query, QueryType::SCALAR);
     }
 
 }

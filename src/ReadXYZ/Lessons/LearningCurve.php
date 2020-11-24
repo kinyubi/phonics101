@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ReadXYZ\lessons;
+namespace App\ReadXYZ\Lessons;
 
 use Color;
 use Point;

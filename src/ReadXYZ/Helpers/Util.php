@@ -198,6 +198,20 @@ class Util
         return self::contains($host, ['.local', '.test']);
     }
 
+    public static function isValidStudentCode($studentCode): bool
+    {
+        $re = '/S[0-9a-f]{14}\.[0-9]{8}/' ;
+        $result = preg_match($re, $studentCode, $matches, PREG_SET_ORDER, 0);
+        return $result === 1;
+    }
+
+    public static function isValidTrainerCode($trainerCode): bool
+    {
+        $re = '/U[0-9a-f]{14}\.[0-9]{8}/' ;
+        $result = preg_match($re, $trainerCode, $matches, PREG_SET_ORDER, 0);
+        return $result === 1;
+    }
+
     /**
      * return first n chars in a string. $len defaults to 1 if not provided.
      *

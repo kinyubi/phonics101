@@ -4,19 +4,20 @@
 namespace App\ReadXYZ\Data;
 
 
-use App\ReadXYZ\Enum\RecordType;
-use App\ReadXYZ\Models\BoolWithMessage;
-use RuntimeException;
+use App\ReadXYZ\Enum\QueryType;
+use App\ReadXYZ\Enum\Sql;
 use stdClass;
 
 class GroupData extends AbstractData
 {
     public function __construct()
     {
-        parent::__construct('abc_groups');
+        parent::__construct('abc_groups', 'groupCode');
+        $this->booleanFields = ['active'];
     }
 
-    public function create(): void
+// ======================== PUBLIC METHODS =====================
+    public function _create(): void
     {
         $query = <<<EOT
 CREATE TABLE `abc_groups` (
@@ -28,79 +29,64 @@ CREATE TABLE `abc_groups` (
 	PRIMARY KEY (`groupCode`)
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB ;
 EOT;
-        $result = $this->db->queryStatement($query);
-        if ($result->failed()) {
-            throw new RuntimeException($this->db->getErrorMessage());
-        }
-    }
-
-    public function insertMany(array $groups): int
-    {
-        $query = 'INSERT INTO abc_groups(groupCode, groupName, groupDisplayAs) VALUES(?, ?, ?)';
-        $statement = $this->db->getPreparedStatement($query);
-        $statement->bind_param('sss', $groupCode, $groupName, $groupDisplayAs);
-        $group = 4;
-        foreach ($groups as $groupName => $groupDisplayAs)
-        {
-            $groupCode = 'G' . str_pad(strval($group), 2, '0', STR_PAD_LEFT);
-            $statement->execute();
-            $group+=4;
-        }
-
-        $statement->close();
-
-        return $this->getCount();
-
-    }
-
-    public function insertOrUpdate(stdClass $group, int $ordinal): BoolWithMessage
-    {
-        $query = <<<EOT
-    INSERT INTO abc_groups(groupCode, groupName, groupDisplayAs, ordinal)
-        VALUES('{$group->groupId}', '{$group->groupName}', '{$group->displayAs}', $ordinal)
-        ON DUPLICATE KEY UPDATE 
-        groupName = '{$group->groupName}',
-        groupDisplayAs = '{$group->displayAs}',
-        ordinal = $ordinal
-EOT;
-        return $this->db->queryStatement($query);
+        $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
     public function getGroupCode(string $groupName): string
     {
         $name = $this->smartQuotes($groupName);
         $query = "SELECT groupCode FROM abc_groups WHERE groupName = $name OR  groupDisplayAs = $name";
-        return $this->throwableQuery($query, RecordType::get(RecordType::SCALAR));
-    }
-
-    public function getActiveGroupRecords()
-    {
-        $query = "SELECT groupCode, groupName, groupDisplayAs FROM abc_groups WHERE active='Y' ORDER BY ordinal";
-        $result = $this->db->queryRows($query);
-        if ($result->failed()) {
-            throw new RuntimeException($result->getErrorMessage());
-        }
-        return $result->getResult();
+        return $this->throwableQuery($query, QueryType::SCALAR);
     }
 
     /**
      * @return string[] an associative array of groupName => displayAs
      */
-    public function getAllActiveGroups()
+    public function getGroupExtendedAssocArray()
     {
-        $groups = $this->getActiveGroupRecords();
+        $groups = $this->getGroupObjects("WHERE active='Y'");
         $array = [];
         foreach ($groups as $group) {
-            $array[$group['groupName']] = $group['groupDisplayAs'];
+            $array[$group->groupName] = $group;
         }
         return $array;
     }
 
-    public function getGroupName(string $groupKey): DbResult
+    public function getGroupName(string $groupKey): string
     {
         $name = $this->smartQuotes($groupKey);
         $query = "SELECT groupName FROM abc_groups WHERE groupName = $name OR  groupDisplayAs = $name OR groupCode = $name";
-        return $this->db->queryAndGetScalar($query);
+        return $this->throwableQuery($query, QueryType::SCALAR);
+    }
+
+    /**
+     * @param string $whereClause
+     * @return stdClass[]
+     */
+    public function getGroupObjects(string $whereClause = '')
+    {
+        $query = "SELECT * FROM vw_group_with_keychain $whereClause ORDER BY ordinal";
+        return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
+    }
+
+    /**
+     * @param stdClass $group
+     * @param int $ordinal
+     * @return DbResult
+     */
+    public function insertOrUpdate(stdClass $group, int $ordinal): DbResult
+    {
+        $active = isset($group->active) ? $this->boolToEnum($group->active) :  Sql::ACTIVE;
+        $query = <<<EOT
+    INSERT INTO abc_groups(groupCode, groupName, groupDisplayAs, ordinal, active)
+        VALUES('{$group->groupId}', '{$group->groupName}', '{$group->displayAs}', $ordinal, '$active')
+        ON DUPLICATE KEY UPDATE 
+        groupName = '{$group->groupName}',
+        groupDisplayAs = '{$group->displayAs}',
+        ordinal = $ordinal,
+        active = '$active'
+EOT;
+        return $this->query($query, QueryType::AFFECTED_COUNT);
     }
 
 }

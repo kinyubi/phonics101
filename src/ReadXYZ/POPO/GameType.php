@@ -2,6 +2,7 @@
 
 namespace App\ReadXYZ\POPO;
 
+use LogicException;
 use stdClass;
 
 class GameType
@@ -11,8 +12,9 @@ class GameType
     public string $thumbNailUrl;
     public string $belongsOnTab;
     public string $cssClass;
-    public bool $isUniversal;
+    public bool   $isUniversal;
     public string $universalGameUrl;
+    public bool   $active;
 
     /**
      * GameType constructor.
@@ -27,13 +29,21 @@ class GameType
         $this->thumbNailUrl = $stdGameType->thumbNailUrl;
         $this->belongsOnTab = $stdGameType->belongsOnTab;
         $this->cssClass = $stdGameType->cssClass;
-        $isUniversal = $stdGameType->isUniversal;
-        if (is_string($isUniversal)) {
-            $this->isUniversal = $stdGameType->isUniversal == 'Y';
-        } else {
-            $this->isUniversal = $isUniversal;
-        }
+        $this->isUniversal = $this->sqlEnumToBool($stdGameType->isUniversal);
+
         $this->universalGameUrl = $stdGameType->universalGameUrl;
+        $this->active = $this->sqlEnumToBool($stdGameType->active ?? true);
+    }
+
+    /**
+     * @param string|bool $value Y/N or true/false
+     * @return bool
+     */
+    private function sqlEnumToBool($value)
+    {
+        if (is_string($value)) return $value = 'Y';
+        if (is_bool($value)) return $value;
+        throw new LogicException('Value was neither string nor bool.');
     }
 
 }

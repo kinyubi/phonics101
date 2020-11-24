@@ -18,15 +18,17 @@ class GameTypes
         $this->gameTypes = $data->getAll();
     }
 
+// ======================== STATIC METHODS =====================
     public static function getInstance()
     {
-        if (!isset(self::$instance)) {
+        if ( ! isset(self::$instance)) {
             self::$instance = new GameTypes();
         }
 
         return self::$instance;
     }
 
+// ======================== PUBLIC METHODS =====================
     /**
      * @param string $gameTypeId
      *
@@ -55,7 +57,8 @@ class GameTypes
         return $games;
     }
 
-    public function isValid(string $gameTypeId) {
+    public function isValid(string $gameTypeId)
+    {
         $lowerGameType = strtolower($gameTypeId);
         return array_key_exists($lowerGameType, $this->gameTypes);
     }

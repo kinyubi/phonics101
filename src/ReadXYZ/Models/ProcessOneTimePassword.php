@@ -23,10 +23,10 @@ class ProcessOneTimePassword
         if (!$username) {
             $loginTemplate->display('Invalid one-time password' . $otp . '. Try logging in manually.');
         }
-        $userId = (new TrainersData())->getTrainerId($username);
+        $userCode = (new TrainersData())->getTrainerCode($username);
         $session = new Session();
         $session->clearSession();
-        $session->updateUser($userId);
+        $session->updateUser($userCode);
         RouteMe::autoLoginDisplay();
     }
 

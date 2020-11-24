@@ -11,7 +11,6 @@ class TabType
     public string $alias;
     public string $script;
     public string $imageFile;
-    public string $html;
 
     // stdClass fields are from TabTypePOPO:
     public function __construct(stdClass $other)
@@ -21,7 +20,6 @@ class TabType
         $this->alias = $other->alias;
         $this->script = $other->script;
         $this->imageFile = $other->imageFile;
-        $this->html = '';
     }
 
 }

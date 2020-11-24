@@ -11,34 +11,27 @@ class MasteryLevelTest extends TestCase
     public function testEquals()
     {
         $noLevel = new MasteryLevel(MasteryLevel::NONE);
-        $another = new MasteryLevel(0);
+        $another = new MasteryLevel('none');
         $this->assertTrue($noLevel->equals($another));
     }
 
     public function testGetKey()
     {
-        $level = new MasteryLevel(2);
+        $level = new MasteryLevel('mastered');
         $key = $level->getKey();
         $this->assertEquals('MASTERED', $key);
-    }
-
-    public function testGetSqlValue()
-    {
-        $level = new MasteryLevel(1);
-        $value = $level->getSqlValue();
-        $this->assertEquals('advancing', $value);
     }
 
     public function testGetValue()
     {
         $noLevel = new MasteryLevel(MasteryLevel::NONE);
-        $this->assertEquals(0, $noLevel->getValue());
+        $this->assertEquals('none', $noLevel->getValue());
     }
 
     public function testIsValid()
     {
         $this->assertFalse(MasteryLevel::isValid(5));
-        $this->assertTrue(MasteryLevel::isValid(2));
+        $this->assertTrue(MasteryLevel::isValid('mastered'));
     }
 
     public function testIsValidKey()
@@ -68,7 +61,7 @@ class MasteryLevelTest extends TestCase
     public function searchProvider()
     {
         return [
-            [0, 'NONE'], [1, 'ADVANCING'], [2, 'MASTERED'], ["XXX", false]
+            ['none', 'NONE'], ['advancing', 'ADVANCING'], ['mastered', 'MASTERED'], ["XXX", false]
         ];
     }
 
@@ -79,32 +72,21 @@ class MasteryLevelTest extends TestCase
         $this->assertTrue(isAssociative($array));
     }
 
-    public function testSqlValues()
+    public function testToIntegral()
     {
-        $values = MasteryLevel::getSqlValues();
-        $this->assertCount(3, $values);
-        $this->assertFalse(isAssociative($values));
-        $this->assertContains('advancing', $values);
+        $this->assertEquals(0, MasteryLevel::toIntegral('none'));
+        $this->assertEquals(1, MasteryLevel::toIntegral('advancing'));
+        $this->assertEquals(2, MasteryLevel::toIntegral('mastered'));
     }
 
     /**
      * values() returns an array of MasteryLevel object not a scalar value
      */
-    public function testGetValues()
+    public function testToSqlValue()
     {
-        $values = MasteryLevel::getValues();
-        $this->assertCount(3, $values);
-        $this->assertContains(0, $values);
-        $this->assertFalse(isAssociative($values));
+        $this->assertEquals(MasteryLevel::NONE, MasteryLevel::toSqlValue(0));
+        $this->assertEquals(MasteryLevel::ADVANCING, MasteryLevel::toSqlValue(1));
+        $this->assertEquals(MasteryLevel::MASTERED, MasteryLevel::toSqlValue(2));
     }
-
-    public function test__toString()
-    {
-        $level = new MasteryLevel(1);
-        $str = (string) $level;
-        $this->assertIsString($str);
-        $this->assertEquals('1', $str);
-    }
-
 
 }

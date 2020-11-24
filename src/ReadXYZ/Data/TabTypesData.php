@@ -4,19 +4,18 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\POPO\TabType;
-use App\ReadXYZ\Models\BoolWithMessage;
-use RuntimeException;
 use stdClass;
 
 class TabTypesData extends AbstractData
 {
     public function __construct()
     {
-        parent::__construct('abc_students');
+        parent::__construct('abc_tabtypes', 'tabTypeId');
     }
 
-    public function create()
+    public function _create()
     {
         $query = <<<EOT
 CREATE TABLE `abc_tabtypes` (
@@ -28,13 +27,10 @@ CREATE TABLE `abc_tabtypes` (
 	PRIMARY KEY (`tabTypeId`)
 ) COLLATE='utf8_general_ci' ENGINE=InnoDB ;
 EOT;
-        $result = $this->db->queryStatement($query);
-        if ($result->failed()) {
-            throw new RuntimeException($this->db->getErrorMessage());
-        }
+        $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
-    public function insertOrUpdateStd(stdClass $tabType): BoolWithMessage
+    public function insertOrUpdateStd(stdClass $tabType): DbResult
     {
         $id = $this->smartQuotes($tabType->tabTypeId);
         $display = $this->smartQuotes($tabType->tabDisplayAs);
@@ -48,7 +44,7 @@ EOT;
             script = $script,
             iconUrl = $icon
 EOT;
-        return $this->db->queryStatement($query);
+        return $this->query($query, QueryType::AFFECTED_COUNT);
     }
 
     /**
@@ -58,20 +54,14 @@ EOT;
      */
     public function getAll(): array
     {
-        $result = $this->db->queryRows("SELECT * FROM abc_tabtypes");
-        if ($result->failed()) {
-            throw new RuntimeException($this->db->getErrorMessage());
-        }
-        $records = $result->getResult();
+        $objects = $this->throwableQuery("SELECT * FROM abc_tabtypes", QueryType::STDCLASS_OBJECTS);
         $tabTypes = [];
-        foreach ($records as $record) {
-            $id = $record['tabTypeId'];
-            $alias = $record['alias'];
-            $tabType = $this->sqlToTabType($record);
+        foreach ($objects as $object) {
+            $id = $object->tabTypeId;
+            $alias = $object->alias;
+            $tabType = new TabType($object);
             $tabTypes[$id] = $tabType;
-            if (! empty($alias)) {
-                $tabTypes[$alias] = $tabType;
-            }
+            if (! empty($alias)) $tabTypes[$alias] = $tabType;
         }
         return $tabTypes;
     }
@@ -84,22 +74,7 @@ EOT;
     public function get(string $tabTypeId): TabType
     {
         $query = "SELECT * FROM abc_tabtypes WHERE tabTypeId = '$tabTypeId' OR alias = '$tabTypeId'";
-        $result = $this->db->queryRecord($query);
-        if ($result->failed()) {
-            throw new RuntimeException($this->db->getErrorMessage());
-        }
-        return $this->sqlToTabType($result->getResult());
-    }
-
-    private function sqlToTabType(array $record): TabType
-    {
-        $object = (object)[
-            'tabTypeId'    => strtolower($record['tabTypeId']),
-            'tabDisplayAs' => $record['tabDisplayAs'],
-            'alias'        => strtolower($record['alias']),
-            'script'       => $record['script'],
-            'imageFile'    => $record['iconUrl']
-        ];
+        $object = $this->throwableQuery($query, QueryType::SINGLE_OBJECT);
         return new TabType($object);
     }
 

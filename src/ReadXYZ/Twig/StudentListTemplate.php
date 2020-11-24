@@ -17,8 +17,8 @@ class StudentListTemplate
         $studentLinks = [];
         foreach ($allStudents as $student) {
             $studentLinks[] = [
-                'url'   => Util::buildActionsLink('processStudentSelection', ['P1' => $student['studentId']]),
-                'title' => ucfirst($student['StudentName'])
+                'url'   => Util::buildActionsLink('processStudentSelection', ['P1' => $student['studentCode']]),
+                'title' => ucfirst($student['studentName'])
             ];
         }
         $args = ['page' => $page, 'studentLinks' => $studentLinks];

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * This is the bootstrap loader for our unit tests as defined in /phpunit.xml.dist
+ */
 use Symfony\Component\Dotenv\Dotenv;
 
 // require dirname(__DIR__).'/vendor/autoload.php';

@@ -5,58 +5,61 @@ namespace App\ReadXYZ\Data;
 
 
 use App\ReadXYZ\Enum\MasteryLevel;
+use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\TimerType;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Session;
 use RuntimeException;
+use stdClass;
 
 class StudentLessonsData extends AbstractData
 {
 
     private Session $session;
-    private int     $studentId;
+    private string  $quotedStudentCode;
     private string  $quotedLessonCode;
     private string  $whereClause;
+    private string  $masteryWhereClause;
 
     /**
      * StudentLessonsData constructor.
-     * This will look to session to provide the studentId or lessonCode whenever needed.
+     * This will look to session to provide the studentCode or lessonCode whenever needed.
      */
     public function __construct()
     {
-        parent::__construct('abc_students');
+        parent::__construct('abc_students', 'id');
         $this->session = new Session();
-        $this->studentId = $this->session->getStudentId();
+        $this->quotedStudentCode = $this->smartQuotes($this->session->getstudentCode());
         $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
-        $this->whereClause = "studentId = {$this->studentId} AND lessonCode = {$this->quotedLessonCode}";
+        $this->whereClause = "studentCode = {$this->quotedStudentCode} AND lessonCode = {$this->quotedLessonCode}";
+        $this->masteryWhereClause = "studentCode = {$this->quotedStudentCode}";
     }
 
 
 // ======================== PUBLIC METHODS =====================
-    public function create()
+    public function _create()
     {
         $query = <<<EOT
-CREATE TABLE `abc_student_lesson` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`studentId` INT(10) UNSIGNED NOT NULL,
-	`lessonCode` VARCHAR(32) NOT NULL,
-	`timePresented` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
-	`masteryLevel` ENUM('none','advancing','mastered') NOT NULL DEFAULT 'none' COMMENT '0-none, 1-advancing, 2-mastered',
-	`masteryDate` DATE NULL DEFAULT NULL,
-	`fluencyTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT 'each 2 char is a decimal value 0-99. Array of up to 8 entries',
-	`testTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT 'each 2 char is a decimal value 0-99. Array of up to 8 entries',
-	`lastPresentedDate` DATE NULL DEFAULT NULL,
-	PRIMARY KEY (`id`),
-	INDEX `studentId` (`studentId`),
-	INDEX `FK_lessonId_student_lesson_lessons` (`lessonCode`),
-	CONSTRAINT `FK_lessonCode_studentLesson__lessons` FOREIGN KEY (`lessonCode`) REFERENCES `abc_lessons` (`lessonCode`) ON UPDATE CASCADE ON DELETE CASCADE,
-	CONSTRAINT `FK_studentId_studentLesson__students` FOREIGN KEY (`studentId`) REFERENCES `abc_students` (`studentId`) ON UPDATE CASCADE ON DELETE CASCADE
-) COMMENT='Used to track a students progress in a lesson' COLLATE='utf8_general_ci' ENGINE=InnoDB ;
+        CREATE TABLE `abc_student_lesson` (
+            `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `studentCode` VARCHAR(32) NULL DEFAULT NULL,
+            `lessonCode` VARCHAR(32) NOT NULL,
+            `timePresented` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+            `masteryLevel` ENUM('none','advancing','mastered') NOT NULL DEFAULT 'none' COMMENT '0-none, 1-advancing, 2-mastered',
+            `masteryDate` DATE NULL DEFAULT NULL,
+            `fluencyTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT 'each char is a hex value. Array of up to 16 entries',
+            `testTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT '16 hex digit entries',
+            `lastPresentedDate` DATE NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            INDEX `lessonCode` (`lessonCode`),
+            INDEX `studentCode` (`studentCode`),
+            CONSTRAINT `FK_lessonCode_studentLesson__lessons` FOREIGN KEY (`lessonCode`) 
+                REFERENCES `abc_lessons` (`lessonCode`) ON UPDATE CASCADE ON DELETE CASCADE,
+            CONSTRAINT `FK_student_has_lesson` FOREIGN KEY (`studentCode`) 
+                REFERENCES `abc_students` (`studentCode`) ON UPDATE CASCADE ON DELETE SET NULL
+        ) COMMENT='Used to track a students progress in a lesson' COLLATE='utf8_general_ci' ENGINE=InnoDB ;
 EOT;
-        $result = $this->db->queryStatement($query);
-        if ($result->failed()) {
-            throw new RuntimeException($this->db->getErrorMessage());
-        }
+        $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
     /**
@@ -85,20 +88,41 @@ EOT;
     }
 
     /**
-     * @param MasteryLevel $masteryLevel 'none'|0, 'advancing'|1, 'mastered'|2
-     * @return BoolWithMessage
+     * @param mixed $value
+     * @return void
      */
-    public function updateMastery(MasteryLevel $masteryLevel): BoolWithMessage
+    public function updateMastery($value): void
     {
         if ( ! $this->session->hasLesson()) {
             throw new RuntimeException('Attempt to update test time without a current lesson.');
         }
         $this->createStudentLessonAsNeeded();
 
-        $sqlEnumValue = $masteryLevel->getSqlValue();
+        if (is_integer($value)) {
+            $sqlValue = MasteryLevel::toSqlValue($value);
+        } else if ($value instanceof MasteryLevel) {
+            $sqlValue = $value->getValue();
+        } else if (is_string($value) && MasteryLevel::isValid($value)) {
+            $sqlValue = $value;
+        } else {
+            $sqlValue = 'none';
+        }
         $where = $this->whereClause;
-        $query = "UPDATE abc_student_lesson SET masteryLevel = '$sqlEnumValue', masteryDate=NOW() WHERE $where";
-        return $this->db->queryStatement($query);
+        $query = "UPDATE abc_student_lesson SET masteryLevel = '$sqlValue', masteryDate=NOW() WHERE $where";
+        $this->throwableQuery($query, QueryType::AFFECTED_COUNT);
+    }
+
+    /**
+     * Get the mastery results for the lessons the student has worked on - array of stdClass objects.
+     * @return stdClass[]
+     */
+    public function getLessonMastery(): array
+    {
+        if (! $this->session->hasStudent()) {
+            return [];
+        }
+        $query = "SELECT *  FROM vw_lesson_mastery WHERE {$this->masteryWhereClause}";
+        return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
     }
 
     /**
@@ -137,23 +161,24 @@ EOT;
     private function createStudentLessonAsNeeded(): void
     {
         $query = "SELECT * FROM abc_student_lesson WHERE {$this->whereClause}";
-        $result = $this->db->queryAndGetCount($query);
-        if ($result->failed()) {
-            throw new RuntimeException($result->getErrorMessage() . '.  ' . $query);
-        }
-        if ($result->getResult() > 0) {
-            return;
+        $count = $this->throwableQuery($query, QueryType::RECORD_COUNT);
+        $student = $this->quotedStudentCode;
+        $lesson = $this->quotedLessonCode;
+        if ($count == 0) {
+            $query = "INSERT INTO abc_student_lesson(studentCode, lessoncode) VALUES($student,$lesson)";
+            $this->throwableQuery($query, QueryType::STATEMENT);
         }
     }
 
+    /**
+     * get the field value for the current student/lesson.
+     * @param string $fieldName
+     * @return mixed the value of the queried field.
+     */
     private function getField(string $fieldName)
     {
         $query = "SELECT $fieldName FROM abc_student_lesson WHERE {$this->whereClause}";
-        $result = $this->db->queryAndGetScalar($query);
-        if ($result->failed()) {
-            throw new RuntimeException($result->getErrorMessage() . '.  ' . $query);
-        }
-        return $result->getResult();
+        return $this->throwableQuery($query, QueryType::SCALAR);
     }
 
     /**
@@ -188,6 +213,6 @@ EOT;
     {
         $smartValue = $this->smartQuotes($value);
         $query = "UPDATE abc_student_lesson SET $sqlFieldName = $smartValue  WHERE {$this->whereClause}";
-        return $this->db->queryStatement($query);
+        $this->throwableQuery($query, QueryType::STATEMENT);
     }
 }

@@ -4,20 +4,23 @@
 namespace App\ReadXYZ\Models;
 
 
+use App\ReadXYZ\Data\DbResult;
 use App\ReadXYZ\Data\OneTimePass;
+use App\ReadXYZ\Data\StudentsData;
+use App\ReadXYZ\Data\TrainersData;
+use App\ReadXYZ\Data\Views;
+use App\ReadXYZ\Enum\TrainerType;
 use App\ReadXYZ\Rest\RestTarget;
 use Exception;
-use mysqli;
-use App\ReadXYZ\Secrets\Access;
 use stdClass;
 
 class ProcessWordPressRequest extends RestTarget
 {
-    private mysqli $conn;
+
 
     public function __construct()
     {
-        $this->conn = Access::dbConnect();
+
     }
 
     private function createUserObject(string $userLogin): stdClass
@@ -44,135 +47,72 @@ class ProcessWordPressRequest extends RestTarget
      *
      * @throws Exception if query command unexpectedly fails
      */
-    private function isUserInPhonics($username): bool
+    private function isUserInPhonics(string $user): bool
     {
-        return $this->sqlExists("SELECT * FROM abc_Users WHERE EMail = '$username'");
+        return (new TrainersData())->isValid($user);
     }
 
     /**
      * returns a basicResponse object with result set to true if user exists in as a trainer in phonics101.
      *
-     * @param string username The username to look for in abc_Users
+     * @param string user The username or trainerCode to look for in abc_Users
      *
      * @return bool returns true if user is a trainer for a student
      *
      * @throws Exception if query command unexpectedly fails
      */
-    private function isUserTeacher($username): bool
+    private function isUserTeacher($user): bool
     {
-        return $this->sqlExists("SELECT * FROM abc_Student WHERE trainer1 = '$username'");
+        return (new Views())->doesTrainerHaveStudents($user);
     }
 
     /**
      * returns a basicResponse object wiht result set to true if user exists in as a
      * trainer in phonics101 for the given student name.
      *
-     * @param string username The username to look for in abc_Student in trainer1 field
-     * @param string studentname The student to look for in abc_Student
+     * @param string user The username or trainerCode to look for in abc_Student in trainer1 field
+     * @param string student The studentName or studentCode to look for in abc_Student
      *
      * @return bool returns true if the teacher/student combo is already in the database
      *
      * @throws Exception if query command unexpectedly fails
      */
-    private function isTeacherStudentLogin($userName, $studentName): bool
+    private function isTeacherStudentLogin(string $user, $student): bool
     {
-        $query = "SELECT * FROM abc_Student WHERE trainer1 = '$userName' AND StudentName = '$studentName'";
-
-        return $this->sqlExists($query);
+        return (new Views())->isValidStudentTrainerPair($user, $student);
     }
 
     /**
-
-     * @param string $username the username to be added as
+     * @param string $userName the username to be added as
      *
-     * @throws Exception if SQL command to add student failed
+     * @param string $studentName
      */
-    private function addStudent(string $username, string $studentName): void
+    private function addStudent(string $userName, string $studentName): void
     {
-        $time = time();
-        $humanTime = date('Y-M-j H:i:s', $time);
-        $studentId = uniqid('S');
-        $enrollForm = [
-            'StudentName' => $studentName,
-            'ParentName' => '',
-            'ParentEmail' => '',
-            'ParentMobile' => '',
-            'Emergency' => '',
-            'TeacherName' => $username,
-            'TeacherEmail' => $username,
-            'TeacherMobile' => '',
-            'transaction' => uniqid(),
-        ];
-        $cargo = [
-            'studentID' => $studentId,
-            'currentLesson' => '',
-            'currentLessons' => [],
-            'masteredLessons' => [],
-            'blockedLessons' => [],
-            'preferences' => [],
-            'enrollForm' => $enrollForm,
-            'StudentName' => $studentName,
-            'trainer1' => $username,
-            'trainer2' => '',
-            'trainer3' => '',
-            'project' => '',
-            'created' => $time,
-            'lastupdate' => $time,
-        ];
-        $studentCargo = serialize($cargo);
-        $fields = '(studentid, cargo, StudentName, project, trainer1, trainer2, trainer3, created, createdhuman, lastupdate)';
-        $values = "('$studentId', '$studentCargo', '$studentName', '', '$username', '', '', $time, '$humanTime', $time)";
-        $query = "INSERT INTO abc_Student $fields VALUES $values";
-
-        $result = $this->conn->query($query);
-        if (!$result) {
-            throw new Exception("Unexpected error adding student $studentName with trainer $username. {$this->conn->error}");
-        }
+        $studentsData = new StudentsData();
+        $studentsData->add($studentName, $userName);
     }
 
     /**
      * Adds the user to abc_Users.
      *
-     * @param mysqli conn  The mysqli connection object
-     * @param string username The username to add to abc_Users
-
-     *
-     * @throws Exception if SQL error encountered adding $username to abc_Users
+     * @param string $userName
+     * @param string $password
+     * @param string $first
+     * @param string $last
+     * @param string $type
+     * @return DbResult
      */
-    private function addUser($username): void
+    private function addUser(
+        string $userName,
+        string $password = 'read',
+        string $first = '',
+        string $last = '',
+        string $type=TrainerType::TRAINER
+    ): dbResult
     {
-        $time = time();
-        $humanTime = date('Y-M-j H:i:s', $time);
-        $uuid = uniqid('U');
-        $cargo = [
-            'Project' => '',
-            'UserName' => $username,
-            'Name' => '',
-            'PasswordHash' => '',
-            'EMail' => $username,
-            'fb_userid' => '',
-            'Message' => '',
-            'Mobile' => '',
-            'Preferences' => [],
-            'UserRole' => 'Volunteer',
-            'Authorized' => '0',
-            'AuthHashKey' => '',
-            'Blocked' => '0',
-            'PolicyAgreed' => 0,		// a time field
-            'registerDate' => $time,
-            'registerIP' => '',  // record the IP
-            'lastVisit' => $time,
-            'uuid' => $uuid,
-        ];
-        $userCargo = serialize($cargo);
-        $fields = 'uuid, UserName, EMail, cargo, created, createdhuman,RoleId';
-        $values = "'$uuid', '$username', '$username', '$userCargo', $time, '$humanTime', 4";
-        $query = "INSERT INTO abc_Users ($fields) VALUES ($values)";
-
-        $result = $this->conn->query($query);
-        if (!$result) {
-            throw new Exception("Unexpected error adding user $username. {$this->conn->error}");
-        }
+        //TODO: use Wordpress membership REST api to get firstName, lastName, password, trainerType
+        return (new TrainersData())->add($userName, $password, $first, $last, $type);
     }
 
     /**
@@ -180,17 +120,19 @@ class ProcessWordPressRequest extends RestTarget
      * the username exists.
      * a json structure is returned (via echo) containing the fields 'code', 'msg' and 'canlogin'.
      *
-     * If the username is of the form email.com-studentname we will try and add user if they don't
-     * exist in abc_Useers and we will try and add student if they don't already exist in abc_Student.
+     * If the username is of the form email.com-studentName we will try and add user if they don't
+     * exist in abc_trainers and we will try and add student if they don't already exist in abc_Student.
      * If everything gets added ok or already existed, 'canlogin' will be set to YES', 'code' will be
      * 200 and msg should be 'OK'.
      *
-     * If the username is not of the form email.com-studentname, we will look to see if the
+     * If the username is not of the form email.com-studentName, we will look to see if the
      * username exists in abc_Users and if so is the username a trainer to any students. If so,
      * 'canlogin' will be set to YES', 'code' will be 200 and msg should be 'OK'.
      *
      * Otherwise 'canlogin' will be set to 'NO', 'code' will most likely be 500 and 'msg' will contain
      * an error message.
+     * @param string $userLogin
+     * @return string
      */
     private function CheckLogin(string $userLogin): string
     {
@@ -223,9 +165,7 @@ class ProcessWordPressRequest extends RestTarget
 
     public function handleRequestAndGetResponse(array $parameters): string
     {
-        if ($this->conn->connect_errno) {
-            return $this->getRestResponse(500, 'Connect failed. '.$this->conn->connect_error, false);
-        } elseif (array_key_exists('login', $parameters)) {
+        if (array_key_exists('login', $parameters)) {
             return $this->CheckLogin($parameters['login']);
         } else {
             return $this->getRestResponse(400, 'Unknown method.', false);

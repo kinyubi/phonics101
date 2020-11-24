@@ -8,29 +8,20 @@ use MyCLabs\Enum\Enum;
 
 class MasteryLevel extends Enum
 {
-    const NONE = 0;
-    const ADVANCING = 1;
-    const MASTERED = 2;
+    const NONE = 'none';
+    const ADVANCING = 'advancing';
+    const MASTERED = 'mastered';
 
-    public function getSqlValue()
+    public static function toIntegral(string $sqlValue)
     {
-        return strtolower($this->getKey());
+        $array = ['none' => 0, 'advancing' => 1, 'mastered' => 2];
+        return $array[$sqlValue] ?? 0;
     }
 
-    public static function getSqlValues()
+    public static function toSqlValue(int $integral): string
     {
-        return array_map('strtolower', self::keys());
-    }
-
-    /**
-     * @return int[] scalars instead of MasteryLevelObjects
-     */
-    public static function getValues(): array
-    {
-        $objects = parent::values();
-        $values = [];
-        foreach($objects as $object) $values[] = $object->getValue();
-        return $values;
+        $array = ['none', 'advancing', 'mastered'];
+        return $array[clamp($integral, 0,2)];
     }
 
 }

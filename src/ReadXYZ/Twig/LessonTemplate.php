@@ -4,7 +4,7 @@
 namespace App\ReadXYZ\Twig;
 
 
-use App\ReadXYZ\Data\UserMasteryData;
+use App\ReadXYZ\Data\WordMasteryData;
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Lessons\LearningCurve;
@@ -65,7 +65,7 @@ class LessonTemplate
         $args['gameTypes'] = GameTypes::getInstance();
         $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         $args['sideNote'] = SideNote::getInstance();
-        $args['masteredWords'] = (new UserMasteryData())->getMasteredWords();
+        $args['masteredWords'] = (new WordMasteryData())->getMasteredWords();
 
         echo TwigFactory::getInstance()->renderTemplate('lesson', $args);
     }

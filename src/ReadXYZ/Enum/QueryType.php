@@ -6,7 +6,7 @@ namespace App\ReadXYZ\Enum;
 
 use MyCLabs\Enum\Enum;
 
-class RecordType extends Enum
+class QueryType extends Enum
 {
     const ASSOCIATIVE_ARRAY = 'associative_array';
     const STDCLASS_OBJECTS  = 'stdclass_objects';
@@ -17,9 +17,10 @@ class RecordType extends Enum
     const SINGLE_RECORD     = 'one_record';
     const SINGLE_OBJECT     = 'one_object';
     const STATEMENT         = 'statement';
+    const EXISTS             = 'exists';
 
-    public static function get(string $value): RecordType
+    public static function get(string $value): QueryType
     {
-        return new RecordType($value);
+        return new QueryType($value);
     }
 }
