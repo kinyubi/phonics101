@@ -7,7 +7,6 @@ namespace App\ReadXYZ\Data;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Sql;
 use App\ReadXYZ\POPO\Lesson;
-use RuntimeException;
 use stdClass;
 
 class LessonsData extends AbstractData
@@ -47,7 +46,7 @@ EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
-    public function insertOrUpdate(stdClass $lesson, int $ordinal): DbResult
+    public function insertOrUpdateFromDb(stdClass $lesson, int $ordinal): DbResult
     {
         $groupTable = new GroupData();
         $groupCode = $groupTable->getGroupCode($lesson->groupName);
@@ -115,7 +114,6 @@ EOT;
      * returns lessonCode associated with lessonName.
      * @param string $lessonName
      * @return string
-     * @throws RuntimeException when not found or SQL query fails.
      */
     public function getLessonCode(string $lessonName): string
     {
@@ -127,7 +125,6 @@ EOT;
      * returns lessonDisplayAs if query matches lessonCode or LessonName.
      * @param string $lesson
      * @return string
-     * @throws RuntimeException when not found or SQL query fails.
      */
     public function getLessonDisplayAs(string $lesson): string
     {

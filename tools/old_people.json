@@ -1,0 +1,1739 @@
+[
+    {
+        "username": "lisamichelle@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5c9e79a6534ca",
+                "studentName": "Annie",
+                "email": "lisamichelle@gmail.com",
+                "currentLesson": "at",
+                "mastery": {
+                    "ig": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2020-01-25 11:11:37"
+                    },
+                    "ut+ug+up+un": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2020-02-29 11:54:18"
+                    },
+                    "at+it": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2020-03-31 10:22:54"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            21,
+                            4,
+                            5,
+                            3
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2020-06-06 18:15:17"
+                    },
+                    "ag": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-08-31 16:26:47"
+                    },
+                    "i_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            0
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-09-26 13:01:48"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-11-23 15:06:48"
+                    },
+                    "bdp_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-23 15:07:14"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-23 15:07:56"
+                    },
+                    "it": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2020-01-25 11:11:37"
+                    },
+                    "ot": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2020-02-02 15:52:10"
+                    }
+                }
+            },
+            {
+                "studentId": "S5ce36e1c38b4b",
+                "studentName": "Joe",
+                "email": "lisamichelle@gmail.com",
+                "currentLesson": "ap",
+                "mastery": {
+                    "ap": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-08-02 09:19:45"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            9,
+                            3
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-07-25 15:05:13"
+                    }
+                }
+            },
+            {
+                "studentId": "S5d3a15db9cef0",
+                "studentName": "Jim",
+                "email": "lisamichelle@gmail.com",
+                "currentLesson": "at",
+                "mastery": {
+                    "ag": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-08-26 08:01:40"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            0
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-07-25 15:05:55"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-08-26 08:01:40"
+                    }
+                }
+            },
+            {
+                "studentId": "S5d449020a7ff8",
+                "studentName": "Mark",
+                "email": "lisamichelle@gmail.com-mark",
+                "currentLesson": "at",
+                "mastery": {
+                    "at": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-08-02 13:35:11"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "smile_123456@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5ce9e57774695",
+                "studentName": "tester",
+                "email": "smile_123456@gmail.com",
+                "currentLesson": "vowels",
+                "mastery": []
+            }
+        ]
+    },
+    {
+        "username": "mjlutkin@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d6fb7d915ba0",
+                "studentName": "Liam",
+                "email": "mjlutkin@gmail.com-liam",
+                "currentLesson": "at",
+                "mastery": {
+                    "u_a": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 16:32:42"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-11 16:23:27"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            24
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-09-12 16:59:05"
+                    },
+                    "vowels": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-16 12:03:51"
+                    },
+                    "ag": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-16 16:49:45"
+                    },
+                    "bdp_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            24
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-09-18 16:55:22"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-19 16:33:37"
+                    },
+                    "it": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            35
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-09-25 16:33:19"
+                    },
+                    "ig": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-26 16:18:53"
+                    },
+                    "a+i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-09-27 16:29:12"
+                    },
+                    "bdp_i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-30 12:09:37"
+                    },
+                    "i_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-30 16:21:37"
+                    },
+                    "ot": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-04 13:20:57"
+                    },
+                    "ot+og+op": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-07 16:14:35"
+                    },
+                    "a+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-30 16:29:33"
+                    },
+                    "ut+ug+up+un": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-10 16:17:26"
+                    },
+                    "o_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-16 17:33:49"
+                    },
+                    "bdp_o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-16 17:34:01"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "dobspc@aol.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d6fc45d87493",
+                "studentName": "Leo",
+                "email": "dobspc@aol.com-leo",
+                "currentLesson": "at",
+                "mastery": {
+                    "at": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-04 08:04:13"
+                    },
+                    "oy": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-11-18 08:24:17"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-11 08:18:32"
+                    },
+                    "i_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-12 08:17:40"
+                    },
+                    "o_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-18 08:36:27"
+                    },
+                    "bdp_u": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-19 08:16:51"
+                    },
+                    "u_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-23 08:10:26"
+                    },
+                    "grand_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-23 08:10:49"
+                    },
+                    "blends_s": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-30 08:21:06"
+                    },
+                    "ck_endings": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-02 08:34:48"
+                    },
+                    "suffix_blends": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-02 08:41:22"
+                    },
+                    "ngs+nks": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-02 08:50:36"
+                    },
+                    "prefix_blends": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-02 08:55:29"
+                    },
+                    "prefix+suffix": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-03 08:18:08"
+                    },
+                    "r_control_pref": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-07 08:20:31"
+                    },
+                    "kn+gn+wr": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-10 08:21:51"
+                    },
+                    "dge+nge": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-14 08:21:24"
+                    },
+                    "a_e_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-16 08:07:44"
+                    },
+                    "o_e_harder": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-28 08:16:00"
+                    },
+                    "u_e": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-28 08:22:23"
+                    },
+                    "nce": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-04 08:15:57"
+                    },
+                    "e_e+eh": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-18 08:14:07"
+                    },
+                    "oh": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-18 08:14:57"
+                    },
+                    "ow": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-18 08:15:10"
+                    },
+                    "aw": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-12-02 08:09:00"
+                    }
+                }
+            },
+            {
+                "studentId": "S5d6fc4866e9e1",
+                "studentName": "Yana",
+                "email": "dobspc@aol.com-yana",
+                "currentLesson": "",
+                "mastery": {
+                    "ot+og+op": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-14 08:54:13"
+                    },
+                    "bdp_o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-24 08:32:17"
+                    },
+                    "o_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-30 07:52:56"
+                    },
+                    "ut+ug+up+un": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-30 08:03:50"
+                    },
+                    "u_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-31 08:25:04"
+                    },
+                    "e_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-11-18 08:56:32"
+                    },
+                    "grand_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-12-06 08:21:49"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-09-13 16:50:17"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-09-13 16:49:54"
+                    },
+                    "vowels": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-13 16:49:58"
+                    },
+                    "it": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-26 08:49:20"
+                    },
+                    "ig": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-02 08:25:59"
+                    },
+                    "a+i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-03 08:45:45"
+                    },
+                    "bdp_i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-07 08:52:44"
+                    },
+                    "ot": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-14 08:43:07"
+                    },
+                    "ag": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-14 08:53:55"
+                    },
+                    "bdp_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-14 08:54:01"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-14 08:54:07"
+                    },
+                    "i_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-14 08:54:13"
+                    },
+                    "a+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-23 08:26:24"
+                    },
+                    "u+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            4,
+                            12,
+                            5
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-10-30 14:03:40"
+                    },
+                    "et+eg+en": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-04 08:44:58"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "lucille@poppiesblooming.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d6fc60620806",
+                "studentName": "Eden",
+                "email": "lucille@poppiesblooming.com-eden",
+                "currentLesson": "vowels",
+                "mastery": {
+                    "at": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-04 08:11:18"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "shaine83@yahoo.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d6fc66d5be97",
+                "studentName": "Parker",
+                "email": "shaine83@yahoo.com-parker",
+                "currentLesson": "vowels",
+                "mastery": {
+                    "at": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-04 08:13:01"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "goldmoon002@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d8d3a92169c6",
+                "studentName": "Marissa",
+                "email": "goldmoon002@gmail.com-marissa",
+                "currentLesson": "at",
+                "mastery": {
+                    "at": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-12-03 15:53:53"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-02 16:14:01"
+                    },
+                    "a+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            25,
+                            22
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-10-16 16:10:51"
+                    },
+                    "u_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            36,
+                            35
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-10-17 16:25:51"
+                    },
+                    "u+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            32,
+                            27
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-03 15:53:53"
+                    },
+                    "u_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            45,
+                            36,
+                            38
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-05 16:45:43"
+                    },
+                    "et+eg+en": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            33,
+                            26,
+                            22
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-10 16:39:37"
+                    }
+                }
+            },
+            {
+                "studentId": "S5d8d3b01870e0",
+                "studentName": "Joseph",
+                "email": "goldmoon002@gmail.com-joseph",
+                "currentLesson": "",
+                "mastery": {
+                    "at": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-14 15:51:57"
+                    },
+                    "ck_endings": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-02 15:52:26"
+                    },
+                    "suffix_blends": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            46,
+                            28
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-10-11 15:55:06"
+                    },
+                    "prefix+suffix": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            79,
+                            48
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-14 15:51:57"
+                    },
+                    "blends_s": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            46,
+                            30
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-05 16:22:18"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "aubreyann@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d8e4872bf113",
+                "studentName": "andy",
+                "email": "aubreyann@gmail.com-andy",
+                "currentLesson": "a+i+o",
+                "mastery": {
+                    "ag": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-04 12:21:36"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-04 12:21:47"
+                    },
+                    "bdp_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-11 11:56:55"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-14 15:56:39"
+                    },
+                    "i_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-28 16:04:26"
+                    },
+                    "ot+og+op": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-11-04 15:49:22"
+                    },
+                    "a+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-11-06 15:51:07"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-02 16:53:50"
+                    },
+                    "ig": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-18 12:18:26"
+                    },
+                    "it": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-18 12:18:36"
+                    },
+                    "a+i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-21 15:50:15"
+                    },
+                    "bdp_i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            165
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-10-23 15:54:47"
+                    },
+                    "ot": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            46
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-10-30 15:54:26"
+                    },
+                    "bdp_o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            274
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-11 15:54:54"
+                    },
+                    "o_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            91
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-13 15:57:04"
+                    },
+                    "ut+ug+up+un": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            151
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-18 15:49:33"
+                    },
+                    "u_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            78
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-02 16:03:22"
+                    },
+                    "u+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            45
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-04 15:48:14"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "lmiller6868@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d92aa7be2aae",
+                "studentName": "Medi",
+                "email": "lmiller6868@gmail.com-medi",
+                "currentLesson": "",
+                "mastery": {
+                    "o_e": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            36,
+                            32
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-14 19:52:39"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-30 19:42:39"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-09-30 19:50:38"
+                    },
+                    "ag": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-02 19:51:41"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-03 19:49:16"
+                    },
+                    "it": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-07 20:34:29"
+                    },
+                    "a+i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-09 19:48:55"
+                    },
+                    "bdp_i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-16 19:35:31"
+                    },
+                    "i_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-16 19:46:37"
+                    },
+                    "ot": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-16 19:49:31"
+                    },
+                    "ot+og+op": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 19:29:58"
+                    },
+                    "a+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 19:40:53"
+                    },
+                    "ig": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 19:41:18"
+                    },
+                    "bdp_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 19:41:23"
+                    },
+                    "vowels": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 19:41:29"
+                    },
+                    "bdp_o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 19:53:05"
+                    },
+                    "ut+ug+up+un": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-21 19:44:05"
+                    },
+                    "u_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-23 19:48:29"
+                    },
+                    "u+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-24 19:47:26"
+                    },
+                    "bdp_u": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-28 19:50:56"
+                    },
+                    "u_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-28 20:02:43"
+                    },
+                    "et+eg+en": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            29,
+                            15,
+                            14
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-10-30 19:43:23"
+                    },
+                    "e_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            26,
+                            18,
+                            15,
+                            16
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-06 19:46:11"
+                    },
+                    "bdp_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            48,
+                            30,
+                            21
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-07 19:48:30"
+                    },
+                    "grand_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            29,
+                            18,
+                            17
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-11 19:49:39"
+                    },
+                    "o_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-11 19:49:49"
+                    },
+                    "ck_endings": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            11,
+                            11,
+                            7,
+                            9,
+                            6
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-13 19:47:39"
+                    },
+                    "i_e": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            35,
+                            25
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-14 19:49:13"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "envisionsherry@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d9b88b2a9fa9",
+                "studentName": "Kaden",
+                "email": "envisionsherry@gmail.com-kaden",
+                "currentLesson": "ag",
+                "mastery": {
+                    "vowels": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-09 16:28:33"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-09 16:28:33"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "laceymorey@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5d9b893787cd9",
+                "studentName": "Nate",
+                "email": "laceymorey@gmail.com-nate",
+                "currentLesson": "prefix+suffix",
+                "mastery": {
+                    "i_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-17 20:19:37"
+                    },
+                    "ot": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 20:19:37"
+                    },
+                    "bdp_o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-23 20:20:57"
+                    },
+                    "u_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-10-28 19:30:34"
+                    },
+                    "u_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2019-11-04 19:01:15"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-07 20:13:48"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-07 20:21:20"
+                    },
+                    "ag": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-09 20:15:50"
+                    },
+                    "bdp_a": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-09 20:30:12"
+                    },
+                    "it": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-10 20:19:50"
+                    },
+                    "vowels": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-14 19:58:26"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-14 20:17:59"
+                    },
+                    "a+i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-16 20:09:58"
+                    },
+                    "bdp_i": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-16 20:21:26"
+                    },
+                    "ig": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-17 19:59:24"
+                    },
+                    "ot+og+op": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-18 09:12:20"
+                    },
+                    "a+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-23 20:15:17"
+                    },
+                    "o_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-10-24 19:20:02"
+                    },
+                    "u+i+o": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            66
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-10-30 19:18:49"
+                    },
+                    "e_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            34,
+                            30
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-11 19:15:13"
+                    },
+                    "bdp_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            64,
+                            24
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-12 18:49:58"
+                    },
+                    "grand_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            59,
+                            39
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-13 19:22:06"
+                    },
+                    "ck_endings": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            30,
+                            22
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-14 19:19:20"
+                    },
+                    "suffix_blends": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            38,
+                            20
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-18 19:25:12"
+                    },
+                    "blends_s": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            51
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-11-20 19:22:45"
+                    },
+                    "ngs+nks": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            56,
+                            27
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-04 19:13:41"
+                    },
+                    "prefix_blends": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            86,
+                            67
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-06 09:24:31"
+                    },
+                    "prefix+suffix": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            75,
+                            40
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2019-12-09 19:22:12"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "teresa@readxyz.com",
+        "trainerType": "staff",
+        "students": []
+    },
+    {
+        "username": "admin@readxyz.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5dc063ef53258",
+                "studentName": "Admin",
+                "email": "admin@readxyz.com",
+                "currentLesson": "at",
+                "mastery": []
+            }
+        ]
+    },
+    {
+        "username": "info@readxyz.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5dc0c69f35a97",
+                "studentName": "Adam",
+                "email": "info@readxyz.com-adam",
+                "currentLesson": "dge+nge",
+                "mastery": {
+                    "ag": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-12 18:33:10"
+                    },
+                    "a_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-04 18:36:27"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-04 18:36:27"
+                    },
+                    "i_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-05 18:20:42"
+                    },
+                    "o_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-05 18:22:52"
+                    },
+                    "u_review": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-05 18:26:03"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-12 18:33:10"
+                    },
+                    "a_e": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2019-11-12 18:35:53"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "abbratfamily@sbcglobal.net",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5e38deee4c327",
+                "studentName": "Kristianna",
+                "email": "abbratfamily@sbcglobal.net-kristianna",
+                "currentLesson": "vowels",
+                "mastery": []
+            }
+        ]
+    },
+    {
+        "username": "deltadawn@gmail.com",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5e5fc3b72faef",
+                "studentName": "Tommy",
+                "email": "deltadawn@gmail.com-tommy",
+                "currentLesson": "at",
+                "mastery": {
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            0,
+                            9
+                        ],
+                        "testCurves": [],
+                        "mastery": "mastered",
+                        "lastPresented": "2020-03-04 16:00:36"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "carlb",
+        "trainerType": "trainer",
+        "students": [
+            {
+                "studentId": "S5eb35006f2a1e",
+                "studentName": "George",
+                "email": "carlb",
+                "currentLesson": "at",
+                "mastery": {
+                    "at+ap": {
+                        "timesPresented": 0,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "none",
+                        "lastPresented": "2020-06-01 22:41:08"
+                    },
+                    "an": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [
+                            5,
+                            4,
+                            4
+                        ],
+                        "mastery": "advancing",
+                        "lastPresented": "2020-06-18 13:50:51"
+                    },
+                    "at+ag": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            5
+                        ],
+                        "testCurves": [
+                            5
+                        ],
+                        "mastery": "advancing",
+                        "lastPresented": "2020-06-18 13:53:31"
+                    },
+                    "ag": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [],
+                        "testCurves": [],
+                        "mastery": "advancing",
+                        "lastPresented": "2020-06-19 12:45:49"
+                    },
+                    "at": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            4,
+                            3,
+                            3,
+                            2,
+                            1,
+                            9,
+                            4,
+                            3
+                        ],
+                        "testCurves": [
+                            6,
+                            6,
+                            6,
+                            6,
+                            6,
+                            6,
+                            4
+                        ],
+                        "mastery": "mastered",
+                        "lastPresented": "2020-10-12 09:54:32"
+                    },
+                    "ap": {
+                        "timesPresented": 1,
+                        "fluencyCurves": [
+                            4
+                        ],
+                        "testCurves": [
+                            4,
+                            5
+                        ],
+                        "mastery": "mastered",
+                        "lastPresented": "2020-07-14 17:20:20"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "username": "judy@readxyz.com",
+        "trainerType": "staff",
+        "students": []
+    },
+    {
+        "username": "test@test.com-test",
+        "trainerType": "staff",
+        "students": []
+    }
+]

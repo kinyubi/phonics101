@@ -1,61 +1,43 @@
 # phonics101
 
-
-
-### 2020-11-14
-
-*[ ] refactor LessonListTemplate
-*[ ] lessons->getGroupName => GroupData=>getGroupName (returns DbResult instead of string)
-*[ ] refactor Lesson class to use LessonsData class
-
 ### 2020-11-15
 
-*[ ] create a method that will populate lessons accordion template with mastery values.
 *[ ] uses lesson GroupCode instead of GroupName where appropriate
-*[ ] make sure functions with a lesson name parameter take into consideration alternates
+
 *[ ] use warmup field in lesson class
-*[x] deprecate Util::fixTabName()
 
 ### 2020-11-21
-*[ ] convert all studentId to studentCode
-   *[ ] StudentLessonsData
-   *[ ] StudentsData
-   *[ ] processStudentSelection
-   *[ ] Views class
-   *[ ] Session class
-   *[ ] StudentListTemplate
-   *[ ] refactor getStudentId() to getStudentCode()
-   *[ ] refactor getStudentName()
-   *[ ] refactor isValidStudentTeacherPair()
-   *[ ] refactor persistSession()
-   *[ ] refactor getTrainerId()
-   *[ ] refactor getUserName()
-*[ ] convert all userId to userCode
-   *[ ] Session
-*[ ] tool to convert selective old user records to new abc_trainers
-*[ ] tool to convert selective old Student records to new abc_students
-
-### 2020-11-23
-*[ ] finish Lessons::setAccordion()
+*[ ] tool to populate abc_trainers and abc_students from selective old_people.json file.
 
 ### COMPLETED
-*[x] fix queryAndGetScalar
+*[x] fixed queryAndGetScalar
 *[x] GroupData::getGroupCode 
-*[x] get rid of prepareCurrentForUpdate
-*[x] fix all StudentData references
-*[x] fix all StudentTable reference 
-*[x] fix all Student class references
+*[x] got rid of prepareCurrentForUpdate
+*[x] fixed all StudentData references
+*[x] fixed all StudentTable reference 
+*[x] fixed all Student class references
   * change to non-singleton based on session
-*[x] fix all Cookie references
-*[x] fix all Identity references
-*[x] rename BlendingInfo to OldBlendingInfo
-*[x] migrate GameTypes from JSON to mysql
-*[x] migrate TabTypes from JSON to mysql
-*[x] remove addSoundClass references.
-*[x] make sure all MasteryLevel code is refactored.
-*[x] deprecate Util::getHumanReadableDate()
-*[x] deprecate Util::getHumanReadableDateTime()
-*[x] make sure lesson alternateNames are now non-associative array.
+*[x] fixed all Cookie references
+*[x] fixed all Identity references
+*[x] renamed BlendingInfo to OldBlendingInfo
+*[x] migrated GameTypes from JSON to mysql
+*[x] migrated TabTypes from JSON to mysql
+*[x] removed addSoundClass references.
+*[x] made sure all MasteryLevel code is refactored.
+*[x] deprecated Util::getHumanReadableDate()
+*[x] deprecated Util::getHumanReadableDateTime()
+*[x] made sure lesson alternateNames are now non-associative array
+*[x] deprecated Util::fixTabName()
+*[x] converted all studentId to studentCode
+*[x] converted all userId to userCode
+*[x] finished Lessons::setAccordion()
+*[x] created a tool to convert old user/student data to old_people.json
+*[x] refactored LessonListTemplate
+*[x] fixed lessons->getGroupName and GroupData=>getGroupName to return string (empty if not found)
+*[x] refactored Lesson class to use LessonsData class
+*[x] created a method that would populate lessons accordion template with mastery values
+*[x] created ActionForms class to replace timers.php, processStudentSelection.php, render.php, processUserLogin.php, processLessonSelection.php, practiceTimer.php and login.php
+*[x] make sure functions with a lesson name parameter take into consideration alternates
 
 ### FUTURE
 *[ ] convert actions/timers.php to routing

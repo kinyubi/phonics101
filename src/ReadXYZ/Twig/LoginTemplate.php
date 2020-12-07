@@ -4,6 +4,8 @@
 namespace App\ReadXYZ\Twig;
 
 
+use App\ReadXYZ\Page\Page;
+
 class LoginTemplate
 {
 

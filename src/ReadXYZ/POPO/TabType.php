@@ -19,7 +19,7 @@ class TabType
         $this->tabDisplayAs = $other->tabDisplayAs;
         $this->alias = $other->alias;
         $this->script = $other->script;
-        $this->imageFile = $other->imageFile;
+        $this->imageFile = $other->imageFile ?? $other->iconUrl;
     }
 
 }

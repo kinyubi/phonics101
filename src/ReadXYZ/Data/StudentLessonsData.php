@@ -9,7 +9,7 @@ use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\TimerType;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Session;
-use RuntimeException;
+use App\ReadXYZ\Helpers\PhonicsException;
 use stdClass;
 
 class StudentLessonsData extends AbstractData
@@ -24,12 +24,13 @@ class StudentLessonsData extends AbstractData
     /**
      * StudentLessonsData constructor.
      * This will look to session to provide the studentCode or lessonCode whenever needed.
+     * @throws PhonicsException
      */
     public function __construct()
     {
         parent::__construct('abc_students', 'id');
         $this->session = new Session();
-        $this->quotedStudentCode = $this->smartQuotes($this->session->getstudentCode());
+        $this->quotedStudentCode = $this->smartQuotes($this->session->getStudentCode());
         $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
         $this->whereClause = "studentCode = {$this->quotedStudentCode} AND lessonCode = {$this->quotedLessonCode}";
         $this->masteryWhereClause = "studentCode = {$this->quotedStudentCode}";
@@ -37,6 +38,10 @@ class StudentLessonsData extends AbstractData
 
 
 // ======================== PUBLIC METHODS =====================
+
+    /**
+     * @throws PhonicsException
+     */
     public function _create()
     {
         $query = <<<EOT
@@ -46,10 +51,10 @@ class StudentLessonsData extends AbstractData
             `lessonCode` VARCHAR(32) NOT NULL,
             `timePresented` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
             `masteryLevel` ENUM('none','advancing','mastered') NOT NULL DEFAULT 'none' COMMENT '0-none, 1-advancing, 2-mastered',
-            `masteryDate` DATE NULL DEFAULT NULL,
+            `dateMastered` DATE NULL DEFAULT NULL,
             `fluencyTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT 'each char is a hex value. Array of up to 16 entries',
             `testTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT '16 hex digit entries',
-            `lastPresentedDate` DATE NULL DEFAULT NULL,
+            `dateLastPresented` DATE NULL DEFAULT NULL,
             PRIMARY KEY (`id`),
             INDEX `lessonCode` (`lessonCode`),
             INDEX `studentCode` (`studentCode`),
@@ -65,20 +70,22 @@ EOT;
     /**
      * Clears for times for the Fluency or Test timer for the current lesson
      * @param TimerType $timerType
+     * @throws PhonicsException
      */
     public function clearTimedTest(TimerType $timerType): void
     {
         if ( ! $this->session->hasLesson()) {
-            throw new RuntimeException('Attempt to update test time without a current lesson.');
+            throw new PhonicsException('Attempt to update test time without a current lesson.');
         }
         $result = $this->updateField($timerType->getSqlFieldName(),'');
-        if ($result->failed()) throw new RuntimeException($result->getErrorMessage());
+        if ($result->failed()) throw new PhonicsException($result->getErrorMessage());
     }
 
     /**
      * fetches the timer times for the specified timer type
      * @param TimerType $timerType
      * @return int[]
+     * @throws PhonicsException
      */
     public function getTimedTest(TimerType $timerType): array
     {
@@ -90,11 +97,12 @@ EOT;
     /**
      * @param mixed $value
      * @return void
+     * @throws PhonicsException
      */
     public function updateMastery($value): void
     {
         if ( ! $this->session->hasLesson()) {
-            throw new RuntimeException('Attempt to update test time without a current lesson.');
+            throw new PhonicsException('Attempt to update test time without a current lesson.');
         }
         $this->createStudentLessonAsNeeded();
 
@@ -108,13 +116,14 @@ EOT;
             $sqlValue = 'none';
         }
         $where = $this->whereClause;
-        $query = "UPDATE abc_student_lesson SET masteryLevel = '$sqlValue', masteryDate=NOW() WHERE $where";
+        $query = "UPDATE abc_student_lesson SET masteryLevel = '$sqlValue', dateMastered=NOW() WHERE $where";
         $this->throwableQuery($query, QueryType::AFFECTED_COUNT);
     }
 
     /**
      * Get the mastery results for the lessons the student has worked on - array of stdClass objects.
      * @return stdClass[]
+     * @throws PhonicsException
      */
     public function getLessonMastery(): array
     {
@@ -129,6 +138,7 @@ EOT;
      * @param TimerType $timerType
      * @param int $seconds
      * @return BoolWithMessage
+     * @throws PhonicsException
      */
     public function updateTimedTest(TimerType $timerType, int $seconds): BoolWithMessage
     {
@@ -136,7 +146,7 @@ EOT;
             return BoolWithMessage::goodResult();
         }
         if ( ! $this->session->hasLesson()) {
-            throw new RuntimeException('Attempt to update test time without a current lesson.');
+            throw new PhonicsException('Attempt to update test time without a current lesson.');
         }
 
         $sqlFieldName = $timerType->getSqlFieldName();
@@ -157,6 +167,7 @@ EOT;
 
     /**
      * This gets run before a sql update to create the record if it doesn't already exist.
+     * @throws PhonicsException
      */
     private function createStudentLessonAsNeeded(): void
     {
@@ -174,6 +185,7 @@ EOT;
      * get the field value for the current student/lesson.
      * @param string $fieldName
      * @return mixed the value of the queried field.
+     * @throws PhonicsException
      */
     private function getField(string $fieldName)
     {
@@ -209,6 +221,12 @@ EOT;
         return $result;
     }
 
+    /**
+     * @param string $sqlFieldName
+     * @param $value
+     * @return BoolWithMessage
+     * @throws PhonicsException
+     */
     private function updateField(string $sqlFieldName, $value): BoolWithMessage
     {
         $smartValue = $this->smartQuotes($value);

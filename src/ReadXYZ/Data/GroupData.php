@@ -6,6 +6,8 @@ namespace App\ReadXYZ\Data;
 
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Sql;
+use App\ReadXYZ\Enum\Throwable;
+use App\ReadXYZ\Helpers\PhonicsException;
 use stdClass;
 
 class GroupData extends AbstractData
@@ -17,6 +19,10 @@ class GroupData extends AbstractData
     }
 
 // ======================== PUBLIC METHODS =====================
+
+    /**
+     * @throws PhonicsException
+     */
     public function _create(): void
     {
         $query = <<<EOT
@@ -32,15 +38,22 @@ EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
-    public function getGroupCode(string $groupName): string
+    /**
+     * @param string $groupName
+     * @param string $throwOnNotFound
+     * @return string
+     * @throws PhonicsException
+     */
+    public function getGroupCode(string $groupName, string $throwOnNotFound=Throwable::NOT_FOUND_IS_VALID): string
     {
         $name = $this->smartQuotes($groupName);
         $query = "SELECT groupCode FROM abc_groups WHERE groupName = $name OR  groupDisplayAs = $name";
-        return $this->throwableQuery($query, QueryType::SCALAR);
+        return $this->throwableQuery($query, QueryType::SCALAR, $throwOnNotFound);
     }
 
     /**
      * @return string[] an associative array of groupName => displayAs
+     * @throws PhonicsException
      */
     public function getGroupExtendedAssocArray()
     {
@@ -52,34 +65,45 @@ EOT;
         return $array;
     }
 
-    public function getGroupName(string $groupKey): string
+    /**
+     * Given the group code (or key) returns the group name. Can be told to throw on not found or return empty
+     * @param string $groupKey
+     * @param string $throwOnNotFound a valid Throwable enum string
+     * @return string the group name if found or empty
+     * @throws PhonicsException
+     */
+    public function getGroupName(string $groupKey, string $throwOnNotFound=Throwable::NOT_FOUND_IS_VALID): string
     {
         $name = $this->smartQuotes($groupKey);
         $query = "SELECT groupName FROM abc_groups WHERE groupName = $name OR  groupDisplayAs = $name OR groupCode = $name";
-        return $this->throwableQuery($query, QueryType::SCALAR);
+        return $this->throwableQuery($query, QueryType::SCALAR, $throwOnNotFound) ?? '';
     }
 
     /**
      * @param string $whereClause
+     * @param string $throwOnNotFound
      * @return stdClass[]
+     * @throws PhonicsException
      */
-    public function getGroupObjects(string $whereClause = '')
+    public function getGroupObjects(string $whereClause = '', string $throwOnNotFound=Throwable::NOT_FOUND_IS_VALID)
     {
         $query = "SELECT * FROM vw_group_with_keychain $whereClause ORDER BY ordinal";
-        return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
+        return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS, $throwOnNotFound);
     }
 
     /**
+     * Inserts or updates a stdClass object into abc_groups
      * @param stdClass $group
      * @param int $ordinal
-     * @return DbResult
+     * @return DbResult good result is the affected count.
+     * @throws PhonicsException
      */
     public function insertOrUpdate(stdClass $group, int $ordinal): DbResult
     {
         $active = isset($group->active) ? $this->boolToEnum($group->active) :  Sql::ACTIVE;
         $query = <<<EOT
     INSERT INTO abc_groups(groupCode, groupName, groupDisplayAs, ordinal, active)
-        VALUES('{$group->groupId}', '{$group->groupName}', '{$group->displayAs}', $ordinal, '$active')
+        VALUES('{$group->groupCode}', '{$group->groupName}', '{$group->displayAs}', $ordinal, '$active')
         ON DUPLICATE KEY UPDATE 
         groupName = '{$group->groupName}',
         groupDisplayAs = '{$group->displayAs}',

@@ -9,6 +9,7 @@ use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
 use App\ReadXYZ\Models\Session;
+use App\ReadXYZ\Page\Page;
 
 class LessonListTemplate
 {

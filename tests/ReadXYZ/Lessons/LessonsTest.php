@@ -11,11 +11,12 @@ use App\ReadXYZ\Lessons\Lessons;
 class LessonsTest extends TestCase
 {
 
-    public function testGetAllLessonNames()
+    public function testGetLessonNamesMap()
     {
         $lessons = Lessons::getInstance();
-        $names = $lessons->getAllLessonNames();
-        $this->assertGreaterThan(90, $names);
+        $namesMap = $lessons->getLessonNamesMap();
+        $this->assertGreaterThan(90, $namesMap);
+        $this->assertTrue(isAssociative($namesMap));
     }
 
     public function testLessonExists()

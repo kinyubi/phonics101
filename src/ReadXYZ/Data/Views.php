@@ -4,8 +4,9 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\BoolEnumTreatment;
 use App\ReadXYZ\Enum\QueryType;
-use LogicException;
+use App\ReadXYZ\Helpers\PhonicsException;
 use stdClass;
 
 class Views extends AbstractData
@@ -43,20 +44,20 @@ class Views extends AbstractData
     // ------------ DELETED FUNCTIONS -----------------------------------
     public function deleteOne($keyValue): void { $this->notImplemented(); }
     public function updateOne($keyValue, string $fieldName, $newValue): void { $this->notImplemented(); }
-    public function throwableQuery(string $query, $queryType, bool $throwOnNotFound = false)
+    public function throwableQuery(string $query, string $queryType, ...$params)
     {
-        throw new LogicException("Invalid method for this class.");
+        throw new PhonicsException("Invalid method for this class.");
     }
-    public function query(string $query, $queryType): DbResult
+    public function query(string $query, $queryType, string $boolEnumTreatment=BoolEnumTreatment::CONVERT_TO_BOOL): DbResult
     {
-        throw new LogicException("Invalid method for this class.");
+        throw new PhonicsException("Invalid method for this class.");
     }
 
     protected function baseDelete(string $where, int $foreignKeyChecks=0): int { $this->notImplemented(); return 0;}
-    protected function truncate(): int { $this->notImplemented(); return 0;}
+    public function truncate(): int { $this->notImplemented(); return 0;}
     private function notImplemented()
     {
-        throw new LogicException("Invalid method for this class.");
+        throw new PhonicsException("Invalid method for this class.");
     }
 
 }

@@ -4,11 +4,13 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\BoolEnumTreatment;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Sql;
+use App\ReadXYZ\Enum\Throwable;
 use App\ReadXYZ\Helpers\Util;
 use Exception;
-use LogicException;
+use App\ReadXYZ\Helpers\PhonicsException;
 use stdClass;
 
 abstract class AbstractData
@@ -18,42 +20,56 @@ abstract class AbstractData
     protected string $primaryKey;
     protected array  $booleanFields = [];
     protected array  $jsonFields = [];
+
     /**
      * AbstractData constructor.
      * @param string $tableName used by deleteOne, updateOne, getCount and truncate
      * @param string $primaryKey used by deleteOne and updateOne
-     * @param int $dbVersion specifies using readxyz1_1 (1 or default) or readxyz0_1 (0)
+     * @param string $dbVersion specifies using readxyz1_1 (1 or default) or readxyz0_1 (0)
+     * @throws PhonicsException
      */
-    public function __construct(string $tableName, string $primaryKey='id', int $dbVersion=Sql::READXYZ1_1)
+    public function __construct(string $tableName, string $primaryKey='id', string $dbVersion=Sql::READXYZ1_1)
     {
         // header is required because sendResponse fails without it
         if ($dbVersion != Sql::READXYZ1_1 && $dbVersion != Sql::READXYZ0_1) {
-            throw new LogicException("$dbVersion is not a valid database version.");
+            throw new PhonicsException("$dbVersion is not a valid database version.");
         }
         $this->db = new PhonicsDb($dbVersion);
         $this->tableName = $tableName;
         $this->primaryKey = $primaryKey;
     }
 
-    protected function fixObject(stdClass $object): stdClass
+    /**
+     * @param stdClass $object
+     * @param string $boolTreatment
+     * @return stdClass
+     * @throws PhonicsException
+     */
+    protected function fixObject(stdClass $object, string $boolTreatment=BoolEnumTreatment::CONVERT_TO_BOOL): stdClass
     {
         $newObject = $object;
-        foreach( $this->booleanFields as $field) {
-            try {
-                if (isset($newObject->$field) && isset($object->$field)) {
-                    $newObject->$field = $this->enumToBool($object->$field);
-                }
-            } catch( Exception $ex) {
-                throw new LogicException("We should never get here. " . $ex->getMessage());
-            }
-
+        if (! BoolEnumTreatment::isValid($boolTreatment)) {
+            throw new PhonicsException("$boolTreatment is not a valid BoolEnumTreatment value");
         }
+        if ($boolTreatment == BoolEnumTreatment::CONVERT_TO_BOOL) {
+            foreach( $this->booleanFields as $field) {
+                try {
+                    if (isset($newObject->$field) && isset($object->$field)) {
+                        $newObject->$field = $this->enumToBool($object->$field);
+                    }
+                } catch( Exception $ex) {
+                    throw new PhonicsException("We should never get here. " . $ex->getMessage());
+                }
+
+            }
+        }
+
         foreach ($this->jsonFields as $field) {
             if (isset($newObject->$field) && isset($object->$field) && is_string($object>$field)) {
                 try {
                     $newObject->$field  = is_null($object->$field) ? NULL : json_decode($object->$field);
                 } catch (Exception $ex) {
-                    throw new LogicException("We should never get here. " . $ex->getMessage());
+                    throw new PhonicsException("We should never get here. " . $ex->getMessage());
                 }
 
             }
@@ -67,6 +83,7 @@ abstract class AbstractData
     /**
      * Delete a single record whose primary key matches the specified value
      * @param mixed $keyValue
+     * @throws PhonicsException
      */
     public function deleteOne($keyValue): void
     {
@@ -77,6 +94,7 @@ abstract class AbstractData
 
     /**
      * @return int the number of records in the table.
+     * @throws PhonicsException
      */
     public function getCount(): int
     {
@@ -87,7 +105,8 @@ abstract class AbstractData
     /**
      * @param mixed $keyValue the value of the Primary Key we want.
      * @param string $fieldName the name of the field to be updated.
-     * @param $newValue the new value for the field.
+     * @param mixed $newValue the new value for the field.
+     * @throws PhonicsException
      */
     public function updateOne($keyValue, string $fieldName, $newValue): void
     {
@@ -100,17 +119,22 @@ abstract class AbstractData
     /**
      * @param string $query
      * @param QueryType|string $queryType
+     * @param string $boolEnumTreatment BoolEnumTreatment::CONVERT_TO_BOOL or KEEP_AS_Y_N
      * @return DbResult
+     * @throws PhonicsException
      */
-    public function query(string $query, $queryType): DbResult
+    public function query(string $query, $queryType, string $boolEnumTreatment=BoolEnumTreatment::CONVERT_TO_BOOL): DbResult
     {
+        if (! BoolEnumTreatment::isValid($boolEnumTreatment)) {
+            throw new PhonicsException("$boolEnumTreatment is not a valid BoolEnumTreatment value");
+        }
         if ($queryType instanceof QueryType) {
             $type = $queryType->getValue();
         } else {
             if (QueryType::isValid($queryType)) {
                 $type = $queryType;
             } else {
-                throw new LogicException("$queryType not a valid query type.");
+                throw new PhonicsException("$queryType not a valid query type.");
             }
         }
         switch ($type) {
@@ -122,7 +146,7 @@ abstract class AbstractData
                     $newResult = [];
                     $objects = $result->getResult();
                     foreach($objects as $object) {
-                        $newResult[] = $this->fixObject($object);
+                        $newResult[] = $this->fixObject($object, $boolEnumTreatment);
                     }
                     return DbResult::goodResult($newResult);
                 } else {
@@ -142,7 +166,7 @@ abstract class AbstractData
             case QueryType::SINGLE_OBJECT:
                 $result = $this->db->queryObject($query);
                 if ($result->wasSuccessful()) {
-                    return DbResult::goodResult($this->fixObject($result->getResult()));
+                    return DbResult::goodResult($this->fixObject($result->getResult(), $boolEnumTreatment));
                 } else {
                     return $result;
                 }
@@ -178,6 +202,7 @@ abstract class AbstractData
     /**
      * @param mixed $value
      * @return string
+     * @throws PhonicsException
      */
     public function boolToEnum($value): string
     {
@@ -186,12 +211,12 @@ abstract class AbstractData
             if ($value == Sql::ACTIVE || $value == Sql::INACTIVE) {
                 return $value;
             } else {
-                throw new LogicException("$value is not a valid value for Active");
+                throw new PhonicsException("$value is not a valid value for Active");
             }
         } else if (is_bool($value)) {
             return $value ? 'Y' : 'N';
         } else {
-            throw new LogicException("$value must be 'Y', 'N' , true or false");
+            throw new PhonicsException("$value must be 'Y', 'N' , true or false");
         }
 
     }
@@ -200,6 +225,7 @@ abstract class AbstractData
      * We expect $enum to be Sql::ACTIVE or Sql::Inactive but we'll accept a bool value as well
      * @param $enum
      * @return bool
+     * @throws PhonicsException
      */
     public function enumToBool($enum): bool
     {
@@ -208,66 +234,77 @@ abstract class AbstractData
             if ($enum == Sql::ACTIVE || $enum == Sql::INACTIVE) {
                 return $enum == 'Y';
             } else {
-                throw new LogicException("$enum is not a valid string value for Active");
+                throw new PhonicsException("$enum is not a valid string value for Active");
             }
         } else if (is_bool($enum)) {
             return $enum;
         } else {
-            throw new LogicException("$enum must be 'Y', 'N' , true or false");
+            throw new PhonicsException("$enum must be 'Y', 'N' , true or false");
         }
     }
 
     /**
      * executes the query, returns the result or throws if query failed.
-     * If $throwIfNotFound is true then throw if the 0 records match.
+     * If $throwIfNotFound is true then throw if no records match, otherwise return NULL.
+     * Two optional string parameters containing valid BoolEnumTreatment or Throwable values
      * @param string $query
-     * @param QueryType|string $queryType
-     * @param bool $throwOnNotFound
+     * @param string $queryType
+     * @param string ...$params must be valid Throwable value or BoolEnumTreatment value
      * @return mixed
+     * @throws PhonicsException
      */
-    public function throwableQuery(string $query, $queryType, bool $throwOnNotFound = false)
+    public function throwableQuery(string $query, string $queryType, ...$params)
     {
+        $throwOnNotFound =  (Throwable::THROW_ON_NOT_FOUND === $this->checkThrowable($params));
+        $boolEnumTreatment = $this->checkBoolEnumTreatment($params);
+
         $queryType = $this->getQueryTypeValue($queryType);
-        $result = $this->query($query, $queryType);
+        $result = $this->query($query, $queryType, $boolEnumTreatment);
         if ($result->wasSuccessful()) {
             $goodResult = $result->getResult();
             switch ($queryType) {
                 case QueryType::ASSOCIATIVE_ARRAY:
                 case QueryType::SCALAR_ARRAY:
                     if ((count($goodResult) == 0) && $throwOnNotFound) {
-                        throw new LogicException('Query found no records.');
+                        throw new PhonicsException('Query found no records.');
                     } else {
-                        return $goodResult;
+                        return $goodResult ?? [];
                     }
                 case QueryType::STDCLASS_OBJECTS:
                     $newResult = [];
                     $objects = $goodResult;
                     foreach($objects as $object) {
-                        $newResult[] = $this->fixObject($object);
+                        $newResult[] = $this->fixObject($object, $boolEnumTreatment);
                     }
                     return $newResult;
                 case QueryType::SCALAR:
                 case QueryType::SINGLE_RECORD:
-                    if (($goodResult == null) && $throwOnNotFound) {
-                        throw new LogicException('Query found no records.');
+                    if ($goodResult == null) {
+                        if ($throwOnNotFound) {
+                            throw new PhonicsException('Query found no records.');
+                        } else {
+                            return   ($queryType == QueryType::SCALAR) ? '' : null;
+                        }
                     } else {
                         return $goodResult;
                     }
                 case QueryType::SINGLE_OBJECT:
                     if (($goodResult == null) && $throwOnNotFound) {
-                        throw new LogicException('Query found no records.');
+                        throw new PhonicsException('Query found no records.');
                     } else {
-                        return $this->fixObject($goodResult);
+                        return $this->fixObject($goodResult, $boolEnumTreatment);
                     }
                 case QueryType::RECORD_COUNT:
                 case QueryType::AFFECTED_COUNT:
+                    return $goodResult ?? 0;
+
                 case QueryType::EXISTS:
-                    return $goodResult;
+                    return $goodResult ?? false;
                 default:
                     return DbResult::badResult($queryType . ' is not a valid query type.');
             }
         } else {
-            throw new LogicException($result->getErrorMessage());
+            throw new PhonicsException($result->getErrorMessage());
         }
     }
 
@@ -279,15 +316,16 @@ abstract class AbstractData
      * @param string $whereClause WHERE clause
      * @param int $foreignKeyChecks sql::FOREIGN_KEY_CHECKS_ON or sql::FOREIGN_KEY_CHECKS_OFF
      * @return int  the number of records affected
+     * @throws PhonicsException
      */
     protected function baseDelete(string $whereClause, int $foreignKeyChecks=Sql::FOREIGN_KEY_CHECKS_ON): int
     {
         if (!runningStandalone()) {
             if (empty($whereClause) || ($foreignKeyChecks == Sql::FOREIGN_KEY_CHECKS_OFF)) {
-                throw new LogicException('Empty where clause and/or key check off only allowed in standalone environment');
+                throw new PhonicsException('Empty where clause and/or key check off only allowed in standalone environment');
             }
         }
-        if (not(empty($whereClause)) && not(Util::startsWith_ci(ltrim($whereClause), 'WHERE'))) {
+        if (not(empty($whereClause)) && not(Util::startsWith_ci('WHERE', ltrim($whereClause)))) {
             $whereClause = 'WHERE ' . $whereClause;
         }
         if ($foreignKeyChecks == Sql::FOREIGN_KEY_CHECKS_OFF) {
@@ -318,32 +356,39 @@ abstract class AbstractData
     /**
      * @param string|QueryType $queryType
      * @return string
+     * @throws PhonicsException
      */
     protected function getQueryTypeValue($queryType): string
     {
         if ($queryType instanceof QueryType) return $queryType->getValue();
         if (QueryType::isValid($queryType)) return $queryType;
-        throw new LogicException("$queryType not a valid query type.");
-    }
-
-    /**
-     * @param int $http_code the http code we want the response to send
-     * @param string $msg the message we want the response to return (default: OK)
-     */
-    protected function sendResponse(int $http_code = 200, string $msg = 'OK'): void
-    {
-        header('Content-Type: application/json');
-        http_response_code($http_code);
-        echo json_encode(['code' => $http_code, 'msg' => $msg]);
+        throw new PhonicsException("$queryType not a valid query type.");
     }
 
     /**
      * Deletes all the records in a table (Not reversible)
      * @return int
+     * @throws PhonicsException
      */
-    protected function truncate(): int
+    public function truncate(): int
     {
         return $this->baseDelete('', sql::FOREIGN_KEY_CHECKS_OFF);
+    }
+
+    protected function checkThrowable($params): string
+    {
+        foreach ($params as $param) {
+            if (Throwable::isValid($param)) return $param;
+        }
+        return Throwable::NOT_FOUND_IS_VALID;
+    }
+
+    protected function checkBoolEnumTreatment($params): string
+    {
+        foreach ($params as $param) {
+            if (BoolEnumTreatment::isValid($param)) return $param;
+        }
+        return BoolEnumTreatment::CONVERT_TO_BOOL;
     }
 
 }

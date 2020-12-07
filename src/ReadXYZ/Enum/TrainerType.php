@@ -4,9 +4,18 @@
 namespace App\ReadXYZ\Enum;
 
 
-class TrainerType extends \MyCLabs\Enum\Enum
+use MyCLabs\Enum\Enum;
+
+class TrainerType extends Enum
 {
-    const PARENT = 'parent';
-    const TRAINER = 'trainer';
-    const ADMIN = 'admin';
+    private static array $permissions = [
+
+    ];
+
+    const RESERVE   = 'reserve';
+    const PARENT    = 'parent';
+    const TRAINER   = 'trainer';
+    const STAFF     = 'staff';
+    const ADMIN     = 'admin';
+    const TEST      = 'test';
 }

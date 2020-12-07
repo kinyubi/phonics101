@@ -2,6 +2,9 @@
 
 namespace App\ReadXYZ\Helpers;
 
+use App\ReadXYZ\Data\StudentsData;
+use App\ReadXYZ\Data\TrainersData;
+use App\ReadXYZ\Enum\Regex;
 use App\ReadXYZ\Twig\TwigFactory;
 use Throwable;
 
@@ -23,16 +26,6 @@ class Util
         return "'" . join("','", $arr) . "'";
     }
 
-    public static function buildActionsLink(string $action, array $args = []): string
-    {
-        $link = "/actions/$action.php";
-        if ($args) {
-            $link .= '?' . http_build_query($args);
-        }
-
-        return $link;
-    }
-
     /**
      * Determine is a haystack contains a needle (or any needle in an array of needles).
      *
@@ -41,7 +34,7 @@ class Util
      *
      * @return bool returns true if $haystack contains $needle
      */
-    public static function contains(string $haystack, $needles): bool
+    public static function contains($needles, string $haystack): bool
     {
         if (is_array($needles)) {
             foreach ($needles as $needle) {
@@ -64,7 +57,7 @@ class Util
      *
      * @return bool returns true if $haystack contains $needle (case-insensitive)
      */
-    public static function contains_ci(string $haystack, $needles): bool
+    public static function contains_ci($needles, string $haystack): bool
     {
         $stack_ci = strtolower($haystack);
         if (is_array($needles)) {
@@ -85,19 +78,20 @@ class Util
 
     public static function convertCamelToSnakeCase(string $input): string
     {
-        if (preg_match('/[A-Z]/', $input) === 0) {
+        // if everything is already lower case, do nothing
+        if (preg_match(Regex::ANY_UPPERCASE, $input) === 0) {
             return $input;
         }
-        $pattern = '/([a-z])([A-Z])/';
-        $r = strtolower(preg_replace_callback($pattern, function ($a) {
+        $pattern = Regex::CAMEL_CASE_TRANSITION;
+        // replace lowerCase to uppercase transition with lowercase_lowercase
+        return strtolower(preg_replace_callback($pattern, function ($a) {
             return $a[1] . "_" . strtolower($a[2]);
         }, $input));
-        return $r;
     }
 
     public static function convertLessonKeyToLessonName(string $lessonKey): string
     {
-        if (Util::startsWith($lessonKey, 'Blending.')) {
+        if (Util::startsWith('Blending.', $lessonKey)) {
             return str_replace('Blending.', '', $lessonKey);
         } else {
             return $lessonKey;
@@ -106,7 +100,7 @@ class Util
 
     public static function convertLessonNameToLessonKey(string $lessonName): string
     {
-        if (Util::startsWith($lessonName, 'Blending.')) {
+        if (Util::startsWith('Blending.', $lessonName)) {
             return $lessonName;
         } else {
             return 'Blending.' . $lessonName;
@@ -195,21 +189,35 @@ class Util
         if ( ! $host) {
             return true;
         }
-        return self::contains($host, ['.local', '.test']);
+        return self::contains(['.local', '.test'], $host);
     }
 
+    /**
+     * @param $studentCode
+     * @return bool
+     * @throws PhonicsException
+     */
     public static function isValidStudentCode($studentCode): bool
     {
-        $re = '/S[0-9a-f]{14}\.[0-9]{8}/' ;
-        $result = preg_match($re, $studentCode, $matches, PREG_SET_ORDER, 0);
-        return $result === 1;
+        if (Regex::isValidStudentCodePattern($studentCode)) {
+            return (new StudentsData())->doesStudentExist($studentCode);
+        } else {
+            return false;
+        }
     }
 
+    /**
+     * @param $trainerCode
+     * @return bool
+     * @throws PhonicsException
+     */
     public static function isValidTrainerCode($trainerCode): bool
     {
-        $re = '/U[0-9a-f]{14}\.[0-9]{8}/' ;
-        $result = preg_match($re, $trainerCode, $matches, PREG_SET_ORDER, 0);
-        return $result === 1;
+        if (Regex::isValidTrainerCodePattern($trainerCode)) {
+            return (new TrainersData())->isValid($trainerCode);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -245,9 +253,9 @@ class Util
             // $trace = $ex->getTraceAsString();
             $trace = Debug::getBackTrace();
         }
-        $args = ['message' => $message, 'details' => $details, 'trace' => $trace];
+        $args = ['errors' => htmlentities("$message\n\n$details\n\n$trace")];
 
-        return TwigFactory::getInstance()->renderBlock('blocks', 'redbox', $args);
+        return TwigFactory::getInstance()->renderTemplate('base',  $args);
     }
 
     /**
@@ -270,7 +278,7 @@ class Util
      *
      * @return bool returns true if $string starts with $startString
      */
-    public static function startsWith(string $string, $startString): bool
+    public static function startsWith($startString, string $string): bool
     {
         if (is_array($startString)) {
             foreach ($startString as $start) {
@@ -296,7 +304,7 @@ class Util
      *
      * @return bool returns true if $string starts with $startString (case-insensitive)
      */
-    public static function startsWith_ci(string $string, $startString): bool
+    public static function startsWith_ci($startString, string $string): bool
     {
         $string_ci = strtolower($string);
         if (is_array($startString)) {
@@ -344,7 +352,7 @@ class Util
      */
     public static function stripExtraSlashes(string $uri): string
     {
-        if (self::startsWith($uri, 'http')) {
+        if (self::startsWith('http', $uri)) {
             $start = substr($uri, 0, 8);
             $end = substr($uri, 8);
             $end2 = str_replace('//', '/', $end);
@@ -414,26 +422,26 @@ class Util
     //         case 'warm-ups':
     //             return 'warmup';
     //         default:
-    //             throw new RuntimeException("$tabName is not a recognized tab name.");
+    //             throw new PhonicsException("$tabName is not a recognized tab name.");
     //     }
     // }
 
-    // public static function getHumanReadableDate($date = ''): string
-    // {
-    //     if ($date) {
-    //         return date('Y-M-j', $date);
-    //     } else {
-    //         return date('Y-M-j');
-    //     }
-    // }
-    //
-    // public static function getHumanReadableDateTime($date = ''): string
-    // {
-    //     if ($date) {
-    //         return date('Y-M-j H:i:s', $date);
-    //     } else {
-    //         return date('Y-M-j H:i:s');
-    //     }
-    // }
+    public static function getHumanReadableDate($date = ''): string
+    {
+        if ($date) {
+            return date('Y-M-j', $date);
+        } else {
+            return date('Y-M-j');
+        }
+    }
+
+    public static function getHumanReadableDateTime($date = ''): string
+    {
+        if ($date) {
+            return date('Y-M-j H:i:s', $date);
+        } else {
+            return date('Y-M-j H:i:s');
+        }
+    }
 
 }

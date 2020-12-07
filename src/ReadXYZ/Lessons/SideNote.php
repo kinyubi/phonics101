@@ -2,12 +2,17 @@
 
 namespace App\ReadXYZ\Lessons;
 
+use App\ReadXYZ\Data\GroupData;
 use App\ReadXYZ\Data\StudentLessonsData;
+use App\ReadXYZ\Enum\Regex;
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Enum\TimerType;
 use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\Log;
 use App\ReadXYZ\Twig\TwigFactory;
 use Exception;
+use Throwable;
 
 /**
  * @copyright (c) 2020 ReadXYZ, LLC
@@ -57,6 +62,7 @@ class SideNote
 
     /**
      * @return string
+     * @throws PhonicsException
      */
     public function getLearningCurveHTML(): string
     {
@@ -67,28 +73,46 @@ class SideNote
      * For the specified tab, returns lesson note if found or returns a group note if found
      * or returns a default note if found or returns an empty string.
      *
-     * @param string $group_name
-     * @param string $tab_name
-     *
-     * @return string
+     * @param string $group groupCode or groupName (will convert to groupCode)
+     * @param string $tabName
+     * @return string return a corresponding note if found
      */
-    public function getNote(string $group_name, string $tab_name): string
+    public function getNote(string $group, string $tabName): string
     {
-        $note = $this->getGroupNote($group_name, $tab_name);
+
+        try {
+            if (Regex::isValidGroupCodePattern($group)) {
+                $groupCode = $group;
+
+            } else {
+                $groupCode = $realGroupName = (new GroupData())->getGroupCode($group);
+            }
+        } catch (Throwable $ex) {
+            $message = "Failure getting group code from  $group. " . $ex->getMessage();
+            Log::warning($message, __METHOD__, __FILE__, __LINE__);
+            return '';
+        }
+
+        try {
+            $realTabName = TabTypes::getInstance()->fixTabName($tabName);
+        } catch (Throwable $ex) {
+            $message = "Failure getting valid tab name from $tabName " . $ex->getMessage();
+            Log::warning($message, __METHOD__, __FILE__, __LINE__);
+            return '';
+        }
+        $note = $this->getGroupNote($groupCode, $realTabName);
         if ($note) {
             return $note;
+        } else {
+            return $this->getDefaultTabNote($tabName) ?? '';
         }
-        $note = $this->getDefaultTabNote($tab_name) ?? '';
-        // if (!Util::startsWith($note, '<br')) {
-        //     $note = '<br\>' . $note;
-        // }
 
-        return $note;
     }
 
     /**
      * called by sidebar.html.twig
      * @return string
+     * @throws PhonicsException
      */
     public function getTestCurveHTML(): string
     {
@@ -101,6 +125,7 @@ class SideNote
      * @param TimerType $timerType currently supported indexes are 'learningCurve' and 'testCurve'
      *
      * @return string learning curve HTML
+     * @throws PhonicsException
      */
     private function getCurveHTML(TimerType $timerType): string
     {
@@ -129,14 +154,13 @@ class SideNote
     /**
      * Looks for notes in 'group_notes" group in side_notes.json. Called by getNote.
      *
-     * @param string $group_name
-     * @param string $tab_name
-     *
-     * @return mixed|string
+     * @param string $groupCode
+     * @param string $tabName
+     * @return string
      */
-    private function getGroupNote(string $group_name, string $tab_name)
+    private function getGroupNote(string $groupCode, string $tabName): string
     {
-        return $this->data['group_notes'][$group_name][$tab_name] ?? '';
+        return $this->data['group_notes'][$groupCode][$tabName] ?? '';
     }
 
 }

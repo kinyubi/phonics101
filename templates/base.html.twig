@@ -1,11 +1,26 @@
-{# defined blocks: title, modals, titleBar, navBar, tabBar, body, otherJqueryReady #}
+{# ===============  DEFINED BLOCKS ====================================================
+title             : This is the label used on the browser tab. It is not part of the page itself.
+                    inputs used: pageTitle
+modals            : inputs used: errors
+titleBar          : inputs used: navbar
+tabBar            : default is empty. Override as needed
+body              : default is empty
+otherJqueryReady  : default is empty. Content must be javascript
+
+======================================================================================#}
+
+{# =============== INPUT VARIABLES ====================================================
+page              : a Page class instance.
+                    page->display(templateName) automatically adds the 'page' and 'isSmallScreen' args
+                    fields include: pageTitle, initialTabName, navbar, tabs, errors, arguments
+#}
 
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}{{ page.pageTitle|default('ReadXYZ') }}{% endblock %}</title>
+  <title>{% block title %}{{ pageTitle|default('ReadXYZ') }}{% endblock %}</title>
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
@@ -43,7 +58,7 @@
 <div class="m-0 p-0 container-fluid">
   {# MODALS BLOCK #}
   {% block modals %}
-    {% if page.errors %}
+    {% if errors %}
     <div class="modal" id="modalError" tabindex="-1" role="dialog"
          aria-labelledby="modalErrorLabel" aria-hidden="true" style="width: 40%">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -55,7 +70,7 @@
                     </button>
                 </div>
                 <div id="modalErrorText" class="modal-body">
-                    {{ modalErrorHtml|raw }}
+                    {{ errors|raw }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -70,7 +85,7 @@
   {% block titleBar %}
     <div class="row bg-white  d-flex justify-content-start title-bar--height align-middle h1 px-2" id="readxyz-title">
       <div class="p-2 col-3 bg-image--title"></div>
-      {% for title, link in page.navBar %}
+      {% for title, link in navBar %}
         <a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
       {% endfor %}
     </div>
@@ -78,7 +93,7 @@
 
   {% block errors %}
     {# display any error messages #}
-    {% if page.errors|default %}
+    {% if errors|default %}
       <div class="container border border-danger p-0">
         <div class="row">
           <h2 class="bg-danger text-white">ERROR</h2>
@@ -102,7 +117,7 @@
         $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
 
         {# show the modal if we have an error #}
-        {% if page.errors|default %}
+        {% if errors|default %}
         $("#modalError").modal("show");
         {% endif %}
     });

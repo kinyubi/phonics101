@@ -43,7 +43,7 @@ class Location
         if (empty($imageName)) {
             return '';
         }
-        if (Util::contains($imageName, 'b-d-p')) {
+        if (Util::contains('b-d-p', $imageName, )) {
             return self::BDP_DIR . 'b-d-p_poster.jpg';
         } else {
             return self::PRONOUNCE_IMAGES_DIR . $imageName;
@@ -55,7 +55,7 @@ class Location
         if (empty($imageName)) {
             return '';
         }
-        if (Util::contains($imageName, 'b-d-p')) {
+        if (Util::contains('b-d-p', $imageName)) {
             return self::BDP_DIR . 'thumb_b-d-p_poster.jpg';
         } else {
             return self::PRONOUNCE_IMAGES_DIR . 'thumb_' . $imageName;

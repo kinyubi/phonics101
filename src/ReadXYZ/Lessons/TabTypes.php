@@ -3,8 +3,9 @@
 namespace App\ReadXYZ\Lessons;
 
 use App\ReadXYZ\Data\TabTypesData;
+use App\ReadXYZ\Enum\TabTypeId;
 use App\ReadXYZ\POPO\TabType;
-use RuntimeException;
+use App\ReadXYZ\Helpers\PhonicsException;
 
 class TabTypes
 {
@@ -40,24 +41,40 @@ class TabTypes
      * @param string $tabTypeId
      *
      * @return TabType|null
+     * @throws PhonicsException
      */
     public function getTabInfo(string $tabTypeId): ?TabType
     {
-        $lowerTabType = strtolower($tabTypeId);
-        return $this->tabTypes[$lowerTabType] ?? null;
+        $realTabType = $this->fixTabName($tabTypeId);
+        return $this->tabTypes[$realTabType] ?? null;
     }
 
-    public function isValid(string $tabTypeId) {
-        $lowerTabType = strtolower($tabTypeId);
-        return array_key_exists($lowerTabType, $this->tabTypes);
+    public function isValid(string $tabTypeId): bool
+    {
+        try {
+            $this->fixTabName($tabTypeId);
+            return true;
+        } catch (PhonicsException $ex) {
+            return false;
+        }
     }
 
+    /**
+     * @param $tabName
+     * @return string
+     * @throws PhonicsException
+     */
     public function fixTabName($tabName)
     {
-        if (not($this->isValid($tabName))) {
-            throw new RuntimeException("$tabName is not a valid tab name or alias.");
+        $lowerTabType = strtolower($tabName);
+        if (not(array_key_exists($lowerTabType, $this->tabTypes))) {
+            throw new PhonicsException("$tabName is not a valid tab name or alias.");
         }
         // if it's an alias key, the tabTypeId will be the real
-        return $this->tabTypes[$tabName]->tabTypeId;
+        $realTabName = $this->tabTypes[$tabName]->tabTypeId;
+        if (!TabTypeId::isValid($realTabName)) {
+            throw new PhonicsException("TabTypeId class and mysql disagree on valid tab type $realTabName.");
+        }
+        return $realTabName;
     }
 }

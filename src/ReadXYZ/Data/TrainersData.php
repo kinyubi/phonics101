@@ -6,7 +6,9 @@ namespace App\ReadXYZ\Data;
 
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Sql;
+use App\ReadXYZ\Enum\Throwable;
 use App\ReadXYZ\Enum\TrainerType;
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
 
 class TrainersData extends AbstractData
@@ -28,6 +30,10 @@ class TrainersData extends AbstractData
     }
 
 // ======================== PUBLIC METHODS =====================
+
+    /**
+     * @throws PhonicsException
+     */
     public function _create(): void
     {
         $query = <<<EOT
@@ -60,6 +66,7 @@ EOT;
     {
         // generate an extended uniqId prefixed with U
         $trainerCode = uniqid('U', true);
+        $trainerCode = str_replace('.', 'Z', $trainerCode);
         $date = $this->smartQuotes(Util::dbDate());
         $hash = $this->makeHash($userName, $password);
         $query = <<<EOT
@@ -73,6 +80,7 @@ EOT;
      * delete will fail if user has students
      * @param string|int $user userName or trainerCode
      * @return int
+     * @throws PhonicsException
      */
     public function delete($user): int
     {
@@ -85,6 +93,7 @@ EOT;
      * Retrieves hash associated with username. Returns empty string if username doesn't exist
      * @param string $userName
      * @return string hash if userName found, otherwise empty
+     * @throws PhonicsException
      */
     public function getHash(string $userName): string
     {
@@ -96,26 +105,45 @@ EOT;
      * Retrieves trainerCode associated with username. Returns empty string if username doesn't exist
      * @param string $user
      * @return string trainerCode if userName found, otherwise empty
+     * @throws PhonicsException
      */
     public function getTrainerCode(string $user): string
     {
         $query = "SELECT trainerCode FROM abc_trainers WHERE userName = '$user' OR trainerCode = '$user'";
-        return $this->throwableQuery($query, QueryType::SCALAR, Sql::THROW_ON_NOT_FOUND);
+        return $this->throwableQuery($query, QueryType::SCALAR, Throwable::THROW_ON_NOT_FOUND) ;
     }
 
+    /**
+     * @param string $user
+     * @return string
+     * @throws PhonicsException
+     */
     public function getUsername(string $user): string
     {
-        $query = "SELECT userName FROM abc_trainers WHERE trainerCode = '$user' OR userName = '$user'";
-        return $this->throwableQuery($query, QueryType::SCALAR, Sql::THROW_ON_NOT_FOUND);
+        if (Util::contains('@', $user)) {return $user;}
+        $query = "SELECT userName FROM abc_trainers WHERE trainerCode = '$user'";
+        return $this->throwableQuery($query, QueryType::SCALAR, Throwable::THROW_ON_NOT_FOUND);
+    }
+
+    /**
+     * @param string $trainer
+     * @return string
+     * @throws PhonicsException
+     */
+    public function getTrainerType(string $trainer): string
+    {
+        $query = "SELECT trainerType FROM abc_trainers WHERE trainerCode = '$trainer' OR userName = '$trainer'";
+        return $this->throwableQuery($query, QueryType::SCALAR, Throwable::THROW_ON_NOT_FOUND);
     }
 
     /**
      * @param string $user userName or trainerCode
      * @return bool
+     * @throws PhonicsException
      */
     public function hasStudents(string $user): bool
     {
-        $where = "trainerCode = '$user' OR userName = '$user'";
+        $where = "(trainerCode = '$user' OR userName = '$user')";
         $query = "SELECT * FROM abc_trainers WHERE $where";
         return $this->throwableQuery($query, QueryType::EXISTS);
     }
@@ -123,11 +151,24 @@ EOT;
     /**
      * @param string $user userName or trainerCode
      * @return bool
+     * @throws PhonicsException
      */
-    public function isAdmin($user): bool
+    public function isAdmin(string $user): bool
     {
-        $where = "trainerCode = '$user' OR userName = '$user'";
+        $where = "(trainerCode = '$user' OR userName = '$user')";
         $query = "SELECT trainerType FROM abc_trainers WHERE trainerType = 'admin' AND $where";
+        return $this->throwableQuery($query, QueryType::EXISTS);
+    }
+
+    /**
+     * @param string $user userName or trainerCode
+     * @return bool
+     * @throws PhonicsException
+     */
+    public function isStaff(string $user): bool
+    {
+        $where = "(trainerCode = '$user' OR userName = '$user')";
+        $query = "SELECT trainerType FROM abc_trainers WHERE (trainerType = 'admin' OR trainerType = 'staff') AND $where";
         return $this->throwableQuery($query, QueryType::EXISTS);
     }
 
@@ -135,17 +176,19 @@ EOT;
      * Returns true is trainer is in the database and is active.
      * @param $user
      * @return bool
+     * @throws PhonicsException
      */
     public function isValid($user): bool
     {
         $where = "trainerCode = '$user' OR userName = '$user' AND active = 'Y'";
-        $query = "SELECT trainerType FROM abc_trainers WHERE trainerType = 'admin' AND $where";
+        $query = "SELECT trainerType FROM abc_trainers WHERE  $where";
         return $this->throwableQuery($query, QueryType::EXISTS);
     }
 
     /**
      * @param string|int $user userName or trainerCode
      * @param bool $activeOrNot
+     * @throws PhonicsException
      */
     public function updateActive($user, bool $activeOrNot): void
     {
@@ -159,6 +202,7 @@ EOT;
      * @param string $user userName or trainerCode
      * @param string $firstName
      * @param string $lastName
+     * @throws PhonicsException
      */
     public function updateName(string $user, string $firstName, string $lastName): void
     {
@@ -171,6 +215,7 @@ EOT;
      * @param string $user
      * @param string $password
      * @return void
+     * @throws PhonicsException
      */
     public function updatePassword(string $user, string $password): void
     {
@@ -197,6 +242,7 @@ EOT;
      * @param string $user userName or trainerCode
      * @param string $password
      * @return string
+     * @throws PhonicsException
      */
     private function makeHash(string $user, string $password): string
     {

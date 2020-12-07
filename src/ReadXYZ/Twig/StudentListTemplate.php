@@ -5,20 +5,24 @@ namespace App\ReadXYZ\Twig;
 
 
 use App\ReadXYZ\Data\StudentsData;
-use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Helpers\PhonicsException;
+use App\ReadXYZ\Page\Page;
 
 class StudentListTemplate
 {
 
+    /**
+     * @throws PhonicsException
+     */
     public function display(): void
     {
-        $allStudents = (new StudentsData())->getStudentsForUser();
+        $allStudents = (new StudentsData())->getMapOfStudentsForUser();
         $page = new Page('Select a student');
         $studentLinks = [];
-        foreach ($allStudents as $student) {
+        foreach ($allStudents as $name => $code) {
             $studentLinks[] = [
-                'url'   => Util::buildActionsLink('processStudentSelection', ['P1' => $student['studentCode']]),
-                'title' => ucfirst($student['studentName'])
+                'url'   => "/handler/student/$code",
+                'title' => ucfirst($name)
             ];
         }
         $args = ['page' => $page, 'studentLinks' => $studentLinks];

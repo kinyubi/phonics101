@@ -108,9 +108,8 @@ class Debug
 
     public static function logException(Exception $ex)
     {
-        if (Util::isLocal()()) {
-            var_dump($ex->getTraceAsString());
-        }
-        Log::error(var_export($ex->getTraceAsString(), true));
+        $msg = $ex->getMessage() . "\n" . $ex->getTraceAsString();
+        $trace = $ex->getTrace();
+        Log::fatal($msg, $trace[0]['function'],$trace[0]['file'], $trace[0]['line']);
     }
 }

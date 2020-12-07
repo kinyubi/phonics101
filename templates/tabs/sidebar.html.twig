@@ -5,7 +5,7 @@
 {% block SideBar %}
   {% set tabId = tabInfo.tabTypeId %}
   {% set infoDim = isSmallScreen ? 30 : 50 %}
-  {% set information = sideNote.getNote(lesson.groupId, tabId) %}
+  {% set information = sideNote.getNote(lesson.groupCode, tabId) %}
   {% set isBdpLesson = 'b-d-p' in lesson.lessonName %}
 
     {# Refresh and Info icon display #}
@@ -58,10 +58,10 @@
     </div>
     <div class="row d-flex">
         {% if tabId == 'fluency' %}
-          {{ sideNote.getLearningCurveHTML() }}
+          {{ learningCurve }}
         {% endif %}
         {% if tabId == 'test' %}
-          {{ sideNote.getTestCurveHTML() }}
+          {{ testCurve }}
         {% endif %}
     </div>
   {% endif %}

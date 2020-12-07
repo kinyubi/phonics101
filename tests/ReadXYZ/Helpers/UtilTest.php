@@ -15,26 +15,20 @@ class UtilTest extends TestCase
         $this->assertEquals("'dog','cat','mouse'", Util::arrayToList($array));
     }
 
-    public function testBuildActionsLink()
-    {
-        $result = Util::buildActionsLink('render', ['P1' => 'me', 'P2' => 'you', 'action' => 'love']);
-        $this->assertEquals('/actions/render.php?P1=me&P2=you&action=love', $result);
-    }
-
     public function testContains()
     {
-        $this->assertTrue(Util::contains('Robin Hood', 'obin'));
-        $this->assertFalse(Util::contains('Robin Hood', 'rob'));
-        $this->assertTrue(Util::contains('Robin Hood', ['bin', 'x']));
-        $this->assertFalse(Util::contains('Robin Hood', ['x', 'y']));
+        $this->assertTrue(Util::contains('obin', 'Robin Hood'));
+        $this->assertFalse(Util::contains('rob', 'Robin Hood'));
+        $this->assertTrue(Util::contains(['bin', 'x'], 'Robin Hood'));
+        $this->assertFalse(Util::contains(['x', 'y'], 'Robin Hood'));
     }
 
     public function testContains_ci()
     {
-        $this->assertTrue(Util::contains_ci('Robin Hood', 'obin'));
-        $this->assertTrue(Util::contains_ci('Robin Hood', 'rob'));
-        $this->assertTrue(Util::contains_ci('Robin Hood', ['x', 'O']));
-        $this->assertFalse(Util::contains_ci('Robin Hood', ['x', 'y']));
+        $this->assertTrue(Util::contains_ci('obin', 'Robin Hood'));
+        $this->assertTrue(Util::contains_ci('rob', 'Robin Hood'));
+        $this->assertTrue(Util::contains_ci(['x', 'O'], 'Robin Hood'));
+        $this->assertFalse(Util::contains_ci(['x', 'y'], 'Robin Hood'));
     }
 
     public function testConvertCamelToSnakeCase()

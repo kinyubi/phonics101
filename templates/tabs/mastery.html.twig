@@ -10,12 +10,11 @@
   {% set listCount = max(lesson.wordlist|length,99) %}
   {% set listIndex = listCount // 25 %}
   <div class="container">
-
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9">
         {{ tabHeader(tabInfo) }}
         <div class="row">
-          <form id="masteryform" name="masteryform" method="POST" action="/actions/updateMastery.php">
+          <form id="masteryform" name="masteryform" method="POST" action="/">
             <div class="row d-flex flex-wrap ">
               {% for word in lesson.wordList %}
                 {% set checked = (word in masteredWords) ? 'checked' : '' %}
@@ -27,7 +26,7 @@
                 </div>
               {% endfor %}
               <input type="hidden" name="wordlist" value="{{ lesson.allWords|join(',') }}"/>
-
+              <input type="hidden" name="handler" value="mastery" />
             </div>
           </form>
         </div>

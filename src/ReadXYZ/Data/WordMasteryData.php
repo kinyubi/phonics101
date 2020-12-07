@@ -9,18 +9,20 @@ use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Log;
 use App\ReadXYZ\Models\Session;
-use RuntimeException;
+use App\ReadXYZ\Helpers\PhonicsException;
 
 class WordMasteryData extends AbstractData
 {
 
-    private PhonicsDb $db;
 
     public function __construct()
     {
         parent::__construct('abc_word_mastery', 'id');
     }
 
+    /**
+     * @throws PhonicsException
+     */
     public function _create()
     {
         $query = <<<EOT
@@ -61,34 +63,17 @@ EOT;
         }
     }
 
-    public function processRequest()
-    {
-        $session = new Session();
-        if (!$session->hasLesson()) {
-            throw new RuntimeException('Cannot update user mastery without an active lesson.');
-        }
-        $studentCode = $session->getstudentCode();
-        $presentedWordList = $_REQUEST['wordlist'];
-        $masteredWords = $_REQUEST['word1'] ?? [];
-        $result = $this->update($studentCode, $presentedWordList, $masteredWords);
-
-        if ($result->wasSuccessful()) {
-            $this->sendResponse(200, 'Update successful');
-        } else {
-            $msg = $result->getErrorMessage();
-            Log::error($msg);
-            $this->sendResponse(500, $msg);
-        }
-        exit();
-    }
-
+    /**
+     * @return array
+     * @throws PhonicsException
+     */
     public function getMasteredWords(): array
     {
         $session = new Session();
         if (!$session->hasLesson()) {
-            throw new RuntimeException('Cannot get mastered words without an active lesson.');
+            throw new PhonicsException('Cannot get mastered words without an active lesson.');
         }
-        $studentCode = $this->smartQuotes($session->getstudentCode());
+        $studentCode = $this->smartQuotes($session->getStudentCode());
         $query = "SELECT word from abc_word_mastery WHERE studentCode = $studentCode";
         return $this->throwableQuery($query, QueryType::SCALAR_ARRAY);
     }

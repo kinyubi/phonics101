@@ -2,7 +2,7 @@
 
 namespace App\ReadXYZ\POPO;
 
-use LogicException;
+use App\ReadXYZ\Helpers\PhonicsException;
 use stdClass;
 
 class GameType
@@ -43,7 +43,7 @@ class GameType
     {
         if (is_string($value)) return $value = 'Y';
         if (is_bool($value)) return $value;
-        throw new LogicException('Value was neither string nor bool.');
+        throw new PhonicsException('Value was neither string nor bool.');
     }
 
 }

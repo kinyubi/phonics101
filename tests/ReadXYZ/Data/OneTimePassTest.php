@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\ReadXYZ\Database;
+namespace Tests\ReadXYZ\Data;
 
 use App\ReadXYZ\Data\OneTimePass;
 use App\ReadXYZ\Data\PhonicsDb;
@@ -14,7 +14,7 @@ class OneTimePassTest extends TestCase
         $this->assertTrue($otp instanceof OneTimePass);
     }
 
-    public function testDecodeOtp()
+    public function testAdd()
     {
         $query = 'SELECT * FROM abc_onetime_pass';
         $phonicsDb = new PhonicsDb();
@@ -29,7 +29,7 @@ class OneTimePassTest extends TestCase
         $phonicsDb->queryStatement("DELETE FROM abc_onetime_pass WHERE hash = '$hash'");
     }
 
-    public function testGetOTP()
+    public function testDecodeAndDelete()
     {
         $query = 'SELECT * FROM abc_onetime_pass';
         $phonicsDb = new PhonicsDb();

@@ -49,8 +49,7 @@ class Lesson implements JsonSerializable
     public ?Warmup $warmup;
 
     /**
-     * Lesson constructor. Called by the Lessons class when building an associative array of lessons.
-     * Lessons class reads in a json file. When json_decode is performed each lesson becomes a stdClass object.
+     * Lesson constructor. The input is a stdClass object from the abc_lessons table in readxyz1_1 database
      *
      * @param stdClass $lesson
      */
@@ -126,9 +125,9 @@ class Lesson implements JsonSerializable
             $this->tabNames[] = 'spell';
         }
         $this->tabNames = array_merge($this->tabNames, ['mastery', 'fluency', 'test']);
-        if ($this->book) {
-            $this->tabNames[] = 'book';
-        }
+        // if ($this->book) {
+        //     $this->tabNames[] = 'book';
+        // }
 
         $this->pronounceImage = Location::getPronounceImage($lesson->pronounceImage ?? '');
         $this->pronounceImageThumb = Location::getPronounceImageThumb($lesson->pronounceImage ?? '');
@@ -207,8 +206,8 @@ class Lesson implements JsonSerializable
      */
     private function make3Lists(string $tabName): array
     {
-        $isPractice = Util::contains_ci($tabName, 'prac');
-        $useSupplemental = (Util::contains_ci($tabName, 'test') || $isPractice);
+        $isPractice = Util::contains_ci('prac', $tabName);
+        $useSupplemental = (Util::contains_ci('test', $tabName ) || $isPractice);
         $arraySize = $isPractice ? 21 : 9;
         $tripleSize = 3 * $arraySize;
         $hasSupplemental = not(empty($this->supplementalWordList));

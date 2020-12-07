@@ -15,14 +15,14 @@ form fields: username, password
     <img src="/images/logo.png" alt="ReadXYZ" style="width:40%;max-width:180px;">
   </div>
   <div class="row d-flex m-4">
-    <form name="frm" method="POST" action="/actions/processUserLogin.php" id="frm" data-ajax="false" autocomplete="on">
+    <form name="frm" method="POST" action="/" id="frm" data-ajax="false" autocomplete="off">
 
       <label for="username" class="pt-3">Email</label>
-      <input type="text" name="username" id="username" value="{{ email }}" autocomplete="email" class="form-control wlx" aria-describedby="emailHelp" placeholder="Enter email address">
+      <input type="text" name="username" id="username" value="{{ email }}" class="form-control wlx" aria-describedby="emailHelp" placeholder="Enter email address" autocomplete="on">
       <label for="password" class="pt-3">Password</label>
-      <input type="password" name="password" id="password" value="" class="form-control wlx"
-             autocomplete="current-password" placeholder="Password">
+      <input type="password" name="password" id="password" value="" class="form-control wlx" placeholder="Password" autocomplete="on">
       <input type="submit" value="LOG IN" class="btn btn-primary mt-3 " style="text-align: center">
+      <input type="hidden" name="handler" value="validate" />
     </form>
   </div>
 

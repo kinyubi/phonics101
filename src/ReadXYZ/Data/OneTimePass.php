@@ -4,63 +4,61 @@
 namespace App\ReadXYZ\Data;
 
 
-use RuntimeException;
+use App\ReadXYZ\Enum\QueryType;
+use App\ReadXYZ\Helpers\PhonicsException;
 
-class OneTimePass
+class OneTimePass extends AbstractData
 {
-    private string $tableName = 'abc_onetime_pass';
-
-    private string $createQuery = <<<EOT
-CREATE TABLE IF NOT EXISTS `abc_onetime_pass` (
-  `hash` varchar(50) NOT NULL DEFAULT '',
-  `username` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`hash`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    /**
+     * @throws PhonicsException
+     */
+    public function _create()
+    {
+        $query = <<<EOT
+        CREATE TABLE IF NOT EXISTS `abc_onetime_pass` (
+          `hash` varchar(50) NOT NULL DEFAULT '',
+          `username` varchar(100) NOT NULL DEFAULT '',
+          PRIMARY KEY (`hash`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 EOT;
-
-    private PhonicsDb $phonicsDb;
+        $this->throwableQuery($query, QueryType::STATEMENT);
+    }
 
     public function __construct()
     {
-        $this->phonicsDb = new PhonicsDb();
-        $result = $this->phonicsDb->queryAndGetCount("SHOW TABLES LIKE 'abc_onetime_pass'");
-        $count = $result->wasSuccessful() ? $result->getResult() : 0;
-        if ($count == 0) {
-            $this->phonicsDb->queryStatement($this->createQuery);
-        }
+        parent::__construct('abc_onetime_pass');
+        $this->primaryKey = 'hash';
     }
 
     /**
      * Creates a one-time password for a user and puts it in the abc_onetime_pass table
      * @param string $username
-     * @return string
+     * @return DbResult
+     * @throws PhonicsException
      */
-    public function getOTP(string $username): string
+    public function add(string $username): DbResult
     {
         $otp = md5($username . strval(time()));
-        $query = "INSERT INTO {$this->tableName} VALUES ('$otp','$username')";
-        $result = $this->phonicsDb->queryStatement($query);
-        if ($result->failed()) {
-            throw new RuntimeException("unable to create OTP. " . $result->getErrorMessage());
-        }
-        return $otp;
+        $query = "INSERT INTO abc_onetime_pass VALUES ('$otp','$username')";
+        return $this->query($query, QueryType::STATEMENT);
     }
 
     /**
      * Decodes a one-time password and returns the associated username. returns null if not found.
      * @param string $otp
-     * @return string
+     * @return DbResult
+     * @throws PhonicsException
      */
-    public function decodeOTP(string $otp): string
+    public function decodeAndDelete(string $otp): DbResult
     {
         $query = "SELECT username FROM abc_onetime_pass WHERE hash = '$otp' ";
-        $result = $this->phonicsDb->queryAndGetScalar($query);
+        $result = $this->query($query, QueryType::STATEMENT);
         $user = $result->wasSuccessful() ? $result->getResult() : '';
         if ($user) {
             $query = "DELETE FROM abc_onetime_pass WHERE hash = '$otp'";
-            $this->phonicsDb->queryStatement($query);
+            $this->query($query, QueryType::STATEMENT);
         }
-        return $user;
+        return $result;
     }
 
 }

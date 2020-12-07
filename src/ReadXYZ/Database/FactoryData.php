@@ -3,7 +3,7 @@
 namespace App\ReadXYZ\Database;
 
 use Exception;
-use RuntimeException;
+use App\ReadXYZ\Helpers\PhonicsException;
 
 abstract class FactoryData
 { // all data tables inherit from this class
@@ -18,7 +18,7 @@ abstract class FactoryData
     {
         $this->dbo = new DbConnect();
         if (mysqli_connect_errno()) {
-            throw new RuntimeException('MySQL connect failure. ' . mysqli_connect_error());
+            throw new PhonicsException('MySQL connect failure. ' . mysqli_connect_error());
         }
     }
 

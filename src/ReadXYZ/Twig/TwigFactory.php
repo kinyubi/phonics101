@@ -34,7 +34,7 @@ class TwigFactory
         $options['autoescape'] = false;
         $options['optimizations'] = 0;
         $path = Util::getProjectPath('templates');
-        $loader = new FilesystemLoader([$path, "$path/parts", "$path/tabs"]);
+        $loader = new FilesystemLoader([$path, "$path/parts", "$path/tabs", "$path/forms"]);
         $this->twigEnvironment = new Environment($loader, $options);
         if (Util::isLocal()) {
             $this->twigEnvironment->addExtension(new DebugExtension());
@@ -68,11 +68,11 @@ class TwigFactory
         $realName = $templateName;
 
         // remove parts subdirectory if its part of template name
-        if (Util::contains($realName, $partDir)) {
+        if (Util::contains($partDir, $realName)) {
             $realName = str_replace($partDir, '', $realName);
         }
         // remove .html.twig extension if its part of template name
-        if (!Util::contains($realName, $ext)) {
+        if (!Util::contains($ext, $realName)) {
             $realName .= $ext;
         }
         // creates loader for this template if it doesn't exist
@@ -84,27 +84,33 @@ class TwigFactory
         return $this->templates[$baseName];
     }
 
+    /**
+     * @param string $templateName
+     * @param array $args
+     * @return string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function renderTemplate(string $templateName, array $args = [])
     {
-        try {
-            $template = $this->loadTemplate($templateName);
-            $html = $template->render($args);
-        } catch (Throwable $ex) {
-            $html = Util::redBox("Twig template render error: $templateName.", $ex);
-        }
-
-        return $html;
+        $template = $this->loadTemplate($templateName);
+        return $template->render($args);
     }
 
+    /**
+     * @param string $templateName
+     * @param string $blockName
+     * @param array $args
+     * @return string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws Throwable
+     */
     public function renderBlock(string $templateName, string $blockName, array $args = [])
     {
-        try {
-            $template = $this->loadTemplate($templateName);
-            $html = $template->renderBlock($blockName, $args);
-        } catch (Throwable $e) {
-            $html = Util::redBox("Twig template render error: $templateName.", $e);
-        }
-
-        return $html;
+        $template = $this->loadTemplate($templateName);
+        return $template->renderBlock($blockName, $args);
     }
 }

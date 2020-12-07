@@ -7,7 +7,7 @@ namespace App\ReadXYZ\Models;
 
 use App\ReadXYZ\Data\StudentLessonsData;
 use App\ReadXYZ\Data\StudentsData;
-use RuntimeException;
+use App\ReadXYZ\Helpers\PhonicsException;
 
 class OldStudent
 {
@@ -37,7 +37,7 @@ class OldStudent
     public function saveLessonSelection(string $lessonName): void
     {
         if (!$this->isValidStudent) {
-            throw new RuntimeException("Cannot save lesson selection without a student session.");
+            throw new PhonicsException("Cannot save lesson selection without a student session.");
         }
         $this->session->updateLesson($lessonName);
     }
@@ -67,7 +67,7 @@ class OldStudent
             $masteryType = $postData['masteryType'] ?? ($postData['P1'] ?? '');
             (new StudentLessonsData())->updateMastery($masteryType);
         } else {
-            throw new RuntimeException( 'POST data did not have required fields.');
+            throw new PhonicsException( 'POST data did not have required fields.');
         }
     }
 

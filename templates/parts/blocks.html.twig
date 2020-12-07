@@ -1,13 +1,4 @@
 
-{# args: message, details, trace #}
-{% block redbox %}
-    <div class="container-sm border border-danger rounded-lg px-3 py-0 m-3">
-        <div class="row"><div class="col-sm-12 text-center h1 bg-danger text-white">ERROR</div></div>
-        <div class="row"><div class="col-sm-12 font-weight-bold text-sm-left">{{ message }}</div></div>
-        {% if details %} <div class="row"><div class="col-sm-12 text-sm-left ">{{ details }}</div></div> {% endif %}
-        {% if trace %}<div class="row"><div class="col-sm-12 text-sm-left ">{{ trace }}</div></div>{% endif %}
-    </div>
-{% endblock %}
 
 {% block favicons %}
     <!-- ****** /images/favicons/faviconit.com /images/favicons/favicons ****** -->

@@ -5,7 +5,7 @@ namespace App\ReadXYZ\Lessons;
 
 
 use App\ReadXYZ\Data\GroupData;
-use LogicException;
+use App\ReadXYZ\Helpers\PhonicsException;
 
 class Groups
 {
@@ -14,6 +14,10 @@ class Groups
 
     private array $groups;
 
+    /**
+     * Groups constructor.
+     * @throws PhonicsException
+     */
     private function __construct()
     {
         $data = new GroupData();
@@ -28,27 +32,42 @@ class Groups
         return self::$instance;
     }
 
-    public function getDisplayAs(string $groupId): string
+    /**
+     * @param string $groupCode
+     * @return string
+     * @throws PhonicsException
+     */
+    public function getDisplayAs(string $groupCode): string
     {
         foreach($this->groups as $group) {
-            if (($group->groupCode == $groupId) || $group->groupName == $groupId) return $group->groupDisplayAs;
+            if (($group->groupCode == $groupCode) || $group->groupName == $groupCode) return $group->groupDisplayAs;
         }
-        throw new LogicException("$groupId is not a valid groupCode or groupName.");
+        throw new PhonicsException("$groupCode is not a valid groupCode or groupName.");
     }
 
-    public function getGroupCode(string $groupId): string
+    /**
+     * @param string $groupCode
+     * @return string
+     * @throws PhonicsException
+     */
+    public function getGroupCode(string $groupCode): string
     {
         foreach($this->groups as $group) {
-            if (($group->groupDisplayAs == $groupId) || $group->groupName == $groupId) return $group->groupCode;
+            if (($group->groupDisplayAs == $groupCode) || $group->groupName == $groupCode) return $group->groupCode;
         }
-        throw new LogicException("$groupId is not a valid groupCode or groupName.");
+        throw new PhonicsException("$groupCode is not a valid groupCode or groupName.");
     }
 
-    public function getGroupName(string $groupId): string
+    /**
+     * @param string $groupCode
+     * @return string
+     * @throws PhonicsException
+     */
+    public function getGroupName(string $groupCode): string
     {
         foreach($this->groups as $group) {
-            if (($group->groupDisplayAs == $groupId) || $group->groupCode == $groupId) return $group->groupName;
+            if (($group->groupDisplayAs == $groupCode) || $group->groupCode == $groupCode) return $group->groupName;
         }
-        throw new LogicException("$groupId is not a valid groupCode or groupName.");
+        throw new PhonicsException("$groupCode is not a valid groupCode or groupName.");
     }
 }

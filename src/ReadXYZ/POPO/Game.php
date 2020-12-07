@@ -29,11 +29,11 @@ class Game implements JsonSerializable
         $this->tabName = $tab;
         $this->ordering = $order;
         $this->url = $url;
-        if (Util::contains($thumb, 'sound-box')) {
+        if (Util::contains('sound-box', $thumb)) {
             $this->cssClass = 'sound-box';
-        } elseif (Util::contains($thumb, 'tic-tac-toe')) {
+        } elseif (Util::contains('tic-tac-toe', $thumb)) {
             $this->cssClass = 'tic-tac-toe';
-        } elseif (Util::contains($thumb, 'advanced-spell')) {
+        } elseif (Util::contains('advanced-spell', $thumb)) {
             $this->cssClass = 'advanced-spell';
         } else {
             $this->cssClass = 'games';

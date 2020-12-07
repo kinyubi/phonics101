@@ -2,10 +2,11 @@
 
 namespace App\ReadXYZ\Data;
 
+use App\ReadXYZ\Enum\Sql;
 use App\ReadXYZ\Models\BoolWithMessage;
 use mysqli;
 use App\ReadXYZ\Secrets\Access;
-use RuntimeException;
+use App\ReadXYZ\Helpers\PhonicsException;
 
 /**
  * Helper class for testing.
@@ -14,11 +15,11 @@ class PhonicsDb
 {
     protected mysqli $connection;
 
-    public function __construct(int $version = 1)
+    public function __construct(string $dbName=Sql::READXYZ1_1)
     {
-        $this->connection = ($version == 1) ? Access::dbConnect() : Access::oldDbConnect();
+        $this->connection = ($dbName == Sql::READXYZ1_1) ? Access::dbConnect() : Access::oldDbConnect();
         if (mysqli_connect_errno()) {
-            throw new RuntimeException(mysqli_connect_error());
+            throw new PhonicsException(mysqli_connect_error());
         }
     }
 
@@ -182,7 +183,7 @@ class PhonicsDb
     {
         $statement = $this->connection->prepare($query);
         if ($statement === false) {
-            throw new RuntimeException($this->getErrorMessage());
+            throw new PhonicsException($this->getErrorMessage());
         }
         return $statement;
     }

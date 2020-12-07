@@ -3,11 +3,12 @@
 
 namespace App\ReadXYZ\Data;
 
+use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Sql;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
 use stdClass;
-use RuntimeException;
+use App\ReadXYZ\Helpers\PhonicsException;
 
 /**
  * Class StudentData
@@ -41,7 +42,7 @@ CREATE TABLE `abc_student` (
 EOT;
         $result = $this->db->queryStatement($query);
         if ($result->failed()) {
-            throw new RuntimeException($this->db->getErrorMessage());
+            throw new PhonicsException($this->db->getErrorMessage());
         }
     }
 
@@ -56,7 +57,7 @@ EOT;
         $query = "SELECT studentid FROM abc_Student WHERE StudentName = '$studentName' AND trainer1 = '$username'";
         $result = $this->db->queryAndGetScalar($query);
         if ($result->wasSuccessful()) return $result->getResult();
-        throw new RuntimeException('Error: ' . $result->getErrorMessage() . '. ' . $query);
+        throw new PhonicsException('Error: ' . $result->getErrorMessage() . '. ' . $query);
     }
 
     /**
@@ -69,6 +70,7 @@ EOT;
         $result = $this->db->queryAndGetScalarArray($query);
         return ($result->wasSuccessful()) ? $result->getResult() : [];
     }
+
 
     public function getStudentName(string $studentId): string
     {
@@ -96,6 +98,25 @@ EOT;
     }
 
     /**
+     * get all trainers that are assigned to student
+     * @return array
+     */
+    public function getStudentTrainers(): array
+    {
+        $query = "SELECT trainer1, studentid, StudentName, cargo, 'trainer' AS trainerType  FROM abc_Student";
+        return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
+    }
+
+    /**
+     * @return string[] list of unique usernames
+     */
+    public function getUniqueTrainers(): array
+    {
+        $query = "SELECT DISTINCT trainer1 FROM abc_student";
+        return $this->throwableQuery($query, QueryType::SCALAR_ARRAY);
+    }
+
+    /**
      * validates that $userId is actually trainer1 for $studentId
      * @param string $studentId
      * @param string $userId
@@ -116,8 +137,8 @@ EOT;
     }
 
     /**
-     * @param string $lessonKey
-     * @param array $cargo
+     * @param string $lessonName
+     * @param array $info
      * @return stdClass|null
      */
     private function harvestMastery(string $lessonName, array $info)
@@ -147,7 +168,7 @@ EOT;
         $query = "SELECT * FROM abc_student WHERE studentid='$studentId'";
         $result = $this->db->queryRecord($query);
         if ($result->failed()) {
-            throw new \RuntimeException($result->getErrorMessage());
+            throw new PhonicsException($result->getErrorMessage());
         }
         $data = $result->getResult();
         $cargo = unserialize($data['cargo']);

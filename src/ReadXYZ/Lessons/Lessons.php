@@ -31,7 +31,7 @@ class Lessons
     /** @var array structure is accordion[groupName][lessonName] => masteryLevel (0-none, 1-advancing, 2-mastered) */
     private array $accordion = []; // used as a starting point for mastery which is applied in student lesson
     private array $alternateNameMap = [];
-    private array $lessonNames = [];
+    private array $lessonNamesMap = []; // lessonName => lessonCode
     private array $displayAs = [];
 
     private function __construct()
@@ -53,18 +53,24 @@ class Lessons
             $this->lessons[$lessonCode] = $lesson;
 
             //adding every conceivable alias
-            $this->alternateNameMap[$lessonCode] = $lessonCode;
-            $this->alternateNameMap[$lessonName] = $lessonCode;
-            $this->alternateNameMap[$lessonDisplay] = $lessonCode;
+            $this->alternateNameMap[$lessonCode] = $lessonName;
+            $this->alternateNameMap[$lessonName] = $lessonName;
+            $this->alternateNameMap[$lessonDisplay] = $lessonName;
+            foreach($lesson->alternateNames as $name) {
+                if (!isset($this->alternateNameMap[$name])) $this->alternateNameMap[$name] = $lessonName;
+            }
 
             $this->displayAs[$lessonCode] = $lessonDisplay;
             $this->displayAs[$lessonName] = $lessonDisplay;
             $this->displayAs[$lessonDisplay] = $lessonDisplay;
+            foreach($lesson->alternateNames as $name) {
+                if (!isset($this->alternateNameMap[$name])) $this->alternateNameMap[$name] = $lessonDisplay;
+            }
 
             $groupName = $lessonInfo->groupName;
             if (! isset($this->accordion[$groupName])) $this->accordion[$groupName] = [];
             $this->accordion[$groupName][$lesson->lessonName] = 0;
-            $this->lessonNames[] = $lessonName;
+            $this->lessonNames[$lessonName] = $lessonCode;
         }
 
     }
@@ -88,6 +94,7 @@ class Lessons
 // ======================== PUBLIC METHODS =====================
     public function getAccordionList(): array
     {
+
         $this->setAccordion();
         return $this->accordion;
     }
@@ -102,9 +109,9 @@ class Lessons
         return $this->groupDisplayAs;
     }
 
-    public function getAllLessonNames(): array
+    public function getLessonNamesMap(): array
     {
-        return $this->lessonNames;
+        return $this->lessonNamesMap;
     }
 
     public function getAllLessons(): array
@@ -117,11 +124,11 @@ class Lessons
      */
     public function &getCurrentLesson(): ?Lesson
     {
-        $currentLessonName = (new Session)->getCurrentLessonName();
-        if ($currentLessonName) {
-            $ref = &$this->lessons[$this->getRealLessonName($currentLessonName)];
+        $currentLessonCode = (new Session)->getCurrentLessonCode();
+        if ($currentLessonCode) {
+            $ref = &$this->lessons[$currentLessonCode];
         } else {
-            $ref = &$this->lessons[$this->lessonNames[0]];
+            $ref = &$this->lessons[array_key_first($this->lessons)];
         }
 
         return $ref;
@@ -129,7 +136,12 @@ class Lessons
 
     public function getCurrentLessonName(): string
     {
-        return (new Session)->getCurrentLessonName();
+        return (new Session())->getCurrentLessonName();
+    }
+
+    public function getCurrentLessonCode(): string
+    {
+        return (new Session())->getCurrentLessonCode();
     }
 
     /**
@@ -159,6 +171,12 @@ class Lessons
 
     }
 
+    /**
+     * using alternate names and lessonCode and lessonDisplayAs as possibilities, return the "official" lesson name.
+     * returns empty if not found
+     * @param string $oldLessonName
+     * @return string if found returns the "official" lesson name, otherwise returns empty string
+     */
     public function getRealLessonName(string $oldLessonName): string
     {
         $oldName = Util::convertLessonKeyToLessonName($oldLessonName);
