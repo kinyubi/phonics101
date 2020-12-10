@@ -21,7 +21,7 @@ class WordMasteryData extends AbstractData
     }
 
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function _create()
     {
@@ -65,7 +65,7 @@ EOT;
 
     /**
      * @return array
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getMasteredWords(): array
     {

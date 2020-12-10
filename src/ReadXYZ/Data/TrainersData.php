@@ -32,7 +32,7 @@ class TrainersData extends AbstractData
 // ======================== PUBLIC METHODS =====================
 
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function _create(): void
     {
@@ -80,7 +80,7 @@ EOT;
      * delete will fail if user has students
      * @param string|int $user userName or trainerCode
      * @return int
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function delete($user): int
     {
@@ -93,7 +93,7 @@ EOT;
      * Retrieves hash associated with username. Returns empty string if username doesn't exist
      * @param string $userName
      * @return string hash if userName found, otherwise empty
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getHash(string $userName): string
     {
@@ -105,7 +105,7 @@ EOT;
      * Retrieves trainerCode associated with username. Returns empty string if username doesn't exist
      * @param string $user
      * @return string trainerCode if userName found, otherwise empty
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getTrainerCode(string $user): string
     {
@@ -116,7 +116,7 @@ EOT;
     /**
      * @param string $user
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getUsername(string $user): string
     {
@@ -128,7 +128,7 @@ EOT;
     /**
      * @param string $trainer
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getTrainerType(string $trainer): string
     {
@@ -139,7 +139,7 @@ EOT;
     /**
      * @param string $user userName or trainerCode
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function hasStudents(string $user): bool
     {
@@ -151,7 +151,7 @@ EOT;
     /**
      * @param string $user userName or trainerCode
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function isAdmin(string $user): bool
     {
@@ -163,7 +163,7 @@ EOT;
     /**
      * @param string $user userName or trainerCode
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function isStaff(string $user): bool
     {
@@ -176,7 +176,7 @@ EOT;
      * Returns true is trainer is in the database and is active.
      * @param $user
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function isValid($user): bool
     {
@@ -188,7 +188,7 @@ EOT;
     /**
      * @param string|int $user userName or trainerCode
      * @param bool $activeOrNot
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateActive($user, bool $activeOrNot): void
     {
@@ -202,7 +202,7 @@ EOT;
      * @param string $user userName or trainerCode
      * @param string $firstName
      * @param string $lastName
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateName(string $user, string $firstName, string $lastName): void
     {
@@ -215,7 +215,7 @@ EOT;
      * @param string $user
      * @param string $password
      * @return void
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updatePassword(string $user, string $password): void
     {
@@ -242,7 +242,7 @@ EOT;
      * @param string $user userName or trainerCode
      * @param string $password
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     private function makeHash(string $user, string $password): string
     {

@@ -6,7 +6,8 @@ namespace App\ReadXYZ\Data;
 
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Sql;
-use App\ReadXYZ\POPO\Lesson;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lesson;
 use stdClass;
 
 class LessonsData extends AbstractData
@@ -50,7 +51,7 @@ EOT;
     {
         $groupTable = new GroupData();
         $groupCode = $groupTable->getGroupCode($lesson->groupName);
-        $lessonCode = $groupCode . 'L' . str_pad(strval($ordinal), 2, '0', STR_PAD_LEFT);
+        $lessonCode = $groupCode . Util::paddedNumber('L', $ordinal);
         $flipbook = $lesson->book ?? '';
         $wordlist = isset($lesson->wordList) ? $this->encodeJsonQuoted($lesson->wordList) : 'NULL';
         $supplemental = isset($lesson->supplementalWordList) ? $this->encodeJsonQuoted($lesson->supplementalWordList) : 'NULL';

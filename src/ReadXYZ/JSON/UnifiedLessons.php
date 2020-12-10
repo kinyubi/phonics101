@@ -4,26 +4,40 @@
 namespace App\ReadXYZ\JSON;
 
 
+use App\ReadXYZ\Enum\JsonDecode;
 use App\ReadXYZ\Helpers\Util;
 use stdClass;
 
 class UnifiedLessons
 {
-    private static function getData(bool $asAssociativeArray = false)
+    /**
+     * @param bool $asAssociativeArray
+     * @return mixed
+     * @throws \JsonException
+     */
+    private static function getData(bool $returnType = JsonDecode::RETURN_STDCLASS)
     {
         $inputFile = Util::getReadXyzSourcePath('resources/unifiedLessons.json');
         $json = file_get_contents($inputFile);
-        return json_decode($json, $asAssociativeArray, 512, JSON_THROW_ON_ERROR);
+        return JsonDecode::decode($json, $returnType);
     }
 
+    /**
+     * @return stdClass
+     * @throws \JsonException
+     */
     public static function getDataAsStdClass(): stdClass
     {
-        return self::getData(false);
+        return self::getData(JsonDecode::RETURN_STDCLASS);
     }
 
+    /**
+     * @return array
+     * @throws \JsonException
+     */
     public static function getDataAsAssociativeArray(): array
     {
-        return self::getData(true);
+        return self::getData(JsonDecode::RETURN_ASSOCIATIVE_ARRAY);
     }
 
 }

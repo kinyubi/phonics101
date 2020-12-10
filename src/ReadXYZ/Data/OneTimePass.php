@@ -10,7 +10,7 @@ use App\ReadXYZ\Helpers\PhonicsException;
 class OneTimePass extends AbstractData
 {
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function _create()
     {
@@ -34,7 +34,7 @@ EOT;
      * Creates a one-time password for a user and puts it in the abc_onetime_pass table
      * @param string $username
      * @return DbResult
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function add(string $username): DbResult
     {
@@ -47,7 +47,7 @@ EOT;
      * Decodes a one-time password and returns the associated username. returns null if not found.
      * @param string $otp
      * @return DbResult
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function decodeAndDelete(string $otp): DbResult
     {

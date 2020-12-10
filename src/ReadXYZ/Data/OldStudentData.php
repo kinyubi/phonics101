@@ -109,6 +109,7 @@ EOT;
 
     /**
      * @return string[] list of unique usernames
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getUniqueTrainers(): array
     {
@@ -121,6 +122,7 @@ EOT;
      * @param string $studentId
      * @param string $userId
      * @return bool
+     * @throws PhonicsException on ill-formed SQL
      */
     public function studentHasTeacher(string $studentId, string $userId): bool
     {
@@ -163,12 +165,12 @@ EOT;
         return ($new->mastery > $existing->mastery);
     }
 
-    public function getData(string $studentId): stdClass
+    public function getData(string $studentId): ?stdClass
     {
         $query = "SELECT * FROM abc_student WHERE studentid='$studentId'";
         $result = $this->db->queryRecord($query);
         if ($result->failed()) {
-            throw new PhonicsException($result->getErrorMessage());
+            return null;
         }
         $data = $result->getResult();
         $cargo = unserialize($data['cargo']);
@@ -200,7 +202,7 @@ EOT;
             'studentName'   => $data['StudentName'],
             'trainer'       => $data['trainer1'],
             'currentLesson' => $currentLesson,
-            'lessonData'    => $lessonsData
+            'lessonMastery' => $lessonsData
         ];
     }
 }

@@ -20,7 +20,7 @@ class StudentsData extends AbstractData
 // ======================== PUBLIC METHODS =====================
 
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function _create()
     {
@@ -48,7 +48,7 @@ EOT;
      * @param string $studentName
      * @param string $userName
      * @return DbResult good result contains studentCode of inserted record
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function add(string $studentName, string $userName): DbResult
     {
@@ -67,7 +67,7 @@ EOT;
     /**
      * @param string $studentCode
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function doesStudentExist(string $studentCode): bool
     {
@@ -81,7 +81,7 @@ EOT;
      * @param string $username
      * @param string $studentName
      * @return string the studentCode if found, otherwise 0
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getStudentCode(string $username, string $studentName): string
     {
@@ -92,7 +92,7 @@ EOT;
     /**
      * @param string $studentCode
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getStudentName(string $studentCode): string
     {
@@ -103,7 +103,7 @@ EOT;
     /**
      * @param string $user trainerCode or userName
      * @return string[] an array of studentNames
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getStudentNamesForUser(string $user): array
     {
@@ -123,7 +123,7 @@ EOT;
     /**
      * @param string $user trainerCode or userName
      * @return array an associative array of studentName => studentCode
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getMapOfStudentsForUser($user = ''): array
     {
@@ -148,7 +148,7 @@ EOT;
      * @param string $student
      * @param string $user
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function isValidStudentTrainerPair(string $student, string $user): bool
     {

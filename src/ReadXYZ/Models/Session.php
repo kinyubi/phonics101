@@ -194,7 +194,7 @@ class Session
 
     /**
      * @return bool returns true is session has a trainer, student and lesson identified.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function hasLesson(): bool
     {
@@ -204,7 +204,7 @@ class Session
     /**
      * Should be the equivalent of isValid because we don't set isValid under we have a student
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function hasStudent(): bool
     {
@@ -220,7 +220,7 @@ class Session
 
     /**
      * @return bool true if session has at least a user, otherwise false.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function hasTrainer(): bool
     {
@@ -231,7 +231,7 @@ class Session
 
     /**
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function isAdmin(): bool
     {
@@ -245,7 +245,7 @@ class Session
 
     /**
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function isStaff(): bool
     {
@@ -260,7 +260,7 @@ class Session
     /**
      * A session is considered active if we have identified the trainer and student for this session.
      * @return bool true if we have trainer/teacher, otherwise false.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function isValid(): bool
     {
@@ -269,7 +269,7 @@ class Session
 
     /**
      * @param string $lessonName
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateLesson(string $lessonName): void
     {
@@ -289,7 +289,7 @@ class Session
     /**
      * If we have session variables associated with the specified student id we retrieve them.
      * @param string $studentCode
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateStudent(string $studentCode)
     {
@@ -332,7 +332,7 @@ class Session
     /**
      * Updates the Session with the given user. Accepts userCode or userName
      * @param string $user trainerCode or userName
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateUser(string $user)
     {
@@ -354,7 +354,7 @@ class Session
     /**
      * @param $trainer
      * @param $student
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateUserAndStudent($trainer, $student)
     {

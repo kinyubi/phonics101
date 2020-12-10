@@ -6,7 +6,6 @@
 #}
 {% block TestTab %}
   {% from "macros.html.twig" import tabHeader  %}
-  {% set listIndex = listIndex ?? 0 %}
   <div class="container">
 
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
@@ -14,7 +13,7 @@
         {{ tabHeader(tabInfo) }}
         <table class="table table-sm table-borderless">
           <tbody>
-          {% for word in lesson.wordList %}
+          {% for word in lesson.wordLists['test'] %}
             <tr class="d-flex">
               <td id="TM{{ loop.index0 }}" class="wordlist col-12 mx-2">{{ word }}</td>
             </tr>

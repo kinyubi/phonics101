@@ -1,20 +1,31 @@
 <?php
 
-namespace App\ReadXYZ\POPO;
+namespace App\ReadXYZ\Lessons;
 
-use App\ReadXYZ\Data\GroupData;
 use App\ReadXYZ\Helpers\Location;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Lessons\GameTypes;
-use App\ReadXYZ\Lessons\Groups;
-use App\ReadXYZ\Lessons\Spinner;
-use App\ReadXYZ\Lessons\Warmups;
+
 use App\ReadXYZ\Models\Log;
+use App\ReadXYZ\POPO\Game;
+use App\ReadXYZ\POPO\Warmup;
 use JsonSerializable;
 use stdClass;
 
 class Lesson implements JsonSerializable
 {
+
+    /*
+     * Lists used:
+     *      Intro Tab:      stretch list
+     *      Write Tab:      el-konin boxes
+     *      Practice Tab:   7x3 extended word list
+     *      Spell Tab:      spinner object
+     *      Mastery Tab:    9x1 basic word list
+     *      Fluency Tab:    fluency sentences
+     *      Test Tab:       9x1 extended word list
+     */
+    private ?array $wordList;
+    private ?array $supplementalWordList;
 
     public string $lessonId;
     public string $lessonName;
@@ -24,8 +35,8 @@ class Lesson implements JsonSerializable
     public string $groupName;
     public string $groupCode;
     public string $lessonDisplayAs;
-    public ?array $wordList;
-    public ?array $supplementalWordList;
+
+
     public ?array $stretchList;
     /** @var string[] */
     public ?array $fluencySentences;
@@ -41,7 +52,6 @@ class Lesson implements JsonSerializable
     public int $ordering = 0;
     public bool $visible;
     public ?array $wordLists;
-    public array $wordListIndexForTab;
     public array $notes;
     public array $allWords;
     public string $book;
@@ -138,11 +148,9 @@ class Lesson implements JsonSerializable
         $this->wordLists = (null === $this->wordList) ? null : [];
         if ($this->tabNames && (null !== $this->wordList)) {
             foreach ($this->tabNames as $tabName) {
-                if (in_array($tabName, ['fluency', 'spinner', 'spell', 'mastery'])) {
-                    continue;
+                if (in_array($tabName, ['practice', 'mastery', 'test'])) {
+                    $this->wordLists[$tabName] = $this->makeWordLists($tabName);
                 }
-                $this->wordLists[$tabName] = $this->make3Lists($tabName);
-                $this->wordListIndexForTab[$tabName] = 0;
             }
         }
     }
@@ -164,7 +172,7 @@ class Lesson implements JsonSerializable
             'alternateNames'       => $this->alternateNames,
             'groupName'            => $this->groupName,
             'lessonDisplayAs'      => $this->lessonDisplayAs,
-            'wordLists'            => $this->wordLists,
+            'wordLists'            => $this->wordLists, // map for each tab that needs it
             'supplementalWordList' => $this->supplementalWordList,
             'stretchList'          => $this->stretchList,
             'fluencySentences'     => $this->fluencySentences,
@@ -175,8 +183,7 @@ class Lesson implements JsonSerializable
             'contrastImages'       => $this->contrastImages,
             'ordering'             => $this->ordering,
             'visible'              => $this->visible,
-            'notes'                => $this->notes,
-            'wordListIndexForTabs' => $this->wordListIndexForTab
+            'notes'                => $this->notes
         ];
     }
 
@@ -200,33 +207,32 @@ class Lesson implements JsonSerializable
      * The practice tab has 7 rows of 3 words and other tabs have a single column of 9 words. The practice and test
      * tabs use both the primary and supplemental word lists. Other tabs use just the primary word list.
      *
+     *
      * @param string $tabName The tab we are building the word list for
      *
      * @return array a 3 x n array where n is 21 for practice tab and 9 for other tabs
      */
-    private function make3Lists(string $tabName): array
+    private function makeWordLists(string $tabName): array
     {
         $isPractice = Util::contains_ci('prac', $tabName);
         $useSupplemental = (Util::contains_ci('test', $tabName ) || $isPractice);
         $arraySize = $isPractice ? 21 : 9;
-        $tripleSize = 3 * $arraySize;
         $hasSupplemental = not(empty($this->supplementalWordList));
         $initialWords = ($useSupplemental && $hasSupplemental) ? array_merge($this->wordList, $this->supplementalWordList) : $this->wordList;
         $words = $initialWords;
         if (not(is_array($words))) {
             LOG::error("No wordlist for tab $tabName in lesson {$this->lessonName}.");
         }
-        while (count($words) < $tripleSize) {
+        while (count($words) < $arraySize) {
             $words = array_merge($words, $initialWords);
         }
-
-        $result = [];
-        for ($i = 0; $i < 3; ++$i) {
-            $slice = array_slice($words, $arraySize * $i, $arraySize);
-            shuffle($slice);
-            $result[$i] = $slice;
+        if (count($words) == $arraySize) {
+            $offset = 0;
+        } else {
+            $offset = rand(0, count($words) - $arraySize);
         }
-
-        return $result;
+        $slice = array_slice($words, $offset, $arraySize);
+        shuffle($slice);
+        return $slice;
     }
 }

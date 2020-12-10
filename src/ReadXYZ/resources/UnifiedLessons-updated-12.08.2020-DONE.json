@@ -3032,7 +3032,7 @@
         "stretchList": "big/bigger/biggest,fat/fatter/fattest,sad/sadder/saddest,fit/fitter/fittest,dim/dimmer/dimmest,buff/buffer/buffest,mad/madder/maddest,wet/wetter/wettest",
         "fluencySentences": [
           "Jim is big.",
-          " Sam is bigger. ",
+          "Sam is bigger. ",
           "TIm had a better dinner.",
           "He is the biggest."
         ],
@@ -3314,7 +3314,7 @@
             "url": "https://wordwall.net/embed/42119e8f4558486e909aafec3d356f1c?themeId=23&templateId=47 "
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/0415b4762f1644b69b79c66b903d576e?themeId=1&templateId=3 "
           },
           {
@@ -3392,7 +3392,7 @@
             "url": "https://wordwall.net/embed/2d838474a25443aa975e4e2ea3fe5d28?themeId=23&templateId=47 "
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/b2b6dbb71dc043468a9b9622d38f45a6?themeId=1&templateId=38"
           }
         ],
@@ -3607,7 +3607,7 @@
             "url": "https://wordwall.net/embed/7e4e46c7c0cf4d7dac2ba13e209482aa?themeId=1&templateId=47"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/1d79a57ff5e14643a5d0c99c2eac6555?themeId=1&templateId=1"
           },
           {
@@ -3650,7 +3650,7 @@
         "contrastList": "",
         "stretchList": "cod/code,lob/lobe,mod/mode,mop/mope,nod/node,not/note,pop/pope,rod/rode,rot/rote,tot/tote,wok/woke",
         "fluencySentences": [
-          " Jim will ride home on his bike and open the note Jane wrote to him.",
+          "Jim will ride home on his bike and open the note Jane wrote to him.",
           "He hopes Jane will go to his home to see the white roses he got on sale for her.",
           "She will love them."
         ],
@@ -3688,7 +3688,7 @@
             "url": "https://wordwall.net/embed/6b296133fd8440c0bfb06bdac38c5d1b?themeId=1&templateId=38 "
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/cb61c1812009435388cb918e39f9e86c?themeId=1&templateId=3 "
           }
         ],
@@ -3758,7 +3758,7 @@
             "url": "https://wordwall.net/embed/1155349439a34f5dbcc20c30f1ada9b1?themeId=23&templateId=47 "
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/0699eaec6c81407fb8fc8ca446b92b10?themeId=1&templateId=1"
           },
           {
@@ -4991,7 +4991,7 @@
             "url": "https://wordwall.net/embed/e4ed90693cd44914937650eabb05f842?themeId=23&templateId=47"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/680f4d0463d7452a81f8fd2a7cbbf6ff?themeId=1&templateId=3"
           },
           {
@@ -5805,7 +5805,7 @@
         "stretchList": "long/longer/longest,short/shorter/shortest,thick/thicker/thickest,thin/thinner/thinnest,close/closer/closest/far/farther/farthest,safer/safer/safest,cute/cuter/cutest",
         "fluencySentences": [
           "That rabbit is the tamest",
-          " cutest",
+          "cutest",
           "and safest pet I have. His fur is thicker and longer than my dog's fur.  My rabbit needs to be braver to get closer to my dog."
         ],
         "games": [
@@ -6154,7 +6154,7 @@
             "url": "https://wordwall.net/embed/a6f068f2766842608ed0649dcfbf79c9?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/990ba0d2c657472eb7cdb0e9cde1d9ed?themeId=1&templateId=3"
           },
           {
@@ -6225,7 +6225,7 @@
             "url": "https://wordwall.net/embed/962d0166f1964dfd94a568a872944d32?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/4f5bc9605aa04dfb8226df56fa6923af?themeId=1&templateId=3"
           },
           {
@@ -6299,7 +6299,7 @@
             "url": "https://wordwall.net/embed/03278094fde248b7ac2308f5d01cff62?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/a7306f1a53c448ab8b073026a8e26d0b?themeId=1&templateId=3"
           },
           {
@@ -6371,7 +6371,7 @@
             "url": "https://wordwall.net/embed/7ccc1136e142484399b8d85d323ffbbd?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/d44053f0478e4f28b1a6636a5e3d2911?themeId=1&templateId=3"
           },
           {
@@ -6443,7 +6443,7 @@
             "url": "https://wordwall.net/embed/82a9c66b91c341bfbd8c83980d6410de?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/95f51d1f7b37495394cd64ba3c4854f4?themeId=1&templateId=3"
           },
           {
@@ -6515,7 +6515,7 @@
             "url": "https://wordwall.net/embed/602b3b5ff92b4260ad69ce4e5c70cda5?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/bf262fe8d2f9474e81354eaf4c435a0f?themeId=1&templateId=3"
           },
           {
@@ -6588,7 +6588,7 @@
             "url": "https://wordwall.net/embed/c5e980c184204fffaa6f6d1d4731e2fd?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/33908d4988104d43ad93f03e4411ed48?themeId=1&templateId=3"
           },
           {
@@ -6660,7 +6660,7 @@
             "url": "https://wordwall.net/embed/b2ca042dc7c54d74befc11eb6df746f4?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/fd0fc51419a7403f9ab6b351b08aeb7b?themeId=1&templateId=3"
           },
           {
@@ -6732,7 +6732,7 @@
             "url": "https://wordwall.net/embed/41b3f804f0364ead8430aa96c213344f?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/6d2ea8e05e8f43929d7e3f3bab0f0c29?themeId=1&templateId=3"
           },
           {
@@ -6805,7 +6805,7 @@
             "url": "https://wordwall.net/embed/82f6d059049d476bae326c28f6cf0643?themeId=27&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/47ff09bd196a42a2a3f0bfa23037b6ed?themeId=1&templateId=3"
           },
           {
@@ -6852,13 +6852,8 @@
         "contrastList": "",
         "stretchList": "bread/dread,head/lead,wealth/health,tread/dead,death/breath,sweat/threat,stealth/wealth",
         "fluencySentences": [
-          "I like to be clean and neat.",
-          "Peanuts are a good treat.",
-          "I can see a seal swimming in the sea.",
-          "My teacher is on sick leave because she felt weak.",
-          "I will eat meat at the feast.",
-          "Can you heal the eagle and set him free?",
-          "Tim cleaned and bleached his jeans."
+          "",
+          ""
         ],
         "games": [
           {
@@ -6874,7 +6869,7 @@
             "url": "https://wordwall.net/embed/64fa69809e834bbcbcac42086fd3d8fe?themeId=1&templateId=7"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/c1baf8c848d44ed9838e4b854b1e8d7a?themeId=1&templateId=3"
           },
           {
@@ -6950,7 +6945,7 @@
             "url": "https://wordwall.net/embed/b7a83a70449740c78da3211991898951?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/cf375aa77aef49fa89448cdaecb1e817?themeId=1&templateId=3 "
           },
           {
@@ -7091,7 +7086,7 @@
             "url": "https://wordwall.net/embed/456859aa56494305aa0d29d1ee8e2c6c?themeId=1&templateId=36"
           },
           {
-            "gameTypeId": "match",
+            "gameTypeId": "match_up",
             "url": "https://wordwall.net/embed/f815e036205f40e1af564540ce94da76?themeId=1&templateId=3"
           },
           {

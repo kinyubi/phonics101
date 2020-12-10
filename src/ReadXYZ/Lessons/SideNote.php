@@ -62,7 +62,7 @@ class SideNote
 
     /**
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getLearningCurveHTML(): string
     {
@@ -112,7 +112,7 @@ class SideNote
     /**
      * called by sidebar.html.twig
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getTestCurveHTML(): string
     {
@@ -125,7 +125,7 @@ class SideNote
      * @param TimerType $timerType currently supported indexes are 'learningCurve' and 'testCurve'
      *
      * @return string learning curve HTML
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     private function getCurveHTML(TimerType $timerType): string
     {

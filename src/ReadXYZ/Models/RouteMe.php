@@ -33,7 +33,7 @@ class RouteMe
      * After a user has been validated this takes him to the proper screen
      * @param bool $forceStudentList
      * @return void HTML for a student list or lesson list as appropriate is displayed
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public static function autoLoginDisplay(bool $forceStudentList = false): void
     {
@@ -78,7 +78,7 @@ class RouteMe
     }
 
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public static function parseRoute()
     {
@@ -217,7 +217,7 @@ class RouteMe
 // ======================== PRIVATE METHODS =====================
     /**
      * @param Session $session
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     private static function rerouteCheck(Session $session)
     {

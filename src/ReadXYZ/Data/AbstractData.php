@@ -26,7 +26,7 @@ abstract class AbstractData
      * @param string $tableName used by deleteOne, updateOne, getCount and truncate
      * @param string $primaryKey used by deleteOne and updateOne
      * @param string $dbVersion specifies using readxyz1_1 (1 or default) or readxyz0_1 (0)
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function __construct(string $tableName, string $primaryKey='id', string $dbVersion=Sql::READXYZ1_1)
     {
@@ -40,13 +40,14 @@ abstract class AbstractData
     }
 
     /**
-     * @param stdClass $object
+     * @param stdClass|null $object $object
      * @param string $boolTreatment
-     * @return stdClass
-     * @throws PhonicsException
+     * @return ?stdClass
+     * @throws PhonicsException on ill-formed SQL
      */
-    protected function fixObject(stdClass $object, string $boolTreatment=BoolEnumTreatment::CONVERT_TO_BOOL): stdClass
+    protected function fixObject(?stdClass $object, string $boolTreatment=BoolEnumTreatment::CONVERT_TO_BOOL): ?stdClass
     {
+        if (is_null($object) || ($object == (object)[])) return null;
         $newObject = $object;
         if (! BoolEnumTreatment::isValid($boolTreatment)) {
             throw new PhonicsException("$boolTreatment is not a valid BoolEnumTreatment value");
@@ -78,12 +79,17 @@ abstract class AbstractData
         return $newObject;
     }
 
+    protected function getDeleteBase(): string
+    {
+        return "DELETE FROM {$this->tableName} WHERE ";
+    }
+
 // ======================== PUBLIC METHODS =====================
 
     /**
      * Delete a single record whose primary key matches the specified value
      * @param mixed $keyValue
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function deleteOne($keyValue): void
     {
@@ -94,7 +100,7 @@ abstract class AbstractData
 
     /**
      * @return int the number of records in the table.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getCount(): int
     {
@@ -106,7 +112,7 @@ abstract class AbstractData
      * @param mixed $keyValue the value of the Primary Key we want.
      * @param string $fieldName the name of the field to be updated.
      * @param mixed $newValue the new value for the field.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateOne($keyValue, string $fieldName, $newValue): void
     {
@@ -121,7 +127,7 @@ abstract class AbstractData
      * @param QueryType|string $queryType
      * @param string $boolEnumTreatment BoolEnumTreatment::CONVERT_TO_BOOL or KEEP_AS_Y_N
      * @return DbResult
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function query(string $query, $queryType, string $boolEnumTreatment=BoolEnumTreatment::CONVERT_TO_BOOL): DbResult
     {
@@ -202,7 +208,7 @@ abstract class AbstractData
     /**
      * @param mixed $value
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function boolToEnum($value): string
     {
@@ -225,7 +231,7 @@ abstract class AbstractData
      * We expect $enum to be Sql::ACTIVE or Sql::Inactive but we'll accept a bool value as well
      * @param $enum
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function enumToBool($enum): bool
     {
@@ -251,7 +257,7 @@ abstract class AbstractData
      * @param string $queryType
      * @param string ...$params must be valid Throwable value or BoolEnumTreatment value
      * @return mixed
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function throwableQuery(string $query, string $queryType, ...$params)
     {
@@ -316,7 +322,7 @@ abstract class AbstractData
      * @param string $whereClause WHERE clause
      * @param int $foreignKeyChecks sql::FOREIGN_KEY_CHECKS_ON or sql::FOREIGN_KEY_CHECKS_OFF
      * @return int  the number of records affected
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     protected function baseDelete(string $whereClause, int $foreignKeyChecks=Sql::FOREIGN_KEY_CHECKS_ON): int
     {
@@ -356,7 +362,7 @@ abstract class AbstractData
     /**
      * @param string|QueryType $queryType
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     protected function getQueryTypeValue($queryType): string
     {
@@ -368,7 +374,7 @@ abstract class AbstractData
     /**
      * Deletes all the records in a table (Not reversible)
      * @return int
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function truncate(): int
     {

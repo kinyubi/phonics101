@@ -31,7 +31,7 @@ EOT;
      * @param string $level
      * @param string $trace
      * @param string $message
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function add(string $level, string $trace, string $message) {
         if (!LogLevel::isValid($level)) {

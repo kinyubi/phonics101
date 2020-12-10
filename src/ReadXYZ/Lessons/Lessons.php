@@ -6,10 +6,10 @@ use App\ReadXYZ\Data\GroupData;
 use App\ReadXYZ\Data\LessonsData;
 use App\ReadXYZ\Data\StudentLessonsData;
 use App\ReadXYZ\Enum\MasteryLevel;
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\Session;
-use App\ReadXYZ\POPO\Lesson;
-use InvalidArgumentException;
+
 use stdClass;
 
 /**
@@ -34,6 +34,10 @@ class Lessons
     private array $lessonNamesMap = []; // lessonName => lessonCode
     private array $displayAs = [];
 
+    /**
+     * Lessons constructor.
+     * @throws PhonicsException
+     */
     private function __construct()
     {
         $groupData = new GroupData();
@@ -70,7 +74,7 @@ class Lessons
             $groupName = $lessonInfo->groupName;
             if (! isset($this->accordion[$groupName])) $this->accordion[$groupName] = [];
             $this->accordion[$groupName][$lesson->lessonName] = 0;
-            $this->lessonNames[$lessonName] = $lessonCode;
+            $this->lessonNamesMap[$lessonName] = $lessonCode;
         }
 
     }

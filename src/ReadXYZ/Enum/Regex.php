@@ -13,8 +13,10 @@ class Regex extends Enum
     const VALID_STUDENT_CODE = '/S[0-9a-f]{14}Z[0-9]{8}/'; // S, 14 hex digits, Z, 9 numeric digits
     const VALID_TRAINER_CODE = '/U[0-9a-f]{14}Z[0-9]{8}/'; // T, 14 hex digits, Z, 9 numeric digits
     const PARENTHETICAL_NUMBER = '/\((\d+)\)/';
-    const LESSON_CODE_PATTERN = '^/G\d\dL\d\d$/';
-    const GROUP_CODE_PATTERN = '^/G\d\d$/';
+    const LESSON_CODE_PATTERN = '/^G\d\dL\d\d$/';
+    const GROUP_CODE_PATTERN = '/^G\d\d$/';
+    const KEYCHAIN_CODE_PATTERN = '/^[Gk]\d\d$/';
+    const NAME_PATTERN = '/^[A-Za-z][a-z]+$/';
 
     public static function extractSqlFieldLength(string $fieldDefinition): int
     {
@@ -42,7 +44,7 @@ class Regex extends Enum
         return Regex::isMatch(Regex::GROUP_CODE_PATTERN, $groupCode);
     }
 
-    private static function isMatch(string $pattern, string $value): bool
+    public static function isMatch(string $pattern, string $value): bool
     {
         return (1 === preg_match($pattern, $value));
     }

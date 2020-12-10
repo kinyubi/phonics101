@@ -9,6 +9,7 @@ use App\ReadXYZ\Data\OneTimePass;
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Data\Views;
+use App\ReadXYZ\Enum\JsonDecode;
 use App\ReadXYZ\Enum\TrainerType;
 use App\ReadXYZ\Rest\RestTarget;
 use Exception;
@@ -34,7 +35,7 @@ class ProcessWordPressRequest extends RestTarget
         $student = $hasStudent ? ucfirst($matches[3]) : '';
         $result = json_encode(['hasEmail' => $hasEmail, 'hasStudent' => $hasStudent, 'email' => $email, 'student' => $student]);
 
-        return json_decode($result);
+        return JsonDecode::decode($result);
     }
 
 

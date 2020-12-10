@@ -195,7 +195,7 @@ class Util
     /**
      * @param $studentCode
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public static function isValidStudentCode($studentCode): bool
     {
@@ -209,7 +209,7 @@ class Util
     /**
      * @param $trainerCode
      * @return bool
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public static function isValidTrainerCode($trainerCode): bool
     {
@@ -231,6 +231,11 @@ class Util
     public static function left(string $string, int $len = 1): string
     {
         return substr($string, 0, $len);
+    }
+
+    public static function paddedNumber(string $prefix, int $number, int $padSize=2): string
+    {
+        return $prefix . str_pad(strval($number), $padSize,'0', STR_PAD_LEFT);
     }
 
     /**

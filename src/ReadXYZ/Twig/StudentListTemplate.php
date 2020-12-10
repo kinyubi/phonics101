@@ -12,7 +12,7 @@ class StudentListTemplate
 {
 
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function display(): void
     {

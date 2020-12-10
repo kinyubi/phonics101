@@ -17,7 +17,7 @@ use App\ReadXYZ\Lessons\TabTypes;
 use App\ReadXYZ\Lessons\Warmups;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Page\LessonPage;
-use App\ReadXYZ\POPO\Lesson;
+use App\ReadXYZ\Lessons\Lesson;
 
 class LessonTemplate
 {
@@ -32,7 +32,7 @@ class LessonTemplate
      * LessonTemplate constructor.
      * @param string $lessonName
      * @param string $initialTabName
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function __construct(string $lessonName = '', string $initialTabName = '')
     {
@@ -58,7 +58,7 @@ class LessonTemplate
 
 // ======================== PUBLIC METHODS =====================
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function display(): void
     {

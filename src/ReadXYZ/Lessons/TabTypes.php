@@ -41,7 +41,7 @@ class TabTypes
      * @param string $tabTypeId
      *
      * @return TabType|null
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getTabInfo(string $tabTypeId): ?TabType
     {
@@ -62,7 +62,7 @@ class TabTypes
     /**
      * @param $tabName
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function fixTabName($tabName)
     {

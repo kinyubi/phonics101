@@ -16,7 +16,7 @@ class Groups
 
     /**
      * Groups constructor.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     private function __construct()
     {
@@ -35,7 +35,7 @@ class Groups
     /**
      * @param string $groupCode
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getDisplayAs(string $groupCode): string
     {
@@ -48,7 +48,7 @@ class Groups
     /**
      * @param string $groupCode
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getGroupCode(string $groupCode): string
     {
@@ -61,7 +61,7 @@ class Groups
     /**
      * @param string $groupCode
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getGroupName(string $groupCode): string
     {

@@ -21,7 +21,7 @@ class GroupData extends AbstractData
 // ======================== PUBLIC METHODS =====================
 
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function _create(): void
     {
@@ -42,7 +42,7 @@ EOT;
      * @param string $groupName
      * @param string $throwOnNotFound
      * @return string
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getGroupCode(string $groupName, string $throwOnNotFound=Throwable::NOT_FOUND_IS_VALID): string
     {
@@ -53,7 +53,7 @@ EOT;
 
     /**
      * @return string[] an associative array of groupName => displayAs
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getGroupExtendedAssocArray()
     {
@@ -70,7 +70,7 @@ EOT;
      * @param string $groupKey
      * @param string $throwOnNotFound a valid Throwable enum string
      * @return string the group name if found or empty
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getGroupName(string $groupKey, string $throwOnNotFound=Throwable::NOT_FOUND_IS_VALID): string
     {
@@ -83,7 +83,7 @@ EOT;
      * @param string $whereClause
      * @param string $throwOnNotFound
      * @return stdClass[]
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getGroupObjects(string $whereClause = '', string $throwOnNotFound=Throwable::NOT_FOUND_IS_VALID)
     {
@@ -96,7 +96,7 @@ EOT;
      * @param stdClass $group
      * @param int $ordinal
      * @return DbResult good result is the affected count.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function insertOrUpdate(stdClass $group, int $ordinal): DbResult
     {

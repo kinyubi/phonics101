@@ -7,10 +7,7 @@
 #}
 {% block PracticeTab %}
   {% from "macros.html.twig" import tabHeader  %}
-  {% set listIndex = listIndex ?? 0 %}
-  {% set wordList = lesson.wordList() %}
   <div class="container">
-
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9">
@@ -20,7 +17,7 @@
           {% for i in range(0,20,3) %}
             <tr class="d-flex">
               {% for j in range(0,2) %}
-                <td class="wordlist col-3 mx-2">{{ wordList[i+j] }}</td>
+                <td class="wordlist col-3 mx-2">{{ lesson.wordLists['practice'][i+j] }}</td>
               {% endfor %}
             </tr>
           {% endfor %}

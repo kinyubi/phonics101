@@ -7,6 +7,7 @@ namespace App\ReadXYZ\Data;
 use App\ReadXYZ\Enum\MasteryLevel;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\TimerType;
+use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Helpers\PhonicsException;
@@ -24,7 +25,7 @@ class StudentLessonsData extends AbstractData
     /**
      * StudentLessonsData constructor.
      * This will look to session to provide the studentCode or lessonCode whenever needed.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function __construct()
     {
@@ -40,7 +41,7 @@ class StudentLessonsData extends AbstractData
 // ======================== PUBLIC METHODS =====================
 
     /**
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function _create()
     {
@@ -70,7 +71,7 @@ EOT;
     /**
      * Clears for times for the Fluency or Test timer for the current lesson
      * @param TimerType $timerType
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function clearTimedTest(TimerType $timerType): void
     {
@@ -85,7 +86,7 @@ EOT;
      * fetches the timer times for the specified timer type
      * @param TimerType $timerType
      * @return int[]
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getTimedTest(TimerType $timerType): array
     {
@@ -97,7 +98,7 @@ EOT;
     /**
      * @param mixed $value
      * @return void
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateMastery($value): void
     {
@@ -123,7 +124,7 @@ EOT;
     /**
      * Get the mastery results for the lessons the student has worked on - array of stdClass objects.
      * @return stdClass[]
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function getLessonMastery(): array
     {
@@ -138,7 +139,7 @@ EOT;
      * @param TimerType $timerType
      * @param int $seconds
      * @return BoolWithMessage
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     public function updateTimedTest(TimerType $timerType, int $seconds): BoolWithMessage
     {
@@ -167,7 +168,7 @@ EOT;
 
     /**
      * This gets run before a sql update to create the record if it doesn't already exist.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     private function createStudentLessonAsNeeded(): void
     {
@@ -185,7 +186,7 @@ EOT;
      * get the field value for the current student/lesson.
      * @param string $fieldName
      * @return mixed the value of the queried field.
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     private function getField(string $fieldName)
     {
@@ -216,7 +217,7 @@ EOT;
     {
         $result = '';
         foreach ($times as $time) {
-            $result .= str_pad(strval($time), 2, '0', STR_PAD_LEFT);
+            $result .= Util::paddedNumber('', $time);
         }
         return $result;
     }
@@ -225,7 +226,7 @@ EOT;
      * @param string $sqlFieldName
      * @param $value
      * @return BoolWithMessage
-     * @throws PhonicsException
+     * @throws PhonicsException on ill-formed SQL
      */
     private function updateField(string $sqlFieldName, $value): BoolWithMessage
     {

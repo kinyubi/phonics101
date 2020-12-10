@@ -21,7 +21,7 @@ class OneTimePassTest extends TestCase
         $result = $phonicsDb->queryAndGetCount($query);
         $countBefore = $result->wasSuccessful() ? $result->getResult() : -1;
         $otp = new OneTimePass();
-        $hash = $otp->getOTP('test');
+        $hash = $otp->add('test');
         $this->assertEquals(32, strlen($hash));
         $result = $phonicsDb->queryAndGetCount($query);
         $countAfter = $result->wasSuccessful() ? $result->getResult() : -1;
@@ -37,12 +37,12 @@ class OneTimePassTest extends TestCase
         $countBefore = $result->wasSuccessful() ? $result->getResult() : -1;
         $this->assertGreaterThanOrEqual(0, $countBefore);
         $otp = new OneTimePass();
-        $hash = $otp->getOTP('test');
+        $hash = $otp->add('test');
         $this->assertEquals(32, strlen($hash));
         $result = $phonicsDb->queryAndGetCount($query);
         $countAfter = $result->wasSuccessful() ? $result->getResult() : -1;
         $this->assertEquals($countBefore + 1, $countAfter);
-        $user = $otp->decodeOTP($hash);
+        $user = $otp->decodeAndDelete($hash);
         $this->assertEquals('test', $user);
         $result = $phonicsDb->queryAndGetCount($query);
         $countAfter = $result->wasSuccessful() ? $result->getResult() : -1;

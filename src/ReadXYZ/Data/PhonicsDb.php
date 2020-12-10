@@ -38,7 +38,6 @@ class PhonicsDb
     {
         if ($result = $this->connection->query($query)) {
             $count = $result->num_rows;
-            $result->close();
 
             return DbResult::goodResult($count);
         } else {
@@ -57,7 +56,6 @@ class PhonicsDb
         if ($result = $this->connection->query($query)) {
             $row = $result->fetch_row();
             $returnValue = $row[0] ?? null;
-            $result->close();
 
             return DbResult::goodResult($returnValue);
         } else {
@@ -70,7 +68,6 @@ class PhonicsDb
     {
         if ($result = $this->connection->query($query)) {
             $count = $this->connection->affected_rows;
-            $result->close();
             return DbResult::goodResult($count);
         }
 
@@ -91,7 +88,6 @@ class PhonicsDb
             while ($row = $result->fetch_assoc()) {
                 $result_array[] = $row;
             }
-            $result->close();
 
             return DbResult::goodResult($result_array);
         } else {
@@ -119,7 +115,6 @@ class PhonicsDb
         $result = $this->connection->query($query);
         if ($result === false) return DbResult::badResult($this->getErrorMessage());
         $row = $result->fetch_assoc();
-        $result->close();
         return DbResult::goodResult($row);
     }
 
