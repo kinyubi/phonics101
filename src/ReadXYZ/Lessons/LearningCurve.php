@@ -12,13 +12,13 @@ class LearningCurve
 {
     public array $data = [];
 
-    public function learningCurveChart($data)
+    public function learningCurveChart($input)
     {      // creates .PNG,  returns filename for <IMG /> tag
-        assert(is_array($data));
-        assert(count($data) > 0, 'Did not expect an empty graph for Learning Curve graph');
+        assert(is_array($input));
+        assert(count($input) > 0, 'Did not expect an empty graph for Learning Curve graph');
 
-        $this->data = $data;          // save it for others
-
+        foreach($input as $datum) {$this->data[] = $datum->seconds;}
+        // save it for others
         require_once dirname(dirname(__DIR__)).'/3rdParty/libChart/classes/libChart.php';
         $chart = new VerticalBarChart(140 + (25 * count($this->data)), 250);
         $chart->getPlot()->getPalette()->setBarColor([new Color(0, 170, 176), new Color(0, 170, 176)]);

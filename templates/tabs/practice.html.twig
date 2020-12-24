@@ -7,7 +7,7 @@
 #}
 {% block PracticeTab %}
   {% from "macros.html.twig" import tabHeader  %}
-  <div class="container">
+  <div class="container-fluid bg-white" id="{{ tabId }}-container">
     {% set tabId = tabInfo.tabTypeId %}
     <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
       <div id="{{ tabId }}-main" class="col-9">

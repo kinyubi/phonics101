@@ -10,7 +10,7 @@
 {% block IntroTab %}
   {% from "macros.html.twig" import tabHeader  %}
   {% set listIndex = listIndex ?? 0 %}
-  <div class="container">
+  <div class="container-fluid bg-white" id="{{ tabId }}-container">
 
     <div class="row  d-flex flex-nowrap  m-2 p-2">
       <div id="{{ tabId }}-main" class="col-9">

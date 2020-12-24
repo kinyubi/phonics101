@@ -2,12 +2,15 @@
 
 namespace App\ReadXYZ\Lessons;
 
+use App\ReadXYZ\Data\LessonsData;
+use App\ReadXYZ\Data\WarmupData;
+use App\ReadXYZ\Helpers\Debug;
 use App\ReadXYZ\Helpers\Location;
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
 
 use App\ReadXYZ\Models\Log;
 use App\ReadXYZ\POPO\Game;
-use App\ReadXYZ\POPO\Warmup;
 use JsonSerializable;
 use stdClass;
 
@@ -56,20 +59,22 @@ class Lesson implements JsonSerializable
     public array $allWords;
     public string $book;
     public array $lengths;
-    public ?Warmup $warmup;
 
     /**
-     * Lesson constructor. The input is a stdClass object from the abc_lessons table in readxyz1_1 database
+     * Lesson constructor. The input is a stdClass object from the abc_lessons table in readxyz0_phonics database
      *
      * @param stdClass $lesson
+     * @throws PhonicsException
      */
     public function __construct(stdClass $lesson)
     {
+        $start = Debug::startTimer();
+        $lessonsData = new LessonsData();
         $this->lessonId = $lesson->lessonCode;
         $this->lessonName = $lesson->lessonName;
         $this->lessonKey = $lesson->lessonName;
         $this->script = 'Blending';
-        $this->alternateNames = $lesson->alternateNames;
+        $this->alternateNames = $this->decodeArray($lesson->alternateNames);
         $this->groupCode = $lesson->groupCode;
         $this->groupName = Groups::getInstance()->getGroupName($lesson->groupCode);
         $this->lessonDisplayAs = $lesson->lessonDisplayAs;
@@ -78,18 +83,20 @@ class Lesson implements JsonSerializable
         $this->supplementalWordList = is_string($lesson->supplementalWordList) ? Util::csvStringToArray($lesson->supplementalWordList) : $lesson->supplementalWordList;
         $this->allWords = array_merge($this->wordList ?? [], $this->supplementalWordList ?? []);
         if (isset($lesson->contrastImages)) {
-            $this->contrastImages = $lesson->contrastImages;
+            $this->contrastImages = $this->decodeArray($lesson->contrastImages);
         } else if (isset($lesson->contrastList)) {
             $this->contrastImages = Util::csvStringToArray($lesson->contrastList);
         }
 
         $this->stretchList = is_string($lesson->stretchList) ? Util::stretchListToArray($lesson->stretchList) : $lesson->stretchList;
-        $this->fluencySentences = $lesson->fluencySentences;
+        $this->fluencySentences = $this->decodeArray($lesson->fluencySentences);
         $this->games = [];
         $this->book = $lesson->flipBook ?? '';
-        $this->warmup = Warmups::getInstance()->getLessonWarmup('warmup');
         $this->spinner = null;
-        $this->spinner = new Spinner($lesson->spinner->prefixList, $lesson->spinner->vowel ?? '', $lesson->spinner->suffixList ?? '');
+        $spinnerObject = $this->decodeObject($lesson->spinner);
+        if ($spinnerObject) {
+            $this->spinner = new Spinner($spinnerObject->prefixList, $spinnerObject->vowel ?? '', $spinnerObject->suffixList ?? '');
+        }
 
         // get the universal games added to the lesson
         $gameTypes = GameTypes::getInstance();
@@ -109,7 +116,8 @@ class Lesson implements JsonSerializable
             );
         }
         // combine the GameTypes information with the games array in the lesson to build the games array
-        foreach ($lesson->games as $game) {
+        $games = $this->decodeArray($lesson->games);
+        foreach ($games as $game) {
             if (empty($game->url)) {
                 continue;
             }
@@ -127,7 +135,7 @@ class Lesson implements JsonSerializable
             );
         }
         $this->tabNames = [];
-        if ($this->warmup) {
+        if ((new WarmupData())->exists($this->lessonId)) {
             $this->tabNames[] = 'warmup';
         }
         $this->tabNames = array_merge($this->tabNames, ['intro', 'write', 'practice']);
@@ -142,7 +150,6 @@ class Lesson implements JsonSerializable
         $this->pronounceImage = Location::getPronounceImage($lesson->pronounceImage ?? '');
         $this->pronounceImageThumb = Location::getPronounceImageThumb($lesson->pronounceImage ?? '');
 
-        $this->contrastImages = $lesson->contrastImages ?? null;
         $this->visible = $lesson->active != 'N';
 
         $this->wordLists = (null === $this->wordList) ? null : [];
@@ -153,6 +160,7 @@ class Lesson implements JsonSerializable
                 }
             }
         }
+        Debug::logElapsedTime($start, 'Lesson::__construct(' . $lesson->lessonName . ')');
     }
 
 
@@ -234,5 +242,15 @@ class Lesson implements JsonSerializable
         $slice = array_slice($words, $offset, $arraySize);
         shuffle($slice);
         return $slice;
+    }
+
+    private function decodeArray(?string $json): array
+    {
+        return ($json != null) ? json_decode($json) : [];
+    }
+
+    private function decodeObject(?string $json): ?object
+    {
+        return ($json != null) ? json_decode($json) : null;
     }
 }

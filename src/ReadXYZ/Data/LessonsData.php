@@ -4,8 +4,10 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
-use App\ReadXYZ\Enum\Sql;
+use App\ReadXYZ\Enum\ActiveType;
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lesson;
 use stdClass;
@@ -13,13 +15,16 @@ use stdClass;
 class LessonsData extends AbstractData
 {
 
-    public function __construct()
+    public function __construct(string $dbVersion = DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_lessons', 'lessonCode');
+        parent::__construct('abc_lessons', 'lessonCode', $dbVersion);
         $this->booleanFields = ['active'];
         $this->jsonFields = ['alternateNames', 'games', 'spinner', 'contrastImages'];
     }
 
+    /**
+     * @throws PhonicsException
+     */
     public function _create(): void
     {
         $query = <<<EOT
@@ -27,26 +32,33 @@ CREATE TABLE `abc_lessons` (
 	`lessonCode` VARCHAR(32) NOT NULL COMMENT 'Format: G01L01',
 	`lessonName` VARCHAR(128) NOT NULL,
 	`lessonDisplayAs` VARCHAR(128) NOT NULL,
-	`groupCode` VARCHAR(32) NULL DEFAULT NULL,
-	`lessonContent` JSON NULL DEFAULT NULL,
+	`groupCode` VARCHAR(32) NULL DEFAULT NULL COMMENT 'IF group is changed  in abc_groups, change it here. If group is deleted in abc_groups, set this to null.',
+	`lessonContent` MEDIUMTEXT NULL COMMENT 'Unused',
 	`wordList` VARCHAR(1024) NULL DEFAULT NULL,
 	`supplementalWordList` VARCHAR(1024) NULL DEFAULT NULL,
 	`stretchList` VARCHAR(1024) NULL DEFAULT NULL,
 	`flipBook` VARCHAR(50) NOT NULL DEFAULT '',
 	`active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
-	`alternateNames` JSON NULL DEFAULT NULL,
-	`fluencySentences` JSON NULL DEFAULT NULL,
-	`games` JSON NULL DEFAULT NULL,
-	`spinner` JSON NULL DEFAULT NULL,
-	`contrastImages` JSON NULL DEFAULT NULL,
+	`alternateNames` MEDIUMTEXT NULL,
+	`fluencySentences` MEDIUMTEXT NULL,
+	`games` MEDIUMTEXT NULL,
+	`spinner` MEDIUMTEXT NULL,
+	`contrastImages` MEDIUMTEXT NULL,
+	`ordinal` TINYINT(4) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`lessonCode`),
 	INDEX `fk_groups__groupCode` (`groupCode`),
-	CONSTRAINT `fk_groups__groupCode` FOREIGN KEY (`groupCode`) REFERENCES `abc_groups` (`groupCode`) ON UPDATE CASCADE ON DELETE SET NULL
-) COLLATE='utf8_general_ci' ENGINE=InnoDB ;
+	CONSTRAINT `fk_groups__groupCode` FOREIGN KEY (`groupCode`) REFERENCES `abc_groups` (`groupCode`) 
+	ON UPDATE CASCADE ON DELETE SET NULL ) COLLATE='utf8_general_ci' ENGINE=InnoDB ;
 EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
+    /**
+     * @param stdClass $lesson
+     * @param int $ordinal
+     * @return DbResult
+     * @throws PhonicsException
+     */
     public function insertOrUpdateFromDb(stdClass $lesson, int $ordinal): DbResult
     {
         $groupTable = new GroupData();
@@ -61,7 +73,7 @@ EOT;
         $games = isset($lesson->games) ? $this->encodeJsonQuoted($lesson->games) : 'NULL';
         $spinner = isset($lesson->spinner) ? $this->encodeJsonQuoted($lesson->spinner) : 'NULL';
         $contrastImages = isset($lesson->contrastImages) ? $this->encodeJsonQuoted($lesson->contrastImages) : 'NULL';
-        $active = isset($lesson->active) ? $this->boolToEnum($lesson->active) :  Sql::ACTIVE;
+        $active = isset($lesson->active) ? $this->boolToEnum($lesson->active) :  ActiveType::IS_ACTIVE;
         $query = <<<EOT
     INSERT INTO abc_lessons(lessonCode, lessonName, lessonDisplayAs, groupCode, lessonContent, wordList, supplementalWordList, stretchList, flipbook, alternateNames, fluencySentences, games, spinner, contrastImages, ordinal, active)
         VALUES('$lessonCode', '{$lesson->lessonId}', '{$lesson->lessonDisplayAs}', '$groupCode', NULL,
@@ -87,6 +99,11 @@ EOT;
         return $this->query($query, QueryType::AFFECTED_COUNT);
     }
 
+    /**
+     * @param string $lesson
+     * @return Lesson
+     * @throws PhonicsException
+     */
     public function get(string $lesson): Lesson
     {
         $x = $this->smartQuotes($lesson);
@@ -104,10 +121,11 @@ EOT;
     /**
      * object contains lessonCode, lessonName, lessonDisplayAs, groupCode, groupName, groupDisplayAs
      * @return stdClass[]
+     * @throws PhonicsException
      */
     public function getLessonsWithGroupFields(): array
     {
-        $query = "SELECT * FROM vw_lessons_with_group_fields";
+        $query = "SELECT * FROM vw_lessons_with_group_fields ORDER BY lessonCode";
         return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
     }
 
@@ -115,6 +133,7 @@ EOT;
      * returns lessonCode associated with lessonName.
      * @param string $lessonName
      * @return string
+     * @throws PhonicsException
      */
     public function getLessonCode(string $lessonName): string
     {
@@ -126,6 +145,7 @@ EOT;
      * returns lessonDisplayAs if query matches lessonCode or LessonName.
      * @param string $lesson
      * @return string
+     * @throws PhonicsException
      */
     public function getLessonDisplayAs(string $lesson): string
     {
@@ -133,5 +153,6 @@ EOT;
         $query = "SELECT lessonDisplayAs FROM abc_lessons WHERE lessonCode = $value OR lessonName = $value";
         return $this->throwableQuery($query, QueryType::SCALAR);
     }
+
 
 }

@@ -4,15 +4,16 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\POPO\TabType;
 use stdClass;
 
 class TabTypesData extends AbstractData
 {
-    public function __construct()
+    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_tabtypes', 'tabTypeId');
+        parent::__construct('abc_tabtypes', 'tabTypeId', $dbVersion);
     }
 
     public function _create()

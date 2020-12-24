@@ -4,7 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 use App\ReadXYZ\Enum\QueryType;
-use App\ReadXYZ\Enum\Sql;
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Lessons\Lessons;
 use stdClass;
@@ -19,7 +19,7 @@ class OldStudentData extends AbstractData
 {
     public function __construct()
     {
-        parent::__construct('abc_students', 'studentid', Sql::READXYZ0_1);
+        parent::__construct('abc_students', 'studentid', DbVersion::READXYZ0_1);
     }
 
     public function _create()
@@ -143,7 +143,7 @@ EOT;
      * @param array $info
      * @return stdClass|null
      */
-    private function harvestMastery(string $lessonName, array $info)
+    private function harvestMastery(array $info)
     {
         $timesPresented = $info['timesPresented'] ?? 0;
         $val = $info['mastery'] ?? 0;
@@ -152,9 +152,9 @@ EOT;
         $testCurves = array_values($info['testCurve'] ?? []);
         $lastPresented = Util::dbDate($info['lastPresented']) ?? '';
         return (object)[
-            'timesPresented' => min($timesPresented, 1),
-            'fluencyCurves'  => $fluencyCurves,
-            'testCurves'     => $testCurves,
+            'timesPresented' => $timesPresented,
+            'fluencyCurves'  => empty($fluencyCurves) ? null : $fluencyCurves,
+            'testCurves'     => empty($testCurves) ? null : $testCurves,
             'mastery'        => $mastery,
             'lastPresented'  => $lastPresented
         ];
@@ -173,11 +173,25 @@ EOT;
             return null;
         }
         $data = $result->getResult();
-        $cargo = unserialize($data['cargo']);
+        $serializedCargo = $data['cargo'];
+        $cargo = unserialize($serializedCargo);
+        $cargoInfo = $this->getCargoInfo($cargo);
+        return (object)[
+            'studentId'     => $data['studentid'],
+            'studentName'   => $data['StudentName'],
+            'trainer'       => $data['trainer1'],
+            'currentLesson' => $cargoInfo->currentLesson,
+            'lessonMastery' => $cargoInfo->mastery
+        ];
+    }
+
+    public function getCargoInfo(array $cargo) {
+
         $currentLesson = Lessons::getInstance()->getRealLessonName($cargo['currentLesson'] ?? '');
         $lessonsData = [];
         $lessons = Lessons::getInstance();
         $lessonTypes = ['currentLessons', 'masteredLessons'];
+        $usableMasteryDataFound = false;
         foreach ($lessonTypes as $lessonType) {
             if ($cargo[$lessonType]) {
                 foreach ($cargo[$lessonType] as $lessonKey => $info) {
@@ -185,24 +199,23 @@ EOT;
                     if (empty($lessonName)) {
                         continue;
                     }
-                    $masteryData = $this->harvestMastery($lessonName, $info);
+                    $masteryData = $this->harvestMastery($info);
                     if (isset($lessonsData[$lessonName])) {
                         if ($masteryData->mastery > $lessonsData[$lessonName]->mastery) {
                             $lessonData[$lessonName] = $masteryData;
+                            $usableMasteryDataFound = true;
                         }
                     } else {
                         $lessonsData[$lessonName] = $masteryData;
+                        $usableMasteryDataFound = true;
                     }
                 }
             }
         }
-
-        return (object)[
-            'studentId'     => $data['studentid'],
-            'studentName'   => $data['StudentName'],
-            'trainer'       => $data['trainer1'],
+        return (object) [
             'currentLesson' => $currentLesson,
-            'lessonMastery' => $lessonsData
+            'mastery' => $lessonsData,
+            'usableData' => $usableMasteryDataFound
         ];
     }
 }

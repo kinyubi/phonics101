@@ -2,6 +2,7 @@
 
 namespace App\ReadXYZ\Twig;
 
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
 use Throwable;
 use Twig\Environment;
@@ -56,9 +57,7 @@ class TwigFactory
      *
      * @return TemplateWrapper
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws PhonicsException
      */
     private function loadTemplate(string $templateName): TemplateWrapper
     {
@@ -78,7 +77,12 @@ class TwigFactory
         // creates loader for this template if it doesn't exist
         $baseName = str_replace($ext, '', $realName);
         if (!key_exists($baseName, $this->templates)) {
-            $this->templates[$baseName] = $this->twigEnvironment->load($realName);
+            try {
+                $this->templates[$baseName] = $this->twigEnvironment->load($realName);
+            } catch (LoaderError | RuntimeError | SyntaxError $ex) {
+                throw new PhonicsException("Unexpected Twig Error loading template.", 0, $ex);
+            }
+
         }
         // return the loader
         return $this->templates[$baseName];
@@ -88,9 +92,7 @@ class TwigFactory
      * @param string $templateName
      * @param array $args
      * @return string
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws PhonicsException
      */
     public function renderTemplate(string $templateName, array $args = [])
     {
@@ -103,14 +105,15 @@ class TwigFactory
      * @param string $blockName
      * @param array $args
      * @return string
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws Throwable
+     * @throws PhonicsException
      */
     public function renderBlock(string $templateName, string $blockName, array $args = [])
     {
         $template = $this->loadTemplate($templateName);
-        return $template->renderBlock($blockName, $args);
+        try {
+            return $template->renderBlock($blockName, $args);
+        } catch (Throwable $ex) {
+            throw new PhonicsException("Unexpected Twig Error rendering block.", 0, $ex);
+        }
     }
 }

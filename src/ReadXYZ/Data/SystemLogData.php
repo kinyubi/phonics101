@@ -11,7 +11,9 @@ use App\ReadXYZ\Helpers\PhonicsException;
 class SystemLogData extends AbstractData
 {
     public function __construct()
-    { parent::__construct('abc_system_log'); }
+    {
+        parent::__construct('abc_system_log');
+    }
 
     public function _create()
     {
@@ -40,7 +42,7 @@ EOT;
         $qLevel = $this->smartQuotes($level);
         $qTrace = $this->smartQuotes($trace);
         $qMessage = $this->smartQuotes($message);
-        $values = "VALUES(NOW(),$qLevel,$qTrace,$qMessage)";
+        $values = "VALUES(CURDATE(),$qLevel,$qTrace,$qMessage)";
         $query = "INSERT INTO abc_system_log(timeStamp, level, trace, message) $values";
         $this->throwableQuery($query, QueryType::STATEMENT);
     }

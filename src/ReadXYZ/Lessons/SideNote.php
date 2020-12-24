@@ -122,13 +122,14 @@ class SideNote
 // ======================== PRIVATE METHODS =====================
 
     /**
-     * @param TimerType $timerType currently supported indexes are 'learningCurve' and 'testCurve'
+     * @param TimerType|string $timerType currently supported indexes are 'learningCurve' and 'testCurve'
      *
      * @return string learning curve HTML
      * @throws PhonicsException on ill-formed SQL
      */
-    private function getCurveHTML(TimerType $timerType): string
+    private function getCurveHTML($timerType): string
     {
+        if (is_string($timerType)) {$timerType = new TimerType($timerType);}
         $studentLessonData = new StudentLessonsData();
         $data = $studentLessonData->getTimedTest($timerType);
         if (count($data) == 0) return '';

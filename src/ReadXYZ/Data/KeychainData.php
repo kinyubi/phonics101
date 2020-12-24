@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Regex;
 use App\ReadXYZ\Helpers\PhonicsException;
@@ -12,9 +13,9 @@ use stdClass;
 
 class KeychainData extends AbstractData
 {
-    public function __construct()
+    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_keychain', 'keychainCode');
+        parent::__construct('abc_keychain', 'keychainCode', $dbVersion);
     }
 
     /**

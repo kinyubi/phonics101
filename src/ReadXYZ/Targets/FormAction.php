@@ -108,18 +108,19 @@ class FormAction
             throw new PhonicsException('Cannot update user mastery without an active lesson.');
         }
         $source = $_POST['source'] ?? 'unknown';
-        $seconds = $_POST['seconds'] ?? 0;
+        $seconds = intval($_POST['seconds'] ?? '0');
+        $timeStamp = intval($_POST['timestamp'] ?? '0');
         $tab = ('fluency' == $source) ? 'fluency' : 'test';
         $lessonTemplate = new LessonTemplate($this->session->getCurrentLessonName(), $tab);
         $studentLessonData = new StudentLessonsData();
         if (('fluency' == $source) || ('test' == $source)) {
-            $studentLessonData->updateTimedTest($source, $seconds);
-            $lessonTemplate->display();
+            $studentLessonData->updateTimedTest($source, $seconds, $timeStamp);
+            $lessonTemplate->display($source);
         } elseif ('testMastery' == $source) {
             // masteryType is 'Advancing' or 'Mastered'
             $masteryType = $_POST['masteryType'];
             $studentLessonData->updateMastery($masteryType);
-            $lessonTemplate->display();
+            $lessonTemplate->display('test');
 
         } else {
             $message = "Call to timers.php with unrecognized source $source";

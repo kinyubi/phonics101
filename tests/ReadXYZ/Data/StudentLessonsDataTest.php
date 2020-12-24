@@ -27,7 +27,7 @@ class StudentLessonsDataTest extends TestCase
             $times = $studentLessonsData->getTimedTest($timer);
             $this->assertCount(0, $times);
             for ($i=0; $i<12; $i++) {
-                $studentLessonsData->updateTimedTest($timer, 12 - $i);
+                $studentLessonsData->updateTimedTest($timer, 12 - $i, time());
             }
             $times = $studentLessonsData->getTimedTest($timer);
             $this->assertCount(8, $times);

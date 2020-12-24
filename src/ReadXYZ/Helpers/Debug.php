@@ -3,6 +3,7 @@
 namespace App\ReadXYZ\Helpers;
 
 use App\ReadXYZ\Models\Log;
+use DateTime;
 use Exception;
 
 /**
@@ -111,5 +112,32 @@ class Debug
         $msg = $ex->getMessage() . "\n" . $ex->getTraceAsString();
         $trace = $ex->getTrace();
         Log::fatal($msg, $trace[0]['function'],$trace[0]['file'], $trace[0]['line']);
+    }
+
+    public static function startTimer(): string
+    {
+        return (new DateTime())->format('U.u');
+    }
+
+    public static function resetTimerLog(): void
+    {
+        if (Util::isLocal()) {
+            unlink(Util::getPublicPath('elapsed_times.txt'));
+        }
+    }
+
+    public static function logElapsedTime(string &$start, string $tag): void
+    {
+        if (Util::isLocal()) {
+            $endStamp = new DateTime();
+            $end = $endStamp->format('U.u');
+            $diff = abs($end - $start) * 1000;
+            $stamp = substr($endStamp->format('H:i:s.u'), 0,12);
+
+            $file = Util::getPublicPath('elapsed_times.txt');
+            $record = sprintf("%s %-50s: %8.3f ms\n", $stamp, $tag, $diff);
+            file_put_contents($file, $record, FILE_APPEND | LOCK_EX);
+            unset($start);
+        }
     }
 }

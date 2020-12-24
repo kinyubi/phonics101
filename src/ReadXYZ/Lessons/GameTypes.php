@@ -10,12 +10,18 @@ class GameTypes
     private static GameTypes $instance;
 
     /** @var GameType[] */
-    private array $gameTypes = [];
+    private array $gameTypes;
+    private array $universalGames = [];
 
     private function __construct()
     {
         $data = new GameTypesData();
         $this->gameTypes = $data->getAll();
+        foreach ($this->gameTypes as $gameType) {
+            if ($gameType->isUniversal) {
+                $this->universalGames[] = $gameType;
+            }
+        }
     }
 
 // ======================== STATIC METHODS =====================
@@ -47,14 +53,7 @@ class GameTypes
      */
     public function getUniversalGameTypes(): array
     {
-        $games = [];
-        foreach ($this->gameTypes as $gameType) {
-            if ($gameType->isUniversal) {
-                $games[] = $gameType;
-            }
-        }
-
-        return $games;
+        return $this->universalGames;
     }
 
     public function isValid(string $gameTypeId)

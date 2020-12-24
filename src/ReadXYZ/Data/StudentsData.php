@@ -6,14 +6,15 @@ namespace App\ReadXYZ\Data;
 
 use App\ReadXYZ\Enum\ActiveType;
 use App\ReadXYZ\Enum\QueryType;
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Helpers\PhonicsException;
 
 class StudentsData extends AbstractData
 {
-    public function __construct()
+    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_students', 'studentCode');
+        parent::__construct('abc_students', 'studentCode', $dbVersion);
         $this->booleanFields = ['active'];
     }
 
@@ -47,14 +48,16 @@ EOT;
      * inserts student record returning student code on good result
      * @param string $studentName
      * @param string $userName
+     * @param string $studentCode optional, if not specified, it will generate one
      * @return DbResult good result contains studentCode of inserted record
      * @throws PhonicsException on ill-formed SQL
      */
-    public function add(string $studentName, string $userName): DbResult
+    public function add(string $studentName, string $userName, string $studentCode=''): DbResult
     {
-        $studentCode = $this->smartQuotes(uniqid('S', true));
+        if (empty($studentCode)) $studentCode = uniqid('S', true);
+        $studentCode = $this->smartQuotes($studentCode);
         $studentCode = str_replace('.', 'Z', $studentCode);
-        $query = "INSERT INTO abc_students(studentCode, userName, studentName,  dateCreated , dateLastAccessed) VALUES($studentCode, '$userName', '$studentName', NOW(), NOW())";
+        $query = "INSERT INTO abc_students(studentCode, userName, studentName,  dateCreated , dateLastAccessed) VALUES($studentCode, '$userName', '$studentName', CURDATE(), CURDATE())";
         $result = $this->query($query, QueryType::STATEMENT);
         if ($result->wasSuccessful()) {
             $studentCode = $this->throwableQuery("SELECT LAST_INSERT_ID()", QueryType::SCALAR);

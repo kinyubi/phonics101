@@ -1,43 +1,22 @@
 # phonics101
 
-### 2020-11-15
-
-*[ ] uses lesson GroupCode instead of GroupName where appropriate
-
+### To Do
 *[ ] use warmup field in lesson class
 
-### 2020-11-21
 *[ ] tool to populate abc_trainers and abc_students from selective old_people.json file.
 
+### 2020-12-11 Migrate readxyz10_phonics
+*[ ] scripts to get JSON for abc_Users, abc_Students, and abc_usermastery. See Siteground JSON Extract OneNote.
+*[x] function to convert epoch time to sql DATE - Util::dbDate()
+
+
 ### COMPLETED
-*[x] fixed queryAndGetScalar
-*[x] GroupData::getGroupCode 
-*[x] got rid of prepareCurrentForUpdate
-*[x] fixed all StudentData references
-*[x] fixed all StudentTable reference 
-*[x] fixed all Student class references
-  * change to non-singleton based on session
-*[x] fixed all Cookie references
-*[x] fixed all Identity references
-*[x] renamed BlendingInfo to OldBlendingInfo
-*[x] migrated GameTypes from JSON to mysql
-*[x] migrated TabTypes from JSON to mysql
-*[x] removed addSoundClass references.
-*[x] made sure all MasteryLevel code is refactored.
-*[x] deprecated Util::getHumanReadableDate()
-*[x] deprecated Util::getHumanReadableDateTime()
-*[x] made sure lesson alternateNames are now non-associative array
-*[x] deprecated Util::fixTabName()
-*[x] converted all studentId to studentCode
-*[x] converted all userId to userCode
-*[x] finished Lessons::setAccordion()
-*[x] created a tool to convert old user/student data to old_people.json
-*[x] refactored LessonListTemplate
-*[x] fixed lessons->getGroupName and GroupData=>getGroupName to return string (empty if not found)
-*[x] refactored Lesson class to use LessonsData class
-*[x] created a method that would populate lessons accordion template with mastery values
-*[x] created ActionForms class to replace timers.php, processStudentSelection.php, render.php, processUserLogin.php, processLessonSelection.php, practiceTimer.php and login.php
-*[x] make sure functions with a lesson name parameter take into consideration alternates
+*[x] create a sql for the entire database and tables (readxyz0_phonics_struct.sql) 
+*[x] change all json data types to MEDIUMTEXT.
+*[x] Bring over fixed data
+  - create sql to migrate abc_gametypes, abc_tabtypes, abc_warmups, abc_zoo_animals, abc_keychain, abc_lessons (readxyz0_fixed_data.sql)
+*[x] create sql for views. (readxyz0_phonics_views.sql)
+
 
 ### FUTURE
 *[ ] convert actions/timers.php to routing

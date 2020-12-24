@@ -6,8 +6,8 @@
 #}
 {% block MasteryTab %}
   {% from "macros.html.twig" import tabHeader  %}
-  <div class="container">
-    <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+  <div class="container-fluid bg-white" id="{{ tabId }}-container">
+    <div class="row  d-flex flex-nowrap  m-2 justify-content-start">
       <div id="{{ tabId }}-main" class="col-9">
         {{ tabHeader(tabInfo) }}
         <div class="row">

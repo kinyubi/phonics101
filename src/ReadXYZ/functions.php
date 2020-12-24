@@ -77,6 +77,7 @@ function not(bool $expression): bool
  */
 function runningStandalone(): bool
 {
-    return ! count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+    return !debug_backtrace();
+    // return ! count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
 }
 

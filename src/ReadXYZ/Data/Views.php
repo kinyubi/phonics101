@@ -5,15 +5,15 @@ namespace App\ReadXYZ\Data;
 
 
 use App\ReadXYZ\Enum\BoolEnumTreatment;
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Helpers\PhonicsException;
-use stdClass;
 
 class Views extends AbstractData
 {
-    public function __construct()
+    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('', '');
+        parent::__construct('', '', $dbVersion);
     }
 
     // /**

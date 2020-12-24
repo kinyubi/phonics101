@@ -5,9 +5,9 @@ namespace App\ReadXYZ\Data;
 
 
 use App\ReadXYZ\Enum\BoolEnumTreatment;
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Regex;
-use App\ReadXYZ\Enum\Sql;
 
 class TableData extends AbstractData
 {
@@ -19,16 +19,19 @@ class TableData extends AbstractData
     ];
     private int   $totalSize;
 
-    public function __construct(
-        string $tableName,
-        string $enumBool = BoolEnumTreatment::KEEP_AS_Y_N)
+    public function __construct(string $tableName, string $enumBool = BoolEnumTreatment::KEEP_AS_Y_N, $version='')
     {
         if ( ! BoolEnumTreatment::isValid($enumBool)) {
             $enumBool = BoolEnumTreatment::KEEP_AS_Y_N;
         }
 
         $db0       = ['abc_student', 'abc_user_mastery', 'abc_users'];
-        $dbVersion = in_array($tableName, $db0) ? Sql::READXYZ0_1 : Sql::READXYZ1_1;
+        if ($version) {
+            $dbVersion = $version;
+        } else {
+            $dbVersion = in_array($tableName, $db0) ? DbVersion::READXYZ0_1 : DbVersion::READXYZ0_PHONICS;
+        }
+
 
         parent::__construct($tableName, 'Field', $dbVersion);
         $query        = "SHOW COLUMNS FROM $tableName";
@@ -49,10 +52,10 @@ class TableData extends AbstractData
                 'default'     => $record['Default'],
                 'width'       => $percent,
                 'enum_bool'   => ($record['Type'] == 'ENUM') && in_array($record['Default'], ['Y', 'N']),
-                'isJson'      => ($record['Type'] == 'JSON'),
+                'isJson'      => ($record['Type'] == 'mediumtext'),
                 'auto_update' => in_array("$tableName|$fieldName", $this->autoUpdates),
             ];
-            $this->fields[] = $fieldInfo;
+            $this->fields[$fieldName] = $fieldInfo;
         }
         $this->totalSize = $totalSize;
     }
@@ -72,13 +75,19 @@ class TableData extends AbstractData
         $data = $this->getAll();
         return [
             'tablename' => $this->tableName,
-            'fields'    => $this->fields,
-            'data'      => $data,
+            'fields'    => $this->fields, // [ 'fieldName' => fieldInfo]
+            'data'      => $data,         // array of records. Each record is ['fieldName' => value, ...]
             'primary'   => $this->primaryKey
         ];
     }
 
 // ======================== PRIVATE METHODS =====================
+
+    /**
+     * For crud operations we need to make a best guess for field width
+     * @param $number
+     * @return mixed
+     */
     private function clampSize($number)
     {
         return clamp($number, 12, 120);
@@ -91,10 +100,17 @@ class TableData extends AbstractData
      */
     private function extractNumber(string $field): int
     {
-        if ($field == 'date') {
-            return 10;
+        $pos = strpos($field, '(');
+        $fieldType = ($pos === false) ? $field : substr($field, 0, $pos);
+        switch(strtolower($fieldType)) {
+            case 'date':
+            case 'enum':
+                return 12;
+            case 'mediumtext':
+                return 120;
+            default:
+                return ($pos === false) ? 12 : Regex::extractSqlFieldLength($field);
         }
-        return Regex::extractSqlFieldLength($field);
     }
 
     private function getTotalSize(array $fieldRecords): int

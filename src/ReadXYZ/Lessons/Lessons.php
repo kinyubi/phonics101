@@ -6,8 +6,10 @@ use App\ReadXYZ\Data\GroupData;
 use App\ReadXYZ\Data\LessonsData;
 use App\ReadXYZ\Data\StudentLessonsData;
 use App\ReadXYZ\Enum\MasteryLevel;
+use App\ReadXYZ\Helpers\Debug;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\Log;
 use App\ReadXYZ\Models\Session;
 
 use stdClass;
@@ -22,8 +24,11 @@ class Lessons
 {
     private static Lessons $instance;
 
-    /** @var Lesson[] */
+    /** @var Lesson[]  lessonName => Lesson object */
     private array $lessons = [];
+
+    /** @var stdClass[] lessonName => Lesson stdclass object */
+    private array $lessonsData = [];
 
     /** @var stdClass[] fields: groupCode, groupName, groupDisplayAs, fileName (keychain), friendlyName */
     private array $groupInfo;
@@ -40,44 +45,49 @@ class Lessons
      */
     private function __construct()
     {
+
+        $start = Debug::startTimer();
         $groupData = new GroupData();
         $lessonsData = new LessonsData();
 
         $this->groupInfo = $groupData->getGroupExtendedAssocArray();
 
-        $lessonsWithGroupInfo = $lessonsData->getLessonsWithGroupFields();
+        $data = $lessonsData->getLessonsWithGroupFields();
+        foreach ($data as $datum) {
+            $this->lessonsData[$datum->lessonName] = $datum;
+        }
 
-        $ordinal = 0;
-        foreach ($lessonsWithGroupInfo as $lessonInfo) {
+
+        foreach ($this->lessonsData as $lessonInfo) {
             $lessonCode = $lessonInfo->lessonCode;
             $lessonName = $lessonInfo->lessonName;
             $lessonDisplay = $lessonInfo->lessonDisplayAs;
-            $lesson = $lessonsData->get($lessonName);
-            $lesson->ordering = $ordinal++;
-            $this->lessons[$lessonCode] = $lesson;
 
             //adding every conceivable alias
             $this->alternateNameMap[$lessonCode] = $lessonName;
             $this->alternateNameMap[$lessonName] = $lessonName;
             $this->alternateNameMap[$lessonDisplay] = $lessonName;
-            foreach($lesson->alternateNames as $name) {
-                if (!isset($this->alternateNameMap[$name])) $this->alternateNameMap[$name] = $lessonName;
+            $alternates = $lessonsData->decodeJson($lessonInfo->alternateNames);
+            if ($alternates != null) {
+                foreach($alternates as $name) {
+                    if ($name && !isset($this->alternateNameMap[$name])) $this->alternateNameMap[$name] = $lessonName;
+                }
+
             }
 
             $this->displayAs[$lessonCode] = $lessonDisplay;
             $this->displayAs[$lessonName] = $lessonDisplay;
             $this->displayAs[$lessonDisplay] = $lessonDisplay;
-            foreach($lesson->alternateNames as $name) {
-                if (!isset($this->alternateNameMap[$name])) $this->alternateNameMap[$name] = $lessonDisplay;
-            }
 
             $groupName = $lessonInfo->groupName;
             if (! isset($this->accordion[$groupName])) $this->accordion[$groupName] = [];
-            $this->accordion[$groupName][$lesson->lessonName] = 0;
+            $this->accordion[$groupName][$lessonInfo->lessonName] = 0;
             $this->lessonNamesMap[$lessonName] = $lessonCode;
-        }
 
+        }
+        Debug::logElapsedTime($start, 'Lessons::__construct');
     }
+
 
 // ======================== STATIC METHODS =====================
 
@@ -88,10 +98,8 @@ class Lessons
      */
     public static function getInstance()
     {
-        if ( ! isset(self::$instance)) {
-            self::$instance = new Lessons();
-        }
-
+        if (isset(self::$instance)) return self::$instance;
+        self::$instance = new Lessons();
         return self::$instance;
     }
 
@@ -118,6 +126,25 @@ class Lessons
         return $this->lessonNamesMap;
     }
 
+    /**
+     * @param string $lessonName
+     * @return object|null
+     * @throws PhonicsException
+     */
+    public function getLesson(string $lessonName): ?object
+    {
+        $name = $this->getRealLessonName($lessonName);
+        if (empty($name)) return null;
+        return new Lesson($this->lessonsData[$name]);
+    }
+
+    public function getLessonCode($lessonName): string
+    {
+        $name = $this->getRealLessonName($lessonName);
+        if (empty($name)) return '';
+        return $this->lessonNamesMap[$name] ?? '';
+    }
+
     public function getAllLessons(): array
     {
         return $this->lessons;
@@ -130,6 +157,7 @@ class Lessons
     {
         $currentLessonCode = (new Session)->getCurrentLessonCode();
         if ($currentLessonCode) {
+
             $ref = &$this->lessons[$currentLessonCode];
         } else {
             $ref = &$this->lessons[array_key_first($this->lessons)];
@@ -164,15 +192,27 @@ class Lessons
 
     /**
      * @return string the next lesson. If we were on the last lesson, loop around
+     * @throws PhonicsException
      */
     public function getNextLessonName(): string
     {
         $session = new Session;
-        $currentLessonName = $this->getRealLessonName($session->getCurrentLessonName());
-        $next = $this->lessons[$currentLessonName]->ordering + 1;
-        if ($next >= count($this->lessons)) $next = 0;
-        return $this->getRealLessonName($this->lessonNames[$next]);
-
+        $currentLessonCode = $session->getCurrentLessonCode();
+        if (empty($currentLessonCode)) {
+            throw new PhonicsException("We should always be on a lesson when we get here.");
+        }
+        $group = intval(substr($currentLessonCode, 1,2));
+        $lesson = intval(substr($currentLessonCode, 4,2));
+        $next = sprintf("G%02dL%02d", $group, $lesson + 1);
+        if (key_exists($next, $this->alternateNameMap)) {
+            return $this->alternateNameMap[$next];
+        }
+        $next = sprintf("G%02dL%02d", $group + 1, $lesson);
+        if (key_exists($next, $this->alternateNameMap)) {
+            return $this->alternateNameMap[$next];
+        } else {
+            return array_key_first($this->lessonNamesMap);
+        }
     }
 
     /**

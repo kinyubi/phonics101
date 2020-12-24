@@ -577,8 +577,8 @@ a.img-contain img {
     background-image: url("/images/readxyzlogo2-2020.png");
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: contain; /* Resize the background image to cover the entire container */
-    background-position: center;
-    margin-left: .5rem;
+    background-position: left;
+    margin-left: 0;
 }
 
 .bg-contain {
@@ -587,3 +587,5 @@ a.img-contain img {
     background-position: center;
     height: 70px !important;
 }
+
+.mw-600 {max-width: 600px}

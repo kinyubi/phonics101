@@ -10,6 +10,7 @@ use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Enum\TrainerType;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lessons;
 
 
 /**
@@ -152,7 +153,11 @@ class Session
      */
     public function getCurrentLessonCode(): string
     {
-        return $this->currentLessonCode;
+        if ($this->currentLessonCode) return $this->currentLessonCode;
+        if ($this->currentLesson) {
+            return Lessons::getInstance()->getLessonCode($this->currentLesson);
+        }
+        return '';
     }
 
     /**
@@ -160,7 +165,11 @@ class Session
      */
     public function getCurrentLessonName(): string
     {
-        return $this->currentLesson;
+        if ($this->currentLesson) return $this->currentLesson;
+        if ($this->currentLessonCode) {
+            return Lessons::getInstance()->getRealLessonName($this->currentLessonCode);
+        }
+        return '';
     }
 
     /**
@@ -276,8 +285,9 @@ class Session
         if ( ! $this->isValid()) {
             throw new PhonicsException("There is no session active for a student. Cannot update lesson.");
         }
-        $this->currentLesson     = $lessonName;
-        $this->currentLessonCode = (new LessonsData())->getLessonCode($lessonName);
+        $lessons = Lessons::getInstance();
+        $this->currentLesson     = $lessons->getRealLessonName($lessonName);
+        $this->currentLessonCode = $lessons->getLessonCode($lessonName);
         if (self::testingInProgress()) {
             return;
         }

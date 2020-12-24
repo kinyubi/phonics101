@@ -4,16 +4,8 @@
 
 require dirname(__DIR__) . '/src/ReadXYZ/autoload.php';
 
-if (not(defined('CLASS'))) {
-    define('CLASS', 0);
-    define('LAYOUT', 1);
-    define('STYLE', 2);
-    define('TAB_NAME', 3);
-    define('METHOD', 4);
-    define('DATA', 5);
-    define('NOTE', 6);
-}
 
+use App\ReadXYZ\Enum\BlendingPageIndex;
 use App\ReadXYZ\Lessons\OldBlendingInfo;
 use App\ReadXYZ\Lessons\OldLessonInfo;
 
@@ -25,8 +17,8 @@ function getBlendingWordLists(array $blendingLessons)
         $list = '';
         $lessonName = $blendingLesson['lessonName'];
         foreach ($blendingLesson['pages'] as $page) {
-            if (in_array($page[TAB_NAME], $wordListTabs)) {
-                foreach ($page[DATA] as $listPart) {
+            if (in_array($page[BlendingPageIndex::TAB_NAME], $wordListTabs)) {
+                foreach ($page[BlendingPageIndex::DATA] as $listPart) {
                     $cleanList = preg_replace('/\s+/', '', $listPart);
                     $list .= (',' . $cleanList);
                 }
@@ -58,7 +50,7 @@ function getTabNames(array $blendingLessons): array
     $tabs = [];
     foreach ($blendingLessons as $blendingLesson) {
         foreach ($blendingLesson['pages'] as $page) {
-            $tabs[] = $page[TAB_NAME];
+            $tabs[] = $page[BlendingPageIndex::TAB_NAME];
         }
     }
     $tabs = array_unique($tabs);

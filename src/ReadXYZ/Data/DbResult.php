@@ -2,6 +2,8 @@
 
 namespace App\ReadXYZ\Data;
 
+use App\ReadXYZ\Models\BoolWithMessage;
+
 /**
  * Class DbResult.
  *
@@ -72,5 +74,14 @@ class DbResult
     public function notFound(): bool
     {
         return $this->result == null;
+    }
+
+    public function toBoolWithMessage(): BoolWithMessage
+    {
+        if ($this->success) {
+            return BoolWithMessage::goodResult();
+        } else {
+            return BoolWithMessage::badResult($this->message);
+        }
     }
 }

@@ -4,19 +4,24 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\POPO\GameType;
 use stdClass;
 
 class GameTypesData extends AbstractData
 {
-    public function __construct()
+    public function __construct($dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_students', 'gameTypeId');
+        parent::__construct('abc_students', 'gameTypeId', $dbVersion);
         $this->booleanFields = ['active', 'isUniversal'];
     }
 
+    /**
+     * @throws PhonicsException
+     */
     public function _create()
     {
         $query = <<<EOT
@@ -37,6 +42,11 @@ EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
+    /**
+     * @param stdClass $gameType
+     * @return DbResult
+     * @throws PhonicsException
+     */
     public function insertOrUpdateStd(stdClass $gameType): DbResult
     {
         $id = $this->smartQuotes($gameType->gameTypeId);
@@ -65,6 +75,7 @@ EOT;
     /**
      * @param mixed ...$params
      * @return GameType[]
+     * @throws PhonicsException
      */
     public function getAll(...$params): array
     {
@@ -76,6 +87,7 @@ EOT;
     /**
      * @param mixed ...$params
      * @return GameType[]
+     * @throws PhonicsException
      */
     public function getAllActive(...$params): array
     {
@@ -84,6 +96,12 @@ EOT;
         return $this->getSelect("WHERE active = 'Y'", $throwIfNotFound, $boolEnumTreatment);
     }
 
+    /**
+     * @param string $gameTypeId
+     * @param mixed ...$params
+     * @return GameType
+     * @throws PhonicsException
+     */
     public function get(string $gameTypeId, ...$params): GameType
     {
         $boolEnumTreatment = $this->checkBoolEnumTreatment($params);
@@ -97,6 +115,7 @@ EOT;
      * @param string $whereClause
      * @param mixed ...$params
      * @return stdClass[]
+     * @throws PhonicsException
      */
     public function getSelect(string $whereClause = '', ...$params)
     {
@@ -105,7 +124,10 @@ EOT;
         if (not(empty($whereClause)) and not(Util::startsWith_ci('where', $whereClause))) {
             $whereClause = 'WHERE ' .$whereClause;
         }
-        return $this->throwableQuery("SELECT * FROM abc_gametypes $whereClause", QueryType::STDCLASS_OBJECTS, $throwIfNotFound, $boolEnumTreatment);
-
+        $objects = $this->throwableQuery("SELECT * FROM abc_gametypes $whereClause", QueryType::STDCLASS_OBJECTS, $throwIfNotFound, $boolEnumTreatment);
+        if ($objects == null) return null;
+        $assocObjects = [];
+        foreach($objects as $object) {$assocObjects[$object->gameTypeId] = new GameType($object);}
+        return $assocObjects;
     }
 }

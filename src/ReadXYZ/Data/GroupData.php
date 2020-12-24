@@ -4,17 +4,18 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
-use App\ReadXYZ\Enum\Sql;
+use App\ReadXYZ\Enum\ActiveType;
 use App\ReadXYZ\Enum\Throwable;
 use App\ReadXYZ\Helpers\PhonicsException;
 use stdClass;
 
 class GroupData extends AbstractData
 {
-    public function __construct()
+    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_groups', 'groupCode');
+        parent::__construct('abc_groups', 'groupCode', $dbVersion);
         $this->booleanFields = ['active'];
     }
 
@@ -100,7 +101,7 @@ EOT;
      */
     public function insertOrUpdate(stdClass $group, int $ordinal): DbResult
     {
-        $active = isset($group->active) ? $this->boolToEnum($group->active) :  Sql::ACTIVE;
+        $active = isset($group->active) ? $this->boolToEnum($group->active) :  ActiveType::IS_ACTIVE;
         $query = <<<EOT
     INSERT INTO abc_groups(groupCode, groupName, groupDisplayAs, ordinal, active)
         VALUES('{$group->groupCode}', '{$group->groupName}', '{$group->displayAs}', $ordinal, '$active')

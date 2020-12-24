@@ -4,11 +4,12 @@
 namespace App\ReadXYZ\POPO;
 
 
-use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Lessons\Lessons;
 
 class Warmup
 {
 
+    public string $lessonCode;
     public string $lessonName;
     public string $instructions;
 
@@ -19,14 +20,17 @@ class Warmup
 
     /**
      * Warmup constructor.
-     * @param string $lessonName
+     * @param string $lesson
      * @param string $instructions
      * @param WarmupItem[] $items
      */
-    public function __construct(string $lessonName, string $instructions, array $items)
+    public function __construct(string $lesson, string $instructions, array $items)
     {
-        $this->lessonName = $lessonName;
+        $lessons            = Lessons::getInstance();
+        $lessonName         = $lessons->getRealLessonName($lesson);
+        $this->lessonCode   = $lessons->getLessonCode($lessonName);
+        $this->lessonName   = $lessonName;
         $this->instructions = $instructions;
-        $this->warmupItems = $items;
+        $this->warmupItems  = $items;
     }
 }

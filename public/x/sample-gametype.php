@@ -1,6 +1,5 @@
 <?php
 
-use App\ReadXYZ\Data\TableData;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Twig\CrudTemplate;
 

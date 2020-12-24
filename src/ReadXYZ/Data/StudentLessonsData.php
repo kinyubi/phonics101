@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\MasteryLevel;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\TimerType;
@@ -25,11 +26,13 @@ class StudentLessonsData extends AbstractData
     /**
      * StudentLessonsData constructor.
      * This will look to session to provide the studentCode or lessonCode whenever needed.
+     * @param string $dbVersion
      * @throws PhonicsException on ill-formed SQL
      */
-    public function __construct()
+    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_students', 'id');
+        parent::__construct('abc_students', 'id', $dbVersion);
+        $this->jsonFields = ['fluencyTimes', 'testTimes'];
         $this->session = new Session();
         $this->quotedStudentCode = $this->smartQuotes($this->session->getStudentCode());
         $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
@@ -46,53 +49,52 @@ class StudentLessonsData extends AbstractData
     public function _create()
     {
         $query = <<<EOT
-        CREATE TABLE `abc_student_lesson` (
-            `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-            `studentCode` VARCHAR(32) NULL DEFAULT NULL,
-            `lessonCode` VARCHAR(32) NOT NULL,
-            `timePresented` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
-            `masteryLevel` ENUM('none','advancing','mastered') NOT NULL DEFAULT 'none' COMMENT '0-none, 1-advancing, 2-mastered',
-            `dateMastered` DATE NULL DEFAULT NULL,
-            `fluencyTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT 'each char is a hex value. Array of up to 16 entries',
-            `testTimes` VARCHAR(16) NOT NULL DEFAULT '' COMMENT '16 hex digit entries',
-            `dateLastPresented` DATE NULL DEFAULT NULL,
-            PRIMARY KEY (`id`),
-            INDEX `lessonCode` (`lessonCode`),
-            INDEX `studentCode` (`studentCode`),
-            CONSTRAINT `FK_lessonCode_studentLesson__lessons` FOREIGN KEY (`lessonCode`) 
-                REFERENCES `abc_lessons` (`lessonCode`) ON UPDATE CASCADE ON DELETE CASCADE,
-            CONSTRAINT `FK_student_has_lesson` FOREIGN KEY (`studentCode`) 
-                REFERENCES `abc_students` (`studentCode`) ON UPDATE CASCADE ON DELETE SET NULL
-        ) COMMENT='Used to track a students progress in a lesson' COLLATE='utf8_general_ci' ENGINE=InnoDB ;
+CREATE TABLE `abc_student_lesson` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`studentCode` VARCHAR(32) NULL DEFAULT NULL COMMENT 'If student is deleted, then related records in this table are deleted.',
+	`lessonCode` VARCHAR(32) NOT NULL COMMENT 'If lesson is deleted, then related records in this table are deleted.',
+	`masteryLevel` ENUM('none','advancing','mastered') NOT NULL DEFAULT 'none' COMMENT '0-none, 1-advancing, 2-mastered',
+	`dateMastered` DATE NULL DEFAULT NULL,
+	`fluencyTimes` MEDIUMTEXT NULL COMMENT 'each char is a hex value. Array of up to 16 entries',
+	`testTimes` MEDIUMTEXT NULL COMMENT '16 hex digit entries',
+	`dateLastPresented` DATE NULL DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `lessonCode` (`lessonCode`),
+	INDEX `studentCode` (`studentCode`),
+	CONSTRAINT `FK_lessonCode_studentLesson__lessons` FOREIGN KEY (`lessonCode`) REFERENCES `abc_lessons` (`lessonCode`) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT `FK_student_has_lesson` FOREIGN KEY (`studentCode`) REFERENCES `abc_students` (`studentCode`) ON UPDATE CASCADE ON DELETE CASCADE
+) COMMENT='Used to track a students progress' COLLATE='utf8_general_ci' ENGINE=InnoDB AUTO_INCREMENT=6 ;
 EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
     /**
      * Clears for times for the Fluency or Test timer for the current lesson
-     * @param TimerType $timerType
+     * @param TimerType|string $timerType
      * @throws PhonicsException on ill-formed SQL
      */
-    public function clearTimedTest(TimerType $timerType): void
+    public function clearTimedTest($timerType): void
     {
+        if (is_string($timerType)) {$timerType = new TimerType($timerType);}
         if ( ! $this->session->hasLesson()) {
             throw new PhonicsException('Attempt to update test time without a current lesson.');
         }
-        $result = $this->updateField($timerType->getSqlFieldName(),'');
+        $result = $this->updateField($timerType->getSqlFieldName(),$this->encodeJsonQuoted([]));
         if ($result->failed()) throw new PhonicsException($result->getErrorMessage());
     }
 
     /**
      * fetches the timer times for the specified timer type
-     * @param TimerType $timerType
+     * @param TimerType|string $timerType
      * @return int[]
      * @throws PhonicsException on ill-formed SQL
      */
-    public function getTimedTest(TimerType $timerType): array
+    public function getTimedTest($timerType): array
     {
+        if (is_string($timerType)) {$timerType = new TimerType($timerType);}
         $sqlFieldName = $timerType->getSqlFieldName();
         $this->createStudentLessonAsNeeded();
-        return $this->getTimedArray($this->getField($sqlFieldName));
+        return $this->getField($sqlFieldName);
     }
 
     /**
@@ -117,7 +119,7 @@ EOT;
             $sqlValue = 'none';
         }
         $where = $this->whereClause;
-        $query = "UPDATE abc_student_lesson SET masteryLevel = '$sqlValue', dateMastered=NOW() WHERE $where";
+        $query = "UPDATE abc_student_lesson SET masteryLevel = '$sqlValue', dateMastered=CURDATE() WHERE $where";
         $this->throwableQuery($query, QueryType::AFFECTED_COUNT);
     }
 
@@ -131,18 +133,20 @@ EOT;
         if (! $this->session->hasStudent()) {
             return [];
         }
-        $query = "SELECT *  FROM vw_lesson_mastery WHERE {$this->masteryWhereClause}";
+        $query = "SELECT * FROM vw_lesson_mastery WHERE {$this->masteryWhereClause}";
         return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
     }
 
     /**
-     * @param TimerType $timerType
+     * @param TimerType|string $timerType
      * @param int $seconds
+     * @param int $timeStamp
      * @return BoolWithMessage
      * @throws PhonicsException on ill-formed SQL
      */
-    public function updateTimedTest(TimerType $timerType, int $seconds): BoolWithMessage
+    public function updateTimedTest($timerType, int $seconds, int $timeStamp): BoolWithMessage
     {
+        if (is_string($timerType)) {$timerType = new TimerType($timerType);}
         if ($seconds == 0) {
             return BoolWithMessage::goodResult();
         }
@@ -153,16 +157,21 @@ EOT;
         $sqlFieldName = $timerType->getSqlFieldName();
         $this->createStudentLessonAsNeeded();
 
-        $times = $this->getTimedArray($this->getField($sqlFieldName));
-        $seconds = min($seconds, 99);
+        $times = $this->getField($sqlFieldName);
         $count = count($times);
         if ($count > 7) {
             $times = array_slice($times, -7, 7);
         }
-        $times[] = $seconds;
-        $newField = $this->setTimedField($times);
+        $last = end($times);
+        $times[] = ['timestamp' => $timeStamp, 'seconds' => $seconds];
+        if (($last !== false) && ($last->timestamp == $timeStamp)) {
+            // do nothing. must have been a form resubmission.
+            return BoolWithMessage::goodResult();
+        }
+        $newField = $this->encodeJsonQuoted($times);
         return $this->updateField($sqlFieldName, $newField);
     }
+
 
 // ======================== PRIVATE METHODS =====================
 
@@ -176,8 +185,11 @@ EOT;
         $count = $this->throwableQuery($query, QueryType::RECORD_COUNT);
         $student = $this->quotedStudentCode;
         $lesson = $this->quotedLessonCode;
+        $emptyArray = $this->encodeJsonQuoted([]);
+        $fields = 'studentCode, lessonCode, dateLastPresented,fluencyTimes,testTimes';
+        $values = "$student,$lesson,CURDATE(),$emptyArray, $emptyArray";
         if ($count == 0) {
-            $query = "INSERT INTO abc_student_lesson(studentCode, lessoncode) VALUES($student,$lesson)";
+            $query = "INSERT INTO abc_student_lesson($fields) VALUES($values)";
             $this->throwableQuery($query, QueryType::STATEMENT);
         }
     }
@@ -191,47 +203,30 @@ EOT;
     private function getField(string $fieldName)
     {
         $query = "SELECT $fieldName FROM abc_student_lesson WHERE {$this->whereClause}";
-        return $this->throwableQuery($query, QueryType::SCALAR);
-    }
-
-    /**
-     * convert the VARCHAR(16) timer field to an array of up to 8 times with a range of 1..99
-     * @param string $fieldValuesString
-     * @return array
-     */
-    private function getTimedArray(string $fieldValuesString): array
-    {
-        $result = [];
-        for ($i = 0; $i < strlen($fieldValuesString); $i += 2) {
-            $result[] = intval(substr($fieldValuesString, $i, 2));
+        $result = $this->throwableQuery($query, QueryType::SCALAR);
+        if (Util::contains_ci('Times', $fieldName)) {
+            if ($result == null) return [];
+            return $this->decodeJson($result);
+        } else {
+            return $result;
         }
-        return $result;
     }
 
     /**
-     * convert an array of times to a string with each time 2 characters in length values '01'..'99'
-     * @param array $times
-     * @return string
-     */
-    private function setTimedField(array $times): string
-    {
-        $result = '';
-        foreach ($times as $time) {
-            $result .= Util::paddedNumber('', $time);
-        }
-        return $result;
-    }
-
-    /**
-     * @param string $sqlFieldName
+     * @param string $fieldName
      * @param $value
      * @return BoolWithMessage
      * @throws PhonicsException on ill-formed SQL
      */
-    private function updateField(string $sqlFieldName, $value): BoolWithMessage
+    private function updateField(string $fieldName, $value): BoolWithMessage
     {
-        $smartValue = $this->smartQuotes($value);
-        $query = "UPDATE abc_student_lesson SET $sqlFieldName = $smartValue  WHERE {$this->whereClause}";
-        $this->throwableQuery($query, QueryType::STATEMENT);
+        $smartValue = (Util::contains_ci('Times', $fieldName)) ? $value : $this->smartQuotes($value);
+        $query = <<<EOT
+        UPDATE abc_student_lesson 
+        SET $fieldName = $smartValue, dateLastPresented = CURDATE()  
+        WHERE {$this->whereClause}
+EOT;
+
+        return $this->query($query, QueryType::STATEMENT)->toBoolWithMessage();
     }
 }

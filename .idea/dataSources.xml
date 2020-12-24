@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@localhost" uuid="e0304046-dcab-4f03-a52b-eeb1165960cc">
+    <data-source source="LOCAL" name="readxyz0_phonics@localhost" uuid="e0304046-dcab-4f03-a52b-eeb1165960cc">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.gjt.mm.mysql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="readxyz1_1@localhost" uuid="752081ba-f04c-4dca-b9ef-7c53660af987">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.gjt.mm.mysql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/readxyz1_1</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/readxyz0_phonics</jdbc-url>
     </data-source>
   </component>
 </project>

@@ -3,6 +3,7 @@
 
 namespace App\ReadXYZ\Models;
 
+use App\ReadXYZ\Data\CompareLocalRemote;
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Helpers\PhonicsException;
@@ -107,6 +108,10 @@ class RouteMe
 
         $routeParts = empty($fullPath) ? ['default'] : explode('/', $fullPath);
 
+        // the routines that consume routeParts should get integers instead of strings if numeric
+        for ($i=0; $i<count($routeParts); $i++) {
+            if (is_numeric($routeParts[$i])) {$routeParts[$i] = intval($routeParts[$i]);}
+        }
         // we handle the instance when a handler is part of the request_url (discouraged).
         if (empty($mainRoute) && in_array($routeParts[0], ['handler', 'act', 'action'])) {
             if (count($routeParts) > 1) {
@@ -163,6 +168,7 @@ class RouteMe
                 // see tables_crud.html.twig
                 (new CrudTemplate('abc_' . $routeParts[0]))->display();
                 break;
+            case 'lessons':
             case 'lessonlist':
                 self::rerouteCheck($session);
                 (new LessonListTemplate())->display();
@@ -195,8 +201,11 @@ class RouteMe
                 $login = new ProcessWordPressRequest();
                 echo $login->handleRequestAndGetResponse($postParameters);
                 break;
+            case 'compare':
+                (new CompareLocalRemote())->analyze();
+                break;
             case 'default':
-            default:
+            case '':
                 if ($session->hasLesson()) {
                     (new LessonTemplate($session->getCurrentLessonName(), ''))->display();
                 } else {
@@ -211,6 +220,8 @@ class RouteMe
                     }
                 }
                 break;
+            default:
+                (new LoginTemplate())->display("$mainRoute is unknown.");
         }
     }
 

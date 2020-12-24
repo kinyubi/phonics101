@@ -122,7 +122,7 @@ class Util
         }
 
         $header = null;
-        $data = [];
+        $data   = [];
         if (false !== ($handle = fopen($filename,
                 'r'))) {
             while (false !== ($row = fgetcsv($handle,
@@ -156,9 +156,27 @@ class Util
     public static function dbDate(int $time = 0): string
     {
         if ($time == 0) {
-            return date('Y-m-d H:i:s');
+            return date('Y-m-d');
         }
-        return date('Y-m-d H:i:s', $time);
+        return date('Y-m-d', $time);
+    }
+
+    public static function getHumanReadableDate($date = ''): string
+    {
+        if ($date) {
+            return date('Y-M-j', $date);
+        } else {
+            return date('Y-M-j');
+        }
+    }
+
+    public static function getHumanReadableDateTime($date = ''): string
+    {
+        if ($date) {
+            return date('Y-M-j H:i:s', $date);
+        } else {
+            return date('Y-M-j H:i:s');
+        }
     }
 
     public static function getInput(string $prompt = '?'): string
@@ -233,9 +251,14 @@ class Util
         return substr($string, 0, $len);
     }
 
-    public static function paddedNumber(string $prefix, int $number, int $padSize=2): string
+    public static function oldUniqueIdToNew(string $oldId): string
     {
-        return $prefix . str_pad(strval($number), $padSize,'0', STR_PAD_LEFT);
+        return $oldId . "0Z123456789";
+    }
+
+    public static function paddedNumber(string $prefix, int $number, int $padSize = 2): string
+    {
+        return $prefix . str_pad(strval($number), $padSize, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -260,7 +283,7 @@ class Util
         }
         $args = ['errors' => htmlentities("$message\n\n$details\n\n$trace")];
 
-        return TwigFactory::getInstance()->renderTemplate('base',  $args);
+        return TwigFactory::getInstance()->renderTemplate('base', $args);
     }
 
     /**
@@ -314,7 +337,7 @@ class Util
         $string_ci = strtolower($string);
         if (is_array($startString)) {
             foreach ($startString as $start) {
-                $len = strlen($start);
+                $len      = strlen($start);
                 $start_ci = strtolower($start);
                 if (substr($string_ci, 0, $len) === $start_ci) {
                     return true;
@@ -324,7 +347,7 @@ class Util
             return false;
         } else {
             $start_ci = strtolower($startString);
-            $len = strlen($start_ci);
+            $len      = strlen($start_ci);
 
             return substr($string_ci, 0, $len) === $start_ci;
         }
@@ -336,7 +359,7 @@ class Util
             return null;
         }
         $wordSets = self::csvStringToArray($stretchList);
-        $result = [];
+        $result   = [];
         try {
             foreach ($wordSets as $wordSet) {
                 $result[] = array_map('trim', explode('/', $wordSet));
@@ -346,49 +369,6 @@ class Util
         }
 
         return $result;
-    }
-
-    /**
-     * strips extra forward slashes from a uri or path.
-     *
-     * @param string $uri uri or path
-     *
-     * @return string a valid path or uri
-     */
-    public static function stripExtraSlashes(string $uri): string
-    {
-        if (self::startsWith('http', $uri)) {
-            $start = substr($uri, 0, 8);
-            $end = substr($uri, 8);
-            $end2 = str_replace('//', '/', $end);
-
-            return $start . $end2;
-        } else {
-            $uri = self::reslash($uri);
-
-            return str_replace('//', '/', $uri);
-        }
-    }
-
-    /**
-     * Removes the namespace from a class name.
-     *
-     * @param string $fullClassName strips the namespace from a fully-qualified class name
-     * @return string
-     */
-    public static function stripNameSpace(string $fullClassName): string
-    {
-        $pos = strrpos($fullClassName, '\\');
-        if (false === $pos) {
-            return $fullClassName;
-        }
-
-        return substr($fullClassName, $pos + 1);
-    }
-
-    public static function testingInProgress(): bool
-    {
-        return defined('TESTING_IN_PROGRESS');
     }
 
     //     public static function addSoundClass(string $lessonName): string
@@ -431,22 +411,47 @@ class Util
     //     }
     // }
 
-    public static function getHumanReadableDate($date = ''): string
+    /**
+     * strips extra forward slashes from a uri or path.
+     *
+     * @param string $uri uri or path
+     *
+     * @return string a valid path or uri
+     */
+    public static function stripExtraSlashes(string $uri): string
     {
-        if ($date) {
-            return date('Y-M-j', $date);
+        if (self::startsWith('http', $uri)) {
+            $start = substr($uri, 0, 8);
+            $end   = substr($uri, 8);
+            $end2  = str_replace('//', '/', $end);
+
+            return $start . $end2;
         } else {
-            return date('Y-M-j');
+            $uri = self::reslash($uri);
+
+            return str_replace('//', '/', $uri);
         }
     }
 
-    public static function getHumanReadableDateTime($date = ''): string
+    /**
+     * Removes the namespace from a class name.
+     *
+     * @param string $fullClassName strips the namespace from a fully-qualified class name
+     * @return string
+     */
+    public static function stripNameSpace(string $fullClassName): string
     {
-        if ($date) {
-            return date('Y-M-j H:i:s', $date);
-        } else {
-            return date('Y-M-j H:i:s');
+        $pos = strrpos($fullClassName, '\\');
+        if (false === $pos) {
+            return $fullClassName;
         }
+
+        return substr($fullClassName, $pos + 1);
+    }
+
+    public static function testingInProgress(): bool
+    {
+        return defined('TESTING_IN_PROGRESS');
     }
 
 }

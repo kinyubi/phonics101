@@ -2,7 +2,7 @@
 
 namespace App\ReadXYZ\Data;
 
-use App\ReadXYZ\Enum\Sql;
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Models\BoolWithMessage;
 use mysqli;
 use App\ReadXYZ\Secrets\Access;
@@ -15,9 +15,26 @@ class PhonicsDb
 {
     protected mysqli $connection;
 
-    public function __construct(string $dbName=Sql::READXYZ1_1)
+    /**
+     * PhonicsDb constructor.
+     * @param string $dbName
+     * @throws PhonicsException
+     */
+    public function __construct(string $dbName=DbVersion::READXYZ0_PHONICS)
     {
-        $this->connection = ($dbName == Sql::READXYZ1_1) ? Access::dbConnect() : Access::oldDbConnect();
+        switch ($dbName) {
+            case DbVersion::READXYZ0_PHONICS:
+                $this->connection = Access::dbConnect();
+                break;
+            case DbVersion::READXYZ1_1:
+                $this->connection = Access::dbConnect11();
+                break;
+            case DbVersion::READXYZ0_1:
+                $this->connection = Access::oldDbConnect();
+                break;
+            default:
+                throw new PhonicsException("$dbName is not a valid database name.");
+        }
         if (mysqli_connect_errno()) {
             throw new PhonicsException(mysqli_connect_error());
         }

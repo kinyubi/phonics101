@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Helpers\PhonicsException;
 
@@ -24,9 +25,9 @@ EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
 
-    public function __construct()
+    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_onetime_pass');
+        parent::__construct('abc_onetime_pass','hash', $dbVersion);
         $this->primaryKey = 'hash';
     }
 

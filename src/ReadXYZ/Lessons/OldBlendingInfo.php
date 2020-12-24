@@ -2,18 +2,9 @@
 
 namespace App\ReadXYZ\Lessons;
 
+use App\ReadXYZ\Enum\BlendingPageIndex;
 use Peekmo\JsonPath\JsonStore;
 use App\ReadXYZ\Helpers\Util;
-
-if (not(defined('CLASS'))) {
-    define('CLASS', 0);
-    define('LAYOUT', 1);
-    define('STYLE', 2);
-    define('TAB_NAME', 3);
-    define('METHOD', 4);
-    define('DATA', 5);
-    define('NOTE', 6);
-}
 
 class OldBlendingInfo
 {
@@ -137,10 +128,10 @@ class OldBlendingInfo
             return [];
         } else {
             foreach ($lesson['pages'] as $page) {
-                if ('Spinner' == $page[TAB_NAME]) {
-                    $array['prefixes'] = $page[DATA][0] ?? '';
-                    $array['vowel'] = $page[DATA][1] ?? '';
-                    $array['suffix'] = $page[DATA][2] ?? '';
+                if ('Spinner' == $page[BlendingPageIndex::TAB_NAME]) {
+                    $array['prefixes'] = $page[BlendingPageIndex::DATA][0] ?? '';
+                    $array['vowel'] = $page[BlendingPageIndex::DATA][1] ?? '';
+                    $array['suffix'] = $page[BlendingPageIndex::DATA][2] ?? '';
                     break;
                 }
             }

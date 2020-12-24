@@ -1,3 +1,9 @@
+
+function seconds_since_epoch(){
+    let d = new Date();
+    return Math.floor( d / 1000 );
+}
+
 function pad(val) {
     let valString = val + "";
     if (valString.length < 2) {
@@ -43,13 +49,18 @@ function displayTestTime() {
 
 $(function () {
     $("#practiceStartButton").on("click", function (e) {
-        myPracticeInterval = setInterval(function () {
-            displayPracticeTime()
-        }, 1000);
+        if (!myPracticeInterval) {
+            myPracticeInterval = setInterval(function () {
+                displayPracticeTime()
+            }, 1000);
+        }
     });
+
     $("#practiceStopButton").on("click", function (e) {
         clearInterval(myPracticeInterval);
+        myPracticeInterval = 0;
     });
+
     $("#practiceStartStopButton").on("click", function (e) {
         if (practiceRunning) {
             clearInterval(myPracticeInterval);
@@ -63,16 +74,22 @@ $(function () {
     });
     $("#practiceResetButton").on("click", function (e) {
         totalPracticeSeconds = 0;
+        clearInterval(myPracticeInterval);
+        myPracticeInterval = 0;
         document.getElementById("practiceTime").innerHTML = "00:00";
     })
 
     $("#fluencyStartButton").on("click", function (e) {
-        myFluencyInterval = setInterval(function () {
-            displayFluencyTime()
-        }, 1000);
+        if (!myFluencyInterval) {
+            myFluencyInterval = setInterval(function () {
+                displayFluencyTime()
+            }, 1000);
+        }
     });
+
     $("#fluencyStopButton").on("click", function (e) {
         clearInterval(myFluencyInterval);
+        myFluencyInterval = 0;
     });
     $("#fluencyStartStopButton").on("click", function (e) {
         if (fluencyRunning) {
@@ -87,16 +104,21 @@ $(function () {
     });
     $("#fluencyResetButton").on("click", function (e) {
         totalFluencySeconds = 0;
+        clearInterval(myFluencyInterval);
+        myFluencyInterval = 0;
         document.getElementById("fluencyTime").innerHTML = "00:00";
     })
 
     $("#fluencySaveButton").on("click", function (e) {
-        clearInterval(myPracticeInterval);
+        clearInterval(myFluencyInterval);
+        myFluencyInterval = 0;
         let formObj = document.forms['fluencyTimerForm'];
         let seconds = formObj.elements['seconds'];
+        let stamp = formObj.elements['timestamp'];
         let fluencyTimeStr = document.getElementById("fluencyTime").innerHTML;
         let timerMinutes = parseInt(fluencyTimeStr.substring(0, 2));
         let timerSeconds = parseInt(fluencyTimeStr.substring(3));
+        stamp.value = seconds_since_epoch();
         seconds.value = (timerMinutes * 60) + timerSeconds;
         if (seconds.value > 0) formObj.submit();
 
@@ -121,15 +143,18 @@ $(function () {
     });
 
     $("#testStartButton").on("click", function (e) {
-        // document.getElementById("testStartButton").style.pointerEvents = 'none';
-        myTestInterval = setInterval(function () {
-            displayTestTime()
-        }, 1000);
+        if (!myTestInterval) {
+            myTestInterval = setInterval(function () {
+                displayTestTime()
+            }, 1000);
+        }
     });
+
     $("#testStopButton").on("click", function (e) {
         clearInterval(myTestInterval);
-        // document.getElementById("testStartButton").style.pointerEvents = 'auto';
+        myTestInterval = 0;
     });
+
     $("#testStartStopButton").on("click", function (e) {
         if (testRunning) {
             clearInterval(myTestInterval);
@@ -143,15 +168,21 @@ $(function () {
     });
     $("#testResetButton").on("click", function (e) {
         totalTestSeconds = 0;
+        clearInterval(myTestInterval);
+        myTestInterval = 0;
         document.getElementById("testTime").innerHTML = "00:00";
     })
 
     $("#testSaveButton").on("click", function (e) {
+        clearInterval(myFluencyInterval);
+        myTestInterval = 0;
         let formObj = document.forms['testTimerForm'];
         let seconds = formObj.elements['seconds'];
         let testTimeStr = document.getElementById("testTime").innerHTML;
         let timerMinutes = parseInt(testTimeStr.substring(0, 2));
         let timerSeconds = parseInt(testTimeStr.substring(3));
+        let stamp = formObj.elements['timestamp'];
+        stamp.value = seconds_since_epoch();
         seconds.value = (timerMinutes * 60) + timerSeconds;
         if (seconds.value > 0) formObj.submit();
     });
@@ -176,6 +207,7 @@ $(function () {
             }
         });
     });
+
 
 });
 

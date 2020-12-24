@@ -1,13 +1,15 @@
 {# ===============  DEFINED BLOCKS ====================================================
 title             : This is the label used on the browser tab. It is not part of the page itself.
                     inputs used: pageTitle
+otherStyles       : additional <style> elements to insert after css links
+otherScripts      : additional <script> elements to insert after js links
 modals            : inputs used: errors
 titleBar          : inputs used: navbar
 tabBar            : default is empty. Override as needed
 body              : default is empty
 otherJqueryReady  : default is empty. Content must be javascript
 
-======================================================================================#}
+====================================================================================== #}
 
 {# =============== INPUT VARIABLES ====================================================
 page              : a Page class instance.
@@ -19,113 +21,123 @@ page              : a Page class instance.
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}{{ pageTitle|default('ReadXYZ') }}{% endblock %}</title>
+	<meta charset="UTF-8">
+	<title>{% block title %}{{ pageTitle|default('ReadXYZ') }}{% endblock %}</title>
 
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
 
-  <!--[if IE]>
-  <link rel="shortcut icon" href="/images/favicons/favicon.ico"><![endif]-->
-  <link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
-  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
-  <link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
+	<!--[if IE]>
+	<link rel="shortcut icon" href="/images/favicons/favicon.ico"><![endif]-->
+	<link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
+	<link rel="shortcut icon" href="/images/favicons/favicon.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
 
-  <script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
+	<script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
 
-  <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
+	<link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
 
-  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/phonics.css" media="all">
-  <link rel="stylesheet" href="/pdfflip/pflip/css/pdfflip.css">
+	<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="/css/phonics.css" media="all">
+	<link rel="stylesheet" href="/pdfflip/pflip/css/pdfflip.css">
 
-  <script src="/js/jquery-3.5.1.js"></script>
-  <script src="/js/jquery.colorbox.js"></script>
-  <script src="/js/popper.min.js"></script>
-  <script src="/js/bootstrap4-custom/bootstrap.bundle.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-  <script src="/js/phonics.js"></script>
-  <script src="/js/timers.js"></script>
-  <script src="/pdfflip/pflip/js/pdfflip.js"></script>
+	{% block otherStyles %}{% endblock %}
+
+	<script src="/js/jquery-3.5.1.js"></script>
+	<script src="/js/jquery.colorbox.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap4-custom/bootstrap.bundle.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+	<script src="/js/phonics.js"></script>
+	<script src="/js/timers.js"></script>
+	<script src="/pdfflip/pflip/js/pdfflip.js"></script>
+
+	{% block otherScripts %}{% endblock %}
 </head>
 
 <body>
 {# <div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; "> #}
-<div class="m-0 p-0 container-fluid">
-  {# MODALS BLOCK #}
-  {% block modals %}
-    {% if errors %}
-    <div class="modal" id="modalError" tabindex="-1" role="dialog"
-         aria-labelledby="modalErrorLabel" aria-hidden="true" style="width: 40%">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-light">
-                    <h5 class="modal-title" id="modalErrorLabel">{{ title }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="modalErrorText" class="modal-body">
-                    {{ errors|raw }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-  {% endblock %}
 
-  {# ERRORS BLOCK #}
-  {% block titleBar %}
-    <div class="row bg-white  d-flex justify-content-start title-bar--height align-middle h1 px-2" id="readxyz-title">
-      <div class="p-2 col-3 bg-image--title"></div>
-      {% for title, link in navBar %}
-        <a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
-      {% endfor %}
-    </div>
-  {% endblock titleBar %}
+{# MODALS BLOCK #}
+{% block modals %}
+	{% if errors %}
+		<div class="modal" id="modalError" tabindex="-1" role="dialog"
+		     aria-labelledby="modalErrorLabel" aria-hidden="true" style="width: 40%">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-danger text-light">
+						<h5 class="modal-title" id="modalErrorLabel">{{ title }}</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div id="modalErrorText" class="modal-body">
+						{{ errors|raw }}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
 
-  {% block errors %}
-    {# display any error messages #}
-    {% if errors|default %}
-      <div class="container border border-danger p-0">
-        <div class="row">
-          <h2 class="bg-danger text-white">ERROR</h2>
-          <p class="text-danger">{{ errorMessage | raw }}</p>
-        </div>
-      </div>
+<div class="m-0 p-0 container-fluid" id="base-container" style="max-width: 950px;">
+{% block titleBar %}
+		<div class="ml-0 row bg-white  d-flex justify-content-start title-bar--height align-middle h1 my-2"  id="readxyz-title">
+		<div class="ml-0 float-left col-3 bg-image--title"></div>
+		{% for title, link in navBar %}
+			<a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
+		{% endfor %}
+	</div>
+{% endblock titleBar %}
 
-    {% endif %}
-  {% endblock errors %}
+{# ERRORS BLOCK #}
+{% block errors %}
+	{# display any error messages #}
+	{% if errors|default %}
+		<div class="container border border-danger p-0">
+			<div class="row">
+				<h2 class="bg-danger text-white">ERROR</h2>
+				<p class="text-danger">{{ errorMessage | raw }}</p>
+			</div>
+		</div>
 
-  {% block tabBar %}{% endblock %}
-  {% block body %}{% endblock %}
+	{% endif %}
+{% endblock errors %}
 
-</div>
+	{# TABBAR BLOCK #}
+{% block tabBar %}{% endblock %}
+
+	{# BODY BLOCK #}
+{% block body %}{% endblock %}
+
+</div> {# end of base-container #}
+
+{# Tail end of HTML body where scripts go #}
 {% set game_dimensions__ = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
 {% set sound_box_dimensions__ = isSmallScreen ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
 <script>
     $(document).ready(function () {
-      {# when bootstrap modal is active, don't dim background #}
+			{# when bootstrap modal is active, don't dim background #}
         $('.modal-backdrop').removeClass("modal-backdrop");
         $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
 
-        {# show the modal if we have an error #}
-        {% if errors|default %}
+			{# show the modal if we have an error #}
+			{% if errors|default %}
         $("#modalError").modal("show");
-        {% endif %}
+			{% endif %}
     });
 
 </script>
 <script>
     $('document').ready(function () {
-      {% block otherJqueryReady %}{% endblock %}
+			{% block otherJqueryReady %}{% endblock %}
         $(".ajax").colorbox();
         $(".tic-tac-toe").colorbox({
             iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",

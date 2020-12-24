@@ -26,14 +26,16 @@
      .box {height: {{ boxDim }};width: {{ boxDim }};padding: 3px;}
      .box__border {border: 3px solid black;display: flex;justify-content: center;align-items: center;}
  </style>
- <div id="write-tab-container" class="container" style="max-width: 600px; width:95%">
-   <div class="row d-flex justify-content-start">
-     <h1 class="my-2 col tac">Sound Boxes</h1>
+ <div class="container-fluid bg-white mx-2" id="{{ tabId }}-container" style="max-width: 600px; width:95%">
+ {#  <div id="write-tab-container" class="container" style="max-width: 600px; width:95%"> #}
+   <div class="row d-flex justify-content-start p-2">
+     <h1 class="my-2 col-12 tac">Sound Boxes</h1>
    </div>
-   {# Botton Row start #}
+
+   {# ROW -- BUTTONS (Start) #}
    <div class="row d-flex justify-content-center">
 
-     {# The button to select the ball color #}
+     {# DROPDOWN BUTTON -- COLOR #}
      <div class="btn-group my-3 mx-1 p-0 ">
        <button id="color-button" type="button" class="btn-readxyz dropdown-toggle"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:{{ boxDim }}">Color
@@ -49,7 +51,7 @@
        </div>
      </div>
 
-     {# The button to select the number of balls #}
+     {# DROPDOWN BUTTON -- COUNT #}
      <div class="btn-group  my-3 mx-1 p-0 ">
        <button id="count-button" type="button" class="btn-readxyz dropdown-toggle"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:{{ boxDim }}">Count
@@ -61,22 +63,22 @@
        </div>
      </div>
 
-     {# The reset button #}
+     {# BUTTON -- RESET #}
      <div class="btn-group  my-3 mx-1 p-0 ">
        <button type="button" class="btn-readxyz px-2" onclick="reload()" style="border:none; width:{{ boxDim }};">Reset</button>
      </div>
    </div>
-   {# Botton Row start #}
+   {# ROW -- BUTTONS (End) #}
 
-   {# Receptacle Boxes Row -- Start #}
+   {# ROW -- RECEPTACLE BOXES (Start) #}
    <div class="row d-flex justify-content-center flex-nowrap mb-2 ">
      {% for i in range(0,count - 1) %}
        <div id="box-{{ i }}" class="box box__border "></div>
      {% endfor %}
    </div>
-   {# Receptacle Boxes Row -- End #}
+   {# ROW -- RECEPTACLE BOXES (End) #}
 
-   {# Balls Row -- Start #}
+   {# ROW -- BALLS (Start) #}
    <div class="row d-flex justify-content-center flex-nowrap">
      {% for i in range(0,count -1) %}
        <div class="box p-2">
@@ -86,32 +88,12 @@
        </div>
      {% endfor %}
    </div>
-   {# Balls Row -- End #}
+   {# ROW -- BALLS (End) #}
+
+   {# ROW -- INSTRUCTIONS #}
    <div class="row d-flex justify-content-center">Click or touch the ball to move it into the box.</div>
    <div id="soundbox-lesson-name" style="display: none">{{ lessonName }}</div>
  </div>
-{#  {% from "macros.html.twig" import tabHeader  %}#}
-{#  {% set listIndex = listIndex ?? 0 %}#}
-{#  <div class="container">#}
 
-{#    {% set tabId = tabInfo.tabTypeId %}#}
-{#    <div class="row  d-flex flex-nowrap  m-2 justify-content-between">#}
-{#      <div id="{{ tabId }}-main" class="col-9  w-75">#}
-{#        {{ tabHeader(tabInfo) }}#}
-{#        <table class="table table-sm table-borderless">#}
-{#          <tbody>#}
-{#          {% for word in wordList %}#}
-{#            <tr>#}
-{#              <td class="wordlist col-12 mx-2">{{ word }}</td>#}
-{#            </tr>#}
-{#          {% endfor %}#}
-{#          </tbody>#}
-{#        </table>#}
-{#      </div>#}
-{#      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 px-0 float-right">#}
-{#        {{ sidebarHtml|raw }}#}
-{#      </div>#}
-{#    </div>#}
-{#  </div>#}
 {% endblock WriteTab %}
 

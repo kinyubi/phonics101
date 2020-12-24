@@ -11,14 +11,14 @@
 {#  {% set tabInfo = tabTypes.getTabInfo(tabId) %}#}
   {% set tabName = tabInfo.tabDisplayAs %}
   {% set dim = isSmallScreen ? 25 : 40 %}
-  <div class="container bg-white" id="{{ tabId }}-container">
+  <div class="container-fluid bg-white" id="{{ tabId }}-container">
 
-    <div class="row  d-flex  flex-nowrap p-2 mx-auto">
-      <div id="{{ tabId }}-main" class="col-8 ">
+    <div class="row  d-flex  flex-nowrap p-2">
+      <div id="{{ tabId }}-main" class="col-8 m-0" >
 
         {{ tabHeader(tabInfo) }}
 
-        <div id="{{ tabId }}-accordion">
+        <div id="{{ tabId }}-accordion" class="mw-600">
 
           {% for warmup in warmups.warmupItems %}
             <div class="card">

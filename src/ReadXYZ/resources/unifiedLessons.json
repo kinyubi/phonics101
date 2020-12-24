@@ -2783,7 +2783,7 @@
             "url": "https://wordwall.net/embed/6028c1a041c04639b348e37900813875?themeId=49&templateId=45"
           },
           {
-            "gameTypeId": "Sort",
+            "gameTypeId": "sort",
             "resource": "https://wordwall.net/resource/3645449",
             "url": "https://wordwall.net/embed/8a39fdaaa4be4f24ab4a4362411022a6?themeId=1&templateId=2"
           },
@@ -2798,7 +2798,7 @@
             "url": "https://wordwall.net/embed/3e964c9baf2c4a1b8d94905c976acf17?themeId=1&templateId=7"
           },
           {
-            "gameTypeId": "Sentences",
+            "gameTypeId": "sentences",
             "resource": "https://wordwall.net/resource/4462865",
             "url": "https://wordwall.net/embed/250316d18f0843069957d7f06ea8baec?themeId=1&templateId=36"
           },
@@ -2808,7 +2808,7 @@
             "url": "https://wordwall.net/embed/66b1e06f471f44ceba1e14d42e39c522?themeId=1&templateId=47"
           },
           {
-            "gameTypeId": "Alien",
+            "gameTypeId": "alien",
             "resource": "https://wordwall.net/resource/3645442",
             "url": "https://wordwall.net/embed/d35ebbb1f0864db89148a93a47c20d24?themeId=23&templateId=47"
           },
@@ -2869,7 +2869,7 @@
             "url": "https://wordwall.net/embed/4e856a1e4fff4f06b47fce712680c035?themeId=49&templateId=45"
           },
           {
-            "gameTypeId": "Sort",
+            "gameTypeId": "sort",
             "resource": "https://wordwall.net/resource/3638523",
             "url": "https://wordwall.net/embed/49995f9f319d4d23ba2252017c1e4cc0?themeId=1&templateId=2"
           },
@@ -4233,7 +4233,7 @@
             "url": "https://wordwall.net/embed/700fc32880604290981b5ca98e87903a?themeId=49&templateId=45"
           },
           {
-            "gameTypeId": "Sort",
+            "gameTypeId": "sort",
             "resource": "https://wordwall.net/resource/3646231",
             "url": "https://wordwall.net/embed/8d4700636a814926916f91b966e9f8be?themeId=1&templateId=2"
           },
@@ -4319,7 +4319,7 @@
             "url": "https://wordwall.net/embed/bfc58c4169cb4580895d178c1da8b159?themeId=49&templateId=45"
           },
           {
-            "gameTypeId": "Sort",
+            "gameTypeId": "sort",
             "resource": "https://wordwall.net/resource/3654130",
             "url": "https://wordwall.net/embed/feb92d86a8b44455b8b7f71e3c8b71e0?themeId=1&templateId=2"
           },

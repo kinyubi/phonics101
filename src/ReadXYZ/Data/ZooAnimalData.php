@@ -4,13 +4,14 @@
 namespace App\ReadXYZ\Data;
 
 
+use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 
 class ZooAnimalData extends AbstractData
 {
-    public function __construct()
+    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
-        parent::__construct('abc_zoo_animals', 'animalCode');
+        parent::__construct('abc_zoo_animals', 'animalCode', $dbVersion);
     }
 
     public function _create(): void
