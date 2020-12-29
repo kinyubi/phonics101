@@ -15,7 +15,7 @@ use Twig\TemplateWrapper;
 
 class TwigFactory
 {
-    private static TwigFactory $instance;
+    private static ?TwigFactory $instance;
 
     private Environment $twigEnvironment;
     private string $error = '';
@@ -49,6 +49,11 @@ class TwigFactory
         }
 
         return self::$instance;
+    }
+
+    public static function destroyInstance()
+    {
+        self::$instance = null;
     }
 
 

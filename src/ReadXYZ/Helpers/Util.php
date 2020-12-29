@@ -188,17 +188,17 @@ class Util
 
     public static function getProjectPath($filename = ''): string
     {
-        return self::stripExtraSlashes(self::reslash($_SERVER['PROJECT_ROOT'] . $filename));
+        return self::stripExtraSlashes(self::reslash($_SERVER['PROJECT_ROOT'] . '/' . $filename));
     }
 
     public static function getPublicPath($filename = ''): string
     {
-        return self::stripExtraSlashes($_SERVER['DOCUMENT_ROOT'] . $filename);
+        return self::stripExtraSlashes($_SERVER['DOCUMENT_ROOT'] . '/' . $filename);
     }
 
     public static function getReadXyzSourcePath($filename = ''): string
     {
-        return self::stripExtraSlashes(self::reslash($_SERVER['XYZ_SRC_ROOT'] . $filename));
+        return self::stripExtraSlashes(self::reslash($_SERVER['XYZ_SRC_ROOT'] . '/' . $filename));
     }
 
     public static function isLocal(): bool

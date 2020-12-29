@@ -9,7 +9,6 @@ use App\ReadXYZ\Enum\MasteryLevel;
 use App\ReadXYZ\Helpers\Debug;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Models\Log;
 use App\ReadXYZ\Models\Session;
 
 use stdClass;
@@ -46,7 +45,7 @@ class Lessons
     private function __construct()
     {
 
-        $start = Debug::startTimer();
+        // $start = Debug::startTimer();
         $groupData = new GroupData();
         $lessonsData = new LessonsData();
 
@@ -85,7 +84,7 @@ class Lessons
             $this->lessonNamesMap[$lessonName] = $lessonCode;
 
         }
-        Debug::logElapsedTime($start, 'Lessons::__construct');
+        // Debug::logElapsedTime($start, 'Lessons::__construct');
     }
 
 

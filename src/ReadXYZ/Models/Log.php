@@ -6,7 +6,6 @@ namespace App\ReadXYZ\Models;
 
 use App\ReadXYZ\Data\SystemLogData;
 use App\ReadXYZ\Enum\LogLevel;
-use Exception;
 
 class Log
 {

@@ -9,6 +9,7 @@ use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Targets\FormAction;
+use App\ReadXYZ\Twig\CacheTemplate;
 use App\ReadXYZ\Twig\CrudTemplate;
 use App\ReadXYZ\Twig\LessonListTemplate;
 use App\ReadXYZ\Twig\LessonTemplate;
@@ -163,6 +164,9 @@ class RouteMe
                     //FormAction::timersHandler sets initialTabName when initializing LessonTemplate object
                     $action->lessonSelectionHandler($postParameters, $routeParts);
                 }
+                break;
+            case 'clear':
+                (new CacheTemplate())->display();
                 break;
             case 'crud':
                 // see tables_crud.html.twig

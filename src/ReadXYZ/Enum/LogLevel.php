@@ -20,6 +20,6 @@ class LogLevel extends Enum
         if (!LogLevel::isValid($value)) {
             throw new PhonicsException("$value is illegal log level.");
         }
-        return array_search($value, LogLevel::values());
+        return array_search($value, array_values(LogLevel::values()));
     }
 }

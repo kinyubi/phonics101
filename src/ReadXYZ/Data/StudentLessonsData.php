@@ -26,16 +26,33 @@ class StudentLessonsData extends AbstractData
     /**
      * StudentLessonsData constructor.
      * This will look to session to provide the studentCode or lessonCode whenever needed.
-     * @param string $dbVersion
+     * @param string $studentCode   if empty, use Session's current studentCode.
+     * @param string $lessonCode    if empty, use Session's current lessonCode
+     * @param string $dbVersion     if empty, use readxyz0_phonics
      * @throws PhonicsException on ill-formed SQL
      */
-    public function __construct(string $dbVersion=DbVersion::READXYZ0_PHONICS)
+    public function __construct(string $studentCode='', string $lessonCode='', string $dbVersion=DbVersion::READXYZ0_PHONICS)
     {
         parent::__construct('abc_students', 'id', $dbVersion);
         $this->jsonFields = ['fluencyTimes', 'testTimes'];
         $this->session = new Session();
-        $this->quotedStudentCode = $this->smartQuotes($this->session->getStudentCode());
-        $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
+        if ($studentCode) {
+            $this->quotedStudentCode = $this->smartQuotes($studentCode);
+        } else {
+            if (!$this->session->hasStudent()) {
+                throw new PhonicsException('If student not specified, session needs to have a student.');
+            }
+            $this->quotedStudentCode = $this->smartQuotes($this->session->getStudentCode());
+        }
+        if ($lessonCode) {
+            $this->quotedLessonCode = $this->smartQuotes($lessonCode);
+        } else {
+            if (!$this->session->hasLesson()) {
+                throw new PhonicsException('If lesson not specified, session needs to have a lesson.');
+            }
+            $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
+        }
+
         $this->whereClause = "studentCode = {$this->quotedStudentCode} AND lessonCode = {$this->quotedLessonCode}";
         $this->masteryWhereClause = "studentCode = {$this->quotedStudentCode}";
     }
@@ -76,9 +93,6 @@ EOT;
     public function clearTimedTest($timerType): void
     {
         if (is_string($timerType)) {$timerType = new TimerType($timerType);}
-        if ( ! $this->session->hasLesson()) {
-            throw new PhonicsException('Attempt to update test time without a current lesson.');
-        }
         $result = $this->updateField($timerType->getSqlFieldName(),$this->encodeJsonQuoted([]));
         if ($result->failed()) throw new PhonicsException($result->getErrorMessage());
     }
@@ -104,9 +118,6 @@ EOT;
      */
     public function updateMastery($value): void
     {
-        if ( ! $this->session->hasLesson()) {
-            throw new PhonicsException('Attempt to update test time without a current lesson.');
-        }
         $this->createStudentLessonAsNeeded();
 
         if (is_integer($value)) {
@@ -130,9 +141,6 @@ EOT;
      */
     public function getLessonMastery(): array
     {
-        if (! $this->session->hasStudent()) {
-            return [];
-        }
         $query = "SELECT * FROM vw_lesson_mastery WHERE {$this->masteryWhereClause}";
         return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
     }
@@ -144,16 +152,14 @@ EOT;
      * @return BoolWithMessage
      * @throws PhonicsException on ill-formed SQL
      */
-    public function updateTimedTest($timerType, int $seconds, int $timeStamp): BoolWithMessage
+    public function updateTimedTest($timerType, int $seconds, int $timeStamp=0): BoolWithMessage
     {
+        if ($timeStamp == 0) $timeStamp = time();
         if (is_string($timerType)) {$timerType = new TimerType($timerType);}
         if ($seconds == 0) {
             return BoolWithMessage::goodResult();
         }
-        if ( ! $this->session->hasLesson()) {
-            throw new PhonicsException('Attempt to update test time without a current lesson.');
-        }
-
+        $seconds = min(99, $seconds);
         $sqlFieldName = $timerType->getSqlFieldName();
         $this->createStudentLessonAsNeeded();
 

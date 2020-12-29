@@ -51,6 +51,7 @@ EOT;
      * @param string $username
      * @param string $studentName
      * @return string the userId if found, otherwise the empty string
+     * @throws PhonicsException
      */
     public function getStudentId(string $username, string $studentName): string
     {
@@ -139,20 +140,17 @@ EOT;
     }
 
     /**
-     * @param string $lessonName
      * @param array $info
      * @return stdClass|null
      */
     private function harvestMastery(array $info)
     {
-        $timesPresented = $info['timesPresented'] ?? 0;
         $val = $info['mastery'] ?? 0;
         $mastery = ($val > 1) ? 'mastered' : (($val == 1) ? 'advancing' : 'none');
         $fluencyCurves = array_values($info['learningCurve'] ?? []);
         $testCurves = array_values($info['testCurve'] ?? []);
         $lastPresented = Util::dbDate($info['lastPresented']) ?? '';
         return (object)[
-            'timesPresented' => $timesPresented,
             'fluencyCurves'  => empty($fluencyCurves) ? null : $fluencyCurves,
             'testCurves'     => empty($testCurves) ? null : $testCurves,
             'mastery'        => $mastery,

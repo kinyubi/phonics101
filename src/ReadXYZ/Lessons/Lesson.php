@@ -68,8 +68,7 @@ class Lesson implements JsonSerializable
      */
     public function __construct(stdClass $lesson)
     {
-        $start = Debug::startTimer();
-        $lessonsData = new LessonsData();
+        // $start = Debug::startTimer();
         $this->lessonId = $lesson->lessonCode;
         $this->lessonName = $lesson->lessonName;
         $this->lessonKey = $lesson->lessonName;
@@ -160,7 +159,7 @@ class Lesson implements JsonSerializable
                 }
             }
         }
-        Debug::logElapsedTime($start, 'Lesson::__construct(' . $lesson->lessonName . ')');
+        // Debug::logElapsedTime($start, 'Lesson::__construct(' . $lesson->lessonName . ')');
     }
 
 

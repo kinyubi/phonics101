@@ -38,3 +38,9 @@
 *[x] created ActionForms class to replace timers.php, processStudentSelection.php, render.php, processUserLogin.php, processLessonSelection.php, practiceTimer.php and login.php
 *[x] make sure functions with a lesson name parameter take into consideration alternates
 *[x] uses lesson GroupCode instead of GroupName where appropriate
+
+### 2020_1226 Differences
+* abc_student_lesson:timesPresented deleted
+* abc_student_lessons:fluencyTimes, testTimes
+    * varchar array to JSON MEDIUMTEXT array
+* vw_lesson_with_group_fields changed

@@ -3,8 +3,6 @@
 
 namespace App\ReadXYZ\Models;
 
-
-use App\ReadXYZ\Data\LessonsData;
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Enum\TrainerType;
@@ -38,6 +36,7 @@ class Session
     private string  $currentLessonCode = '';
     private string  $studentName       = '';
     private string  $currentLesson     = '';
+    private int     $studentCount      = 0;
     private int     $lastValidated     = 0;
 
 
@@ -45,6 +44,7 @@ class Session
      * Session constructor.
      * Normal flow - we make sure $_SESSION variables have been exposed with a start_session.
      * We check for the existence of $_SESSION['currCode'].
+     * @throws PhonicsException
      */
     public function __construct()
     {
@@ -56,13 +56,16 @@ class Session
             $this->studentName       = 'Test';
             $this->currentLessonCode = 'TEST';
             $this->currentLesson     = 'test';
+            $this->studentCount      = 1;
             $this->lastValidated     = time();
-
             //When testing we don't use the $_SESSION variable
         } else {
             // If we have an active session we retrieve it, otherwise
             self::sessionContinue();
-            if (isset($_SESSION['identity'])) unset($_SESSION['identity']);
+            // // Get rid of a previous way we handled sessions
+            // if (isset($_SESSION['identity'])) {
+            //     unset($_SESSION['identity']);
+            // }
 
             $sessId = $_SESSION[self::CURR_CODE] ?? '';
 
@@ -73,11 +76,35 @@ class Session
             if (Util::startsWith('S', $sessId)) {
                 // $_SESSION['currCode'] contains a student id so we retrieve all the information
                 $this->retrieveSession($sessId);
+                $this->studentCount = $this->getUserStudentCount($this->userCode);
             } else {
                 // we assume $_SESSION['currCode'] is a userCode. We retrieve the id but session is still invalid
                 $this->userCode = $sessId;
+                $this->studentCount = $this->getUserStudentCount($this->userCode);
             }
+
         }
+    }
+
+    /**
+     * @param string $userCode
+     * @return int
+     * @throws PhonicsException
+     */
+    private function getUserStudentCount(string $userCode): int
+    {
+        if (empty($userCode)) return 0;
+        if (isset($_SESSION[$userCode])) {
+            $userInfo = $_SESSION[$userCode];
+            $cutoff = time() - (24 * 60 * 60);
+            if ($userInfo->lastUpdated > $cutoff) return $userInfo->studentCount;
+        }
+        $ct = count((new StudentsData())->getStudentNamesForUser($userCode));
+        $_SESSION[$userCode] = (object) [
+            'lastUpdated' => time(),
+            'studentCount' => $ct
+        ];
+        return $ct;
     }
 
 // ======================== STATIC METHODS =====================
@@ -146,6 +173,7 @@ class Session
         $this->currentLesson     = '';
         $this->currentLessonCode = '';
         $this->lastValidated     = 0;
+        $this->studentCount      = -1;
     }
 
     /**
@@ -153,7 +181,9 @@ class Session
      */
     public function getCurrentLessonCode(): string
     {
-        if ($this->currentLessonCode) return $this->currentLessonCode;
+        if ($this->currentLessonCode) {
+            return $this->currentLessonCode;
+        }
         if ($this->currentLesson) {
             return Lessons::getInstance()->getLessonCode($this->currentLesson);
         }
@@ -165,7 +195,9 @@ class Session
      */
     public function getCurrentLessonName(): string
     {
-        if ($this->currentLesson) return $this->currentLesson;
+        if ($this->currentLesson) {
+            return $this->currentLesson;
+        }
         if ($this->currentLessonCode) {
             return Lessons::getInstance()->getRealLessonName($this->currentLessonCode);
         }
@@ -178,6 +210,14 @@ class Session
     public function getLastValidated()
     {
         return $this->lastValidated;
+    }
+
+    /**
+     * @return string studentCode of session
+     */
+    public function getStudentCode(): string
+    {
+        return $this->studentCode;
     }
 
     /**
@@ -194,20 +234,17 @@ class Session
     }
 
     /**
-     * @return string studentCode of session
-     */
-    public function getStudentCode(): string
-    {
-        return $this->studentCode;
-    }
-
-    /**
      * @return bool returns true is session has a trainer, student and lesson identified.
      * @throws PhonicsException on ill-formed SQL
      */
     public function hasLesson(): bool
     {
         return $this->hasStudent() && ! empty($this->currentLessonCode);
+    }
+
+    public function getStudentCount(): bool
+    {
+        return $this->studentCount;
     }
 
     /**
@@ -217,8 +254,12 @@ class Session
      */
     public function hasStudent(): bool
     {
-        if (self::testingInProgress()) {return true;}
-        if (empty($this->userCode) || empty($this->studentCode)) return false;
+        if (self::testingInProgress()) {
+            return true;
+        }
+        if (empty($this->userCode) || empty($this->studentCode)) {
+            return false;
+        }
 
         if (Util::isValidStudentCode($this->studentCode) && $this->hasTrainer()) {
             return (new StudentsData())->isValidStudentTrainerPair($this->studentCode, $this->userCode);
@@ -233,8 +274,12 @@ class Session
      */
     public function hasTrainer(): bool
     {
-        if (self::testingInProgress()) {return true;}
-        if (empty($this->userCode)) return false;
+        if (self::testingInProgress()) {
+            return true;
+        }
+        if (empty($this->userCode)) {
+            return false;
+        }
         return Util::isValidTrainerCode($this->userCode);
     }
 
@@ -244,8 +289,12 @@ class Session
      */
     public function isAdmin(): bool
     {
-        if (self::testingInProgress()) {return true;}
-        if ( ! $this->hasTrainer()) {return false;}
+        if (self::testingInProgress()) {
+            return true;
+        }
+        if ( ! $this->hasTrainer()) {
+            return false;
+        }
 
         $trainerData = new TrainersData();
         $trainerType = $trainerData->getTrainerType($this->userCode);
@@ -258,8 +307,12 @@ class Session
      */
     public function isStaff(): bool
     {
-        if (self::testingInProgress()) {return true;}
-        if ( ! $this->hasTrainer()) {return false;}
+        if (self::testingInProgress()) {
+            return true;
+        }
+        if ( ! $this->hasTrainer()) {
+            return false;
+        }
 
         $trainerData = new TrainersData();
         $trainerType = $trainerData->getTrainerType($this->userCode);
@@ -285,7 +338,7 @@ class Session
         if ( ! $this->isValid()) {
             throw new PhonicsException("There is no session active for a student. Cannot update lesson.");
         }
-        $lessons = Lessons::getInstance();
+        $lessons                 = Lessons::getInstance();
         $this->currentLesson     = $lessons->getRealLessonName($lessonName);
         $this->currentLessonCode = $lessons->getLessonCode($lessonName);
         if (self::testingInProgress()) {
@@ -349,16 +402,21 @@ class Session
         if (self::testingInProgress()) {
             return;
         }
-        $trainersData  = new TrainersData();
-        $trainerCode   = Util::isValidTrainerCode($user) ? $user : $trainersData->getTrainerCode($user);
+
+        $trainersData = new TrainersData();
+        $trainerCode  = Util::isValidTrainerCode($user) ? $user : $trainersData->getTrainerCode($user);
         if (empty($trainerCode)) {
             throw new PhonicsException("$user does not exist.");
         }
+
+        $count = count((new StudentsData())->getStudentNamesForUser($user));
+
 
         // set userCode after clearing the other fields
         $this->clearSession();
         $_SESSION[self::CURR_CODE] = $trainerCode;
         $this->userCode            = $trainerCode;
+        $this->studentCount = $count;
     }
 
     /**
@@ -372,9 +430,11 @@ class Session
     }
 
 // ======================== PRIVATE METHODS =====================
+
     /**
      * Persist this object into session variables.
      * @param string $studentCode the student the data belongs to.
+     * @throws PhonicsException
      */
     private function persistSession(string $studentCode)
     {
@@ -390,15 +450,18 @@ class Session
     /**
      * Copies the persisted session information into our Session object.
      * @param string $studentCode the student the data belongs to.
+     * @throws PhonicsException
      */
     private function retrieveSession(string $studentCode)
     {
         if ( ! isset($_SESSION[$studentCode])) {
             Log::info("Nonexistent session $studentCode. ");
         }
+        $user = $_SESSION[$studentCode]['USER_CODE'] ?? '';
+
         // If we pass in a non-student id we will clear the object and invalidate it
         $this->studentCode       = $_SESSION[$studentCode]['STUDENT_CODE'] ?? '';
-        $this->userCode          = $_SESSION[$studentCode]['USER_CODE'] ?? '';
+        $this->userCode          = $user;
         $this->studentName       = $_SESSION[$studentCode]['STUDENT_NAME'] ?? '';
         $this->currentLesson     = $_SESSION[$studentCode]['CURRENT_LESSON'] ?? '';
         $this->currentLessonCode = $_SESSION[$studentCode]['CURRENT_LESSON_CODE'] ?? '';

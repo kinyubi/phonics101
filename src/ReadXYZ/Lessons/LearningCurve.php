@@ -2,6 +2,7 @@
 
 namespace App\ReadXYZ\Lessons;
 
+use App\ReadXYZ\Models\Log;
 use Color;
 use Point;
 use App\ReadXYZ\Helpers\Util;
@@ -48,7 +49,8 @@ class LearningCurve
         $urlName = "/generated/$uuid.png";    // refer via browser
 
         $chart->render($filename);
-
+        $dataPoints = count($this->data);
+        Log::info("$dataPoints saved to $filename");
         return $urlName;
     }
 
@@ -59,16 +61,22 @@ class LearningCurve
         if (!is_dir($generatedCache)) {
             mkdir($generatedCache);
         }
-        if (is_dir($generatedCache)) {       // does the directory exist?
-            $dir = dir($generatedCache);    // create a directory object
-            while (false !== ($entry = $dir->read())) {
-                if ('.' == substr($entry, 0, 1)) {
-                    continue;
-                }     // skip the . and .. files
-                if (filemtime("$generatedCache/$entry") + (60 * 60 * 8) < time()) {  // 8 hours
-                    unlink("$generatedCache/$entry");
-                }
+        $files = glob("$generatedCache/*.png");
+        $totalCt = count($files);
+        $failedCt = $successCt = 0;
+        $cutoffTime = time() - (60 * 60 * 48);
+        foreach ($files as $file) {
+            $modTime = filemtime($file);
+            if ($modTime < $cutoffTime) {
+                $result = unlink($file);
+                if ($result) {$successCt++;} else {$failedCt++;}
             }
         }
+        $files = glob("$generatedCache/*.png");
+        $leftCt = count($files);
+
+        Log::info("$totalCt files inspected in $generatedCache. Failed to delete $failedCt. Successfully deleted $successCt. Files remaining $leftCt.");
+        if ($failedCt > 0) Util::redBox("failed to delete $failedCt files in generated folder.");
+
     }
 }

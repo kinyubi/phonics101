@@ -63,7 +63,6 @@ class LessonTemplate
             $this->initialTabName = $initialTab;
         }
 
-        LearningCurve::cleanUpOldGraphics();
         $sideNote              = SideNote::getInstance();
         $args                  = [];
         $args['students']      = (new StudentsData())->getStudentNamesForUser($this->trainerCode);

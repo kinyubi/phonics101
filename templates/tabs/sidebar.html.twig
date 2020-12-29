@@ -62,6 +62,7 @@
         {% endif %}
         {% if tabId == 'test' %}
           {{ testCurve }}
+          {{ block('testButtons', 'timers2.html.twig')|raw }}
         {% endif %}
     </div>
   {% endif %}

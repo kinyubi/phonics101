@@ -111,7 +111,8 @@ class FormAction
         $seconds = intval($_POST['seconds'] ?? '0');
         $timeStamp = intval($_POST['timestamp'] ?? '0');
         $tab = ('fluency' == $source) ? 'fluency' : 'test';
-        $lessonTemplate = new LessonTemplate($this->session->getCurrentLessonName(), $tab);
+        $lessonName = $this->session->getCurrentLessonName();
+        $lessonTemplate = new LessonTemplate($lessonName, $tab);
         $studentLessonData = new StudentLessonsData();
         if (('fluency' == $source) || ('test' == $source)) {
             $studentLessonData->updateTimedTest($source, $seconds, $timeStamp);
