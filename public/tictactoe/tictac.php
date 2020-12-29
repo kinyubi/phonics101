@@ -2,6 +2,9 @@
 require dirname(__DIR__) . '/autoload.php';
 use App\ReadXYZ\Helpers\Location;
 
+$cssJsVer = '?ver=0.1229.1';
+$bootstrapVer = '?ver=0.1016.0';
+
 $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'cap,gap,lap,map,rap,sap,tap,zap,nap',
           'bag,hag,jag,lag,nag,rag,sag,tag,wag',
@@ -67,19 +70,20 @@ $cat = location::getTicTacToeAnimal($player2);
 <html lang="en-US">
 
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
   <title>Tic Tac Toe</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rock Salt">
-  <link rel="stylesheet" href="/css/bootstrap4-01229a/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css<?php echo $bootstrapVer; ?>">
   <link rel="stylesheet" href="/css/colorbox/colorbox.css">
-  <link rel="stylesheet" href="/css/phonics_01229a.css">
+  <link rel="stylesheet" href="/css/phonics.css<?php echo $cssJsVer; ?>">
 
   <!--  <script src="/js/jquery-3.5.1.js"></script>-->
   <script src="/js/unused/jquery-1.12.4.js"></script>
 
   <script src="/js/jquery.colorbox.js"></script>
-  <script src="/js/bootstrap4-01229a/bootstrap.min.js"></script>
+  <script src="/js/bootstrap4-custom/bootstrap.min.js<?php echo $bootstrapVer; ?>"></script>
   <script src="/js/drag-and-touch.js"></script>
 
   <style>

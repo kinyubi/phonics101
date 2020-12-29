@@ -17,6 +17,8 @@ page              : a Page class instance.
                     fields include: pageTitle, initialTabName, navbar, tabs, errors, arguments
 #}
 
+{% set cssJsVer = '0.1229.1' %}
+{% set bootstrapVer = '0.1016.0' %}
 <!DOCTYPE html>
 
 <html lang="en">
@@ -37,12 +39,12 @@ page              : a Page class instance.
 
 	<script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/css/bootstrap4-01229a/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css?ver={{ cssJsVer }}">
 
 	<link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
 
 	<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="/css/phonics_01229a.css" media="all">
+	<link rel="stylesheet" href="/css/phonics.css?ver={{ cssJsVer }}" media="all">
 	<link rel="stylesheet" href="/pdfflip/pflip/css/pdfflip.css">
 
 	{% block otherStyles %}{% endblock %}
@@ -50,10 +52,10 @@ page              : a Page class instance.
 	<script src="/js/jquery-3.5.1.js"></script>
 	<script src="/js/jquery.colorbox.js"></script>
 	<script src="/js/popper.min.js"></script>
-	<script src="/js/bootstrap4-01229a/bootstrap.bundle.js"></script>
+	<script src="/js/bootstrap4-custom/bootstrap.bundle.js?ver={{ bootstrapVer }}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-	<script src="/js/phonics_01229a.js"></script>
-	<script src="/js/timers_01229a.js"></script>
+	<script src="/js/phonics.js?ver={{ cssJsVer }}"></script>
+	<script src="/js/timers.js?ver={{ cssJsVer }}"></script>
 	<script src="/pdfflip/pflip/js/pdfflip.js"></script>
 
 	{% block otherScripts %}{% endblock %}

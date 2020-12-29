@@ -165,9 +165,12 @@ class RouteMe
                     $action->lessonSelectionHandler($postParameters, $routeParts);
                 }
                 break;
+            case 'sess_fix':
+
             case 'clear':
                 (new CacheTemplate())->display();
                 break;
+
             case 'crud':
                 // see tables_crud.html.twig
                 (new CrudTemplate('abc_' . $routeParts[0]))->display();

@@ -19,7 +19,11 @@ use App\ReadXYZ\Lessons\Lessons;
  * underlying session variable persists.
  *
  * We allow for multiple coexisting sessions. We don't kill session data for a student if the the student
- * changes. We just change the $_SESSION[self::CURR_CODE].
+ * changes.
+ * $_SESSION['currStudent']
+ * $_SESSION['currUser']
+ * $_SESSION['STUDENTS'][$studentCode] object(currentLessonCode, studentName, lastValidated, currentLessonName?)
+ * $_SESSION['USERS'][$userCode] object(userName, students['code' => $code, 'name' => $name], lastValidated)
  */
 class Session
 {
@@ -30,7 +34,6 @@ class Session
     const TEST_STUDENTCODE = 'S123456789abcde.12345678';
     const VALIDITY_WINDOW  = 60 * 60 * 24; // one day in seconds
 
-    // $_SESSION[$_SESSION[self::CURR_STUDENT] contains the session object
     private string  $userCode          = '';
     private string  $studentCode       = '';
     private string  $currentLessonCode = '';
@@ -55,7 +58,7 @@ class Session
             $this->studentCode       = self::TEST_STUDENTCODE;
             $this->studentName       = 'Test';
             $this->currentLessonCode = 'TEST';
-            $this->currentLesson     = 'test';
+            $this->currentLessonName = 'test';
             $this->studentCount      = 1;
             $this->lastValidated     = time();
             //When testing we don't use the $_SESSION variable
@@ -79,32 +82,15 @@ class Session
                 $this->studentCount = $this->getUserStudentCount($this->userCode);
             } else {
                 // we assume $_SESSION['currCode'] is a userCode. We retrieve the id but session is still invalid
-                $this->userCode = $sessId;
+                $this->userCode     = $sessId;
                 $this->studentCount = $this->getUserStudentCount($this->userCode);
             }
-
         }
     }
 
-    /**
-     * @param string $userCode
-     * @return int
-     * @throws PhonicsException
-     */
-    private function getUserStudentCount(string $userCode): int
+    private static function cleanupSessionVariables(): void
     {
-        if (empty($userCode)) return 0;
-        if (isset($_SESSION[$userCode])) {
-            $userInfo = $_SESSION[$userCode];
-            $cutoff = time() - (24 * 60 * 60);
-            if ($userInfo->lastUpdated > $cutoff) return $userInfo->studentCount;
-        }
-        $ct = count((new StudentsData())->getStudentNamesForUser($userCode));
-        $_SESSION[$userCode] = (object) [
-            'lastUpdated' => time(),
-            'studentCount' => $ct
-        ];
-        return $ct;
+
     }
 
 // ======================== STATIC METHODS =====================
@@ -157,7 +143,6 @@ class Session
     }
 
 // ======================== PUBLIC METHODS =====================
-
     /**
      * This kills the session. It does not kill the session settings associated with a student.
      * Once $_SESSION['currCode] gets set
@@ -170,7 +155,7 @@ class Session
         $this->studentCode       = '';
         $this->userCode          = '';
         $this->studentName       = '';
-        $this->currentLesson     = '';
+        $this->currentLessonName = '';
         $this->currentLessonCode = '';
         $this->lastValidated     = 0;
         $this->studentCount      = -1;
@@ -184,8 +169,8 @@ class Session
         if ($this->currentLessonCode) {
             return $this->currentLessonCode;
         }
-        if ($this->currentLesson) {
-            return Lessons::getInstance()->getLessonCode($this->currentLesson);
+        if ($this->currentLessonName) {
+            return Lessons::getInstance()->getLessonCode($this->currentLessonName);
         }
         return '';
     }
@@ -195,8 +180,8 @@ class Session
      */
     public function getCurrentLessonName(): string
     {
-        if ($this->currentLesson) {
-            return $this->currentLesson;
+        if ($this->currentLessonName) {
+            return $this->currentLessonName;
         }
         if ($this->currentLessonCode) {
             return Lessons::getInstance()->getRealLessonName($this->currentLessonCode);
@@ -220,6 +205,11 @@ class Session
         return $this->studentCode;
     }
 
+    public function getStudentCount(): bool
+    {
+        return $this->studentCount;
+    }
+
     /**
      * @return string studentName if student has been set in session otherwise empty string
      */
@@ -240,11 +230,6 @@ class Session
     public function hasLesson(): bool
     {
         return $this->hasStudent() && ! empty($this->currentLessonCode);
-    }
-
-    public function getStudentCount(): bool
-    {
-        return $this->studentCount;
     }
 
     /**
@@ -339,13 +324,13 @@ class Session
             throw new PhonicsException("There is no session active for a student. Cannot update lesson.");
         }
         $lessons                 = Lessons::getInstance();
-        $this->currentLesson     = $lessons->getRealLessonName($lessonName);
+        $this->currentLessonName = $lessons->getRealLessonName($lessonName);
         $this->currentLessonCode = $lessons->getLessonCode($lessonName);
         if (self::testingInProgress()) {
             return;
         }
         $key                                   = $this->studentCode;
-        $_SESSION[$key]['CURRENT_LESSON']      = $this->currentLesson;
+        $_SESSION[$key]['CURRENT_LESSON']      = $this->currentLessonName;
         $_SESSION[$key]['CURRENT_LESSON_CODE'] = $this->currentLessonCode;
     }
 
@@ -385,7 +370,7 @@ class Session
             }
             $this->studentCode       = $studentCode;
             $this->studentName       = $studentName;
-            $this->currentLesson     = '';
+            $this->currentLessonName = '';
             $this->currentLessonCode = '';
             $this->lastValidated     = time();
             $this->persistSession($studentCode);
@@ -416,7 +401,7 @@ class Session
         $this->clearSession();
         $_SESSION[self::CURR_CODE] = $trainerCode;
         $this->userCode            = $trainerCode;
-        $this->studentCount = $count;
+        $this->studentCount        = $count;
     }
 
     /**
@@ -430,11 +415,34 @@ class Session
     }
 
 // ======================== PRIVATE METHODS =====================
+    /**
+     * @param string $userCode
+     * @return int
+     * @throws PhonicsException
+     */
+    private function getUserStudentCount(string $userCode): int
+    {
+        if (empty($userCode)) {
+            return 0;
+        }
+        if (isset($_SESSION[$userCode])) {
+            $userInfo = $_SESSION[$userCode];
+            $cutoff   = time() - (24 * 60 * 60);
+            if ($userInfo->lastUpdated > $cutoff) {
+                return $userInfo->studentCount;
+            }
+        }
+        $ct                  = count((new StudentsData())->getStudentNamesForUser($userCode));
+        $_SESSION[$userCode] = (object)[
+            'lastUpdated'  => time(),
+            'studentCount' => $ct
+        ];
+        return $ct;
+    }
 
     /**
      * Persist this object into session variables.
      * @param string $studentCode the student the data belongs to.
-     * @throws PhonicsException
      */
     private function persistSession(string $studentCode)
     {
@@ -442,7 +450,7 @@ class Session
         $_SESSION[$studentCode]['USER_CODE']           = $this->userCode;
         $_SESSION[$studentCode]['STUDENT_CODE']        = $this->studentCode;
         $_SESSION[$studentCode]['STUDENT_NAME']        = $this->studentName;
-        $_SESSION[$studentCode]['CURRENT_LESSON']      = $this->currentLesson;
+        $_SESSION[$studentCode]['CURRENT_LESSON']      = $this->currentLessonName;
         $_SESSION[$studentCode]['CURRENT_LESSON_CODE'] = $this->currentLessonCode;
         $_SESSION[$studentCode]['VALIDATE']            = $this->lastValidated;
     }
@@ -463,7 +471,7 @@ class Session
         $this->studentCode       = $_SESSION[$studentCode]['STUDENT_CODE'] ?? '';
         $this->userCode          = $user;
         $this->studentName       = $_SESSION[$studentCode]['STUDENT_NAME'] ?? '';
-        $this->currentLesson     = $_SESSION[$studentCode]['CURRENT_LESSON'] ?? '';
+        $this->currentLessonName = $_SESSION[$studentCode]['CURRENT_LESSON'] ?? '';
         $this->currentLessonCode = $_SESSION[$studentCode]['CURRENT_LESSON_CODE'] ?? '';
         $this->lastValidated     = $_SESSION[$studentCode]['VALIDATE'] ?? 0;
     }

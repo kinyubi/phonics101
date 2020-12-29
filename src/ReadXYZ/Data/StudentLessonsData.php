@@ -22,6 +22,7 @@ class StudentLessonsData extends AbstractData
     private string  $quotedLessonCode;
     private string  $whereClause;
     private string  $masteryWhereClause;
+    private string  $hasLesson;
 
     /**
      * StudentLessonsData constructor.
@@ -46,15 +47,23 @@ class StudentLessonsData extends AbstractData
         }
         if ($lessonCode) {
             $this->quotedLessonCode = $this->smartQuotes($lessonCode);
+            $this->hasLesson = true;
         } else {
-            if (!$this->session->hasLesson()) {
-                throw new PhonicsException('If lesson not specified, session needs to have a lesson.');
+            if ($this->session->hasLesson()) {
+                $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
+                $this->hasLesson = true;
+            } else {
+                $this->hasLesson = false;
             }
-            $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
-        }
 
-        $this->whereClause = "studentCode = {$this->quotedStudentCode} AND lessonCode = {$this->quotedLessonCode}";
+        }
         $this->masteryWhereClause = "studentCode = {$this->quotedStudentCode}";
+
+        if (! $this->hasLesson) {
+            $this->whereClause = "lessonCode = 'There is no lesson code'";
+        } else {
+            $this->whereClause = "studentCode = {$this->quotedStudentCode} AND lessonCode = {$this->quotedLessonCode}";
+        }
     }
 
 
@@ -118,6 +127,8 @@ EOT;
      */
     public function updateMastery($value): void
     {
+        if (!$this->hasLesson) return; // if no lesson, there's nothing to do
+
         $this->createStudentLessonAsNeeded();
 
         if (is_integer($value)) {
@@ -141,6 +152,7 @@ EOT;
      */
     public function getLessonMastery(): array
     {
+        // This work whether or not we have a student
         $query = "SELECT * FROM vw_lesson_mastery WHERE {$this->masteryWhereClause}";
         return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
     }
@@ -154,6 +166,9 @@ EOT;
      */
     public function updateTimedTest($timerType, int $seconds, int $timeStamp=0): BoolWithMessage
     {
+        if (! $this->hasLesson) {
+            throw new PhonicsException('Cannot update timed test without a lesson.');
+        }
         if ($timeStamp == 0) $timeStamp = time();
         if (is_string($timerType)) {$timerType = new TimerType($timerType);}
         if ($seconds == 0) {
@@ -187,6 +202,9 @@ EOT;
      */
     private function createStudentLessonAsNeeded(): void
     {
+        if (! $this->hasLesson) {
+            throw new PhonicsException('Cannot update timed test without a lesson.');
+        }
         $query = "SELECT * FROM abc_student_lesson WHERE {$this->whereClause}";
         $count = $this->throwableQuery($query, QueryType::RECORD_COUNT);
         $student = $this->quotedStudentCode;
@@ -208,6 +226,9 @@ EOT;
      */
     private function getField(string $fieldName)
     {
+        if (! $this->hasLesson) {
+            throw new PhonicsException('Cannot update timed test without a lesson.');
+        }
         $query = "SELECT $fieldName FROM abc_student_lesson WHERE {$this->whereClause}";
         $result = $this->throwableQuery($query, QueryType::SCALAR);
         if (Util::contains_ci('Times', $fieldName)) {
@@ -226,6 +247,9 @@ EOT;
      */
     private function updateField(string $fieldName, $value): BoolWithMessage
     {
+        if (! $this->hasLesson) {
+            throw new PhonicsException('Cannot update timed test without a lesson.');
+        }
         $smartValue = (Util::contains_ci('Times', $fieldName)) ? $value : $this->smartQuotes($value);
         $query = <<<EOT
         UPDATE abc_student_lesson 

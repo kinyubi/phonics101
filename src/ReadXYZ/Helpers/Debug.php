@@ -2,6 +2,8 @@
 
 namespace App\ReadXYZ\Helpers;
 
+use App\ReadXYZ\Enum\OutputFormat;
+use App\ReadXYZ\Enum\ReturnMethod;
 use App\ReadXYZ\Models\Log;
 use DateTime;
 use Exception;
@@ -24,6 +26,11 @@ use Exception;
  */
 class Debug
 {
+
+
+
+
+
     public static function isDebug(): bool
     {
         return isset($_COOKIE['readxyz_debug_on']);
@@ -31,7 +38,6 @@ class Debug
 
     private static function getArgString($args): string
     {
-        $result = '';
         if ($args) {
             $json = json_encode($args, JSON_UNESCAPED_SLASHES);
             if (strlen($json) > 90) {
@@ -138,6 +144,47 @@ class Debug
             $record = sprintf("%s %-50s: %8.3f ms\n", $stamp, $tag, $diff);
             file_put_contents($file, $record, FILE_APPEND | LOCK_EX);
             unset($start);
+        }
+    }
+
+    /**
+     * @param mixed $var
+     * @param string $return
+     * @param string $format
+     * @param int $level
+     * @return string
+     */
+    public static function dumpVariable($var, $return = ReturnMethod::ECHO_RESULTS, $format = OutputFormat::HTML_FORMAT, $level = 0) {
+        $spaces = "";
+        $space = ($format == OutputFormat::HTML_FORMAT) ? "&nbsp;" : " ";
+        $newline = ($format == OutputFormat::HTML_FORMAT)  ? "<br />" : "\n";
+        for ($i = 1; $i <= 6; $i++) {
+            $spaces .= $space;
+        }
+        $tabs = $spaces;
+        for ($i = 1; $i <= $level; $i++) {
+            $tabs .= $spaces;
+        }
+        if (is_array($var)) {
+            $title = "Array";
+        } elseif (is_object($var)) {
+            $title = get_class($var)." Object";
+        } else {
+            $title = gettype($var);
+        }
+        $output = $title . $newline . $newline;
+        foreach($var as $key => $value) {
+            if (is_array($value) || is_object($value)) {
+                $level++;
+                $value = Debug::dumpVariable($value, ReturnMethod::RETURN_RESULTS, $format, $level);
+                $level--;
+            }
+            $output .= $tabs . "[" . $key . "] => " . $value . $newline;
+        }
+        if ($return) {
+            return $output;
+        } else {
+            echo $output;
         }
     }
 }

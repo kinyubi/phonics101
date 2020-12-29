@@ -39,8 +39,7 @@ inputs:
           font: bold 20px Muli, Century Gothic, sans-serif;
       }
   </style>
-  <div class="row d-flex bg-white justify-content-start mx-2">
-    <div class=" lesson-list--width bg-readultra" id="lesson-list">
+  <div class="row d-flex bg-white justify-content-start mx-2 flex-wrap">
 
       {# DISPLAY MOST RECENT LESSON IF IT'S IN THE COOKIE #}
       {% if mostRecentLesson %}
@@ -59,14 +58,14 @@ inputs:
 
       {% endif %}
       {# FOR EACH GROUP #}
-      <div id="lesson-accordion">
+      <div id="lesson-accordion" class="col-md-12 col-sm-12 col-lg-5 lesson-list--width">
         {% for groupName, lessonPart in accordion %}
           {% set group = groupInfo[groupName] %}
           {% set groupIndex = loop.index %}
           {% set groupHeader = 'header-' ~ loop.index %}
           {% set groupCollapse = 'collapse-' ~ loop.index %}
           {% set groupAnimal = '/images/keychain/' ~ group.fileName %}
-          <div class="card bg-white border-readxyz">
+          <div class="card bg-white border-readxyz ">
             <div class="card-header bg-white" id="{{ groupHeader }}">
               <a class="card-link" data-toggle="collapse" data-target="#{{ groupCollapse }}"
                  aria-controls="{{ groupCollapse }}" aria-expanded="false" style="cursor: pointer">
@@ -107,7 +106,6 @@ inputs:
         {% endfor %}
       </div>
 
-    </div>
   </div>
 {% endblock body %}
 

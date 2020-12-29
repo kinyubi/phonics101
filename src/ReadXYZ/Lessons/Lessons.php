@@ -231,6 +231,9 @@ class Lessons
         return array_key_exists($lessonName, $this->alternateNameMap);
     }
 
+    /**
+     * @throws PhonicsException
+     */
     public function setAccordion()
     {
         $mastery = (new StudentLessonsData())->getLessonMastery();
