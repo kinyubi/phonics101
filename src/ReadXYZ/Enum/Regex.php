@@ -58,7 +58,7 @@ class Regex extends Enum
         {
             // we don't have a hyphen after the final period
             if (!filter_var($compositeEmail, FILTER_VALIDATE_EMAIL)) {
-                return (object)['success' => false, 'email' => $compositeEmail];
+                return (object)['success' => false, 'email' => $compositeEmail, 'student' => ''];
             } else {
                 return (object)['success' => true, 'email' => $compositeEmail, 'student' => ''];
             }
@@ -68,7 +68,7 @@ class Regex extends Enum
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return (object) ['success' => true, 'email' => $email, 'student' => $student];
         } else {
-            return (object) ['success' => false,  'email' => $email];
+            return (object) ['success' => false,  'email' => $email, 'student' => $student];
         }
     }
 

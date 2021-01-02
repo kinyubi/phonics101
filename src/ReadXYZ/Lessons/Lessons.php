@@ -154,7 +154,7 @@ class Lessons
      */
     public function &getCurrentLesson(): ?Lesson
     {
-        $currentLessonCode = (new Session)->getCurrentLessonCode();
+        $currentLessonCode = Session::getCurrentLessonCode();
         if ($currentLessonCode) {
 
             $ref = &$this->lessons[$currentLessonCode];
@@ -167,12 +167,12 @@ class Lessons
 
     public function getCurrentLessonName(): string
     {
-        return (new Session())->getCurrentLessonName();
+        return Session::getCurrentLessonName();
     }
 
     public function getCurrentLessonCode(): string
     {
-        return (new Session())->getCurrentLessonCode();
+        return Session::getCurrentLessonCode();
     }
 
     /**
@@ -195,8 +195,7 @@ class Lessons
      */
     public function getNextLessonName(): string
     {
-        $session = new Session;
-        $currentLessonCode = $session->getCurrentLessonCode();
+        $currentLessonCode = Session::getCurrentLessonCode();
         if (empty($currentLessonCode)) {
             throw new PhonicsException("We should always be on a lesson when we get here.");
         }

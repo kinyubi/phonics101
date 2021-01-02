@@ -32,9 +32,21 @@ Optional Arguments
     For an untabbed page you can create another block template for the body block and use that
 #}
 
-{# inherited blocks: title, modals, titleBar, navBar, tabBar, body, otherJqueryReady #}
+{# inherited blocks: title, modals, navBar, tabBar, body, otherJS #}
 
 {% extends 'base.html.twig' %}
+
+{% block otherStyles %}
+  <link rel="stylesheet" href="/pdfflip/pflip/css/pdfflip.css">
+{% endblock otherStyles %}
+
+{% block otherScripts %}
+  {% set cssJsVer = '1.0101.0' %}
+  <script src="/js/phonics.js?ver={{ cssJsVer }}"></script>
+ 	<script src="/js/timers.js?ver={{ cssJsVer }}"></script>
+  <script src="/js/sound_box.js?ver={{ cssJsVer }}"></script>
+ 	<script src="/pdfflip/pflip/js/pdfflip.js"></script>
+{% endblock otherScripts %}
 
 {# The tab bar displays the home button and tab buttons #}
 {% block tabBar %}
@@ -101,3 +113,34 @@ Optional Arguments
     </div>
   </div> {# end container #}
 {% endblock body %}
+
+{% block otherJS %}
+	<script>
+			$('document').ready(function () {
+       $(".ajax").colorbox();
+       $(".tic-tac-toe").colorbox({
+           iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
+           top: 20, overlayClose: false, scrolling: false
+       });
+
+       $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ game_dimensions__ }}});
+       $(".sound-box").colorbox({
+           iframe: true, scrolling: false, overlayClose: false, {{ sound_box_dimensions__ }}
+       });
+
+       $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
+       $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
+       $(".inline").colorbox({inline: true, width: "50%"});
+       $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
+
+       $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
+
+       $(document).bind('cbox_open', function () {
+           $('html').addClass("body__scroll_disable");
+       }).bind('cbox_cleanup', function () {
+           $('html').removeClass("body__scroll_disable");
+       });
+
+   });
+	</script>
+{% endblock otherJS %}

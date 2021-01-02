@@ -58,6 +58,7 @@ class TwigFactory
 
 
     /**
+     * html.twig suffix is optional
      * @param string $templateName the name of a template (no path, .html.twig optional)
      *
      * @return TemplateWrapper

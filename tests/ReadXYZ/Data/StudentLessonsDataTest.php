@@ -16,8 +16,7 @@ class StudentLessonsDataTest extends TestCase
 
     public function testUpdateTimedTest()
     {
-        $session = new Session();
-        $this->assertEquals('TEST', $session->getCurrentLessonCode());
+        $this->assertEquals('TEST', Session::getCurrentLessonCode());
         $testTimer = new TimerType(TimerType::TEST);
         $fluencyTimer = new TimerType(TimerType::FLUENCY);
         $timers = [$testTimer, $fluencyTimer];

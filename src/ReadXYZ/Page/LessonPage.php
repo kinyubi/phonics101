@@ -14,10 +14,9 @@ class LessonPage extends Page
 
     public function __construct(string $lessonName, string $studentName)
     {
-        $session = new Session();
-        $title = (new LessonsData())->getLessonDisplayAs($session->getCurrentLessonCode());
+        $title = (new LessonsData())->getLessonDisplayAs(Session::getCurrentLessonCode());
         parent::__construct($title);
-        $this->studentName = $session->getStudentName();
+        $this->studentName = Session::getStudentName();
     }
 
     public function displayLesson(): void

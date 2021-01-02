@@ -19,9 +19,9 @@
 
 {# @name timerButton
    Display a timer button
-   @param tab     the tab the timer is on (i.e. practice, fluency or test)
-   @param name    button name: Start, Stop, Reset, Save, StartStop (the png icon base name should match this name
-   @param tooltip the tooltip to display on hover
+   @param string tab     the tab the timer is on (i.e. practice, fluency or test)
+   @param string name    button name: Start, Stop, Reset, Save, StartStop (the png icon base name should match this name
+   @param string tooltip the tooltip to display on hover
 #}
 {% macro timerButton(tab, name, tooltip) %}
   {% set filename = '/images/sidebar/' ~ name ~ '.png' %}
@@ -35,4 +35,37 @@
     <div class="row d-flex align-content-center">
         <div id="{{ tab }}Time" class="wordlist mx-auto my-3">00:00</div>
     </div>
+{% endmacro %}
+
+{#
+  @name toast
+  Display a Bootstrap Toast alert
+  @see https://getbootstrap.com/docs/4.4/components/toasts/
+  @param string header     header text
+  @param string smalltext  small text to the right of the header
+  @param string message    a message (can be HTML or plain text.
+  @param bool   autohide   if autohide is true we must show a close button
+  @param int    delay      if autohide is true we will wait this number of milliseconds to close
+#}
+{% macro toast(header, smalltext, message, autohide = false, delay = 500) %}
+  {% if autohide == false %}
+    {% set hideAttr  = 'data-autohide="false"' %}
+    {% set delayAttr = (delay == 500) ? 'data-delay="' ~ delay ~ '"' : '' %}
+  {% else %}
+    {% set hideAttr  = '' %}
+    {% set delayAttr = '' %}
+  {% endif %}
+  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" {{ hideAttr }} {{ delayAttr }} >
+    <div class="toast-header">
+      <img src="images/logo-150.png" class="rounded mr-2" alt="logo">
+      <strong class="mr-auto">{{ header }}</strong>
+      <small class="text-muted">{{ smalltext }}</small>
+      {% if autohide == true %}
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {% endif %}
+    </div>
+    <div class="toast-body">{{ message|raw }}</div>
+  </div>
 {% endmacro %}

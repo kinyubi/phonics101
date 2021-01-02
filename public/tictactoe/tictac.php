@@ -2,7 +2,7 @@
 require dirname(__DIR__) . '/autoload.php';
 use App\ReadXYZ\Helpers\Location;
 
-$cssJsVer = '?ver=0.1229.1';
+$cssJsVer = '?ver=1.0101.0';
 $bootstrapVer = '?ver=0.1016.0';
 
 $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',

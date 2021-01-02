@@ -4,11 +4,16 @@
 namespace App\ReadXYZ\Models;
 
 use App\ReadXYZ\Data\CompareLocalRemote;
-use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\TrainersData;
+use App\ReadXYZ\Data\Views;
+use App\ReadXYZ\Handlers\CrudHandler;
+use App\ReadXYZ\Handlers\LessonSelector;
+use App\ReadXYZ\Handlers\LoginForm;
+use App\ReadXYZ\Handlers\StudentSelector;
+use App\ReadXYZ\Handlers\TimerForms;
+use App\ReadXYZ\Handlers\WordMasteryForm;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Targets\FormAction;
 use App\ReadXYZ\Twig\CacheTemplate;
 use App\ReadXYZ\Twig\CrudTemplate;
 use App\ReadXYZ\Twig\LessonListTemplate;
@@ -18,74 +23,59 @@ use App\ReadXYZ\Twig\StudentListTemplate;
 
 class RouteMe
 {
-    // private static function httpPost($url, $data){
-    // 	$options = array(
-    // 		'http' => array(
-    //      		'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-    //         	'method'  => 'POST',
-    //         	'content' => http_build_query($data)
-    //     	)
-    //     );
-    // 	$context  = stream_context_create($options);
-    // 	return file_get_contents($url, false, $context);
-    // }
+
 
 // ======================== STATIC METHODS =====================
     /**
      * After a user has been validated this takes him to the proper screen
-     * @param bool $forceStudentList
+     * @param string $explicitStudentName
      * @return void HTML for a student list or lesson list as appropriate is displayed
      * @throws PhonicsException on ill-formed SQL
      */
-    public static function autoLoginDisplay(bool $forceStudentList = false): void
+    public static function computeImpliedRoute(string $explicitStudentName = ''): void
     {
-        $session     = new Session();
-        $trainerCode = $session->getTrainerCode();
+        $trainerCode = Session::getTrainerCode();
         if (empty($trainerCode)) {
             throw new PhonicsException("We shouldn't get here without session user being set.");
         }
-        $studentsData = new StudentsData();
-        $students     = $studentsData->getStudentNamesForUser($trainerCode);
-        if ((count($students) > 1) || $forceStudentList) {
+
+        $students     = Views::getInstance()->getMapOfStudentsForUser($trainerCode);
+        if ((count($students) > 1) && empty($explicitStudentName)) {
             (new StudentListTemplate())->display();
+            exit;
         } else {
             if (count($students) == 1) {
-                $studentCode = $students[0]['studentCode'];
-                $session->updateStudent($studentCode);
+                $studentCode = reset($students); //returns the first value in an associative array;
+                Session::updateStudent($studentCode);
                 (new LessonListTemplate())->display();
+                exit;
             } else {
-                $trainersData = new TrainersData();
-                if ($trainersData->isAdmin($trainerCode)) {
-                    throw new PhonicsException('Admin screen not yet implemented');
-                } else {
-                    $userName = $trainersData->getUsername($trainerCode);
-                    throw new PhonicsException("Trainer $userName has no students.");
+                if (not(empty($explicitStudentName))) {
+                    $studentCode = '';
+                    foreach($students as $name => $code) {
+                        if (strtolower($name) == strtolower($explicitStudentName)) {
+                            $studentCode = $code;
+                            break;
+                        }
+                    }
+                    if ($studentCode) {
+                        Session::updateStudent($studentCode);
+                        (new LessonListTemplate())->display();
+                        exit;
+                    }
                 }
+                // Were here because someone appended a student name to the email that doesn't belong to them.
+                (new LoginTemplate("Please specify just an email address or an email with a valid student name."));
             }
         }
     }
 
-    public static function generatePassword()
-    {
-        $chars      = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $strength   = rand(10, 20);
-        $lastPos    = strlen($chars) - 1;
-        $randomWord = '';
-        for ($i = 0; $i < $strength; $i++) {
-            $randomLetter = $chars[mt_rand(0, $lastPos)];
-            $randomWord   .= $randomLetter;
-        }
-
-        return $randomWord;
-    }
 
     /**
      * @throws PhonicsException on ill-formed SQL
      */
     public static function parseRoute()
     {
-        $session = new Session();
-
         $requestUri     = parse_url($_SERVER['REQUEST_URI']);
         $postParameters = [];
         $mainRoute      = '';
@@ -130,39 +120,41 @@ class RouteMe
         // Some routes have precondition, handle that here
         switch ($mainRoute) {
             case 'lesson':
-                if ( ! $session->hasStudent()) {
+                if ( ! Session::hasStudent()) {
                     $mainRoute = 'default';
                 }
                 break;
             case 'crud':
-                if (( ! $session->isStaff()) || (count($routeParts) == 0)) {
+                if (( ! Session::isStaff()) || (count($routeParts) == 0)) {
                     throw new PhonicsException("Non-staff access to CRUD operations disallowed.");
                 }
         }
         switch ($mainRoute) {
             // processing for forms
             case 'handler':
-                $action = new FormAction();
-
-                if ('crud' == $target) {
-                    // create/read/update/delete
-                    (new CrudAction())->handlePost();
-                } elseif ('mastery' == $target) {
-                    // mastery form on mastery tab
-                    $action->wordMasteryFormHandler();
-                } elseif ('student' == $target) {
-                    // handle selection of student when trainer has multiple students
-                    $action->studentSelectionHandler($routeParts[0]);
-                } elseif ('timer' == $target) {
-                    // handle timer button for fluency, test and practice
-                    $action->timersHandler();
-                } elseif ('validate' == $target) {
-                    $action->loginHandler();
-                } elseif ('lesson' == $target) {
-                    //initialTabName set in LessonTemplate constructor
-                    //phonics.js sets initialTabName in reload function as a route part
-                    //FormAction::timersHandler sets initialTabName when initializing LessonTemplate object
-                    $action->lessonSelectionHandler($postParameters, $routeParts);
+                switch ($target) {
+                    case 'crud':
+                        CrudHandler::handlePost();
+                        break;
+                    case 'getStudents':
+                        LoginForm::handleUserEntry($routeParts);
+                        break;
+                    case 'mastery':
+                        WordMasteryForm::handlePost();
+                        break;
+                    case 'student':
+                        StudentSelector::route($routeParts[0]);
+                        break;
+                    case 'timer':
+                        TimerForms::handlePost();
+                        break;
+                    case 'validate':
+                        LoginForm::handlePost();
+                        break;
+                    case 'lesson':
+                        LessonSelector::route($postParameters, $routeParts);
+                        break;
+                    default:
                 }
                 break;
             case 'sess_fix':
@@ -177,7 +169,7 @@ class RouteMe
                 break;
             case 'lessons':
             case 'lessonlist':
-                self::rerouteCheck($session);
+                self::rerouteCheck();
                 (new LessonListTemplate())->display();
                 break;
             case 'login':
@@ -188,7 +180,7 @@ class RouteMe
                 $processor->handleRequestAndEchoResponse($postParameters);
                 break;
             case 'studentlist':
-                self::autoLoginDisplay(true);
+                self::computeImpliedRoute();
                 break;
             case 'test':
                 if ( ! Util::isLocal()) {
@@ -213,14 +205,14 @@ class RouteMe
                 break;
             case 'default':
             case '':
-                if ($session->hasLesson()) {
-                    (new LessonTemplate($session->getCurrentLessonName(), ''))->display();
+                if (Session::hasLesson()) {
+                    (new LessonTemplate(Session::getCurrentLessonName(), ''))->display();
                 } else {
-                    if ($session->hasStudent()) {
+                    if (Session::hasStudent()) {
                         (new LessonListTemplate())->display();
                     } else {
-                        if ($session->hasTrainer()) {
-                            self::autoLoginDisplay();
+                        if (Session::hasTrainer()) {
+                            self::computeImpliedRoute();
                         } else {
                             (new LoginTemplate())->display();
                         }
@@ -233,16 +225,20 @@ class RouteMe
     }
 
 // ======================== PRIVATE METHODS =====================
+
     /**
-     * @param Session $session
+     * Performs a check before we display a lesson list.
+     * If the session variables tell us we don't have a trainer and a student we're going to the login screen.
+     * If the session variables tell us we have a trainer validated but not a student we pass off the decision
+     * to computeImpliedRoute.
      * @throws PhonicsException on ill-formed SQL
      */
-    private static function rerouteCheck(Session $session)
+    private static function rerouteCheck()
     {
-        if ( ! $session->isValid()) {
-            if ($session->hasTrainer()) {
+        if ( ! Session::isValid()) {
+            if (Session::hasTrainer()) {
                 // we have a trainer but not a student
-                self::autoLoginDisplay();
+                self::computeImpliedRoute();
             } else {
                 (new LoginTemplate())->display();
             }

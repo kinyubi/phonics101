@@ -103,62 +103,6 @@ EOT;
         return $this->throwableQuery($query, QueryType::SCALAR);
     }
 
-    /**
-     * @param string $user trainerCode or userName
-     * @return string[] an array of studentNames
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function getStudentNamesForUser(string $user): array
-    {
-        // We user the user of the current session if no user specified.
-        if (empty($user)) {
-            $session = new Session();
-            $user = $session->getTrainerCode();
-            if ( ! $user) {
-                throw new PhonicsException("User cannot be empty when no user present in session.");
-            }
-        }
-        $where = "(active = 'Y') AND (userName = '$user' OR trainerCode = '$user')";
-        $query = "SELECT studentName FROM vw_students_with_username WHERE $where";
-        return $this->throwableQuery($query, QueryType::SCALAR_ARRAY);
-    }
 
-    /**
-     * @param string $user trainerCode or userName
-     * @return array an associative array of studentName => studentCode
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function getMapOfStudentsForUser($user = ''): array
-    {
-        // We user the user of the current session if no user specified.
-        if (empty($user)) {
-            $session = new Session();
-            $user = $session->getTrainerCode();
-            if ( ! $user) {
-                throw new PhonicsException("User cannot be empty when no user present in session.");
-            }
-        }
-        $active = ActiveType::IS_ACTIVE;
-        $where = "(active = '$active') AND (userName = '$user' OR trainerCode = '$user')";
-        $query = "SELECT studentCode, studentName FROM vw_students_with_username WHERE $where";
-        $students = $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
-        $studentMap = [];
-        foreach ($students as $student) {$studentMap[$student->studentName] = $student->studentCode;}
-        return $studentMap;
-    }
-
-    /**
-     * @param string $student
-     * @param string $user
-     * @return bool
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function isValidStudentTrainerPair(string $student, string $user): bool
-    {
-        $active = ActiveType::IS_ACTIVE;
-        $where = "studentCode = '$student' AND active = '$active' AND (userName = '$user' OR trainerCode = '$user')";
-        $query = "SELECT * FROM vw_students_with_username WHERE $where";
-        return $this->throwableQuery($query, QueryType::EXISTS);
-    }
 
 }

@@ -1,5 +1,5 @@
 /* MAKE SURE YOU MAINTAIN PHONICS.CSS and PHONICS.MOBILE.CSS TOGETHER */
-
+/* version 1.0101.0
 
  /*reset.css */
 /*html {*/
@@ -312,29 +312,29 @@ td.info-thumb {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
-/* Practice tab timer button */
-.timerButton {
-    width: 60px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-    padding: 3px;
-    border-radius: 4px;
-    margin: 3px;
-    border-width: 2px;
-    border-style: solid;
+/*!* Practice tab timer button *!*/
+/*.timerButton {*/
+/*    width: 60px;*/
+/*    text-align: center;*/
+/*    font-family: Arial, sans-serif;*/
+/*    font-size: 12px;*/
+/*    cursor: pointer;*/
+/*    padding: 3px;*/
+/*    border-radius: 4px;*/
+/*    margin: 3px;*/
+/*    border-width: 2px;*/
+/*    border-style: solid;*/
 
-}
+/*}*/
 
-.timerButton:hover {
-    background-color: #cccccc;
-    color: white;
-}
+/*.timerButton:hover {*/
+/*    background-color: #cccccc;*/
+/*    color: white;*/
+/*}*/
 
-.timerButton:active {
-    transform: translateY(4px);
-}
+/*.timerButton:active {*/
+/*    transform: translateY(4px);*/
+/*}*/
 
 .progressButton {
     font-family: "Comic Sans MS", Geneva, sans-serif;
@@ -613,3 +613,11 @@ a.img-contain img {
 
 .mw-600 {max-width: 600px}
 
+/* Customize some of the bootstrap breadcrumb class attributes */
+.breadcrumb {
+    margin: 0 1rem !important;
+    padding: 0 !important;
+    background-color: white !important;
+    -ms-flex-align: baseline !important;
+    align-items: baseline !important;
+}

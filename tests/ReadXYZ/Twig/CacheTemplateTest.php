@@ -2,7 +2,6 @@
 
 namespace Tests\ReadXYZ\Twig;
 
-use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Twig\CacheTemplate;
 use PHPUnit\Framework\TestCase;
 
@@ -13,11 +12,11 @@ class CacheTemplateTest extends TestCase
     {
     }
 
-    public function testRecursiveGlob()
+    public function testClearTwigCache()
     {
         $template = new CacheTemplate();
-        $cachePath = Util::getReadXyzSourcePath('cache');
-        $files = $template->recursiveGlob("$cachePath/*/*.php");
-        $this->assertTrue(count($files) > 0);
+        $results = $template->returnCounts();
+        $this->assertEquals(0, $results['after']);
+        $this->assertNotEquals(-1, $results['before']);
     }
 }

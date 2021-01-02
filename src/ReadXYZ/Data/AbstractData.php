@@ -261,7 +261,7 @@ abstract class AbstractData
      * Two optional string parameters containing valid BoolEnumTreatment or Throwable values
      * @param string $query
      * @param string $queryType
-     * @param string ...$params must be valid Throwable value or BoolEnumTreatment value
+     * @param string ...$params defaults to BoolEnumTreatment::CONVERT_TO_BOOL, Throwable::NOT_FOUND_IS_VALID
      * @return mixed
      * @throws PhonicsException on ill-formed SQL
      */
@@ -304,6 +304,7 @@ abstract class AbstractData
                     if (($goodResult == null) && ($throwOnNotFound === Throwable::THROW_ON_NOT_FOUND)) {
                         throw new PhonicsException('Query found no records.');
                     } else {
+                        // if not found, we succeed and put null in goodResult
                         return $this->fixObject($goodResult, $boolEnumTreatment);
                     }
                 case QueryType::RECORD_COUNT:
@@ -374,6 +375,11 @@ abstract class AbstractData
         return $count;
     }
 
+    /**
+     * defaults to BoolEnumTreatment::CONVERT_TO_BOOL
+     * @param mixed ...$params
+     * @return string
+     */
     protected function checkBoolEnumTreatment(...$params): string
     {
         foreach ($params as $param) {
@@ -384,6 +390,11 @@ abstract class AbstractData
         return BoolEnumTreatment::CONVERT_TO_BOOL; // default
     }
 
+    /**
+     * defaults to Throwable::NOT_FOUND_IS_VALID
+     * @param mixed ...$params
+     * @return string
+     */
     protected function checkThrowable(...$params): string
     {
         foreach ($params as $param) {

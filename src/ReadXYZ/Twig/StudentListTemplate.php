@@ -4,7 +4,7 @@
 namespace App\ReadXYZ\Twig;
 
 
-use App\ReadXYZ\Data\StudentsData;
+use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Page\Page;
 
@@ -16,7 +16,7 @@ class StudentListTemplate
      */
     public function display(): void
     {
-        $allStudents = (new StudentsData())->getMapOfStudentsForUser();
+        $allStudents = Views::getInstance()->getMapOfStudentsForUser();
         $page = new Page('Select a student');
         $studentLinks = [];
         foreach ($allStudents as $name => $code) {

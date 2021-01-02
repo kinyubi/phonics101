@@ -1,30 +1,32 @@
 {# ===============  DEFINED BLOCKS ====================================================
-title             : This is the label used on the browser tab. It is not part of the page itself.
-                    inputs used: pageTitle
+
 otherStyles       : additional <style> elements to insert after css links
 otherScripts      : additional <script> elements to insert after js links
 modals            : inputs used: errors
-titleBar          : inputs used: navbar
+
 tabBar            : default is empty. Override as needed
 body              : default is empty
-otherJqueryReady  : default is empty. Content must be javascript
-
+otherJS
 ====================================================================================== #}
 
 {# =============== INPUT VARIABLES ====================================================
-page              : a Page class instance.
-                    page->display(templateName) automatically adds the 'page' and 'isSmallScreen' args
-                    fields include: pageTitle, initialTabName, navbar, tabs, errors, arguments
+	browserTabText  : text on browser tab
+	pageTitle       : title on title bar
+	errors          : a Page object variable (by default displays page errors)
+	navbar          : [ [ displayText => link ]  ] (by default, part of titleBar block)
+	previous_crumbs : [ [ displayText => link ]  ] (by default, part of titleBar block)
+	this_crumb      : displayText (no link
+
 #}
 
-{% set cssJsVer = '0.1229.1' %}
+{% set cssJsVer = '1.0101.0' %}
 {% set bootstrapVer = '0.1016.0' %}
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>{% block title %}{{ pageTitle|default('ReadXYZ') }}{% endblock %}</title>
+	<title>readXYZ {{ browserTabText }}</title>
 
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
@@ -45,7 +47,6 @@ page              : a Page class instance.
 
 	<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="/css/phonics.css?ver={{ cssJsVer }}" media="all">
-	<link rel="stylesheet" href="/pdfflip/pflip/css/pdfflip.css">
 
 	{% block otherStyles %}{% endblock %}
 
@@ -54,9 +55,6 @@ page              : a Page class instance.
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap4-custom/bootstrap.bundle.js?ver={{ bootstrapVer }}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-	<script src="/js/phonics.js?ver={{ cssJsVer }}"></script>
-	<script src="/js/timers.js?ver={{ cssJsVer }}"></script>
-	<script src="/pdfflip/pflip/js/pdfflip.js"></script>
 
 	{% block otherScripts %}{% endblock %}
 </head>
@@ -72,7 +70,7 @@ page              : a Page class instance.
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header bg-danger text-light">
-						<h5 class="modal-title" id="modalErrorLabel">{{ title }}</h5>
+						<h5 class="modal-title" id="modalErrorLabel">{{ pageTitle }}</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -89,37 +87,66 @@ page              : a Page class instance.
 	{% endif %}
 {% endblock %}
 
+{# Container for the whole page #}
 <div class="m-0 p-0 container-fluid" id="base-container" style="max-width: 950px;">
-{% block titleBar %}
-		<div class="ml-0 row bg-white  d-flex justify-content-start title-bar--height align-middle h1 my-2"  id="readxyz-title">
+
+{#  breadcrumbs in the titlebar
+   if a user has multiple students:  <username> / students / lessons / <lessonname>
+	 if a user has one student:        <username> / <studentname> / lessons / <lessonname>
+#}
+
+	{# TITLE BAR - START #}
+	<div class="ml-0 row bg-white  d-flex justify-content-start title-bar--height align-baseline h1 my-2"  id="readxyz-title">
+		{# title bar: logo #}
 		<div class="ml-0 float-left col-3 bg-image--title"></div>
+		{# title bar: nav items #}
 		{% for title, link in navBar %}
 			<a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
 		{% endfor %}
+		{# title bar - breadcrumbs #}
+		{% block breadcrumbs %}
+			{% if previous_crumbs or this_crumb %}
+				<div class="my-auto mx-3">
+					<nav aria-label="breadcrumb" >
+					  <ol class="breadcrumb h6">
+						  {% for crumb in previous_crumbs %}
+							  {% set decoration = ((crumb.link is empty) or (crumb.link == '#')) ? 'style="text-decoration: none;color: #6c757d;"' : '' %}
+					    <li class="breadcrumb-item"><a href="{{ crumb.link }}"  {{ decoration }}>{{ crumb.text }}</a></li>
+						  {% endfor %}
+						  {% if this_crumb %}
+					    <li class="breadcrumb-item active " aria-current="page">{{ this_crumb }}</li>
+							  {% endif %}
+					  </ol>
+					</nav>
+				</div>
+			{% endif %}
+		{% endblock breadcrumbs %}
 	</div>
-{% endblock titleBar %}
+	{# TITLE BAR - END #}
 
-{# ERRORS BLOCK #}
-{% block errors %}
-	{# display any error messages #}
-	{% if errors|default %}
-		<div class="container border border-danger p-0">
-			<div class="row">
-				<h2 class="bg-danger text-white">ERROR</h2>
-				<p class="text-danger">{{ errorMessage | raw }}</p>
-			</div>
-		</div>
-
-	{% endif %}
-{% endblock errors %}
+{#	#}{# ERRORS BLOCK #}
+{#	{% block errors %}#}
+{#		#}{# display any error messages #}
+{#		{% if errors|default %}#}
+{#			<div class="container border border-danger p-0">#}
+{#				<div class="row">#}
+{#					<h2 class="bg-danger text-white">ERROR</h2>#}
+{#					<p class="text-danger">{{ errorMessage | raw }}</p>#}
+{#				</div>#}
+{#			</div>#}
+{#	#}
+{#		{% endif %}#}
+{#{% endblock errors %}#}
 
 	{# TABBAR BLOCK #}
-{% block tabBar %}{% endblock %}
+	{% block tabBar %}{% endblock %}
 
 	{# BODY BLOCK #}
-{% block body %}{% endblock %}
+	{% block body %}{% endblock %}
 
 </div> {# end of base-container #}
+
+{% block otherJS %}{% endblock otherJS %}
 
 {# Tail end of HTML body where scripts go #}
 {% set game_dimensions__ = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
@@ -130,49 +157,12 @@ page              : a Page class instance.
         $('.modal-backdrop').removeClass("modal-backdrop");
         $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
 
-			{# show the modal if we have an error #}
-			{% if errors|default %}
-        $("#modalError").modal("show");
-			{% endif %}
-    });
+		    $(window).resize(function () {setScreenCookie();});
 
-</script>
-<script>
-    $('document').ready(function () {
-			{% block otherJqueryReady %}{% endblock %}
-        $(".ajax").colorbox();
-        $(".tic-tac-toe").colorbox({
-            iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
-            top: 20, overlayClose: false, scrolling: false
-        });
-
-        $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ game_dimensions__ }}});
-        $(".sound-box").colorbox({
-            iframe: true, scrolling: false, overlayClose: false, {{ sound_box_dimensions__ }}
-        });
-
-        $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
-        $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
-        $(".inline").colorbox({inline: true, width: "50%"});
-        $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
-
-        $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
-
-        // disable parent scrolling when colorbox modal is active
-        // reenable scrolling when colorbox modal is closed
-        // see: https://www.geeksforgeeks.org/how-to-disable-scrolling-temporarily-using-javascript/
-        $(document).bind('cbox_open', function () {
-            $('html').addClass("body__scroll_disable");
-        }).bind('cbox_cleanup', function () {
-            $('html').removeClass("body__scroll_disable");
-        });
-
-        setScreenCookie();
-
-        $(window).resize(function () {
-            setScreenCookie();
-        });
-
+				{# show the modal if we have an error #}
+				{% if errors|default %}
+	        $("#modalError").modal("show");
+				{% endif %}
 
     });
 

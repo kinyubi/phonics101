@@ -11,6 +11,7 @@ use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Enum\JsonDecode;
 use App\ReadXYZ\Enum\TrainerType;
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Rest\RestTarget;
 use Exception;
 use stdClass;
@@ -64,7 +65,7 @@ class ProcessWordPressRequest extends RestTarget
      */
     private function isUserTeacher($user): bool
     {
-        return (new Views())->doesTrainerHaveStudents($user);
+        return Views::getInstance()->doesTrainerHaveStudents($user);
     }
 
     /**
@@ -80,13 +81,14 @@ class ProcessWordPressRequest extends RestTarget
      */
     private function isTeacherStudentLogin(string $user, $student): bool
     {
-        return (new Views())->isValidStudentTrainerPair($user, $student);
+        return Views::getInstance()->isValidStudentTrainerPair($user, $student);
     }
 
     /**
      * @param string $userName the username to be added as
      *
      * @param string $studentName
+     * @throws PhonicsException
      */
     private function addStudent(string $userName, string $studentName): void
     {
@@ -98,22 +100,19 @@ class ProcessWordPressRequest extends RestTarget
      * Adds the user to abc_Users.
      *
      * @param string $userName
-     * @param string $password
-     * @param string $first
-     * @param string $last
+     * @param string $displayName
      * @param string $type
      * @return DbResult
+     * @throws PhonicsException
      */
     private function addUser(
         string $userName,
-        string $password = 'read',
-        string $first = '',
-        string $last = '',
+        string $displayName,
         string $type=TrainerType::TRAINER
     ): dbResult
     {
         //TODO: use Wordpress membership REST api to get firstName, lastName, password, trainerType
-        return (new TrainersData())->add($userName, $password, $first, $last, $type);
+        return (new TrainersData())->add($userName, $displayName, $type);
     }
 
     /**
@@ -147,7 +146,7 @@ class ProcessWordPressRequest extends RestTarget
                 if (!$alreadyExists) {
                     // we should always have to create both the user and student for a user-student login
                     if (!$this->isUserInPhonics($userLogin)) {
-                        $this->addUser($userLogin);
+                        $this->addUser($userLogin, '');
                     }
                     $this->addStudent($userLogin, $user->student);
                 }
@@ -160,7 +159,7 @@ class ProcessWordPressRequest extends RestTarget
             return $this->getRestResponse(500, $ex->getMessage(), false);
         }
         $otpDispenser = new OneTimePass();
-        $otp = $otpDispenser->getOTP($userLogin);
+        $otp = $otpDispenser->add($userLogin);
         return $this->getRestResponse(200, $otp, true);
     }
 

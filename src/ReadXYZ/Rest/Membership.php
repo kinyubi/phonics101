@@ -6,6 +6,7 @@ namespace App\ReadXYZ\Rest;
 
 use App\ReadXYZ\Data\DbResult;
 use App\ReadXYZ\Enum\MemberFieldTypes;
+use App\ReadXYZ\Enum\Regex;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Helpers\PhonicsException;
 use stdClass;
@@ -72,8 +73,12 @@ class Membership
      */
     public function getUser(string $member): stdClass
     {
-        $fieldName = Util::contains('@', $member) ? MemberFieldTypes::USER_EMAIL : MemberFieldTypes::USER_LOGIN;
-
+        $composite = Regex::parseCompositeEmail($member);
+        if ($composite->success === true) {
+            $fieldName = (empty($composite->student)) ? 'user_email' : 'user_login';
+        } else {
+            $fieldName = 'user_login';
+        }
         $inputData = [
             'op'      => 'get_user',
             'api_key' => self::API_KEY,

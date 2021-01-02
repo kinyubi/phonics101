@@ -16,8 +16,6 @@ use stdClass;
 
 class StudentLessonsData extends AbstractData
 {
-
-    private Session $session;
     private string  $quotedStudentCode;
     private string  $quotedLessonCode;
     private string  $whereClause;
@@ -36,21 +34,20 @@ class StudentLessonsData extends AbstractData
     {
         parent::__construct('abc_students', 'id', $dbVersion);
         $this->jsonFields = ['fluencyTimes', 'testTimes'];
-        $this->session = new Session();
         if ($studentCode) {
             $this->quotedStudentCode = $this->smartQuotes($studentCode);
         } else {
-            if (!$this->session->hasStudent()) {
+            if (!Session::hasStudent()) {
                 throw new PhonicsException('If student not specified, session needs to have a student.');
             }
-            $this->quotedStudentCode = $this->smartQuotes($this->session->getStudentCode());
+            $this->quotedStudentCode = $this->smartQuotes(Session::getStudentCode());
         }
         if ($lessonCode) {
             $this->quotedLessonCode = $this->smartQuotes($lessonCode);
             $this->hasLesson = true;
         } else {
-            if ($this->session->hasLesson()) {
-                $this->quotedLessonCode = $this->smartQuotes($this->session->getCurrentLessonCode());
+            if (Session::hasLesson()) {
+                $this->quotedLessonCode = $this->smartQuotes(Session::getCurrentLessonCode());
                 $this->hasLesson = true;
             } else {
                 $this->hasLesson = false;

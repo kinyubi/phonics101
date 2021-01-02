@@ -4,14 +4,18 @@
 namespace App\ReadXYZ\Twig;
 
 
+use App\ReadXYZ\Helpers\PhonicsException;
+use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Page\Page;
 
 class LoginTemplate
 {
 
+    const USERNAME        = 'username';
+
     private Page $page;
 
-    public function __construct(string $errorMessage='')
+    public function __construct(string $errorMessage = '')
     {
         $this->page = new Page('ReadXYZ Login');
         if ($errorMessage) {
@@ -19,13 +23,17 @@ class LoginTemplate
         }
     }
 
-    public function display(string $errorMessage=''): void
+    /**
+     * @param string $errorMessage
+     * @throws PhonicsException
+     */
+    public function display(string $errorMessage = ''): void
     {
-        if ($errorMessage) {
-            $this->page->addError($errorMessage);
-        }
-        $args = ['page' => $this->page];
-        echo TwigFactory::getInstance()->renderTemplate('login.html.twig', $args);
+        $userObject = Session::getUserObject();
+        $this->page->addError($errorMessage);
+        $this->page->addArgument(self::USERNAME, Session::getUserName());
+
+        $this->page->display('login');
     }
 
 }

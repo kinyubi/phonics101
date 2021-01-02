@@ -1,9 +1,11 @@
 <?php
 
 /**
- * using 0.1229.1 versioning for  phonics css and js.
+ * using 1.0101.0 versioning for  phonics css and js.
  *
  */
+
+use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Models\RouteMe;
 use Symfony\Component\ErrorHandler\Debug;
@@ -14,5 +16,7 @@ if ($_SERVER['APP_DEBUG']) {
     umask(0000);
     Debug::enable();
 }
+Util::checkCache();
 Session::sessionContinue();
 RouteMe::parseRoute();
+

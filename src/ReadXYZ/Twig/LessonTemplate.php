@@ -5,6 +5,7 @@ namespace App\ReadXYZ\Twig;
 
 
 use App\ReadXYZ\Data\StudentsData;
+use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Data\WarmupData;
 use App\ReadXYZ\Data\WordMasteryData;
 use App\ReadXYZ\Helpers\PhonicsException;
@@ -15,6 +16,7 @@ use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Lessons\Lessons;
 use App\ReadXYZ\Lessons\SideNote;
 use App\ReadXYZ\Lessons\TabTypes;
+use App\ReadXYZ\Models\BreadCrumbs;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Page\LessonPage;
 use App\ReadXYZ\Lessons\Lesson;
@@ -36,14 +38,13 @@ class LessonTemplate
      */
     public function __construct(string $lessonName = '', string $initialTabName = '')
     {
-        $session              = new Session();
         $this->lessonFactory  = Lessons::getInstance();
         $this->lessonName     = $lessonName;
         $this->initialTabName = $initialTabName;
-        $this->trainerCode    = $session->getTrainerCode();
-        $session->updateLesson($lessonName);
+        $this->trainerCode    = Session::getTrainerCode();
+        Session::updateLesson($lessonName);
 
-        $studentName = $session->getStudentName();
+        $studentName = Session::getStudentName();
         $this->lesson = $this->lessonFactory->getLesson($lessonName);
         if ($this->lesson == null) {
             return Util::redBox("A lesson named $lessonName does not exist.");
@@ -65,7 +66,7 @@ class LessonTemplate
 
         $sideNote              = SideNote::getInstance();
         $args                  = [];
-        $args['students']      = (new StudentsData())->getStudentNamesForUser($this->trainerCode);
+        $args['students']      = Views::getInstance()->getStudentNamesForUser($this->trainerCode);
         $args['page']          = $this->page;
         $args['lesson']        = $this->lesson;
         $args['tabTypes']      = TabTypes::getInstance();
@@ -75,12 +76,16 @@ class LessonTemplate
         $args['testCurve']     = $sideNote->getTestCurveHTML();
         $args['learningCurve'] = $sideNote->getLearningCurveHTML();
         $args['masteredWords'] = (new WordMasteryData())->getMasteredWords();
+        $args['this_crumb'] = $this->lesson->lessonDisplayAs;
         if ($this->initialTabName) {
             $args['initialTabName'] = $this->initialTabName;
         }
         if (in_array('warmup', $this->lesson->tabNames)) {
             $args['warmups']   = (new WarmupData())->get($this->lesson->lessonId);
         }
+
+        $breadcrumbs = (new BreadCrumbs())->getPrevious('lesson');
+        if ($breadcrumbs) $args['previous_crumbs'] = $breadcrumbs;
         $this->page->addArguments($args);
         $this->page->displayLesson();
     }

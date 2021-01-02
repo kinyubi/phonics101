@@ -5,6 +5,7 @@ namespace App\ReadXYZ\Helpers;
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Enum\Regex;
+use App\ReadXYZ\Twig\CacheTemplate;
 use App\ReadXYZ\Twig\TwigFactory;
 use Throwable;
 
@@ -24,6 +25,12 @@ class Util
     public static function arrayToList(array $arr): string
     {
         return "'" . join("','", $arr) . "'";
+    }
+
+    public static function checkCache(bool $force = false): void
+    {
+        if (self::isLocal() && !$force) return;
+        (new CacheTemplate())->clearTwigCache($force);
     }
 
     /**

@@ -11,10 +11,10 @@ class TrainersDataTest extends TestCase
     public function testGetTrainerId()
     {
         $trainersData = new TrainersData();
-        $id = $trainersData->getTrainerId('nobody');
+        $id = $trainersData->getTrainerCode('nobody');
         $this->assertEquals(0, $id);
 
-        $id = $trainersData->getTrainerId('test');
+        $id = $trainersData->getTrainerCode('test');
         $this->assertGreaterThan(0, $id);
     }
 
@@ -24,7 +24,7 @@ class TrainersDataTest extends TestCase
         $id = $trainersData->getHash('nobody');
         $this->assertEmpty( $id);
 
-        $id = $trainersData->getTrainerId('test');
+        $id = $trainersData->getTrainerCode('test');
         $this->assertNotEmpty($id);
     }
 
@@ -51,10 +51,14 @@ class TrainersDataTest extends TestCase
     public function testAdd()
     {
         $trainersData = new TrainersData();
-        $result = $trainersData->add('test_user', 'FirstTest', 'LastTest', 'trainer', 'test');
+        $result = $trainersData->add('test_user', 'Test',  'trainer', 'test');
     }
 
     public function testDelete()
+    {
+    }
+
+    public function testGet()
     {
     }
 

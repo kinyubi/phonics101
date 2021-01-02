@@ -70,11 +70,10 @@ EOT;
      */
     public function getMasteredWords(): array
     {
-        $session = new Session();
-        if (!$session->hasLesson()) {
+        if (!Session::hasLesson()) {
             throw new PhonicsException('Cannot get mastered words without an active lesson.');
         }
-        $studentCode = $this->smartQuotes($session->getStudentCode());
+        $studentCode = $this->smartQuotes(Session::getStudentCode());
         $query = "SELECT word from abc_word_mastery WHERE studentCode = $studentCode";
         return $this->throwableQuery($query, QueryType::SCALAR_ARRAY);
     }

@@ -1,5 +1,5 @@
 <?php
-$cssJsVer = '?ver=0.1229.1';
+$cssJsVer = '?ver=1.0101.0';
 $bootstrapVer = '?ver=0.1016.0';
 require dirname(__DIR__) . '/autoload.php';
 use App\ReadXYZ\Helpers\Location;

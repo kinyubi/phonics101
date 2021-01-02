@@ -38,21 +38,21 @@ class TrainersData extends AbstractData
     public function _create(): void
     {
         $query = <<<EOT
-        CREATE TABLE `abc_trainers` (
-            `userName` VARCHAR(100) NOT NULL COMMENT 'WordPress email/username',
-            `firstName` VARCHAR(50) NOT NULL,
-            `lastName` VARCHAR(50) NOT NULL,
-            `dateCreated` DATE NOT NULL,
-            `dateModified` DATE NOT NULL,
-            `dateLastAccessed` DATE NOT NULL,
-            `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
-            `trainerType` ENUM('parent','trainer','admin') NULL DEFAULT NULL,
-            `membershipValidTo` DATE NULL DEFAULT NULL,
-            `hash` VARCHAR(128) NOT NULL,
-            `trainerCode` VARCHAR(32) NOT NULL,
-            PRIMARY KEY (`userName`),
-            UNIQUE INDEX `trainerCode` (`trainerCode`)
-        ) COMMENT='Replacement for abc_Users' COLLATE='utf8_general_ci' ENGINE=InnoDB ;
+CREATE TABLE `abc_trainers` (
+	`userName` VARCHAR(100) NOT NULL COMMENT 'WordPress email/username',
+	`displayName` VARCHAR(50) NOT NULL,
+	`dateCreated` DATE NOT NULL,
+	`dateModified` DATE NOT NULL,
+	`dateLastAccessed` DATE NOT NULL,
+	`active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+	`trainerType` ENUM('reserve','parent','trainer','staff','admin') NULL DEFAULT NULL,
+	`membershipValidTo` DATE NULL DEFAULT NULL,
+	`hash` VARCHAR(128) NOT NULL,
+	`trainerCode` VARCHAR(32) NOT NULL,
+	`userEmail` VARCHAR(100) NOT NULL DEFAULT '',
+	PRIMARY KEY (`userName`),
+	UNIQUE INDEX `trainerCode` (`trainerCode`)
+) COMMENT='Replacement for abc_Users' COLLATE='utf8_general_ci' ENGINE=InnoDB ;
 EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
@@ -60,9 +60,8 @@ EOT;
 
     /**
      * @param string $userName
-     * @param string $password
-     * @param string $firstName
-     * @param string $lastName
+
+     * @param string $displayName
      * @param string $type
      * @param string $active
      * @return DbResult
@@ -70,16 +69,13 @@ EOT;
      */
     public function add(
         string $userName,
-        string $password = '',
-        string $firstName = '',
-        string $lastName = '',
+        string $displayName = '',
         string $type = TrainerType::TRAINER,
         string $active = ActiveType::IS_ACTIVE
     ): DbResult
     {
         $userName = $this->smartQuotes($userName);
-        $firstName = $this->smartQuotes($firstName);
-        $lastName = $this->smartQuotes($lastName);
+        $displayName = $this->smartQuotes($displayName);
         $type = $this->smartQuotes($type);
         $active = $this->smartQuotes($active);
         // generate an extended uniqId prefixed with U
@@ -88,10 +84,10 @@ EOT;
         $date        = $this->smartQuotes(Util::dbDate());
         $hash        = $this->smartQuotes(empty($password) ? '' : $this->makeHash($userName, $password));
         $query       = <<<EOT
-        INSERT INTO abc_trainers(userName,firstName,lastName,dateCreated,dateModified,dateLastAccessed,trainerType,hash, trainerCode, active)
-        VALUES($userName, $firstName, $lastName, $date, $date, $date, $type, $hash, $trainerCode, $active)
+        INSERT INTO abc_trainers(userName,displayName,dateCreated,dateModified,dateLastAccessed,trainerType,hash, trainerCode, active,userEmail)
+        VALUES($userName, $displayName, $date, $date, $date, $type, $hash, $trainerCode, $active, $userName)
         ON DUPLICATE KEY UPDATE
-        firstName = $firstName, lastName = $lastName, dateModified = $date, dateLastAccessed = $date,
+        displayName = $displayName, dateModified = $date, dateLastAccessed = $date,
         trainerType = $type, active = $active
 EOT;
         return $this->query($query, QueryType::STATEMENT);
@@ -122,6 +118,17 @@ EOT;
         $where = "trainerCode = '$user' OR userName = '$user'";
         $query = "SELECT trainerType FROM abc_trainers WHERE  $where";
         return $this->throwableQuery($query, QueryType::EXISTS);
+    }
+
+    /**
+     * @param string $user trainerCode or userName
+     * @return ?object
+     * @throws PhonicsException
+     */
+    public function get(string $user): ?object
+    {
+        $query = "SELECT * FROM abc_trainers WHERE userName = '$user' OR trainerCode = '$user'";
+        return $this->throwableQuery($query, QueryType::SINGLE_OBJECT, Throwable::THROW_ON_NOT_FOUND);
     }
 
     /**
@@ -198,6 +205,7 @@ EOT;
     }
 
     /**
+     * true is trainerType is staff or admin
      * @param string $user userName or trainerCode
      * @return bool
      * @throws PhonicsException on ill-formed SQL
@@ -210,7 +218,7 @@ EOT;
     }
 
     /**
-     * Returns true is trainer is in the database and is active.
+     * true is trainer is in the database and is active.
      * @param $user
      * @return bool
      * @throws PhonicsException on ill-formed SQL
@@ -223,6 +231,7 @@ EOT;
     }
 
     /**
+     * set trainer status to active
      * @param string|int $user userName or trainerCode
      * @param bool $activeOrNot
      * @throws PhonicsException on ill-formed SQL
@@ -236,15 +245,15 @@ EOT;
     }
 
     /**
+     * update trainers display name
      * @param string $user userName or trainerCode
-     * @param string $firstName
-     * @param string $lastName
+     * @param string $displayName
      * @throws PhonicsException on ill-formed SQL
      */
-    public function updateName(string $user, string $firstName, string $lastName): void
+    public function updateName(string $user, string $displayName): void
     {
         $where = "trainerCode = '$user' OR userName = '$user'";
-        $query = "UPDATE abc_trainers SET firstName='$firstName', lastName='$lastName', dateModified=CURDATE() WHERE $where";
+        $query = "UPDATE abc_trainers SET displayName='$displayName', dateModified=CURDATE() WHERE $where";
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
 

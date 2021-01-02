@@ -5,6 +5,7 @@ namespace App\ReadXYZ\Models;
 
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\TrainersData;
+use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Enum\TrainerType;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
@@ -23,100 +24,302 @@ use App\ReadXYZ\Lessons\Lessons;
  * $_SESSION['currStudent']
  * $_SESSION['currUser']
  * $_SESSION['STUDENTS'][$studentCode] object(currentLessonCode, studentName, lastValidated, currentLessonName?)
- * $_SESSION['USERS'][$userCode] object(userName, students['code' => $code, 'name' => $name], lastValidated)
+ * $_SESSION['USERS'][$trainerCode] object(userName, trainerCode, studentCt, studentmap, lastValidated)
  */
 class Session
 {
-    // $_SESSION[self::CURR_CODE] contains the current userCode or studentCode.
-    // If it's a userCode it means we don't have a student selected yet.
-    const CURR_CODE        = 'currCode';
-    const TEST_USERCODE    = 'U123456789abcde.12345678';
-    const TEST_STUDENTCODE = 'S123456789abcde.12345678';
-    const VALIDITY_WINDOW  = 60 * 60 * 24; // one day in seconds
+    const CURRENT_STUDENT  = 'currStudent';
+    const CURRENT_USER     = 'currUser';
+    const STUDENTS         = 'STUDENTS';
+    const USERS            = 'USERS';
+    const TEST_TRAINERCODE = 'U123456789abcde0Z12345678';
+    const TEST_STUDENTCODE = 'S123456789abcde0Z12345678';
+    const TEST_NAME        = 'Test';
 
-    private string  $userCode          = '';
-    private string  $studentCode       = '';
-    private string  $currentLessonCode = '';
-    private string  $studentName       = '';
-    private string  $currentLesson     = '';
-    private int     $studentCount      = 0;
-    private int     $lastValidated     = 0;
+    const VALIDITY_WINDOW = 60 * 60 * 24; // one day in seconds
 
+
+// ======================== STATIC METHODS =====================
+    /**
+     * This kills the session. It does not kill the session settings associated with a student.
+     * Once $_SESSION['currCode] gets set
+     */
+    public static function clearSession()
+    {
+        self::sessionContinue();
+        self::cleanupSessionVariables();
+        $_SESSION[self::CURRENT_STUDENT] = '';
+        $_SESSION[self::CURRENT_USER]    = '';
+    }
 
     /**
-     * Session constructor.
-     * Normal flow - we make sure $_SESSION variables have been exposed with a start_session.
-     * We check for the existence of $_SESSION['currCode'].
+     * @return string current lesson code in use in session or empty string if none selected.
      * @throws PhonicsException
      */
-    public function __construct()
+    public static function getCurrentLessonCode(): string
     {
-        $underTest = self::testingInProgress();
-        // If unit testing we just build the session
-        if ($underTest) {
-            $this->userCode          = self::TEST_USERCODE;
-            $this->studentCode       = self::TEST_STUDENTCODE;
-            $this->studentName       = 'Test';
-            $this->currentLessonCode = 'TEST';
-            $this->currentLessonName = 'test';
-            $this->studentCount      = 1;
-            $this->lastValidated     = time();
-            //When testing we don't use the $_SESSION variable
-        } else {
-            // If we have an active session we retrieve it, otherwise
-            self::sessionContinue();
-            // // Get rid of a previous way we handled sessions
-            // if (isset($_SESSION['identity'])) {
-            //     unset($_SESSION['identity']);
-            // }
+        if (self::testingInProgress()) {
+            return 'TEST';
+        }
 
-            $sessId = $_SESSION[self::CURR_CODE] ?? '';
+        $student = self::get(self::STUDENTS);
+        if (empty($student->studentCode)) {
+            return '';
+        }
 
-            if (empty($sessId)) {
-                // we haven't set up $_SESSION['currCode'] yet so return empty handed
-                return;
-            }
-            if (Util::startsWith('S', $sessId)) {
-                // $_SESSION['currCode'] contains a student id so we retrieve all the information
-                $this->retrieveSession($sessId);
-                $this->studentCount = $this->getUserStudentCount($this->userCode);
+        if (empty($student->lessonCode)) {
+            if (empty($student->lessonName)) {
+                return '';
             } else {
-                // we assume $_SESSION['currCode'] is a userCode. We retrieve the id but session is still invalid
-                $this->userCode     = $sessId;
-                $this->studentCount = $this->getUserStudentCount($this->userCode);
+                $student->lessonCode = Lessons::getInstance()->getLessonCode($student->lessonName);
+                if ($student->lessonCode) {
+                    self::set($student, self::STUDENTS, $student->studentCode);
+                }
+                return $student->lessonCode;
             }
+        } else {
+            // we have a lesson code
+            if (empty($student->lessonName)) {
+                $student->lessonName = Lessons::getInstance()->getRealLessonName($student->lessonCode);
+                if ($student->lessonName) {
+                    self::set($student, self::STUDENTS, $student->studentCode);
+                }
+            }
+            return $student->lessonCode;
         }
     }
 
-    private static function cleanupSessionVariables(): void
+    /**
+     * @return string current lesson name in use in session or empty string if none selected.
+     * @throws PhonicsException
+     */
+    public static function getCurrentLessonName(): string
     {
+        if (self::testingInProgress()) {
+            return self::TEST_NAME;
+        }
 
+        $student = self::get(self::STUDENTS);
+        if (empty($student->studentCode)) {
+            return '';
+        }
+
+        if (empty($student->lessonName)) {
+            if (empty($student->lessonCode)) {
+                return '';
+            } else {
+                $student->lessonName = Lessons::getInstance()->getRealLessonName($student->lessonCode);
+                if ($student->lessonName) {
+                    self::set($student, self::STUDENTS, $student->studentCode);
+                }
+                return $student->lessonName;
+            }
+        } else {
+            // we have a lesson name
+            if (empty($student->lessonCode)) {
+                // if we have a lesson name but no code let's get the lesson code and update the session variable
+                $student->lessonCode = Lessons::getInstance()->getLessonCode($student->lessonName);
+                if ($student->lessonCode) {
+                    self::set($student, self::STUDENTS, $student->studentCode);
+                }
+            }
+            return $student->lessonName;
+        }
     }
 
-// ======================== STATIC METHODS =====================
+    /**
+     * @return string studentCode of session
+     * @throws PhonicsException
+     */
+    public static function getStudentCode(): string
+    {
+        if (self::testingInProgress()) {
+            return self::TEST_STUDENTCODE;
+        }
+        return self::get(self::CURRENT_STUDENT);
+    }
+
+    /**
+     * @return int epoch seconds since last validated. Not currently used.
+     * @throws PhonicsException
+     */
+    public static function getStudentLastValidated()
+    {
+        return self::get(self::STUDENTS)->lastValidated;
+    }
+
+    /**
+     * @return string studentName if student has been set in session otherwise empty string
+     * @throws PhonicsException
+     */
+    public static function getStudentName(): string
+    {
+        if (self::testingInProgress()) {
+            return self::TEST_NAME;
+        }
+
+        return  self::get(self::STUDENTS)->studentName;
+    }
+
+    /**
+     * @return string
+     * @throws PhonicsException
+     */
+    public static function getTrainerCode(): string
+    {
+        if (self::testingInProgress()) {
+            return self::TEST_TRAINERCODE;
+        }
+
+        return self::get(self::CURRENT_USER);
+    }
+
+    /**
+     * @return int epoch seconds since last validated. Not currently used.
+     * @throws PhonicsException
+     */
+    public static function getUserLastValidated()
+    {
+        return self::get(self::USERS)->lastValidated;
+    }
+
+    /**
+     * @return string
+     * @throws PhonicsException
+     */
+    public static function getUserName(): string
+    {
+        if (self::testingInProgress()) {
+            return self::TEST_NAME;
+        }
+        return self::get(self::USERS)->userName;
+    }
+
+    /**
+     *  an object with the fields (studentCode, studentName, lessonCode, lessonName, lastValidated)
+     * @return object|null
+     * @throws PhonicsException
+     */
+    public static function getStudentObject(): ?object
+    {
+        return (self::hasStudent()) ? self::get(self::STUDENTS) : null;
+    }
+
+    /**
+     * an object with the fields (trainerCode, userName, trainerType, studentCt, studentMap, lastValidated)
+     * @return object|null
+     * @throws PhonicsException
+     */
+    public static function getUserObject(): ?object
+    {
+        if (! self::hasTrainer()) return null;
+        $user = self::get(self::USERS);
+        if (! isset($users->trainerType)) {
+            $trainerType = (new TrainersData())->getTrainerType($user->trainerCode);
+            $user->trainerType = $trainerType;
+            self::set($user, self::USERS);
+        }
+        return $user;
+    }
+
+    /**
+     * @return bool
+     * @throws PhonicsException
+     */
     public static function hasActiveStudent(): bool
     {
         if (self::testingInProgress()) {
             return true;
         }
-        self::sessionContinue();
-        $sessId = $_SESSION[self::CURR_CODE] ?? '';
-        return Util::startsWith('S', $sessId);
+
+        return ! empty(self::get(self::CURRENT_STUDENT));
     }
 
-    public static function hasNoSession(): bool
-    {
-        return not(self::hasOnlyUser() || self::hasActiveStudent());
-    }
-
-    public static function hasOnlyUser(): bool
+    /**
+     * @return bool returns true is session has a trainer, student and lesson identified.
+     * @throws PhonicsException on ill-formed SQL
+     */
+    public static function hasLesson(): bool
     {
         if (self::testingInProgress()) {
-            return false;
+            return true;
+        }
+        return ! empty(self::get(self::STUDENTS)->lessonCode);
+    }
+
+    /**
+     * Should be the equivalent of isValid because we don't set isValid under we have a student
+     * @return bool
+     * @throws PhonicsException on ill-formed SQL
+     */
+    public static function hasStudent(): bool
+    {
+        if (self::testingInProgress()) {
+            return true;
         }
         self::sessionContinue();
-        $sessId = $_SESSION[self::CURR_CODE] ?? '';
-        return Util::startsWith('U', $sessId);
+        $hasStudent = ! empty(self::get(self::CURRENT_STUDENT));
+        if ($hasStudent) {
+            $studentCode = self::getStudentCode();
+            $trainerCode = self::getTrainerCode();
+            if (empty($trainerCode) || empty($studentCode)) {
+                return false;
+            }
+            return Views::getInstance()->isValidStudentTrainerPair($trainerCode, $studentCode,);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return bool true if session has at least a user, otherwise false.
+     * @throws PhonicsException on ill-formed SQL
+     */
+    public static function hasTrainer(): bool
+    {
+        if (self::testingInProgress()) {
+            return true;
+        }
+        $trainerCode = self::get(self::CURRENT_USER);
+        return Util::isValidTrainerCode($trainerCode);
+    }
+
+    /**
+     * @return bool
+     * @throws PhonicsException on ill-formed SQL
+     */
+    public static function isAdmin(): bool
+    {
+        if (self::testingInProgress()) {
+            return true;
+        }
+
+        return self::get(self::USERS)->type == TrainerType::ADMIN;
+
+    }
+
+    /**
+     * @return bool
+     * @throws PhonicsException on ill-formed SQL
+     */
+    public static function isStaff(): bool
+    {
+        if (self::testingInProgress()) {
+            return true;
+        }
+
+        $trainerType = self::get(self::USERS)->type;
+        return in_array($trainerType, [TrainerType::ADMIN, TrainerType::STAFF]);
+    }
+
+    /**
+     * A session is considered active if we have identified the trainer and student for this session.
+     * @return bool true if we have trainer/teacher, otherwise false.
+     * @throws PhonicsException on ill-formed SQL
+     */
+    public static function isValid(): bool
+    {
+        return self::hasStudent();
     }
 
     /**
@@ -128,8 +331,15 @@ class Session
         if (self::testingInProgress()) {
             return;
         }
-        if ( ! isset($_SESSION)) { //You can't start a session that's already going
-            session_start();       // continues the existing session
+
+        if ( ! isset($_SESSION)) {
+            session_start();
+        }
+        if ( ! isset($_SESSION[self::CURRENT_USER])) {
+            $_SESSION[self::CURRENT_USER] = '';
+        }
+        if ( ! isset($_SESSION[self::CURRENT_STUDENT])) {
+            $_SESSION[self::CURRENT_STUDENT] = '';
         }
     }
 
@@ -142,196 +352,30 @@ class Session
         return defined('TESTING_IN_PROGRESS');
     }
 
-// ======================== PUBLIC METHODS =====================
-    /**
-     * This kills the session. It does not kill the session settings associated with a student.
-     * Once $_SESSION['currCode] gets set
-     */
-    public function clearSession()
-    {
-        if (isset($_SESSION[self::CURR_CODE])) {
-            unset($_SESSION[self::CURR_CODE]);
-        }
-        $this->studentCode       = '';
-        $this->userCode          = '';
-        $this->studentName       = '';
-        $this->currentLessonName = '';
-        $this->currentLessonCode = '';
-        $this->lastValidated     = 0;
-        $this->studentCount      = -1;
-    }
-
-    /**
-     * @return string current lesson code in use in session or empty string if none selected.
-     */
-    public function getCurrentLessonCode(): string
-    {
-        if ($this->currentLessonCode) {
-            return $this->currentLessonCode;
-        }
-        if ($this->currentLessonName) {
-            return Lessons::getInstance()->getLessonCode($this->currentLessonName);
-        }
-        return '';
-    }
-
-    /**
-     * @return string current lesson name in use in session or empty string if none selected.
-     */
-    public function getCurrentLessonName(): string
-    {
-        if ($this->currentLessonName) {
-            return $this->currentLessonName;
-        }
-        if ($this->currentLessonCode) {
-            return Lessons::getInstance()->getRealLessonName($this->currentLessonCode);
-        }
-        return '';
-    }
-
-    /**
-     * @return int epoch seconds since last validated. Not currently used.
-     */
-    public function getLastValidated()
-    {
-        return $this->lastValidated;
-    }
-
-    /**
-     * @return string studentCode of session
-     */
-    public function getStudentCode(): string
-    {
-        return $this->studentCode;
-    }
-
-    public function getStudentCount(): bool
-    {
-        return $this->studentCount;
-    }
-
-    /**
-     * @return string studentName if student has been set in session otherwise empty string
-     */
-    public function getStudentName(): string
-    {
-        return $this->studentName;
-    }
-
-    public function getTrainerCode(): string
-    {
-        return $this->userCode;
-    }
-
-    /**
-     * @return bool returns true is session has a trainer, student and lesson identified.
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function hasLesson(): bool
-    {
-        return $this->hasStudent() && ! empty($this->currentLessonCode);
-    }
-
-    /**
-     * Should be the equivalent of isValid because we don't set isValid under we have a student
-     * @return bool
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function hasStudent(): bool
-    {
-        if (self::testingInProgress()) {
-            return true;
-        }
-        if (empty($this->userCode) || empty($this->studentCode)) {
-            return false;
-        }
-
-        if (Util::isValidStudentCode($this->studentCode) && $this->hasTrainer()) {
-            return (new StudentsData())->isValidStudentTrainerPair($this->studentCode, $this->userCode);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @return bool true if session has at least a user, otherwise false.
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function hasTrainer(): bool
-    {
-        if (self::testingInProgress()) {
-            return true;
-        }
-        if (empty($this->userCode)) {
-            return false;
-        }
-        return Util::isValidTrainerCode($this->userCode);
-    }
-
-    /**
-     * @return bool
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function isAdmin(): bool
-    {
-        if (self::testingInProgress()) {
-            return true;
-        }
-        if ( ! $this->hasTrainer()) {
-            return false;
-        }
-
-        $trainerData = new TrainersData();
-        $trainerType = $trainerData->getTrainerType($this->userCode);
-        return (TrainerType::ADMIN == $trainerType);
-    }
-
-    /**
-     * @return bool
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function isStaff(): bool
-    {
-        if (self::testingInProgress()) {
-            return true;
-        }
-        if ( ! $this->hasTrainer()) {
-            return false;
-        }
-
-        $trainerData = new TrainersData();
-        $trainerType = $trainerData->getTrainerType($this->userCode);
-        return in_array($trainerType, ['admin', 'staff']);
-    }
-
-    /**
-     * A session is considered active if we have identified the trainer and student for this session.
-     * @return bool true if we have trainer/teacher, otherwise false.
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function isValid(): bool
-    {
-        return $this->hasStudent();
-    }
-
     /**
      * @param string $lessonName
      * @throws PhonicsException on ill-formed SQL
      */
-    public function updateLesson(string $lessonName): void
+    public static function updateLesson(string $lessonName): void
     {
-        if ( ! $this->isValid()) {
-            throw new PhonicsException("There is no session active for a student. Cannot update lesson.");
-        }
-        $lessons                 = Lessons::getInstance();
-        $this->currentLessonName = $lessons->getRealLessonName($lessonName);
-        $this->currentLessonCode = $lessons->getLessonCode($lessonName);
         if (self::testingInProgress()) {
             return;
         }
-        $key                                   = $this->studentCode;
-        $_SESSION[$key]['CURRENT_LESSON']      = $this->currentLessonName;
-        $_SESSION[$key]['CURRENT_LESSON_CODE'] = $this->currentLessonCode;
+
+        if ( ! self::isValid()) {
+            throw new PhonicsException("There is no session active for a student. Cannot update lesson.");
+        }
+        $lessons             = Lessons::getInstance();
+        $student             = self::get(self::STUDENTS);
+        $student->lessonName = $lessons->getRealLessonName($lessonName);
+        $student->lessonCode = $lessons->getLessonCode($lessonName);
+
+        if ($student->studentCode && $student->lessonCode && $student->lessonName) {
+            self::set($student, self::STUDENTS);
+        } else {
+            $message = "Cannot update session lesson. Student: {$student->studentCode}, lesson: {$student->lessonCode}";
+            throw new PhonicsException($message);
+        }
     }
 
     /**
@@ -339,152 +383,259 @@ class Session
      * @param string $studentCode
      * @throws PhonicsException on ill-formed SQL
      */
-    public function updateStudent(string $studentCode)
+    public static function updateStudent(string $studentCode)
     {
         if (self::testingInProgress()) {
             return;
         }
-        if ( ! isset($_SESSION[self::CURR_CODE])) {
-            throw new PhonicsException("Cannot update student session when no session key is present.");
+        if ( ! self::hasTrainer()) {
+            throw new PhonicsException("Cannot update student session without a user.");
         }
         if ( ! Util::isValidStudentCode($studentCode)) {
             throw new PhonicsException("$studentCode is not a valid student code.");
         }
 
-        $_SESSION[self::CURR_CODE] = $studentCode;
+        self::set($studentCode, self::CURRENT_STUDENT);
         // if this matches the current session id just retrieve it
-        if (isset($_SESSION[$studentCode])) {
-            $this->retrieveSession($studentCode);
-        } else {
-            // validate the student record
-            $studentsData = new StudentsData();
-            $studentName  = $studentsData->getStudentName($studentCode);
-            if (empty($studentName)) {
-                throw new PhonicsException("$studentCode not found in abc_students.");
-            }
-            // validate the student's trainer
-            $teacherValidated = $studentsData->isValidStudentTrainerPair($studentCode, $this->userCode);
-            if ( ! $teacherValidated) {
-                $userName = (new TrainersData())->getUsername($this->userCode);
-                throw new PhonicsException("$userName does not teach $studentName($studentCode).");
-            }
-            $this->studentCode       = $studentCode;
-            $this->studentName       = $studentName;
-            $this->currentLessonName = '';
-            $this->currentLessonCode = '';
-            $this->lastValidated     = time();
-            $this->persistSession($studentCode);
+        $student = self::getEmptyStudentObject();
+
+        $studentsData = new StudentsData();
+        $studentName  = $studentsData->getStudentName($studentCode);
+        if (empty($studentName)) {
+            throw new PhonicsException("$studentCode not found in abc_students.");
         }
+        $student->studentCode = $studentCode;
+        $student->studentName = $studentName;
+        $trainerCode          = self::get(self::CURRENT_USER);
+        // validate the student's trainer
+        $teacherValidated = Views::getInstance()->isValidStudentTrainerPair($trainerCode, $studentCode);
+        if ( ! $teacherValidated) {
+            $userName = (new TrainersData())->getUsername($trainerCode);
+            throw new PhonicsException("$userName does not teach $studentName($studentCode).");
+        }
+
+        $student->lessonName    = '';
+        $student->lessonCode    = '';
+        $student->lastValidated = time();
+        self::set($student, self::STUDENTS);
     }
 
     /**
-     * Updates the Session with the given user. Accepts userCode or userName
-     * @param string $user trainerCode or userName
+     * Updates the Session with the given user. Accepts trainerCode or userName as first parameter.
+     * If this call is based on S2Member information, we don't know the trainerCode
+     * @param string $userName usually an email address
+     * @param string $trainerCode
+     * @param string $userDisplayAs trainers full name
+     * @param string $trainerType
+     * @param array $studentMap [ ['studentCode' => code, 'studentName' => name]  ]
      * @throws PhonicsException on ill-formed SQL
      */
-    public function updateUser(string $user)
+    public static function updateUser(
+        string $userName,
+        string $trainerCode = '',
+        string $userDisplayAs = '',
+        string $trainerType = '',
+        array $studentMap = [])
     {
         if (self::testingInProgress()) {
             return;
         }
-
+        self::sessionContinue();
         $trainersData = new TrainersData();
-        $trainerCode  = Util::isValidTrainerCode($user) ? $user : $trainersData->getTrainerCode($user);
-        if (empty($trainerCode)) {
-            throw new PhonicsException("$user does not exist.");
+        $userObject   = null;
+        if (empty($trainerCode) || empty($userDisplayAs) || empty($studentMap || empty($trainerType))) {
+            // we only have partial data so get information from the database
+
+            $trainer = $trainersData->get($userName);
+            if ($trainer == null) {
+                throw new PhonicsException("$userName is not a valid user name.");
+            } else {
+                $studentMap = Views::getInstance()->getMapOfStudentsForUser();
+                $count      = count($studentMap);
+                $userObject = self::createUserObject($trainer->trainerCode, $trainer->userName, $trainer->trainerType, $count, $studentMap);
+                $trainerCode = $trainer->trainerCode;
+            }
+        } else {
+            $userObject = self::createUserObject($trainerCode, $userName, $trainerType, count($studentMap), $studentMap);
         }
-
-        $count = count((new StudentsData())->getStudentNamesForUser($user));
-
-
-        // set userCode after clearing the other fields
-        $this->clearSession();
-        $_SESSION[self::CURR_CODE] = $trainerCode;
-        $this->userCode            = $trainerCode;
-        $this->studentCount        = $count;
+        self::clearSession();
+        self::set($trainerCode, self::CURRENT_USER);
+        self::set($userObject, self::USERS);
     }
 
-    /**
-     * @param $trainer
-     * @param $student
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function updateUserAndStudent($trainer, $student)
-    {
-        throw new PhonicsException("Not yet implemented.");
-    }
-
+// ======================== PUBLIC METHODS =====================
 // ======================== PRIVATE METHODS =====================
+
     /**
-     * @param string $userCode
-     * @return int
-     * @throws PhonicsException
+     *  $_SESSION['currStudent']
+     * $_SESSION['currUser']
+     * $_SESSION['STUDENTS'][$studentCode] object(currentLessonCode, studentName, lastValidated, currentLessonName?)
+     * $_SESSION['USERS'][$trainerCode] object(userName, students['code' => $code, 'name' => $name], lastValidated)
      */
-    private function getUserStudentCount(string $userCode): int
+    private static function cleanupSessionVariables(): void
     {
-        if (empty($userCode)) {
-            return 0;
-        }
-        if (isset($_SESSION[$userCode])) {
-            $userInfo = $_SESSION[$userCode];
-            $cutoff   = time() - (24 * 60 * 60);
-            if ($userInfo->lastUpdated > $cutoff) {
-                return $userInfo->studentCount;
+        self::sessionContinue();
+        $allowed = ['currStudent', 'currUser', 'STUDENTS', 'USERS'];
+        $keys    = array_keys($_SESSION);
+        foreach ($keys as $key) {
+            if ( ! in_array($key, $allowed)) {
+                unset($_SESSION[$key]);
             }
         }
-        $ct                  = count((new StudentsData())->getStudentNamesForUser($userCode));
-        $_SESSION[$userCode] = (object)[
-            'lastUpdated'  => time(),
-            'studentCount' => $ct
-        ];
-        return $ct;
     }
 
     /**
-     * Persist this object into session variables.
-     * @param string $studentCode the student the data belongs to.
+     * creates an object with the fields (studentCode, studentName, lessonCode, lessonName, lastValidated)
+     * @param string $studentCode
+     * @param string $studentName
+     * @param string $lessonCode
+     * @param string $lessonName
+     * @param int $lastValidated
+     * @return object
      */
-    private function persistSession(string $studentCode)
+    private static function createStudentObject(
+        string $studentCode,
+        string $studentName,
+        string $lessonCode,
+        string $lessonName,
+        int $lastValidated
+    ): object
     {
-        $_SESSION[self::CURR_CODE]                     = $studentCode;
-        $_SESSION[$studentCode]['USER_CODE']           = $this->userCode;
-        $_SESSION[$studentCode]['STUDENT_CODE']        = $this->studentCode;
-        $_SESSION[$studentCode]['STUDENT_NAME']        = $this->studentName;
-        $_SESSION[$studentCode]['CURRENT_LESSON']      = $this->currentLessonName;
-        $_SESSION[$studentCode]['CURRENT_LESSON_CODE'] = $this->currentLessonCode;
-        $_SESSION[$studentCode]['VALIDATE']            = $this->lastValidated;
+        $seconds = ($lastValidated == 0) ? time() : $lastValidated;
+        return (object)[
+            'studentCode'   => $studentCode,
+            'studentName'   => $studentName,
+            'lessonCode'    => $lessonCode,
+            'lessonName'    => $lessonName,
+            'lastValidated' => $seconds
+        ];
     }
 
     /**
-     * Copies the persisted session information into our Session object.
-     * @param string $studentCode the student the data belongs to.
+     * creates an object with the fields (trainerCode, userName, studentCt, studentMap, lastValidated)
+     * @param string $trainerCode
+     * @param string $userName
+     * @param int $studentCt
+     * @param array $studentMap
+     * @param int $lastValidated
+     * @return object
+     */
+    private static function createUserObject(
+        string $trainerCode,
+        string $userName,
+        string $trainerType,
+        int $studentCt,
+        array $studentMap,
+        int $lastValidated = 0
+    ): ?object
+    {
+        $seconds = ($lastValidated == 0) ? time() : $lastValidated;
+        return (object)[
+            'trainerCode'   => $trainerCode,
+            'userName'      => $userName,
+            'studentCt'     => $studentCt,
+            'trainerType'   => $trainerType,
+            'studentMap'    => $studentMap,
+            'lastValidated' => $seconds
+        ];
+    }
+
+    /**
+     * return a session variable. If STUDENTS or USERS is specified, the current student/user value is used
+     * if subKey is empty.
+     * @param string $key
+     * @param string $subKey
+     * @return string|?object
      * @throws PhonicsException
      */
-    private function retrieveSession(string $studentCode)
+    private static function get(string $key, string $subKey = '')
     {
-        if ( ! isset($_SESSION[$studentCode])) {
-            Log::info("Nonexistent session $studentCode. ");
+        self::sessionContinue();
+        if (in_array($key, [self::CURRENT_STUDENT, self::CURRENT_USER])) {
+            return $_SESSION[$key] ?? '';
+        } elseif (in_array($key, [self::STUDENTS, self::USERS])) {
+            if (empty($subKey) && ($key == self::STUDENTS)) {
+                if (empty($_SESSION[self::CURRENT_STUDENT])) {
+                    return self::getEmptyStudentObject();
+                } else {
+                    return $_SESSION[self::STUDENTS][$_SESSION[self::CURRENT_STUDENT]] ?? null;
+                }
+            } elseif (empty($subKey) && ($key == self::USERS)) {
+                if (empty($_SESSION[self::CURRENT_USER])) {
+                    return self::getEmptyUserObject();
+                } else {
+                    return $_SESSION[self::USERS][$_SESSION[self::CURRENT_USER]] ?? null;
+                }
+            } else {
+                if ($key == self::STUDENTS) {
+                    return $_SESSION[$key][$subKey] ?? self::getEmptyStudentObject();
+                } else {
+                    return $_SESSION[$key][$subKey] ?? self::getEmptyUserObject();
+                }
+            }
+        } else {
+            throw new PhonicsException("Invalid session key $key.");
         }
-        $user = $_SESSION[$studentCode]['USER_CODE'] ?? '';
-
-        // If we pass in a non-student id we will clear the object and invalidate it
-        $this->studentCode       = $_SESSION[$studentCode]['STUDENT_CODE'] ?? '';
-        $this->userCode          = $user;
-        $this->studentName       = $_SESSION[$studentCode]['STUDENT_NAME'] ?? '';
-        $this->currentLessonName = $_SESSION[$studentCode]['CURRENT_LESSON'] ?? '';
-        $this->currentLessonCode = $_SESSION[$studentCode]['CURRENT_LESSON_CODE'] ?? '';
-        $this->lastValidated     = $_SESSION[$studentCode]['VALIDATE'] ?? 0;
     }
 
     /**
-     * @param string $userCode
+     * @return object an empty
+     */
+    private static function getEmptyStudentObject(): object
+    {
+        return self::createStudentObject('', '', '', '', 1);
+    }
+
+    /**
+     * @return object an empty object with the fields (trainerCode, userName, studentCt, studentMap, lastValidated)
+     */
+    private static function getEmptyUserObject(): object
+    {
+        return self::createUserObject('', '', '', 0, []);
+    }
+
+    /**
+     * set a session variable. see explanation in get for key and subKey.
+     * @param mixed $value
+     * @param string $key
+     * @param string $subKey
+     * @throws PhonicsException
+     */
+    private static function set($value, string $key, string $subKey = ''): void
+    {
+        self::sessionContinue();
+        if (in_array($key, [self::CURRENT_STUDENT, self::CURRENT_USER])) {
+            $_SESSION[$key] = $value;
+        } elseif (in_array($key, [self::STUDENTS, self::USERS])) {
+            if (empty($subKey) && ($key == self::STUDENTS)) {
+                if (empty($_SESSION[self::CURRENT_STUDENT])) {
+                    throw new PhonicsException("SubKey must be present if no current student.");
+                }
+                $_SESSION[self::STUDENTS][$_SESSION[self::CURRENT_STUDENT]] = $value;
+            } elseif (empty($subKey) && ($key == self::USERS)) {
+                if (empty($_SESSION[self::CURRENT_USER])) {
+                    throw new PhonicsException("SubKey must be present if no current user.");
+                }
+                $_SESSION[self::USERS][$_SESSION[self::CURRENT_USER]] = $value;
+            } else {
+                $_SESSION[$key][$subKey] = $value;
+            }
+        } else {
+            throw new PhonicsException("Invalid session key $key.");
+        }
+    }
+
+    /**
+     * @param string $trainerCode
      * @param string $studentCode
      * @return bool
      */
-    private function updateValidation(string $userCode, string $studentCode): bool
+    private function updateValidation(string $trainerCode, string $studentCode): bool
     {
         // Eventually we will query the member manager API if the user and student are still valid.
         // For now, we just do nothing.
+        self::sessionContinue();
+
         $this->lastValidated = time();
 
         if ( ! self::testingInProgress()) {
