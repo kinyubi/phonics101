@@ -4,12 +4,11 @@
 namespace App\ReadXYZ\Twig;
 
 
-use App\ReadXYZ\Data\GroupData;
-use App\ReadXYZ\Enum\TrainerType;
 use App\ReadXYZ\Helpers\PhonicsException;
+use App\ReadXYZ\JSON\GroupsJson;
+use App\ReadXYZ\JSON\LessonsJson;
 use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Lessons\Lessons;
 use App\ReadXYZ\Models\BreadCrumbs;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Page\Page;
@@ -27,7 +26,7 @@ class LessonListTemplate
      */
     public function display()
     {
-        $lessons = Lessons::getInstance();
+        $lessons = LessonsJson::getInstance();
         $student = Session::getStudentObject();
         $studentName = $student->studentName;
         $currentCrumb = 'lessons';
@@ -37,12 +36,12 @@ class LessonListTemplate
 
 
         $args = [
-            'accordion'         => $lessons->getAccordionList(),
+            'accordion'         => $lessons->getAccordionWithMastery(),
             'studentName'       => $studentName,
             'mostRecentLesson'  => $student->lessonCode,
-            'groupInfo'         => (new GroupData())->getGroupExtendedAssocArray(),
+            'groupsJson'        => GroupsJson::getInstance(), //sync with twig
             'this_crumb'        => $currentCrumb,
-            'lessonDisplayAs'   => $lessons->getLessonDisplayAs(), // [ [lessonCode => lessonDisplayAs] ]
+            'LessonsJson'       => $lessons,
             'isLocal' => Util::isLocal()
         ];
 

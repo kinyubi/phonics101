@@ -7,6 +7,7 @@ namespace App\ReadXYZ\Data;
 use App\ReadXYZ\Enum\ActiveType;
 use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
+use App\ReadXYZ\Enum\Regex;
 use App\ReadXYZ\Enum\Throwable;
 use App\ReadXYZ\Enum\TrainerType;
 use App\ReadXYZ\Helpers\PhonicsException;
@@ -14,6 +15,7 @@ use App\ReadXYZ\Helpers\Util;
 
 class TrainersData extends AbstractData
 {
+
     // from AbstractData:
     //   PhonicsDb  $db
     //   string     $tableName
@@ -60,8 +62,8 @@ EOT;
 
     /**
      * @param string $userName
-
      * @param string $displayName
+     * @param string $trainerCode
      * @param string $type
      * @param string $active
      * @return DbResult
@@ -71,6 +73,7 @@ EOT;
         string $userName,
         string $displayName = '',
         string $type = TrainerType::TRAINER,
+        string $trainerCode = '',
         string $active = ActiveType::IS_ACTIVE
     ): DbResult
     {
@@ -79,13 +82,11 @@ EOT;
         $type = $this->smartQuotes($type);
         $active = $this->smartQuotes($active);
         // generate an extended uniqId prefixed with U
-        $trainerCode = uniqid('U', true);
-        $trainerCode = $this->smartQuotes(str_replace('.', 'Z', $trainerCode));
+        $trainerCode = $this->smartQuotes($this->newTrainerCode($trainerCode));
         $date        = $this->smartQuotes(Util::dbDate());
-        $hash        = $this->smartQuotes(empty($password) ? '' : $this->makeHash($userName, $password));
         $query       = <<<EOT
-        INSERT INTO abc_trainers(userName,displayName,dateCreated,dateModified,dateLastAccessed,trainerType,hash, trainerCode, active,userEmail)
-        VALUES($userName, $displayName, $date, $date, $date, $type, $hash, $trainerCode, $active, $userName)
+        INSERT INTO abc_trainers(userName,displayName,dateCreated,dateModified,dateLastAccessed,trainerType, trainerCode, active,hash)
+        VALUES($userName, $displayName, $date, $date, $date, $type, $trainerCode, $active, '')
         ON DUPLICATE KEY UPDATE
         displayName = $displayName, dateModified = $date, dateLastAccessed = $date,
         trainerType = $type, active = $active
@@ -176,7 +177,7 @@ EOT;
         if (Util::contains('@', $user)) {
             return $user;
         }
-        $query = "SELECT userName FROM abc_trainers WHERE trainerCode = '$user'";
+        $query = "SELECT userName FROM abc_trainers WHERE trainerCode = '$user' OR userName = '$user'";
         return $this->throwableQuery($query, QueryType::SCALAR, Throwable::THROW_ON_NOT_FOUND);
     }
 
@@ -258,42 +259,21 @@ EOT;
     }
 
     /**
-     * @param string $user
-     * @param string $password
-     * @return void
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public function updatePassword(string $user, string $password): void
-    {
-        $where    = "trainerCode = '$user' OR userName = '$user'";
-        $userName = (Util::isValidTrainerCode($user)) ? $this->getUsername($user) : $user;
-        $hash     = $this->makeHash($userName, $password);
-        $query    = "UPDATE abc_trainers SET hash='$hash', dateModified=CURDATE(), dateLastAccessed=CURDATE() WHERE $where";
-        $this->throwableQuery($query, QueryType::STATEMENT);
-    }
-
-    public function verifyPassword(string $userName, string $password): bool
-    {
-        $calculatedHash = $this->makeHash($userName, $password);
-        $actualHash     = $this->getHash($userName);
-        if (empty($actualHash)) {
-            return false;
-        }
-        return $calculatedHash === $actualHash;
-    }
-
-// ======================== PRIVATE METHODS =====================
-
-    /**
-     * @param string $user userName or trainerCode
-     * @param string $password
+     * generates a trainer code based on an abc_users.uuid or creates a new code if no uuid specified.
+     * @param string $oldCode
      * @return string
-     * @throws PhonicsException on ill-formed SQL
+     * @throws PhonicsException
      */
-    private function makeHash(string $user, string $password): string
+    public function newTrainerCode(string $oldCode=''): string
     {
-        $userName = (Util::isValidTrainerCode($user)) ? $this->getUsername($user) : $user;
-        return password_hash($userName . '|' . $password, PASSWORD_BCRYPT, ['cost' => 8]);
+        if (empty($oldCode)) {
+            return str_replace('.', 'Z', uniqid('U', true));
+        } elseif (Regex::isValidOldTrainerCodePattern($oldCode)) {
+            return Util::oldUniqueIdToNew($oldCode);
+        } elseif (Regex::isValidTrainerCodePattern($oldCode)) {
+            return $oldCode;
+        } else {
+            throw new PhonicsException("Invalid input. Should be empty or valid old abc_users uuid.");
+        }
     }
-
 }

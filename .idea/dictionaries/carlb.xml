@@ -1,8 +1,10 @@
 <component name="ProjectDictionaryState">
   <dictionary name="carlb">
     <words>
+      <w>boolstring</w>
       <w>favicons</w>
       <w>flipbook</w>
+      <w>gametypes</w>
       <w>laminas</w>
       <w>laragon</w>
       <w>lessonlist</w>
@@ -17,6 +19,7 @@
       <w>studentlist</w>
       <w>subquery</w>
       <w>tablename</w>
+      <w>tabtypes</w>
       <w>trainercode</w>
       <w>usercode</w>
       <w>usermastery</w>

@@ -94,6 +94,7 @@ class Membership
      *   Optional: user_email, user_pass, first_name, last_name, s2member_notes, modify_if_login_exists, notification
      *   custom_fields[student1_firstname], custom_fields[student2_firstname], custom_fields[student3_firstname]
      * @return DbResult
+     * @throws PhonicsException
      */
     public function modifyUser(stdClass $userObject): DbResult
     {

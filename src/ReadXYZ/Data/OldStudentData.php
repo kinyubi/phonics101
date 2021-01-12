@@ -6,7 +6,7 @@ namespace App\ReadXYZ\Data;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\JSON\LessonsJson;
 use stdClass;
 use App\ReadXYZ\Helpers\PhonicsException;
 
@@ -185,26 +185,26 @@ EOT;
 
     public function getCargoInfo(array $cargo) {
 
-        $currentLesson = Lessons::getInstance()->getRealLessonName($cargo['currentLesson'] ?? '');
         $lessonsData = [];
-        $lessons = Lessons::getInstance();
+        $lessonsJson = LessonsJson::getInstance();
+        $currentLesson = $lessonsJson->getLessonName($cargo['currentLesson']) ?? '';
         $lessonTypes = ['currentLessons', 'masteredLessons'];
         $usableMasteryDataFound = false;
         foreach ($lessonTypes as $lessonType) {
             if ($cargo[$lessonType]) {
                 foreach ($cargo[$lessonType] as $lessonKey => $info) {
-                    $lessonName = $lessons->getRealLessonName($lessonKey);
-                    if (empty($lessonName)) {
+                    $lessonCode= $lessonsJson->getLessonCode(Util::convertLessonKeyToLessonName($lessonKey));
+                    if (empty($lessonCode)) {
                         continue;
                     }
                     $masteryData = $this->harvestMastery($info);
-                    if (isset($lessonsData[$lessonName])) {
-                        if ($masteryData->mastery > $lessonsData[$lessonName]->mastery) {
-                            $lessonData[$lessonName] = $masteryData;
+                    if (isset($lessonsData[$lessonCode])) {
+                        if ($masteryData->mastery > $lessonsData[$lessonCode]->mastery) {
+                            $lessonData[$lessonCode] = $masteryData;
                             $usableMasteryDataFound = true;
                         }
                     } else {
-                        $lessonsData[$lessonName] = $masteryData;
+                        $lessonsData[$lessonCode] = $masteryData;
                         $usableMasteryDataFound = true;
                     }
                 }

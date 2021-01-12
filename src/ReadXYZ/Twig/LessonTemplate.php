@@ -4,18 +4,15 @@
 namespace App\ReadXYZ\Twig;
 
 
-use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\Views;
-use App\ReadXYZ\Data\WarmupData;
 use App\ReadXYZ\Data\WordMasteryData;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Lessons\GameTypes;
-use App\ReadXYZ\Lessons\LearningCurve;
-use App\ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\JSON\LessonsJson;
+use App\ReadXYZ\JSON\TabTypesJson;
+use App\ReadXYZ\JSON\WarmupsJson;
 use App\ReadXYZ\Lessons\SideNote;
-use App\ReadXYZ\Lessons\TabTypes;
 use App\ReadXYZ\Models\BreadCrumbs;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Page\LessonPage;
@@ -23,7 +20,7 @@ use App\ReadXYZ\Lessons\Lesson;
 
 class LessonTemplate
 {
-    private Lessons    $lessonFactory;
+    private LessonsJson    $lessonsJson;
     private ?Lesson    $lesson;
     private LessonPage $page;
     private string     $lessonName;
@@ -38,14 +35,14 @@ class LessonTemplate
      */
     public function __construct(string $lessonName = '', string $initialTabName = '')
     {
-        $this->lessonFactory  = Lessons::getInstance();
-        $this->lessonName     = $lessonName;
+        $this->lessonsJson = LessonsJson::getInstance();
+        $this->lessonName  = $lessonName;
         $this->initialTabName = $initialTabName;
         $this->trainerCode    = Session::getTrainerCode();
         Session::updateLesson($lessonName);
 
         $studentName = Session::getStudentName();
-        $this->lesson = $this->lessonFactory->getLesson($lessonName);
+        $this->lesson = $this->lessonsJson->getLesson($lessonName);
         if ($this->lesson == null) {
             return Util::redBox("A lesson named $lessonName does not exist.");
         }
@@ -69,19 +66,18 @@ class LessonTemplate
         $args['students']      = Views::getInstance()->getStudentNamesForUser($this->trainerCode);
         $args['page']          = $this->page;
         $args['lesson']        = $this->lesson;
-        $args['tabTypes']      = TabTypes::getInstance();
-        $args['gameTypes']     = GameTypes::getInstance();
+        $args['tabTypes']      = TabTypesJson::getInstance();
         $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
         $args['sideNote']      = SideNote::getInstance();
         $args['testCurve']     = $sideNote->getTestCurveHTML();
         $args['learningCurve'] = $sideNote->getLearningCurveHTML();
         $args['masteredWords'] = (new WordMasteryData())->getMasteredWords();
-        $args['this_crumb'] = $this->lesson->lessonDisplayAs;
+        $args['this_crumb'] = $this->lesson->lessonName;
         if ($this->initialTabName) {
             $args['initialTabName'] = $this->initialTabName;
         }
         if (in_array('warmup', $this->lesson->tabNames)) {
-            $args['warmups']   = (new WarmupData())->get($this->lesson->lessonId);
+            $args['warmups']   = WarmupsJson::getInstance()->get($this->lesson->lessonId);
         }
 
         $breadcrumbs = (new BreadCrumbs())->getPrevious('lesson');

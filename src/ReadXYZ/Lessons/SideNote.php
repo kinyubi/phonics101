@@ -2,13 +2,13 @@
 
 namespace App\ReadXYZ\Lessons;
 
-use App\ReadXYZ\Data\GroupData;
 use App\ReadXYZ\Data\StudentLessonsData;
 use App\ReadXYZ\Enum\Regex;
 use App\ReadXYZ\Helpers\PhonicsException;
-use App\ReadXYZ\Lessons\LearningCurve;
+use App\ReadXYZ\JSON\GroupsJson;
 use App\ReadXYZ\Enum\TimerType;
 use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\JSON\TabTypesJson;
 use App\ReadXYZ\Models\Log;
 use App\ReadXYZ\Twig\TwigFactory;
 use Exception;
@@ -85,7 +85,7 @@ class SideNote
                 $groupCode = $group;
 
             } else {
-                $groupCode = $realGroupName = (new GroupData())->getGroupCode($group);
+                $groupCode = $realGroupName = GroupsJson::getInstance()->getGroupCode($group);
             }
         } catch (Throwable $ex) {
             $message = "Failure getting group code from  $group. " . $ex->getMessage();
@@ -93,18 +93,13 @@ class SideNote
             return '';
         }
 
-        try {
-            $realTabName = TabTypes::getInstance()->fixTabName($tabName);
-        } catch (Throwable $ex) {
-            $message = "Failure getting valid tab name from $tabName " . $ex->getMessage();
-            Log::warning($message, __METHOD__, __FILE__, __LINE__);
-            return '';
-        }
+        $realTabName = TabTypesJson::getInstance()->getTabId($tabName);
+        if (empty($realTabName)) return '';
         $note = $this->getGroupNote($groupCode, $realTabName);
         if ($note) {
             return $note;
         } else {
-            return $this->getDefaultTabNote($tabName) ?? '';
+            return $this->getDefaultTabNote($realTabName) ?? '';
         }
 
     }

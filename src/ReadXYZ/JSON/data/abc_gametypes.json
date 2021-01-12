@@ -1,0 +1,124 @@
+[
+    {
+        "type": "header",
+        "comment": "created manually. replaces readxyz0_phonics.abc_gametypes."
+    },
+    {
+        "type": "filler"
+    },
+    {
+        "type": "json_table",
+        "version": "1.0104.1",
+        "name": "abc_gametypes",
+        "data": [
+            {
+                "gameTypeId": "alien",
+                "gameTitle": "Alien",
+                "thumbNailUrl": "/images/sidebar/alien.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "practice",
+                "url": "",
+                "active": true
+            },
+            {
+                "gameTypeId": "dice",
+                "gameTitle": "Phonological Awareness",
+                "thumbNailUrl": "/images/sidebar/dice.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "warmup",
+                "url": "/dice/rolldice-orig.php",
+                "active": true
+            },
+            {
+                "gameTypeId": "mastery",
+                "gameTitle": "Mastery Flip",
+                "thumbNailUrl": "/images/sidebar/mastery.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "mastery",
+                "url": "",
+                "active": true
+            },
+            {
+                "gameTypeId": "random",
+                "gameTitle": "Word Cards",
+                "thumbNailUrl": "/images/sidebar/random.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "intro",
+                "url": "",
+                "active": true
+            },
+            {
+                "gameTypeId": "scramble",
+                "gameTitle": "Word Scramble",
+                "thumbNailUrl": "/images/sidebar/scramble.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "spell",
+                "url": "",
+                "active": true
+            },
+            {
+                "gameTypeId": "sentences",
+                "gameTitle": "Missing Word",
+                "thumbNailUrl": "/images/sidebar/sentences.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "fluency",
+                "url": "",
+                "active": true
+            },
+            {
+                "gameTypeId": "sort",
+                "gameTitle": "Rhyme Sort",
+                "thumbNailUrl": "/images/sidebar/sort.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "practice",
+                "url": "",
+                "active": true
+            },
+            {
+                "gameTypeId": "sound-box",
+                "gameTitle": "Sound Boxes",
+                "thumbNailUrl": "/images/sidebar/sound-box.jpg",
+                "cssClass": "sound-box",
+                "belongsOnTab": "write",
+                "url": "/sound-box.php",
+                "active": true
+            },
+            {
+                "gameTypeId": "test",
+                "gameTitle": "Test",
+                "thumbNailUrl": "/images/sidebar/dice.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "test",
+                "url": "",
+                "active": false
+            },
+            {
+                "gameTypeId": "tic-tac-toe",
+                "gameTitle": "Tic-Tac-Toe",
+                "thumbNailUrl": "/images/sidebar/tic-tac-toe.jpg",
+                "cssClass": "tic-tac-toe",
+                "belongsOnTab": "practice",
+                "url": "/tictactoe/tictac.php",
+                "active": true
+            },
+            {
+                "gameTypeId": "whack-a-mole",
+                "gameTitle": "Whack-A-Mole",
+                "thumbNailUrl": "/images/sidebar/whack-a-mole.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "practice",
+                "url": "",
+                "active": true
+            },
+            {
+                "gameTypeId": "word-builder",
+                "gameTitle": "Word Builder",
+                "thumbNailUrl": "/images/sidebar/word-builder.jpg",
+                "cssClass": "games",
+                "belongsOnTab": "intro",
+                "url": "",
+                "active": true
+            }
+        ]
+    }
+]

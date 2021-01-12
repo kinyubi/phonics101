@@ -8,7 +8,7 @@
   {% from "macros.html.twig" import tabHeader  %}
 
 {#  {% set tabId = 'warmup' %}#}
-{#  {% set tabInfo = tabTypes.getTabInfo(tabId) %}#}
+{#  {% set tabInfo = tabTypes.get(tabId) %}#}
   {% set tabName = tabInfo.tabDisplayAs %}
   {% set dim = isSmallScreen ? 25 : 40 %}
   <div class="container-fluid bg-white" id="{{ tabId }}-container">

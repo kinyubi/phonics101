@@ -32,7 +32,18 @@ class OldUserData extends AbstractData
      */
     public function getUsersWithoutStudents(): array
     {
-        $query = "SELECT UserName FROM abc_users WHERE UserName NOT IN (SELECT trainer1 FROM abc_student) ";
+        $query = "SELECT UserName FROM abc_Users WHERE UserName NOT IN (SELECT trainer1 FROM abc_student) ";
         return $this->throwableQuery($query, QueryType::SCALAR_ARRAY);
+    }
+
+    /**
+     * @param $userName
+     * @return string
+     * @throws PhonicsException
+     */
+    public function getUuid($userName): string
+    {
+        $query = "SELECT uuid FROM abc_Users WHERE UserName = '$userName'";
+        return $this->throwableQuery($query, QueryType::SCALAR) ?? '';
     }
 }

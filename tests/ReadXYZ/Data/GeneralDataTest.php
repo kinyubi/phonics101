@@ -60,4 +60,13 @@ class GeneralDataTest extends TestCase
         $this->assertNotContains('abc_students', $tables);
         $this->assertContains('abc_tabtypes', $tables);
     }
+
+    public function testSmartQuotes()
+    {
+        $genPhonics = new GeneralData();
+        $data = "bands,camps,facts,hands,lambs,masks,pants,tasks,bends,dents,desks,helps,melts,rents";
+        $quoted = $genPhonics->smartQuotes($data);
+        $jsonQuoted = $genPhonics->encodeJsonQuoted($data);
+        $this->assertEquals($quoted, $jsonQuoted);
+    }
 }

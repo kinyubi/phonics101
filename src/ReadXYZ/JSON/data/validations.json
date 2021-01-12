@@ -1,0 +1,34 @@
+[
+  {
+    "fieldValidations": [
+      {
+        "gameTypeId": [
+          "alien",
+          "dice",
+          "mastery",
+          "match",
+          "random",
+          "scramble",
+          "sentences",
+          "sort",
+          "sound-box",
+          "tic-tac-toe",
+          "whack-a-mole",
+          "word-builder"
+        ],
+        "gameCssClass": [
+          "games",
+          "sound-box",
+          "tic-tac-toe"
+        ],
+        "boolEnum": [
+          "Y",
+          "N"
+        ],
+        "tabTypesFromMySql": "SELECT tabTypeId FROM abc_tabtypes;",
+        "gameTypesFromMySql": "SELECT gameTypeId FROM abc_gametypes;"
+      }
+    ]
+  },
+
+]

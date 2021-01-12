@@ -22,7 +22,6 @@ class CacheTemplate
         if ($errorMessage) {
             $this->page->addError($errorMessage);
         }
-        $this->clearTwigCache();
     }
 
     private function recursiveGlob($pattern, $flags = 0) {

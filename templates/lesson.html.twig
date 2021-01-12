@@ -41,7 +41,7 @@ Optional Arguments
 {% endblock otherStyles %}
 
 {% block otherScripts %}
-  {% set cssJsVer = '1.0101.0' %}
+  {% set cssJsVer = '1.0102.0' %}
   <script src="/js/phonics.js?ver={{ cssJsVer }}"></script>
  	<script src="/js/timers.js?ver={{ cssJsVer }}"></script>
   <script src="/js/sound_box.js?ver={{ cssJsVer }}"></script>
@@ -64,7 +64,7 @@ Optional Arguments
             </div>
           </a>
           {% for tabId in lesson.tabNames %}
-            {% set tabInfo = tabTypes.getTabInfo(tabId) %}
+            {% set tabInfo = tabTypes.get(tabId) %}
             {% set active = (tabId == visibleTab|lower) ? 'active' : '' %}
             {% set selected = (tabId == visibleTab|lower) ? 'true' : 'false' %}
             {% set tabElemId = tabId ~ '-tab' %}
@@ -99,7 +99,7 @@ Optional Arguments
       <div class="tab-content w-100" id="myTabContent">
           {# CONTENT FOR EACH TAB #}
         {% for tabId in lesson.tabNames %}
-          {% set tabInfo = tabTypes.getTabInfo(tabId) %}
+          {% set tabInfo = tabTypes.get(tabId) %}
           {% set active = (tabId == visibleTab) ? 'show active' : '' %}
           {% set bodyId = tabId ~ '-body' %}
           {% set tabElemId = tabId ~ '-tab' %}
@@ -115,6 +115,8 @@ Optional Arguments
 {% endblock body %}
 
 {% block otherJS %}
+  {% set game_dimensions__ = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
+  {% set sound_box_dimensions__ = isSmallScreen ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
 	<script>
 			$('document').ready(function () {
        $(".ajax").colorbox();

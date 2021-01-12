@@ -18,6 +18,7 @@ class Regex extends Enum
     const CAMEL_CASE_TRANSITION = '/([a-z])([A-Z])/'; // lowercase letter followed by uppercase letter
     const VALID_STUDENT_CODE = '/^S[0-9a-f]{14}Z[0-9]{8}$/'; // S, 14 hex digits, Z, 9 numeric digits
     const VALID_OLD_STUDENT_CODE = '/^S[0-9a-f]{13}$/'; // S, 13 hex digits
+    const VALID_OLD_TRAINER_CODE = '/^U[0-9a-f]{13}$/'; // U, 13 hex digits
     const VALID_CONVERTED_STUDENT_CODE = '/^S[0-9a-f]{13}0Z123456789$/';
     const VALID_TRAINER_CODE = '/^U[0-9a-f]{14}Z[0-9]{8}$/'; // T, 14 hex digits, Z, 9 numeric digits
     const PARENTHETICAL_NUMBER = '/\((\d+)\)/';
@@ -40,31 +41,41 @@ class Regex extends Enum
         return $isMatch;
     }
 
-    public static function isValidEmail(string $email): bool
+    public static function isValidEmail(string $trainer): bool
     {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
+        return filter_var($trainer, FILTER_VALIDATE_EMAIL);
     }
 
-    public static function parseCompositeEmail(string $compositeEmail)
+    /**
+     * The trainer1 field of an old student record is input. It determines is trainer1 is a composite email,
+     * meaning it is an email address, followed by a hyphen, followed by the student's first name. An object is
+     * returned with the fields 'success', 'email' and 'student'.
+     * 'success' is true if the value validated as an email address or a composite email address.
+     * 'email' contains just the email portion of the trainer.
+     * 'student' contains the student first name if trainer was a composite email, otherwise it is an empty string.
+     * @param string $trainer
+     * @return object
+     */
+    public static function parseCompositeEmail(string $trainer)
     {
 
         $pos = false;
-        $pos1 = strrpos($compositeEmail, '-');
-        $pos2 = strrpos($compositeEmail, '.');
+        $pos1 = strrpos($trainer, '-');
+        $pos2 = strrpos($trainer, '.');
         if (($pos1 !== false) && ($pos2 !== false)) {
             $pos = ($pos1 > $pos2) ? $pos1 : false;
         }
         if ($pos === false)
         {
             // we don't have a hyphen after the final period
-            if (!filter_var($compositeEmail, FILTER_VALIDATE_EMAIL)) {
-                return (object)['success' => false, 'email' => $compositeEmail, 'student' => ''];
+            if (!filter_var($trainer, FILTER_VALIDATE_EMAIL)) {
+                return (object)['success' => false, 'email' => $trainer, 'student' => ''];
             } else {
-                return (object)['success' => true, 'email' => $compositeEmail, 'student' => ''];
+                return (object)['success' => true, 'email' => $trainer, 'student' => ''];
             }
         }
-        $email = substr($compositeEmail, 0, $pos);
-        $student = substr($compositeEmail, $pos+1);
+        $email = substr($trainer, 0, $pos);
+        $student = substr($trainer, $pos + 1);
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return (object) ['success' => true, 'email' => $email, 'student' => $student];
         } else {
@@ -75,6 +86,11 @@ class Regex extends Enum
     public static function isValidOldStudentCodePattern(string $studentCode): bool
     {
         return Regex::isMatch(Regex::VALID_OLD_STUDENT_CODE, $studentCode);
+    }
+
+    public static function isValidOldTrainerCodePattern(string $studentCode): bool
+    {
+        return Regex::isMatch(Regex::VALID_OLD_TRAINER_CODE, $studentCode);
     }
 
     public static function isValidTrainerCodePattern(string $trainerCode): bool

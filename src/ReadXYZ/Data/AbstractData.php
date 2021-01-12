@@ -117,29 +117,18 @@ abstract class AbstractData
     }
 
     /**
-     * We expect $enum to be ActiveType::IS_ACTIVE or ActiveType::IS_INACTIVE but we'll accept a bool value as well
-     * @param $enum
-     * @return bool
-     * @throws PhonicsException on ill-formed SQL
+     * smart quotes for JSON object
+     * @param $object
+     * @return string suitable for use as the value of a mysql JSON field
      */
-    public function enumToBool($enum): bool
+    public function encodeJsonQuoted($object)
     {
-        if (is_null($enum)) {
-            return false;
+        if ($object == null) {
+            return "NULL";
         }
-        if (is_string($enum)) {
-            if ($enum == ActiveType::IS_ACTIVE || $enum == ActiveType::IS_INACTIVE) {
-                return $enum == 'Y';
-            } else {
-                throw new PhonicsException("$enum is not a valid string value for Active");
-            }
-        } else {
-            if (is_bool($enum)) {
-                return $enum;
-            } else {
-                throw new PhonicsException("$enum must be 'Y', 'N' , true or false");
-            }
-        }
+        $encode = json_encode($object, JSON_UNESCAPED_SLASHES);
+        $fixed  = str_replace("'", "\\'", $encode);
+        return "'" . $fixed . "'";
     }
 
     /**
@@ -237,6 +226,7 @@ abstract class AbstractData
                 return DbResult::badResult($queryType->getValue() . ' is not a valid record type.');
         }
     }
+
 
     /**
      *
@@ -406,21 +396,6 @@ abstract class AbstractData
     }
 
     /**
-     * smart quotes for JSON object
-     * @param $object
-     * @return string suitable for use as the value of a mysql JSON field
-     */
-    protected function encodeJsonQuoted($object)
-    {
-        if ($object == null) {
-            return "NULL";
-        }
-        $encode = json_encode($object, JSON_UNESCAPED_SLASHES);
-        $fixed  = str_replace("'", "\\'", $encode);
-        return "'" . $fixed . "'";
-    }
-
-    /**
      * @param stdClass|null $object $object
      * @param string $boolTreatment
      * @return ?stdClass
@@ -439,7 +414,7 @@ abstract class AbstractData
             foreach ($this->booleanFields as $field) {
                 try {
                     if (isset($newObject->$field) && isset($object->$field)) {
-                        $newObject->$field = $this->enumToBool($object->$field);
+                        $newObject->$field = BoolEnumTreatment::enumToBool($object->$field);
                     }
                 } catch (Exception $ex) {
                     throw new PhonicsException("We should never get here. " . $ex->getMessage());

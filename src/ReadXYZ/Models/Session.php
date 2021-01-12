@@ -9,7 +9,7 @@ use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Enum\TrainerType;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Lessons\Lessons;
+use App\ReadXYZ\JSON\LessonsJson;
 
 
 /**
@@ -66,12 +66,12 @@ class Session
         if (empty($student->studentCode)) {
             return '';
         }
-
+        $lessonsJson = LessonsJson::getInstance();
         if (empty($student->lessonCode)) {
             if (empty($student->lessonName)) {
                 return '';
             } else {
-                $student->lessonCode = Lessons::getInstance()->getLessonCode($student->lessonName);
+                $student->lessonCode = $lessonsJson->getLessonCode($student->lessonName);
                 if ($student->lessonCode) {
                     self::set($student, self::STUDENTS, $student->studentCode);
                 }
@@ -80,7 +80,7 @@ class Session
         } else {
             // we have a lesson code
             if (empty($student->lessonName)) {
-                $student->lessonName = Lessons::getInstance()->getRealLessonName($student->lessonCode);
+                $student->lessonName = $lessonsJson->getLessonName($student->lessonCode);
                 if ($student->lessonName) {
                     self::set($student, self::STUDENTS, $student->studentCode);
                 }
@@ -108,7 +108,7 @@ class Session
             if (empty($student->lessonCode)) {
                 return '';
             } else {
-                $student->lessonName = Lessons::getInstance()->getRealLessonName($student->lessonCode);
+                $student->lessonName = LessonsJson::getInstance()->getLessonName($student->lessonCode);
                 if ($student->lessonName) {
                     self::set($student, self::STUDENTS, $student->studentCode);
                 }
@@ -118,7 +118,7 @@ class Session
             // we have a lesson name
             if (empty($student->lessonCode)) {
                 // if we have a lesson name but no code let's get the lesson code and update the session variable
-                $student->lessonCode = Lessons::getInstance()->getLessonCode($student->lessonName);
+                $student->lessonCode = LessonsJson::getInstance()->getLessonCode($student->lessonName);
                 if ($student->lessonCode) {
                     self::set($student, self::STUDENTS, $student->studentCode);
                 }
@@ -281,7 +281,7 @@ class Session
             return true;
         }
         $trainerCode = self::get(self::CURRENT_USER);
-        return Util::isValidTrainerCode($trainerCode);
+        return (new TrainersData())->isValid($trainerCode);
     }
 
     /**
@@ -365,9 +365,9 @@ class Session
         if ( ! self::isValid()) {
             throw new PhonicsException("There is no session active for a student. Cannot update lesson.");
         }
-        $lessons             = Lessons::getInstance();
+        $lessons             = LessonsJson::getInstance();
         $student             = self::get(self::STUDENTS);
-        $student->lessonName = $lessons->getRealLessonName($lessonName);
+        $student->lessonName = $lessons->getLessonName($lessonName);
         $student->lessonCode = $lessons->getLessonCode($lessonName);
 
         if ($student->studentCode && $student->lessonCode && $student->lessonName) {
@@ -391,7 +391,7 @@ class Session
         if ( ! self::hasTrainer()) {
             throw new PhonicsException("Cannot update student session without a user.");
         }
-        if ( ! Util::isValidStudentCode($studentCode)) {
+        if ( ! (new StudentsData())->doesStudentExist($studentCode)) {
             throw new PhonicsException("$studentCode is not a valid student code.");
         }
 

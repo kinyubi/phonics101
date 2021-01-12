@@ -19,7 +19,7 @@ otherJS
 
 #}
 
-{% set cssJsVer = '1.0101.0' %}
+{% set cssJsVer = '1.0102.0' %}
 {% set bootstrapVer = '0.1016.0' %}
 <!DOCTYPE html>
 
@@ -149,8 +149,7 @@ otherJS
 {% block otherJS %}{% endblock otherJS %}
 
 {# Tail end of HTML body where scripts go #}
-{% set game_dimensions__ = isSmallScreen ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
-{% set sound_box_dimensions__ = isSmallScreen ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
+
 <script>
     $(document).ready(function () {
 			{# when bootstrap modal is active, don't dim background #}

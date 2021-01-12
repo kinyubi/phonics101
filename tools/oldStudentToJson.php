@@ -12,6 +12,7 @@ function convertToSimpleEmail(string $username): string
     return substr($username, 0, $pos);
 }
 
+
 $studentData = new OldStudentData();
 $userData = new OldUserData();
 $userObjects = $studentData->getStudentTrainers();

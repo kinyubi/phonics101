@@ -5,12 +5,14 @@ namespace App\ReadXYZ\Data;
 
 
 use App\ReadXYZ\Enum\ActiveType;
-use App\ReadXYZ\Enum\BoolEnumTreatment;
-use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Models\Session;
 
+/**
+ * Class Views implements the views in database readxyz0_phonics.
+ * @package App\ReadXYZ\Data
+ */
 class Views
 {
     private static Views $instance;
@@ -96,24 +98,5 @@ class Views
         return $studentMap;
     }
 
-
-    // ------------ DELETED FUNCTIONS -----------------------------------
-    public function deleteOne($keyValue): void { $this->notImplemented(); }
-    public function updateOne($keyValue, string $fieldName, $newValue): void { $this->notImplemented(); }
-    public function throwableQuery(string $query, string $queryType, ...$params)
-    {
-        throw new PhonicsException("Invalid method for this class.");
-    }
-    public function query(string $query, $queryType, string $boolEnumTreatment=BoolEnumTreatment::CONVERT_TO_BOOL): DbResult
-    {
-        throw new PhonicsException("Invalid method for this class.");
-    }
-
-    protected function baseDelete(string $where, int $foreignKeyChecks=0): int { $this->notImplemented(); return 0;}
-    public function truncate(): int { $this->notImplemented(); return 0;}
-    private function notImplemented()
-    {
-        throw new PhonicsException("Invalid method for this class.");
-    }
 
 }

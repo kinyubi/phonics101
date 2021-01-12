@@ -11,7 +11,7 @@ inputs:
     studentName     : obtained by calling Session::getStudentName()
     mostRecentLesson: lessonName of lesson most recently worked on
     groupInfo       : Info based on vw_group_with_keychain view
-    lessonDisplayAs : associative array: lessonName => displayAs
+    lessonName      : associative array: lessonName => displayAs
     isLocal         : obtained by Util::isLocal()
 #}
 
@@ -40,7 +40,7 @@ inputs:
 					{% set href = '/handler/lesson/' ~ mostRecentLesson|url_encode %}
 					<a href="{{ href }}" id="most-recent-lesson">
 						<i class="fa fa-bolt text-warning fa-2x mx-3" aria-hidden="true"></i>
-						<span class="h3 text-dark mx-4">{{ lessonDisplayAs[mostRecentLesson]|escape('html') }}</span>
+						<span class="h3 text-dark mx-4">{{ lessonJson.getLessonName(mostRecentLesson)|escape('html') }}</span>
 						<span class="text-secondary">(most recent lesson)</span>
 					</a>
 				</div>
@@ -52,8 +52,8 @@ inputs:
 	<div class="row d-flex bg-white justify-content-start mx-2 flex-wrap">
 	{# FOR EACH GROUP #}
 	<div id="lesson-accordion" class="col-md-12 col-sm-12 col-lg-5 lesson-list--width">
-		{% for groupName, lessonPart in accordion %}
-			{% set group = groupInfo[groupName] %}
+		{% for groupCode, lessonPart in accordion %}
+			{% set group = groupsJson.get(groupCode) %}
 			{% set groupIndex = loop.index %}
 			{% set groupHeader = 'header-' ~ loop.index %}
 			{% set groupCollapse = 'collapse-' ~ loop.index %}
@@ -66,7 +66,7 @@ inputs:
 							<div class="col-1">
 								<img src="/images/lessonlist/accordion-unexpanded.png" alt="-" class="size--list-icon"/>
 							</div>
-							<div class="h5 ml-3 text-dark col-6">{{ group.groupDisplayAs }}</div>
+							<div class="h5 ml-3 text-dark col-6">{{ group.groupName }}</div>
 							<div class="col-4 accordion--image" style="background-image: url({{ groupAnimal }})">
 							</div>
 						</div>
@@ -86,7 +86,7 @@ inputs:
 										<div class="row d-flex flex-nowrap" style="height: 2em;">
 											<div data-toggle="tooltip" title="{{ iconTip[mastery] }}"
 											     class="col-1 h-75 align-self-center mastery--image mastery--{{ iconList[mastery] }}"></div>
-											<a role="button" href="{{ href }}" class="h4 text-dark ml-3">{{ lessonDisplayAs[lessonName] }}</a>
+											<a role="button" href="{{ href }}" class="h4 text-dark ml-3">{{ lessonName }}</a>
 										</div>
 									</div>
 								{% endfor %}

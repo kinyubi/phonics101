@@ -1,0 +1,91 @@
+[
+  {
+    "type": "header",
+    "version": "5.0.4",
+    "comment": "Export to JSON plugin for PHPMyAdmin"
+  },
+  {
+    "type": "database",
+    "name": "readxyz0_phonics"
+  },
+  {
+    "type": "table",
+    "name": "abc_groups",
+    "version": "1.0107.1",
+    "database": "readxyz0_phonics",
+    "data": [
+      {
+        "groupCode": "letters",
+        "groupName": "Letters",
+        "active": true,
+        "ordinal": "1"
+      },
+      {
+        "groupCode": "a",
+        "groupName": "/a/",
+        "active": true,
+        "ordinal": "2"
+      },
+      {
+        "groupCode": "i",
+        "groupName": "/i/",
+        "active": true,
+        "ordinal": "3"
+      },
+      {
+        "groupCode": "o_u",
+        "groupName": "/o/ & /u/",
+        "active": true,
+        "ordinal": "4"
+      },
+      {
+        "groupCode": "cvc_wrap",
+        "groupName": "CVC Wrap-up",
+        "active": true,
+        "ordinal": "5"
+      },
+      {
+        "groupCode": "magic_e",
+        "groupName": "Magic e",
+        "active": true,
+        "ordinal": "6"
+      },
+      {
+        "groupCode": "blends",
+        "groupName": "Blends",
+        "active": true,
+        "ordinal": "7"
+      },
+      {
+        "groupCode": "magic_e_blends",
+        "groupName": "Magic e Blends",
+        "active": true,
+        "ordinal": "8"
+      },
+      {
+        "groupCode": "blend_wrap",
+        "groupName": "Blend Wrap-up",
+        "active": true,
+        "ordinal": "9"
+      },
+      {
+        "groupCode": "word_play",
+        "groupName": "Word Play",
+        "active": true,
+        "ordinal": "10"
+      },
+      {
+        "groupCode": "phonics_1",
+        "groupName": "Phonics 1",
+        "active": true,
+        "ordinal": "11"
+      },
+      {
+        "groupCode": "phonics_2",
+        "groupName": "Phonics 2",
+        "active": true,
+        "ordinal": "12"
+      }
+    ]
+  }
+]

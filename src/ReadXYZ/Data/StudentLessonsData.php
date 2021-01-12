@@ -144,7 +144,7 @@ EOT;
 
     /**
      * Get the mastery results for the lessons the student has worked on - array of stdClass objects.
-     * @return stdClass[]
+     * @return stdClass[] fields are studentCode, studentName, lessonCode, lessonName, groupCode, groupName, masteryLevel
      * @throws PhonicsException on ill-formed SQL
      */
     public function getLessonMastery(): array
@@ -171,7 +171,7 @@ EOT;
         if ($seconds == 0) {
             return BoolWithMessage::goodResult();
         }
-        $seconds = min(99, $seconds);
+
         $sqlFieldName = $timerType->getSqlFieldName();
         $this->createStudentLessonAsNeeded();
 

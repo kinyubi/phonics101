@@ -160,6 +160,11 @@ class Util
         }
     }
 
+    /**
+     * convert epoch time to mysql date
+     * @param int $time
+     * @return string
+     */
     public static function dbDate(int $time = 0): string
     {
         if ($time == 0) {
@@ -217,33 +222,6 @@ class Util
         return self::contains(['.local', '.test'], $host);
     }
 
-    /**
-     * @param $studentCode
-     * @return bool
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public static function isValidStudentCode($studentCode): bool
-    {
-        if (Regex::isValidStudentCodePattern($studentCode)) {
-            return (new StudentsData())->doesStudentExist($studentCode);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param $trainerCode
-     * @return bool
-     * @throws PhonicsException on ill-formed SQL
-     */
-    public static function isValidTrainerCode($trainerCode): bool
-    {
-        if (Regex::isValidTrainerCodePattern($trainerCode)) {
-            return (new TrainersData())->isValid($trainerCode);
-        } else {
-            return false;
-        }
-    }
 
     /**
      * return first n chars in a string. $len defaults to 1 if not provided.
@@ -378,45 +356,6 @@ class Util
         return $result;
     }
 
-    //     public static function addSoundClass(string $lessonName): string
-    //     {
-    //         $pattern = '#/([a-zA-Z]+)/#';
-    //         return preg_replace($pattern, '<span class="sound">$1</span>', $lessonName);
-    //     }
-    //
-    //     public static function alert(string $message): void
-    //     {
-    //         echo "<script type='text/javascript'>alert('$message');</script>";
-    //     }
-
-    // public static function fixTabName($tabName): string
-    // {
-    //     switch (strtolower($tabName)) {
-    //         case 'stretch':
-    //         case 'intro':
-    //             return 'intro';
-    //         case 'words':
-    //         case 'write':
-    //             return 'write';
-    //         case 'practice':
-    //             return 'practice';
-    //         case 'spell':
-    //         case 'spinner':
-    //             return 'spell';
-    //         case 'mastery':
-    //             return 'mastery';
-    //         case 'fluency':
-    //             return 'fluency';
-    //         case 'test':
-    //             return 'test';
-    //         case 'warmups':
-    //         case 'warmup':
-    //         case 'warm-ups':
-    //             return 'warmup';
-    //         default:
-    //             throw new PhonicsException("$tabName is not a recognized tab name.");
-    //     }
-    // }
 
     /**
      * strips extra forward slashes from a uri or path.
