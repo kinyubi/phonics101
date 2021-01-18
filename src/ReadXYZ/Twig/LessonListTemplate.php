@@ -6,6 +6,7 @@ namespace App\ReadXYZ\Twig;
 
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\JSON\GroupsJson;
+use App\ReadXYZ\JSON\KeyChainJson;
 use App\ReadXYZ\JSON\LessonsJson;
 use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
@@ -39,7 +40,7 @@ class LessonListTemplate
             'accordion'         => $lessons->getAccordionWithMastery(),
             'studentName'       => $studentName,
             'mostRecentLesson'  => $student->lessonCode,
-            'groupsJson'        => GroupsJson::getInstance(), //sync with twig
+            'keychainAnimals'   => KeyChainJson::getInstance()->getAll(), //sync with twig
             'this_crumb'        => $currentCrumb,
             'LessonsJson'       => $lessons,
             'isLocal' => Util::isLocal()

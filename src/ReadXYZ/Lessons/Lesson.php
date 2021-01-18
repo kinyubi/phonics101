@@ -2,6 +2,7 @@
 
 namespace App\ReadXYZ\Lessons;
 
+use App\ReadXYZ\CSV\CSV;
 use App\ReadXYZ\Helpers\Location;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\JSON\GameTypesJson;
@@ -34,8 +35,8 @@ class Lesson
     public ?array       $games;
     /** @var string[] */
     public ?array       $tabNames;
-public ?Spinner     $spinner;
-        public string       $pronounceImage; // plain array
+    public ?Spinner     $spinner;
+    public string       $pronounceImage; // plain array
     public string       $pronounceImageThumb;
     /** @var string[] */
     public ?array       $contrastImages;
@@ -64,8 +65,8 @@ public ?Spinner     $spinner;
         $this->alternateNames = $lesson->alternateNames;
         $this->groupCode      = $lesson->groupCode;
 
-        $this->wordList             = Util::csvStringToArray($lesson->wordList) ?? [];
-        $this->supplementalWordList = Util::csvStringToArray($lesson->supplementalWordList) ?? [];
+        $this->wordList             = CSV::listToArray($lesson->wordList) ?? [];
+        $this->supplementalWordList = CSV::listToArray($lesson->supplementalWordList) ?? [];
         $this->allWords             = array_merge($this->wordList, $this->supplementalWordList);
         if (isset($lesson->contrastImages)) {
             $array = $lesson->contrastImages;
@@ -74,7 +75,7 @@ public ?Spinner     $spinner;
             }
         }
 
-        $this->stretchList      = is_string($lesson->stretchList) ? Util::stretchListToArray($lesson->stretchList) : $lesson->stretchList;
+        $this->stretchList      = is_string($lesson->stretchList) ? CSV::stretchListToArray($lesson->stretchList) : $lesson->stretchList;
         $this->fluencySentences = $lesson->fluencySentences;
         $this->games            = [];
         $this->book             = $lesson->book ?? '';
@@ -90,7 +91,7 @@ public ?Spinner     $spinner;
         for ($i = 0; $i < count($universalGames); $i++) {
             if ($universalGames[$i]->gameTypeId == 'tic-tac-toe') {
                 $wordlist                 = join('_', $this->getTicTacToeWords());
-                $$universalGames[$i]->url .= '?wordlist=' . $wordlist;
+                $universalGames[$i]->url .= '?wordlist=' . $wordlist;
             }
             $this->games[$universalGames[$i]->belongsOnTab][] = $universalGames[$i];
         }
@@ -125,7 +126,7 @@ public ?Spinner     $spinner;
         $this->pronounceImage      = Location::getPronounceImage($lesson->pronounceImage ?? '');
         $this->pronounceImageThumb = Location::getPronounceImageThumb($lesson->pronounceImage ?? '');
 
-        $this->visible = $lesson->active != 'N';
+        $this->visible = $lesson->visible;
 
         $this->wordLists = (null === $this->wordList) ? null : [];
         if ($this->tabNames && (null !== $this->wordList)) {
@@ -169,8 +170,7 @@ public ?Spinner     $spinner;
         $isPractice      = Util::contains_ci('prac', $tabName);
         $useSupplemental = (Util::contains_ci('test', $tabName) || $isPractice);
         $arraySize       = $isPractice ? 21 : 9;
-        $hasSupplemental = not(empty($this->supplementalWordList));
-        $initialWords    = ($useSupplemental && $hasSupplemental) ? array_merge($this->wordList, $this->supplementalWordList) : $this->wordList;
+        $initialWords    = ($useSupplemental) ? $this->allWords : $this->wordList;
         $words           = $initialWords;
         if (not(is_array($words))) {
             LOG::error("No wordlist for tab $tabName in lesson {$this->lessonName}.");
@@ -183,6 +183,7 @@ public ?Spinner     $spinner;
         } else {
             $offset = rand(0, count($words) - $arraySize);
         }
+        shuffle($words);
         $slice = array_slice($words, $offset, $arraySize);
         shuffle($slice);
         return $slice;

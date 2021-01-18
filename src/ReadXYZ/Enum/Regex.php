@@ -27,6 +27,7 @@ class Regex extends Enum
     const KEYCHAIN_CODE_PATTERN = '/^[Gk]\d\d$/';
     const NAME_PATTERN = '/^[A-Za-z][a-z]+$/';
     const VALID_DATE_PATTERN = '/^2[01][0-9]{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/';
+    const VERSION_PATTERN = '/^[0-9]{1,2}\.[0-9]{4}\.[0-9]$/';
 
     public static function extractSqlFieldLength(string $fieldDefinition): int
     {
@@ -111,6 +112,11 @@ class Regex extends Enum
     public static function isMatch(string $pattern, string $value): bool
     {
         return (1 === preg_match($pattern, $value));
+    }
+
+    public static function isValidVersion(string $value): bool
+    {
+        return Regex::isMatch(Regex::VERSION_PATTERN, $value);
     }
 
     /**

@@ -4,8 +4,6 @@
 namespace App\ReadXYZ\POPO;
 
 
-use App\ReadXYZ\JSON\LessonsJson;
-
 /**
  * Class Warmup fields(lessonCode, lessonName, instructions)
  * @package App\ReadXYZ\POPO
@@ -13,8 +11,7 @@ use App\ReadXYZ\JSON\LessonsJson;
 class Warmup
 {
 
-    public string $lessonCode;
-    public string $lessonName;
+    public string $lessonId;
     public string $instructions;
 
     /**
@@ -24,16 +21,13 @@ class Warmup
 
     /**
      * Warmup constructor.
-     * @param string $lesson
+     * @param string $lessonId
      * @param string $instructions
      * @param WarmupItem[] $items
      */
-    public function __construct(string $lesson, string $instructions, array $items)
+    public function __construct(string $lessonId, string $instructions, array $items)
     {
-        $lessons            = LessonsJson::getInstance();
-        $lessonName         = $lessons->getLessonName($lesson);
-        $this->lessonCode   = $lessons->getLessonCode($lessonName);
-        $this->lessonName   = $lessonName;
+        $this->lessonId  = $lessonId;
         $this->instructions = $instructions;
         $this->warmupItems  = $items;
     }

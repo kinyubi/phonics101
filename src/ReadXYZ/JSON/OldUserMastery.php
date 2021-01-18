@@ -9,9 +9,13 @@ use App\ReadXYZ\Data\WordMasteryData;
 use App\ReadXYZ\Helpers\PhonicsException;
 
 
-class OldUserMastery extends AbstractJson
+class OldUserMastery
 {
-    private array $wordMastery;
+    use JsonTrait;
+
+    protected static OldUserMastery   $instance;
+    private array                     $wordMastery;
+
     /**
      * builds an object with the student data we'll need for abc_students, abc_trainers and abc_studentLesson
      * abcStudentsFromOldStudents constructor.
@@ -19,16 +23,14 @@ class OldUserMastery extends AbstractJson
      */
     public function __construct()
     {
-        parent::__construct('abc_usermastery.json');
+        $this->baseConstruct('abc_usermastery.json');
+        $this->baseMakeMap();
         $this->wordMastery = $this->importDataAsAssociativeArray();
     }
 
-    public static function getInstance()
-    {
-        return parent::getInstanceBase(__CLASS__);
-    }
-
+// ======================== PUBLIC METHODS =====================
     /**
+     * populates word mastery from mastery words on old version of program
      * @throws PhonicsException
      */
     public function populateAbcWordMastery(): void
@@ -37,10 +39,10 @@ class OldUserMastery extends AbstractJson
         if (0 != $wordMasteryTable->getCount()) {
             throw new PhonicsException("This function is only available is abc_word_mastery is empty.");
         }
-        $studentsTable = new StudentsData();
-        $currentStudent = '';
+        $studentsTable       = new StudentsData();
+        $currentStudent      = '';
         $currentStudentValid = false;
-        $newCode = '';
+        $newCode             = '';
         foreach ($this->wordMastery as $record) {
             $id = $record->studentID;
             if ($id != $currentStudent) {

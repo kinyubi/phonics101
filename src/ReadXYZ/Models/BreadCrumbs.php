@@ -33,11 +33,10 @@ class BreadCrumbs
                 $this->breadCrumbs[] = ['text' => 'Staff', 'link' => '#'];
             }
             if ($this->trainer->studentCt== 1) {
-                $studentNames = array_values($this->trainer->studentMap);
-
-                $this->breadCrumbs[] = ['text' => $studentNames[0], 'link' => '#'];
+                $this->breadCrumbs[] = ['text' => $this->student->studentName, 'link' => '#'];
             } elseif ($this->trainer->studentCt > 1) {
                 $this->breadCrumbs[] = ['text' => 'students', 'link' => '/studentlist'];
+                $this->breadCrumbs[] = ['text' => $this->student->studentName, 'link' => '#'];
             }
         }
     }

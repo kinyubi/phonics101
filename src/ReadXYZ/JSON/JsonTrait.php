@@ -9,59 +9,60 @@ use App\ReadXYZ\Enum\JsonDecode;
 use App\ReadXYZ\Helpers\PhonicsException;
 use stdClass;
 
-abstract class AbstractJson
+trait JsonTrait
 {
-    protected static object   $instance;
-
-
-    protected string    $sourceFile             = '';
-    protected string    $json                   = '';
-    protected array     $booleanFields          = [];
-    protected string    $version                = '';
-    protected string    $implicitVersion        = '';
-    protected array     $map                    = [];
-    protected string    $primaryKey             = '';
-    protected array     $objects                = [];
+    protected string $sourceFile = '';
+    protected string     $json         = '';
+    protected array     $booleanFields = [];
+    protected string    $version = '';
+    protected string     $implicitVersion = '';
+    protected array     $map             = [];
+    protected string     $primaryKey = '';
+    protected array     $objects     = [];
     protected bool      $doesJsonHaveVersioning = false;
 
     /**
-     * AbstractJson constructor. We only populate primaryKey, json, objects and map if primary key is provided,
+     * JsonTrait constructor. We only populate primaryKey, json, objects and map if primary key is provided,
      * otherwise caller is responsible for overriding MapMap and populating those fields
      * @param string $sourceFile
      * @param string $primaryKey
      * @throws PhonicsException
      */
-    protected function __construct(string $sourceFile, string $primaryKey = '')
+    private function baseConstruct(string $sourceFile, string $primaryKey = '')
     {
         $dataDir          = __DIR__ . '/data/';
-        $this->sourceFile = $dataDir . $sourceFile;
-        if ( ! file_exists($this->sourceFile)) {
+        $sourceFile = $dataDir . $sourceFile;
+        if ( ! file_exists($sourceFile)) {
             throw new PhonicsException("$sourceFile does not exist.");
         }
-        $this->implicitVersion = self::getImplicitVersion($this->sourceFile);
+        $this->sourceFile = $sourceFile;
+        $this->implicitVersion = self::getImplicitVersion($sourceFile);
         if ($primaryKey) {
             $this->primaryKey = $primaryKey;
-            $this->json       = file_get_contents($this->sourceFile);
+            $this->json      = file_get_contents($sourceFile);
             $this->objects    = $this->importDataAsStdClass();
-            $this->makeMap($this->objects);
         }
     }
 
 // ======================== STATIC METHODS =====================
 
     /**
+     * Takes a file or a json string, and puts the json into the format used when exporting mySQL data to JSON.
+     * If already in that format, it's OK. The resultant JSON is saved to the specified output file in the 'data'
+     * subdirectory.
      * @param string $source a filename or a JSON string
      * @param string $tableName
+     * @param string $outputFileName
      * @throws PhonicsException
      */
-    public static function convert(string $source, string $tableName)
+    public static function convert(string $source, string $tableName, string $outputFileName)
     {
         if (strlen($source) < 100) {
             $json    = file_get_contents($source);
-            $version = AbstractJson::getImplicitVersion($source);
+            $version = JsonTrait::getImplicitVersion($source);
         } else {
-            $json = $source;
-            $version = AbstractJson::getImplicitVersion();
+            $json    = $source;
+            $version = JsonTrait::getImplicitVersion();
         }
 
         $data    = JsonDecode::decode($json, JsonDecode::RETURN_STDCLASS);
@@ -69,7 +70,7 @@ abstract class AbstractJson
         foreach ($data as $item) {
             $objects[] = $item;
         }
-        $targetFile = __DIR__ . "/data/$tableName";
+        $targetFile = __DIR__ . "/data/$outputFileName";
         $object     = (object)['data' =>
                                    [['type' => 'header', 'comment' => $tableName],
                                     ['type' => 'database', 'name' => 'readxyz0_phonics'],
@@ -90,7 +91,7 @@ abstract class AbstractJson
      * @param string $fileName
      * @return string
      */
-    public static function getImplicitVersion(string $fileName=''): string
+    public static function getImplicitVersion(string $fileName = ''): string
     {
         if (empty($fileName)) {
             $stamp = date('y.md', time());
@@ -102,17 +103,18 @@ abstract class AbstractJson
         return substr($stamp, 1) . '.1';
     }
 
-    protected static function getInstanceBase(string $class)
-    {
-        $fullClass = 'App\\ReadXYZ\\JSON\\' . $class;
-        if ( ! isset(self::$instance)) {
-            self::$instance = new $fullClass();
-        }
+// ======================== PUBLIC METHODS =====================
 
-        return self::$instance;
+    /**
+     * @param string $keyValue
+     * @return bool
+     * @throws PhonicsException
+     */
+    public function exists(string $keyValue): bool
+    {
+        return $this->get($keyValue) != null;
     }
 
-// ======================== PUBLIC METHODS =====================
     /**
      * @param string $key
      * @return object|null
@@ -157,7 +159,7 @@ abstract class AbstractJson
         }
 
         $objects = JsonDecode::decode($this->json, JsonDecode::RETURN_STDCLASS);
-        if ( ! isset($objects[2]->data)) {
+        if ( ! isset($object[2]->data)) {
             return;
         }
 
@@ -166,6 +168,16 @@ abstract class AbstractJson
         rename($this->sourceFile, $this->sourceFile . '.bak');
         file_put_contents($this->sourceFile, $json);
         $this->version = $this->implicitVersion;
+    }
+
+    public static function getInstance()
+    {
+        $class = __CLASS__;
+        if ( ! isset(self::$instance)) {
+            self::$instance = new $class();
+        }
+
+        return self::$instance;
     }
 
     /**
@@ -213,10 +225,10 @@ abstract class AbstractJson
         if ($this->doesJsonHaveVersioning && empty($this->version)) {
             $this->fixMissingVersion();
         }
-        if (not(empty($this->booleanFields))) {
+        if (not(empty($this->booleanField))) {
             for ($i = 0; $i < count($myData); $i++) {
                 foreach ($this->booleanFields as $fieldName) {
-                    $myData[$i]->$fieldName =  BoolEnumTreatment::enumToBool($myData[$i]->$fieldName);
+                    $myData[$i]->$fieldName = BoolEnumTreatment::enumToBool($myData[$i]->$fieldName);
                 }
             }
         }
@@ -224,13 +236,12 @@ abstract class AbstractJson
     }
 
     /**
-     * @param stdClass[] $objects
      * @return void
      */
-    protected function makeMap(array $objects): void
+    protected function baseMakeMap(): void
     {
         $key = $this->primaryKey;
-        foreach ($objects as $object) {
+        foreach ($this->objects as $object) {
             $this->map[$object->$key] = $object;
         }
     }

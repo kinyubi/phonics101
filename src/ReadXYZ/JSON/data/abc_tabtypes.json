@@ -36,7 +36,7 @@
       },
       {
         "tabTypeId": "write",
-        "tabDisplayAs": "Tap &amp; Map",
+        "tabDisplayAs": "TapMap",
         "script": "I will choose 4 words from the lesson. For each word, you will tap the sounds and then write the word.",
         "imageFile": "/images/tabs/write.png",
         "aliases": ["word", "tapAndMap"]
@@ -58,7 +58,7 @@
       {
         "tabTypeId": "warmup",
         "tabDisplayAs": "Warmup",
-        "script": "I am going to ask you some questions. During this exercise, you will watch me and listen.",
+        "script": "Using warmups.instructions. This should never display.",
         "imageFile": "/images/tabs/warmup.png",
         "aliases": []
       },

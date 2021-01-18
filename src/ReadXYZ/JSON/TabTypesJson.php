@@ -11,8 +11,10 @@ use stdClass;
  * Class TabTypesJson. [ [$tabTypeId => TabType object ] ]
  * @package App\ReadXYZ\JSON
  */
-class TabTypesJson extends AbstractJson
+class TabTypesJson
 {
+    use JsonTrait;
+    protected static TabTypesJson   $instance;
     protected array $aliasMap = [];
 
     /**
@@ -22,13 +24,9 @@ class TabTypesJson extends AbstractJson
      */
     protected function __construct()
     {
-        parent::__construct('abc_tabtypes.json', 'tabTypeId');
+        $this->baseConstruct('abc_tabtypes.json', 'tabTypeId');
+        $this->baseMakeMap();
         $this->makeAliasMap();
-    }
-
-    public static function getInstance()
-    {
-        return parent::getInstanceBase(__CLASS__);
     }
 
     /**

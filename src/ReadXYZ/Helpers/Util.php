@@ -114,51 +114,7 @@ class Util
         }
     }
 
-    /**
-     * @see http://gist.github.com/385876
-     *
-     * @param string $filename The csv file
-     * @param string $delimiter the delimiter (default is comma)
-     *
-     * @return array|bool if successful an array of key value pairs, otherwise false
-     */
-    public static function csvFileToArray(string $filename = '', string $delimiter = ',')
-    {
-        if ( ! file_exists($filename) || ! is_readable($filename)) {
-            return false;
-        }
 
-        $header = null;
-        $data   = [];
-        if (false !== ($handle = fopen($filename,
-                'r'))) {
-            while (false !== ($row = fgetcsv($handle,
-                    10000,
-                    $delimiter))) {
-                if ( ! $header) {
-                    $header = $row;
-                } else {
-                    $data[] = array_combine($header,
-                        $row);
-                }
-            }
-            fclose($handle);
-        }
-
-        return $data;
-    }
-
-    public static function csvStringToArray(string $list): ?array
-    {
-        if (($list == null) || empty($list)) {
-            return null;
-        }
-        try {
-            return array_map('trim', explode(',', $list));
-        } catch (Throwable $throwable) {
-            return null;
-        }
-    }
 
     /**
      * convert epoch time to mysql date
@@ -246,17 +202,6 @@ class Util
         return $prefix . str_pad(strval($number), $padSize, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * Takes a string of comma-separated words and surrounds each word with single quotes.
-     *
-     * @param string csvList a string of comma-separated words
-     *
-     * @return string
-     */
-    public static function quoteList(string $csvList): string
-    {
-        return "'" . str_replace(',', "','", $csvList) . "'";
-    }
 
     public static function redBox(string $message, Throwable $ex = null): string
     {
@@ -337,25 +282,6 @@ class Util
             return substr($string_ci, 0, $len) === $start_ci;
         }
     }
-
-    public static function stretchListToArray(string $stretchList): ?array
-    {
-        if (empty($stretchList)) {
-            return null;
-        }
-        $wordSets = self::csvStringToArray($stretchList);
-        $result   = [];
-        try {
-            foreach ($wordSets as $wordSet) {
-                $result[] = array_map('trim', explode('/', $wordSet));
-            }
-        } catch (Throwable $throwable) {
-            return null;
-        }
-
-        return $result;
-    }
-
 
     /**
      * strips extra forward slashes from a uri or path.

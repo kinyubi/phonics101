@@ -48,14 +48,6 @@ class UtilTest extends TestCase
         $this->assertEquals('Blending./a/', Util::convertLessonNameToLessonKey('/a/'));
     }
 
-    public function testCsvStringToArray()
-    {
-    }
-
-    public function testCsvFileToArray()
-    {
-    }
-
     public function testDbConnect()
     {
         $sqlObj = Access::dbConnect();

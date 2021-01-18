@@ -5,6 +5,7 @@ namespace App\ReadXYZ\JSON;
 
 
 use App\ReadXYZ\Helpers\PhonicsException;
+use stdClass;
 
 /**
  * Class GameTypesJson stdClass(gameTypeId, gameTitle, thumbNailUrl, cssClass, belongsOnTab, url, active)
@@ -12,8 +13,11 @@ use App\ReadXYZ\Helpers\PhonicsException;
  * makeMap is not overridden.
  * @package App\ReadXYZ\JSON
  */
-class GameTypesJson extends AbstractJson
+class GameTypesJson
 {
+    use JsonTrait;
+
+    private static GameTypesJson   $instance;
 /*
      gameTypeId: string,
      gameTitle: string,
@@ -24,25 +28,62 @@ class GameTypesJson extends AbstractJson
      active: bool
  */
 
-    protected array $universalGames = [];
+    private array $aliasMap = [];
+    /**
+     * @var stdClass[]
+     */
+    private array $universalGames = [];
     /**
      * TabTypeJson constructor.
      * @see https://goessner.net/articles/JsonPath/
      * @throws PhonicsException
      */
-    protected function __construct()
+    private function __construct()
     {
-        parent::__construct('abc_gametypes.json', 'gameTypeId');
+        $this->baseConstruct('abc_gametypes.json', 'gameTypeId');
+        $this->makeMap();
+        foreach ($this->objects as $object) {
+            if(not(empty($object->url))) $this->universalGames[] = $object;
+        }
     }
 
-    public static function getInstance()
+    private function makeMap()
     {
-        return parent::getInstanceBase(__CLASS__);
+        $key = $this->primaryKey;
+        foreach ($this->objects as $object) {
+            $this->map[$object->$key] = $object;
+            $this->aliasMap[$object->gameTypeId] = $object->gameTypeId;
+            $this->aliasMap[$object->gameTitle] = $object->gameTypeId;
+        }
+    }
+
+    /**
+     * @param string $tag
+     * @return string|false
+     */
+    private function getId(string $tag)
+    {
+        if (empty($tag)) return false;
+        $id = $this->aliasMap[$tag] ?? '';
+        if (empty($id)) return false;
+        return $id;
+    }
+
+    public function get(string $tag): ?object
+    {
+        $id = $this->getId($tag);
+        if ($id === false) return null;
+        return $this->map[$id];
+    }
+
+    public function exists(string $tag): bool
+    {
+        return $this->get($tag) != null;
     }
 
     /**
      * returns an array of stdClass game objects
-     * @return array
+     * @return stdClass[]
      */
     public function getUniversal(): array
     {

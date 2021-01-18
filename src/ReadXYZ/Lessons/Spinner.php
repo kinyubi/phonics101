@@ -2,7 +2,7 @@
 
 namespace App\ReadXYZ\Lessons;
 
-use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\CSV\CSV;
 use JsonSerializable;
 
 class Spinner implements JsonSerializable
@@ -14,9 +14,9 @@ class Spinner implements JsonSerializable
 
     public function __construct(string $prefix, string $vowel, string $suffix)
     {
-        $this->prefixList = Util::csvStringToArray($prefix) ?? [];
-        $this->vowel = Util::csvStringToArray($vowel) ?? [];
-        $this->suffixList = Util::csvStringToArray($suffix) ?? [];
+        $this->prefixList = CSV::listToArray($prefix) ?? [];
+        $this->vowel = CSV::listToArray($vowel) ?? [];
+        $this->suffixList = CSV::listToArray($suffix) ?? [];
     }
 
 

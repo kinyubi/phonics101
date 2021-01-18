@@ -34,15 +34,9 @@ class GeneralDataTest extends TestCase
 
     public function testGetAllViews()
     {
-        $genPhonics = new GeneralData();
         $gen01 = new GeneralData(DbVersion::READXYZ0_1);
 
-        $this->assertCount(2, $gen01->getAllViews());
-        $this->assertContains('vw_accordion', $genPhonics->getAllViews());
-        $this->assertContains('vw_users_without_students', $gen01->getAllViews());
-
-        $this->assertNotContains('vw_accordion', $gen01->getAllViews());
-        $this->assertNotContains('vw_users_without_students', $genPhonics->getAllViews());
+        $this->assertContains('vw_students_with_username', $gen01->getAllViews());
     }
 
     public function testGetDynamicTables()

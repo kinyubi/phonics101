@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\JSON;
 
 
+use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\POPO\Warmup;
 use App\ReadXYZ\POPO\WarmupItem;
 
@@ -11,36 +12,41 @@ use App\ReadXYZ\POPO\WarmupItem;
  * Class WarmupsJson houses an array of Warmup objects. Parent methods include get, getAll and getCount
  * @package App\ReadXYZ\JSON
  */
-class WarmupsJson extends AbstractJson
+class WarmupsJson
 {
+    use JsonTrait;
+    protected static WarmupsJson   $instance;
+    /**
+     * WarmupsJson constructor.
+     * @throws PhonicsException
+     */
     protected function __construct()
     {
-        parent::__construct('abc_warmups.json', 'lessonId');
+        $this->baseConstruct('abc_warmups.json', 'lessonName');
+        $this->makeMap();
     }
 
-    public static function getInstance()
+    public function exists($lessonId): bool
     {
-        return parent::getInstanceBase(__CLASS__);
-    }
-
-    public function exists($lessonTag): bool
-    {
-        $lessonId = LessonsJson::getInstance()->getLessonId($lessonTag);
         return isset($this->map[$lessonId]);
     }
 
-    protected function makeMap(array $objects): void
-        {
+    protected function makeMap(): void
+    {
 
-            foreach ($objects as $object) {
-                // IMPORTANT: Right now what's in lessonId in the JSON is really lessonName
-                $lessonId = LessonsJson::getInstance()->getLessonId($object->lessonId);
-                $items = [];
-                foreach ($object->warmups as $item) {
-                    $items[] = new WarmupItem($item->directions, $item->parts);
-                }
-                $warmup = new Warmup($lessonId, $object->instructions, $items);
-                $this->map[$lessonId] = $warmup;
+        foreach ($this->objects as $object) {
+            $items = [];
+            foreach ($object->warmups as $item) {
+                $items[] = new WarmupItem($item->directions, $item->parts);
             }
+            $warmup = new Warmup($object->lessonId, $object->instructions, $items);
+            $this->map[$object->lessonId] = $warmup;
         }
+    }
+
+    public function get(string $lessonTag): ?Warmup
+    {
+        $id = LessonsJson::getInstance()->getLessonId($lessonTag);
+        return $this->map[$id] ?? null;
+    }
 }

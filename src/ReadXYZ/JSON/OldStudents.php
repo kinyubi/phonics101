@@ -8,8 +8,6 @@
 
 namespace App\ReadXYZ\JSON;
 
-
-use App\ReadXYZ\Data\LessonsData;
 use App\ReadXYZ\Data\OldStudentData;
 use App\ReadXYZ\Data\StudentLessonsData;
 use App\ReadXYZ\Data\StudentsData;
@@ -17,10 +15,11 @@ use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Enum\Regex;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Rest\Membership;
 
-class OldStudents extends AbstractJson
+
+class OldStudents
 {
+    use JsonTrait;
 
     private array $students = [];
     private array $trainers;
@@ -31,7 +30,8 @@ class OldStudents extends AbstractJson
      */
     public function __construct()
     {
-        parent::__construct('abc_Students.json', 'studentId');
+        $this->baseConstruct('abc_Student.json', 'studentId');
+        $this->baseMakeMap();
         $oldStudents = $this->importDataAsAssociativeArray();
 
         $trainers = [];
@@ -47,11 +47,6 @@ class OldStudents extends AbstractJson
         $this->trainers = array_values(array_unique($trainers));
     }
 
-    public static function getInstance()
-    {
-        return parent::getInstanceBase(__CLASS__);
-    }
-
     /**
      * Looks at each students cargo record and extracts information like word mastery and lesson mastery.
      * Also get the trainer and student information needed to be able to populate abc_students, atc_trainers,
@@ -64,7 +59,6 @@ class OldStudents extends AbstractJson
         $cargo       = unserialize($record['cargo']);
         $cargoInfo   = (new OldStudentData())->getCargoInfo($cargo);
         $trainer     = $record['trainer1'];
-        $uuid        =
         $parseResult = Regex::parseCompositeEmail($trainer);
 
         $trainerEmail   = $parseResult->success ? $parseResult->email : $trainer;
@@ -140,7 +134,6 @@ class OldStudents extends AbstractJson
         // we need each timestamp to be different. If timestamp matches the previous entry if will be ignored.
         // because it will be assumed to be a resubmission.
         $timeStamp  = time() - 10000;
-        $lessonData = new LessonsData();
         $count      = 0;
         foreach ($this->students as $studentCode => $info) {
             if ($info->usableData && $info->hasSomeMastery) {

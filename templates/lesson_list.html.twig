@@ -7,7 +7,7 @@ inherited inputs:
     pageTitle       : (from Page instance)
     menu            : key value pairs of title => link for navbar (from Page instance)
 inputs:
-    accordion[]     : $accordion[$groupname][lessonCode] = masteryvalue
+    accordion[]     : $accordion[$groupCode]['groupName' => groupName, 'lessons' => [lessonId]['lessonName' => x, 'mastery' => y]
     studentName     : obtained by calling Session::getStudentName()
     mostRecentLesson: lessonName of lesson most recently worked on
     groupInfo       : Info based on vw_group_with_keychain view
@@ -52,12 +52,12 @@ inputs:
 	<div class="row d-flex bg-white justify-content-start mx-2 flex-wrap">
 	{# FOR EACH GROUP #}
 	<div id="lesson-accordion" class="col-md-12 col-sm-12 col-lg-5 lesson-list--width">
-		{% for groupCode, lessonPart in accordion %}
-			{% set group = groupsJson.get(groupCode) %}
+		{% for groupCode, groupInfo in accordion %}
+			{% set groupName = groupsInfo.groupName %}
 			{% set groupIndex = loop.index %}
 			{% set groupHeader = 'header-' ~ loop.index %}
 			{% set groupCollapse = 'collapse-' ~ loop.index %}
-			{% set groupAnimal = '/images/keychain/' ~ group.fileName %}
+			{% set groupAnimal = keychainAnimals[groupCode].fileName %}
 			<div class="card bg-white border-readxyz ">
 				<div class="card-header bg-white" id="{{ groupHeader }}">
 					<a class="card-link" data-toggle="collapse" data-target="#{{ groupCollapse }}"
@@ -66,7 +66,7 @@ inputs:
 							<div class="col-1">
 								<img src="/images/lessonlist/accordion-unexpanded.png" alt="-" class="size--list-icon"/>
 							</div>
-							<div class="h5 ml-3 text-dark col-6">{{ group.groupName }}</div>
+							<div class="h5 ml-3 text-dark col-6">{{ groupName }}</div>
 							<div class="col-4 accordion--image" style="background-image: url({{ groupAnimal }})">
 							</div>
 						</div>
@@ -80,8 +80,10 @@ inputs:
 							<ul class="d-flex flex-column flex-nowrap pl-4" style="width:100%; ">
 
 								{# FOR EACH LESSON IN A GROUP #}
-								{% for lessonName, mastery in lessonPart %}
-									{% set href = '/handler/lesson/' ~ lessonName|url_encode %}
+								{% for lessonId, lessonInfo in groupInfo.lessons %}
+									{% set lessonName = lessonInfo.lessonName %}
+									{% set mastery = lessonInfo.mastery %}
+									{% set href = '/handler/lesson/' ~ lessonId|url_encode %}
 									<div class="list-group-item list-group-item-white">
 										<div class="row d-flex flex-nowrap" style="height: 2em;">
 											<div data-toggle="tooltip" title="{{ iconTip[mastery] }}"

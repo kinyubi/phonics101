@@ -32,8 +32,6 @@ class Users extends AbstractData implements IBasicTableFunctions
         // do not allow if the email already exists  (dup userName is ok)
         if ($this->getUserEMail($cargo['EMail'])) {
             assert(false, "insertUser Fails - EMail '{$cargo['EMail']}' already exists");
-
-            return false;
         }
 
         // UserName is optional but necessary for DB,
@@ -62,14 +60,17 @@ class Users extends AbstractData implements IBasicTableFunctions
         return false; // lots of reasons this could happen
     }
 
+    /**
+     * @param $EMail
+     * @return false|mixed
+     * @throws \Exception
+     */
     public function getUserCargo($EMail)
     { // returns ONE record
         $safeUser = $this->quote_smart($EMail); // don't like injections
         $resultSet = $this->query("select * from abc_Users where EMail = $safeUser");
 
         if (count($resultSet) > 1) {
-            assert(false, "Seems to be a duplicate user '$EMail' - denying access");
-
             return false;
         }
 

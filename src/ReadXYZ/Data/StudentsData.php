@@ -69,38 +69,40 @@ EOT;
     }
 
     /**
-     * @param string $studentCode
+     * @param string $studentTag
      * @return bool
      * @throws PhonicsException on ill-formed SQL
      */
-    public function doesStudentExist(string $studentCode): bool
+    public function doesStudentExist(string $studentTag): bool
     {
         $active = ActiveType::IS_ACTIVE;
-        $query = "SELECT * FROM abc_students WHERE studentCode = '$studentCode' AND active = '$active'";
+        $where = "(studentCode = '$studentTag' OR compositeCode = '$studentTag') AND active = '$active'";
+        $query = "SELECT * FROM abc_students WHERE $where";
         return $this->throwableQuery($query, QueryType::EXISTS);
     }
 
     /**
-     * Gets the userName associated with a given user name. Returns empty string if not found
-     * @param string $username
-     * @param string $studentName
+     * Gets the studentCode if the studentCode, compositeCode or
+     * @param string $studentTag
      * @return string the studentCode if found, otherwise 0
      * @throws PhonicsException on ill-formed SQL
      */
-    public function getStudentCode(string $username, string $studentName): string
+    public function getStudentCode(string $studentTag): string
     {
-        $query = "SELECT studentCode FROM abc_students WHERE StudentName = '$studentName' AND (username = '$username' ";
+        $where = "studentCode = '$studentTag' OR compositeCode = '$studentTag'";
+        $query = "SELECT studentCode FROM abc_students WHERE $where ";
         return $this->throwableQuery($query, QueryType::SCALAR);
     }
 
     /**
-     * @param string $studentCode
+     * @param string $studentTag
      * @return string
      * @throws PhonicsException on ill-formed SQL
      */
-    public function getStudentName(string $studentCode): string
+    public function getStudentName(string $studentTag): string
     {
-        $query = "SELECT studentName FROM abc_students WHERE studentCode = '$studentCode'";
+        $where = "studentCode = '$studentTag' OR compositeCode = '$studentTag'";
+        $query = "SELECT studentName FROM abc_students WHERE $where";
         return $this->throwableQuery($query, QueryType::SCALAR);
     }
 

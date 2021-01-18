@@ -1,4 +1,14 @@
 # phonics101 Change Log
+### 2021-01-15
+*[x] Database changes
+    - removed userEmail from abc_trainers and vw_students_with_username
+    - dropped table abc_zoo_animals (now json-based)
+    - delete ZooAnimalsData class
+    - dropped vw_lessons_with_group_fields
+    - dropped vw_lesson_mastery
+    - dropped vw_student_lessons
+    - dropped vw_mastery_subquery
+    - dropped vw_accordion
 ### 2020-12-24
 *[x] abc_student_lesson: 
     * timePresented field removed.

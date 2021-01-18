@@ -11,13 +11,14 @@ use App\ReadXYZ\Helpers\PhonicsException;
  * Fields are groupCode, groupName,  active, ordinal
  * @package App\ReadXYZ\JSON
  */
-class GroupsJson extends AbstractJson
+class GroupsJson
 {
-    protected array $nameMap = [];
-    protected array $codeMap = [];
+    use JsonTrait;
+    protected static GroupsJson   $instance;
+
     protected array $aliasMap = [];
-    protected array $codes = [];
-    protected array $names = [];
+    protected array $nameFromCodeMap = [];
+    protected array $codeFromNameMap = [];
 
     /**
      * TabTypeJson constructor.
@@ -26,76 +27,75 @@ class GroupsJson extends AbstractJson
      */
     protected function __construct()
     {
-        parent::__construct('abc_groups.json', 'groupCode');
+        $this->baseConstruct('abc_groups.json', 'groupCode');
+        $this->makeMap();
     }
 
     /**
      * overrides parent::makeMap. This creates a groupCode lookup table with groupCode and groupName keys
-     * @param array $objects
      */
-    protected function makeMap(array $objects): void
+    protected function makeMap(): void
     {
-        foreach ($objects as $object) {
+        foreach ($this->objects as $object) {
             $this->map[$object->groupCode] = $object;
             $this->aliasMap[$object->groupName] = $object->groupCode;
             $this->aliasMap[$object->groupCode] = $object->groupCode;
-            $this->codes[] = $object->groupCode;
-            $this->names[] = $object->groupName;
+            $this->nameFromCodeMap[$object->groupCode] = $object->groupName;
+            $this->codeFromNameMap[$object->groupName] = $object->groupCode;
         }
     }
 
     /**
-     * Fields are groupCode, groupName, active, ordinal
-     * @return GroupsJson
+     * @param string $groupTag
+     * @return object|null
      */
-    public static function getInstance()
+    public function get(string $groupTag): ?object
     {
-        return parent::getInstanceBase(__CLASS__);
+        $key = $this->aliasMap[$groupTag] ?? '';
+        if (empty($key)) return null;
+        return  $this->map[$key];
     }
 
     /**
      * input can be a groupName or groupCode
      * @param string $groupTag
-     * @return string the associated group code
+     * @return string|false the associated group code
      */
-    public function getGroupCode(string $groupTag): string
+    public function getGroupCode(string $groupTag)
     {
-        return $this->map[$this->aliasMap[$groupTag]]->groupCode ?? '';
+        if (empty($groupTag)) return false;
+        $code = $this->aliasMap[$groupTag] ?? '';
+        return empty($code) ? false : $code;
     }
 
     /**
      * input can be a groupName or groupCode
      * @param string $groupTag
-     * @return string the associated group code
+     * @return string|false the associated group code
      */
-    public function getGroupName(string $groupTag): string
+    public function getGroupName(string $groupTag)
     {
-        return $this->map[$this->aliasMap[$groupTag]]->groupName ?? '';
+        if (empty($groupTag)) return false;
+        $code = $this->aliasMap[$groupTag] ?? '';
+        if (empty($code)) return false;
+        return $this->nameFromCodeMap[$code];
     }
 
     /**
      * input can be a groupName or groupCode
      * @param string $groupTag
-     * @return int
+     * @return int|false
      */
-    public function getGroupOrdinal(string $groupTag): int
+    public function getGroupOrdinal(string $groupTag)
     {
-        return $this->map[$this->aliasMap[$groupTag]]->ordinal ?? '';
+        $obj = $this->get($groupTag);
+        if ($obj == null) return false;
+        return $obj->ordinal;
     }
 
-    public function getGroupCodes(): array
+    public function getGroupCodeToNameMap(): array
     {
-        return $this->codes;
+        return $this->nameFromCodeMap;
     }
 
-    public function getGroupNames(): array
-    {
-        return $this->names;
-    }
-
-
-    public function getNameMap(): array
-    {
-        return $this->nameMap;
-    }
 }

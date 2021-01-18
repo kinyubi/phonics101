@@ -4,19 +4,42 @@
 namespace App\ReadXYZ\JSON;
 
 
+use App\ReadXYZ\Helpers\PhonicsException;
+
 /**
  * Class KeyChainJson fields are  keychainCode, fileName, friendlyName, groupCode
  * @package App\ReadXYZ\JSON
  */
-class KeyChainJson extends AbstractJson
+class KeyChainJson
 {
+    use JsonTrait;
+    protected static KeyChainJson   $instance;
+
+    /**
+     * KeyChainJson constructor.
+     * @throws PhonicsException
+     */
     protected function __construct()
     {
-        parent::__construct('abc_keychain.json', 'groupCode');
+        $this->baseConstruct('abc_keychain.json', 'groupCode');
+        $this->baseMakeMap();
     }
 
-    public static function getInstance()
+    /**
+     * @param string $key   a groupCode or a groupName
+     * @return object|null
+     */
+    public function get(string $key): ?object
     {
-        return parent::getInstanceBase(__CLASS__);
+        $code = GroupsJson::getInstance()->getGroupCode($key) ?? null;
+        return $code ? $this->map[$code] : null;
     }
+
+    public function exists(string $key): bool
+    {
+        $code = GroupsJson::getInstance()->getGroupCode($key) ?? null;
+        if ($code == null) return false;
+        return $this->map[$code] != null;
+    }
+
 }

@@ -12,14 +12,27 @@ class GameTypesJsonTest extends TestCase
     {
         $gameTypeData = GameTypesJson::getInstance();
         $gameType = $gameTypeData->get('tic-tac-toe');
-        $this->assertInstanceOf(GameType::class, $gameType);
+        $this->assertIsObject($gameType);
         $this->assertEquals('Tic-Tac-Toe', $gameType->gameTitle);
-        $this->assertEquals(true, $gameType->active);
+        $this->assertTrue($gameType->active);
+
+        $gameType = $gameTypeData->get('ttt');
+        $this->assertNull($gameType);
     }
 
-    public function testJson()
+    public function testExists()
     {
+        $gameJson = GameTypesJson::getInstance();
+        $this->assertTrue($gameJson->exists('tic-tac-toe'));
+        $this->assertTrue($gameJson->exists('Tic-Tac-Toe'));
+        $this->assertFalse($gameJson->exists('xx'));
+    }
 
+    public function testGetUniversal()
+    {
+        $gameJson = GameTypesJson::getInstance();
+        $u = $gameJson->getUniversal();
+        $this->assertGreaterThanOrEqual(2, count($u) );
     }
 
     public function testGetAll()

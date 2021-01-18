@@ -2,6 +2,7 @@
 
 namespace App\ReadXYZ\Lessons;
 
+use App\ReadXYZ\CSV\CSV;
 use Exception;
 use App\ReadXYZ\Helpers\Util;
 
@@ -30,7 +31,7 @@ class CsvList
     {
         $fileName = Util::getReadXyzSourcePath('resources/old/compare.csv');
 
-        $this->csvArray = Util::csvFileToArray($fileName);
+        $this->csvArray = CSV::fileToArray($fileName);
         foreach ($this->csvArray as $lesson) {
             $realName = trim($lesson['NewLessonName']);
             $originalName = trim($lesson['OriginalLessonName']);

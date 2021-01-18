@@ -20,7 +20,7 @@ class BoolEnumTreatment extends Enum
     public static function enumToBool($enum): bool
     {
         if (is_string($enum)) return $enum = ActiveType::IS_ACTIVE;
-        if (is_bool($enum)) return $$enum;
+        if (is_bool($enum)) return $enum;
         return false;
     }
 }

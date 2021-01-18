@@ -51,7 +51,6 @@ CREATE TABLE `abc_trainers` (
 	`membershipValidTo` DATE NULL DEFAULT NULL,
 	`hash` VARCHAR(128) NOT NULL,
 	`trainerCode` VARCHAR(32) NOT NULL,
-	`userEmail` VARCHAR(100) NOT NULL DEFAULT '',
 	PRIMARY KEY (`userName`),
 	UNIQUE INDEX `trainerCode` (`trainerCode`)
 ) COMMENT='Replacement for abc_Users' COLLATE='utf8_general_ci' ENGINE=InnoDB ;

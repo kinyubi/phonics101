@@ -31,7 +31,7 @@
                 {% for letter in lesson.spinner.prefixList %}
                   {% set clickFunc = func ~ "('p','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button"
-                          onclick="{{ clickFunc }}">
+                          onclick="{{ clickFunc }}" style="min-width:34px">
                     {{ letter }}
                   </button>
                 {% endfor %}
@@ -52,7 +52,7 @@
                 {% for letter in lesson.spinner.vowel %}
                   {% set clickFunc = func ~ "('v','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-danger rounded m-1 p-1 tac col-12"
-                          type="button" onclick="{{ clickFunc }}">{{ letter }}
+                          type="button" onclick="{{ clickFunc }}" style="min-width:34px">{{ letter }}
                   </button>
                 {% endfor %}
               </div>
@@ -71,7 +71,7 @@
                 {% for letter in lesson.spinner.suffixList %}
                   {% set clickFunc = func ~ "('s','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-primary rounded m-1 p-1 tac col-12"
-                          type="button" onclick="{{ clickFunc }}">{{ letter }}
+                          type="button" onclick="{{ clickFunc }}" style="min-width:34px">{{ letter }}
                   </button>
                 {% endfor %}
               </div>

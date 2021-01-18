@@ -5,7 +5,6 @@
     warmups
 #}
 {% block WarmupTab %}
-  {% from "macros.html.twig" import tabHeader  %}
 
 {#  {% set tabId = 'warmup' %}#}
 {#  {% set tabInfo = tabTypes.get(tabId) %}#}
@@ -16,7 +15,10 @@
     <div class="row  d-flex  flex-nowrap p-2">
       <div id="{{ tabId }}-main" class="col-8 m-0" >
 
-        {{ tabHeader(tabInfo) }}
+        <div class="row  d-flex flex-nowrap justify-content-start  m-2 px-1 py-3">
+          <div class="text-readxyz ">Script:&nbsp;</div>
+          <div class="text-secondary ">&quot;{{ warmups.instructions }}&quot;</div>
+        </div>
 
         <div id="{{ tabId }}-accordion" class="mw-600">
 

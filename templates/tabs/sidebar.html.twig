@@ -41,7 +41,7 @@
             {% set url = (game.gameTypeId == 'tic-tac-toe') and (h > 100) ? '/tictactoe/tictac-lg.php' : game.url %}
             {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell', 'sound-box']) ? game.gameTypeId : 'games' %}
             <a class="{{ class }}" href="{{ url }}">
-              <img src="{{ game.thumbRef }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
+              <img src="{{ game.thumbNailUrl }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
                    title="{{ game.gameTitle }}" width="{{ w }}" height="{{ h }}">
             </a>
           </td>

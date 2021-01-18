@@ -150,7 +150,7 @@ EOT;
     public function getLessonMastery(): array
     {
         // This work whether or not we have a student
-        $query = "SELECT * FROM vw_lesson_mastery WHERE {$this->masteryWhereClause}";
+        $query = "SELECT * FROM abc_student_lesson WHERE {$this->masteryWhereClause}";
         return $this->throwableQuery($query, QueryType::STDCLASS_OBJECTS);
     }
 

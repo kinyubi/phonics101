@@ -23,6 +23,7 @@ class LoginForm extends AbstractHandler
     /**
      * handles the submission of the login form. The required field username must be supplied. There is an optional
      * student field as well.
+     * S2Member fields: userEmail, displayName, students, id, role, (ignore other fields)
      * @throws PhonicsException
      */
     public static function handlePost(): void
@@ -42,32 +43,32 @@ class LoginForm extends AbstractHandler
             if ($hasStudent) $explicitStudentName = ucfirst($compositeEmail->student);
             $specialCase = (Util::contains(['carlbaker', 'lisamichelle'], $userName));
 
-            // $user: s2Member stdClass object (userEmail, displayName, students, id, role, (ignore other fields))
+            // $s2User: s2Member stdClass object (userEmail, displayName, students, id, role, (ignore other fields))
 
-            $user = (new Membership())->getUser($userName);
-            if (($user->valid !== true) && (! $specialCase)) {
-                (new LoginTemplate())->display('Invalid user name.');
+            $s2User = (new Membership())->getUser($userName);
+            if (($s2User->valid !== true) && (! $specialCase)) {
+                (new LoginTemplate())->display('Invalid s2User name.');
                 exit;
             }
-            // if S2Member knows about the user but he's not in the database or it can supply display name, add or update.
+            // if S2Member knows about the s2User but he's not in the database or it can supply display name, add or update.
             $trainersData = new TrainersData();
             $changed = false;
-            if ($user->valid) {
-                $email = $user->userEmail;
+            if ($s2User->valid) {
+                $email = $s2User->userEmail;
                 $trainer = $trainersData->get($email);
                 $trainerType = TrainerType::TRAINER;
                 if ($trainer == null) {
-                    if (Util::contains('admin', $user->role)) $trainerType = TrainerType::ADMIN;
-                    if (Util::contains('staff', $user->role)) $trainerType = TrainerType::STAFF;
-                    $trainersData->add($email, $user->displayName, $trainerType);
+                    if (Util::contains('admin', $s2User->role)) $trainerType = TrainerType::ADMIN;
+                    if (Util::contains('staff', $s2User->role)) $trainerType = TrainerType::STAFF;
+                    $trainersData->add($email, $s2User->displayName, $trainerType);
                     $changed = true;
                 } elseif (empty($trainer->displayName)) {
-                    $trainersData->updateName($email, $user->displayName);
+                    $trainersData->updateName($email, $s2User->displayName);
                     $trainerType = $trainer->trainerType;
                     $changed = true;
                 }
             } else {
-                // this only happens if we are a special user
+                // this only happens if we are a special s2User
                 $email = $compositeEmail->email;
                 $trainer = $trainersData->get($email);
                 $trainerType = TrainerType::TRAINER;
@@ -90,14 +91,14 @@ class LoginForm extends AbstractHandler
             // If S2Member knows about students we don't know about, we'll add them to our database.
             if (self::USING_S2_MEMBER) {
                 $changed = false;
-                $s2students = $user->students; //string[]
+                $s2students = $s2User->students; //string[]
                 foreach ($s2students as $studentName) {
                     if (!in_array($studentName, $ourStudentNames)) {
                         $studentData->add($studentName, $userName);
                     }
                 }
                 if ($changed) {
-                    $ourStudents = $views->getMapOfStudentsForUser($user->userEmail);
+                    $ourStudents = $views->getMapOfStudentsForUser($s2User->userEmail);
                 }
             }
 
