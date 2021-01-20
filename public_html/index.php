@@ -10,7 +10,8 @@ use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Models\RouteMe;
 use Symfony\Component\ErrorHandler\Debug;
 
-require dirname(__DIR__).'/config/bootstrap.php';
+//require dirname(__DIR__).'/config/bootstrap.php';
+require 'autoload.php';
 
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);

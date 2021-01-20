@@ -10,7 +10,8 @@ class Location
     public const FILE = 'file';
     public const RANDOM = 'random';
 
-    public const TIC_TAC_TOE_ANIMAL_DIR = '/tictactoe/images/';
+    // public const TIC_TAC_TOE_ANIMAL_DIR = '/tictactoe/images/';
+    public const TIC_TAC_TOE_ANIMAL_DIR = '/images/animals/named/';
     public const BDP_DIR = '/images/bdp/';
     public const FAVICON_DIR = '/images/favicons/';
     public const LESSON_LIST_ICONS_DIR = '/images/lessonlist/';

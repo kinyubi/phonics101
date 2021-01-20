@@ -90,8 +90,7 @@ class Lesson
         $universalGames = $gameTypesJson->getUniversal();
         for ($i = 0; $i < count($universalGames); $i++) {
             if ($universalGames[$i]->gameTypeId == 'tic-tac-toe') {
-                $wordlist                 = join('_', $this->getTicTacToeWords());
-                $universalGames[$i]->url .= '?wordlist=' . $wordlist;
+                $_SESSION['TicTacToe'] = $this->getTicTacToeWords();
             }
             $this->games[$universalGames[$i]->belongsOnTab][] = $universalGames[$i];
         }

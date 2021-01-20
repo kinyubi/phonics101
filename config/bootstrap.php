@@ -9,6 +9,9 @@ if (!class_exists(Dotenv::class)) {
 }
 
 $envDir = dirname(__DIR__) . '/.env';
+
+// ----------------------- START - ORIGINAL CODE --------------------------------------------------------
+
 // Load cached env vars if the .env.local.php file exists
 // Run "composer dump-env prod" to create it (requires symfony/flex >=1.2)
 if (is_array($env = @include dirname(__DIR__).'/.env.local.php') && (!isset($env['APP_ENV']) || ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? $env['APP_ENV']) === $env['APP_ENV'])) {
@@ -17,6 +20,13 @@ if (is_array($env = @include dirname(__DIR__).'/.env.local.php') && (!isset($env
     // load all the .env files
     (new Dotenv($envDir))->loadEnv(dirname(__DIR__).'/.env');
 }
+// ------------------------- END - ORIGINAL CODE --------------------------------------------------------
+
+// ----------------------- START - CUSTOM CODE ----------------------------------------------------------
+$local__ = str_contains($_SERVER['DOCUMENT_ROOT'] ?? '', 'laragon');
+$envSuffix = ($local__ === true) ? '.dev' : '.prod';
+(new Dotenv($envDir))->loadEnv(dirname(__DIR__).'/.env' . $envSuffix);
+// ------------------------- END - CUSTOM CODE ----------------------------------------------------------
 
 $_SERVER += $_ENV;
 $_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) ?: 'dev';
@@ -25,6 +35,6 @@ $_SERVER['APP_DEBUG'] = $_ENV['APP_DEBUG'] = (int) $_SERVER['APP_DEBUG'] || filt
 
 $_SERVER['XYZ_SRC_ROOT'] = str_replace('\\', '/',dirname(__DIR__) . '/src/ReadXYZ/');
 $_SERVER['PROJECT_ROOT'] = str_replace('\\', '/',dirname(__DIR__) . '/');
-$_SERVER['PUBLIC_ROOT'] = str_replace('\\', '/',dirname(__DIR__) . '/public/');
+$_SERVER['PUBLIC_ROOT'] = str_replace('\\', '/',dirname(__DIR__) . '/public_html/');
 
 require_once  dirname(__DIR__) . '/src/ReadXYZ/functions.php';

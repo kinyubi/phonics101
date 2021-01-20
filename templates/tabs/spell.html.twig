@@ -16,7 +16,7 @@
       {# main column 75% wide #}
       <div class="col-9">
         {{ tabHeader(tabInfo) }}
-        <div class="row d-flex flex-nowrap">
+        <div class="row d-flex flex-nowrap" >
 
           {# Prefix letters column #}
           {% if lesson.spinner.prefixList|default %}
@@ -31,7 +31,7 @@
                 {% for letter in lesson.spinner.prefixList %}
                   {% set clickFunc = func ~ "('p','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button"
-                          onclick="{{ clickFunc }}" style="min-width:34px">
+                          onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">
                     {{ letter }}
                   </button>
                 {% endfor %}
@@ -52,7 +52,7 @@
                 {% for letter in lesson.spinner.vowel %}
                   {% set clickFunc = func ~ "('v','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-danger rounded m-1 p-1 tac col-12"
-                          type="button" onclick="{{ clickFunc }}" style="min-width:34px">{{ letter }}
+                          type="button" onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">{{ letter }}
                   </button>
                 {% endfor %}
               </div>
@@ -71,7 +71,7 @@
                 {% for letter in lesson.spinner.suffixList %}
                   {% set clickFunc = func ~ "('s','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-primary rounded m-1 p-1 tac col-12"
-                          type="button" onclick="{{ clickFunc }}" style="min-width:34px">{{ letter }}
+                          type="button" onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">{{ letter }}
                   </button>
                 {% endfor %}
               </div>

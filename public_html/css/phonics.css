@@ -447,6 +447,7 @@ a.img-contain img {
     .sfp {font-size: .6rem !important;}
     .wordlist {font-size: 1.5rem !important;}
     .scaled {transform:scale(.5, .5);}
+    .tile-size {height: 24px; width: 24px; line-height: 24px; font-size: 1em !important; font-weight: bold}
     .size--tab-icon {height: 50px; width: 50px}
     .size--side-icon {height: 24px; width: 24px}
     .size--key-icon {height: 35px; width: 35px}
@@ -462,6 +463,7 @@ a.img-contain img {
      .sfp {font-size: .6rem !important;}
      .wordlist {font-size: 2rem !important;}
      .scaled {transform:scale(.6, .6);}
+     .tile-size {height: 30px; width: 30px; line-height: 30px; font-size: 1.2em !important; font-weight: bold}
      .size--tab-icon {height: 50px; width: 50px}
      .size--side-icon {height: 30px; width: 30px}
      .size--key-icon {height: 45px; width: 45px}
@@ -476,6 +478,7 @@ a.img-contain img {
      .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 2.5rem !important;}
      .scaled {transform:scale(.75, .75);}
+     .tile-size {height: 40px; width: 40px; line-height: 40px; font-size: 1.5em !important; font-weight: bold}
      .size--tab-icon {height: 42px; width: 42px}
      .size--side-icon {height: 40px; width: 40px}
      .size--key-icon {height: 60px; width: 60px}
@@ -489,6 +492,7 @@ a.img-contain img {
      .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 3rem !important;}
      .scaled {transform:scale(1.0, 1.0);}
+     .tile-size {height: 60px; width: 60px; line-height: 60px; font-size: 2em !important; font-weight: bold}
      .size--tab-icon {height: 60px; width: 60px}
      .size--side-icon {height: 50px; width: 50px}
      .size--key-icon {height: 75px; width: 75px}

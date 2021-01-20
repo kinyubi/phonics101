@@ -1,8 +1,9 @@
 <?php
-$cssJsVer = '?ver=1.0102.0';
-$bootstrapVer = '?ver=1.0117.0';
 require dirname(__DIR__) . '/autoload.php';
 use App\ReadXYZ\Helpers\Location;
+
+$cssJsVer = '?ver=1.0102.0';
+$bootstrapVer = '?ver=1.01.17.0';
 
 $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'cap,gap,lap,map,rap,sap,tap,zap,nap',
@@ -48,17 +49,12 @@ while ($player2 == $player1) {
     $player2 = $animals[rand(0, 99)];
 }
 
-$list_count = count($words);
-$idx = rand(0, $list_count - 1);
-$word_list = explode(',', $words[$idx]);
-
-if (isset($_GET['wordlist'])) {
-    $raw_list = explode('_', $_GET['wordlist']);
-    $count = count($raw_list);
-    $word_list = $raw_list;
-    for ($i = $count; $i < 9; ++$i) {
-        $word_list[] = $raw_list[$i % $count];
-    }
+if (isset($_SESSION['TicTacToe'])) {
+  $word_list = $_SESSION['TicTacToe'];
+} else {
+    $list_count = count($words);
+    $idx = rand(0, $list_count - 1);
+    $word_list = explode(',', $words[$idx]);
 }
 
 $rat = Location::getTicTacToeAnimal($player1);
@@ -69,6 +65,7 @@ $cat = location::getTicTacToeAnimal($player2);
 <html lang="en-US">
 
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
   <title>Tic Tac Toe</title>
@@ -100,14 +97,14 @@ $cat = location::getTicTacToeAnimal($player2);
       }
 
       td {
-          margin: 4px;
-          width: 140px;
-          height: 140px;
+          margin: 2px;
+          width: 70px;
+          height: 70px;
       }
 
       h1 {
           font-family: "Rock Salt", Times, serif;
-          font-size: 48px;
+          font-size: 26px;
           color: #00aabe;
           padding: 5px;
           margin-bottom: 0;
@@ -122,27 +119,27 @@ $cat = location::getTicTacToeAnimal($player2);
           background-color: #00aabe;
           border: none;
           color: white;
-          padding: 10px;
+          padding: 5px;
           text-align: center;
           text-decoration: none;
           display: inline-block;
-          font-size: 18px;
-          margin: 24px 24px 0 0;
+          font-size: 10px;
+          margin: 15px 15px 0 0;
           cursor: pointer;
           border-radius: 8px;
-          width: 120px;
+          width: 65px;
       }
 
       .gamePiece {
-          width: 80px;
-          height: 80px;
+          width: 45px;
+          height: 45px;
           margin: 0;
           z-index: 100;
       }
       .gamePiece__wrapper {
-          width: 96px;
-          height: 96px;
-          margin: 4px;
+          width: 50px;
+          height: 50px;
+          margin: 2px;
       }
 
       .row__ticTacToe:after {
@@ -152,9 +149,9 @@ $cat = location::getTicTacToeAnimal($player2);
       }
 
       .square {
-          width: 120px;
-          height: 120px;
-          padding: 5px;
+          width: 70px;
+          height: 70px;
+          padding: 3px;
           border-collapse: collapse;
           font-family: serif;
           font-size: 40px;

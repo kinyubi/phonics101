@@ -60,7 +60,6 @@ class LessonTemplate
         if ($initialTab) {
             $this->initialTabName = $initialTab;
         }
-
         $sideNote              = SideNote::getInstance();
         $args                  = [];
         $args['students']      = Views::getInstance()->getStudentNamesForUser($this->trainerCode);
@@ -78,6 +77,11 @@ class LessonTemplate
         }
         if (in_array('warmup', $this->lesson->tabNames)) {
             $args['warmups']   = WarmupsJson::getInstance()->get($this->lesson->lessonId);
+        }
+        if (isset($this->lesson->soundLetters)) {
+            $args['soundLetters'] = $this->lesson->soundLetters;
+        } else {
+            $args['soundLetters'] = str_split('abcdefghijklmnopqrstuvwxyz');
         }
 
         $breadcrumbs = (new BreadCrumbs())->getPrevious('lesson');
