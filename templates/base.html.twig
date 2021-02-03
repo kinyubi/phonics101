@@ -18,8 +18,8 @@ otherJS
 	this_crumb      : displayText (no link
 
 #}
-
-{% set cssJsVer = '1.0102.0' %}
+{% from "macros.html.twig" import dialog, dialogAnchor, dialogButton %}
+{% set cssJsVer = '1.0202.0' %}
 {% set bootstrapVer = '1.0117.0' %}
 <!DOCTYPE html>
 
@@ -55,6 +55,7 @@ otherJS
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap4-custom/bootstrap.bundle.js?ver={{ bootstrapVer }}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+	<script src="/js/phonics.js?ver={{ cssJsVer }}"></script>
 
 	{% block otherScripts %}{% endblock %}
 </head>
@@ -88,15 +89,15 @@ otherJS
 {% endblock %}
 
 {# Container for the whole page #}
-<div class="m-0 p-0 container-fluid" id="base-container" style="max-width: 950px;">
+<div class="m-0 p-0 p-sm-1 p-md-3 p-lg-5 container-fluid" id="base-container" style="max-width: 950px;">
 
 {#  breadcrumbs in the titlebar
    if a user has multiple students:  <username> / students / lessons / <lessonname>
 	 if a user has one student:        <username> / <studentname> / lessons / <lessonname>
 #}
-
+{% block titleBar %}
 	{# TITLE BAR - START #}
-	<div class="ml-0 row bg-white  d-flex justify-content-start title-bar--height align-baseline h1 my-2"  id="readxyz-title">
+	<div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2" id="readxyz-title">
 		{# title bar: logo #}
 		<div class="ml-0 float-left col-3 bg-image--title"></div>
 		{# title bar: nav items #}
@@ -104,7 +105,7 @@ otherJS
 			<a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
 		{% endfor %}
 		{# title bar - breadcrumbs #}
-		{% block breadcrumbs %}
+
 			{% if previous_crumbs or this_crumb %}
 				<div class="my-auto mx-3">
 					<nav aria-label="breadcrumb" >
@@ -120,8 +121,33 @@ otherJS
 					</nav>
 				</div>
 			{% endif %}
-		{% endblock breadcrumbs %}
+
+		{# placeholder to allow screen to define zoo animals #}
+		{% set useModal = false %}
+		{% if (animals and not hideTitleAnimals) %}
+			{% set studentCode = session.currStudent|default %}
+			{% set studentName = (studentCode is empty) ? '' : session['STUDENTS'][studentCode].studentName %}
+			{% set zooClass = (studentName is empty) ?  '' : 'zoo-animals' %}
+			{% set zooUrl = (zooClass is empty) ? '#' : zooUrl %}
+			{% set dim = smaller ? '40px' : '75px' %}
+			{% set anchorStyle = 'height:' ~ dim ~ ';width:' ~ dim %}
+			{% set imgStyle = 'style="width:90%"' %}
+			<a class="img-contain col-1 {{ zooClass }}" href="{{ zooUrl }}" {{ anchorStyle }}>
+				<img src="{{ animals[0].fileName }}" alt="{{ animals[0].friendlyName }}"  title="See my zoo" {{ imgStyle }}">
+			</a>
+
+			{% set titleText = 'Award the ' ~ animals[1].friendlyName ~ ' to ' ~ studentName %}
+			<a class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" {{ anchorStyle }}>
+				<img src="{{ animals[1].grayFileName }}" alt="{{ animals[1].friendlyName }}"
+				     title="{{ titleText }}" {{ imgStyle }}>
+			</a>
+			{# dialog(id, title, text, clickTarget, doneFunc)  #}
+			{{ dialog("award-confirm", "Award Ceremony", titleText, '/handler/award', 'noAward') }}
+		{% endif %}
+
+
 	</div>
+	{% endblock titleBar %}
 	{# TITLE BAR - END #}
 
 {#	#}{# ERRORS BLOCK #}
@@ -156,12 +182,32 @@ otherJS
         $('.modal-backdrop').removeClass("modal-backdrop");
         $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
 
-		    $(window).resize(function () {setScreenCookie();});
+        $(window).resize(function () {
+            setScreenCookie();
+        });
+
+        $(".ajax").colorbox();
+        $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
+        $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
+        $(".inline").colorbox({inline: true, width: "50%"});
+        $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
+        $(".zoo-animals").colorbox({
+            iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
+            top: 20, overlayClose: false, scrolling: true
+        });
 
 				{# show the modal if we have an error #}
 				{% if errors|default %}
 	        $("#modalError").modal("show");
 				{% endif %}
+
+        $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
+
+        $(document).bind('cbox_open', function () {
+            $('html').addClass("body__scroll_disable");
+        }).bind('cbox_cleanup', function () {
+            $('html').removeClass("body__scroll_disable");
+        });
 
     });
 

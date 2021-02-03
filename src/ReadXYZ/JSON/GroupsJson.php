@@ -16,9 +16,6 @@ class GroupsJson
     use JsonTrait;
     protected static GroupsJson   $instance;
 
-    protected array $aliasMap = [];
-    protected array $nameFromCodeMap = [];
-    protected array $codeFromNameMap = [];
 
     /**
      * TabTypeJson constructor.
@@ -36,13 +33,17 @@ class GroupsJson
      */
     protected function makeMap(): void
     {
-        foreach ($this->objects as $object) {
-            $this->map[$object->groupCode] = $object;
-            $this->aliasMap[$object->groupName] = $object->groupCode;
-            $this->aliasMap[$object->groupCode] = $object->groupCode;
-            $this->nameFromCodeMap[$object->groupCode] = $object->groupName;
-            $this->codeFromNameMap[$object->groupName] = $object->groupCode;
+        if ($this->cacheUsed) return;
+        $timer = $this->startTimer('creating object' . __CLASS__ . '.');
+        foreach ($this->persisted['objects'] as $object) {
+            $this->persisted['map'][$object->groupCode] = $object;
+            $this->persisted['aliasMap'][$object->groupName] = $object->groupCode;
+            $this->persisted['aliasMap'][$object->groupCode] = $object->groupCode;
+            $this->persisted['nameFromCodeMap'][$object->groupCode] = $object->groupName;
+            $this->persisted['codeFromNameMap'][$object->groupName] = $object->groupCode;
         }
+        $this->stopTimer($timer);
+        $this->cacheData();
     }
 
     /**
@@ -51,9 +52,9 @@ class GroupsJson
      */
     public function get(string $groupTag): ?object
     {
-        $key = $this->aliasMap[$groupTag] ?? '';
+        $key = $this->persisted['aliasMap'][$groupTag] ?? '';
         if (empty($key)) return null;
-        return  $this->map[$key];
+        return  $this->persisted['map'][$key];
     }
 
     /**
@@ -64,7 +65,7 @@ class GroupsJson
     public function getGroupCode(string $groupTag)
     {
         if (empty($groupTag)) return false;
-        $code = $this->aliasMap[$groupTag] ?? '';
+        $code = $this->persisted['aliasMap'][$groupTag] ?? '';
         return empty($code) ? false : $code;
     }
 
@@ -76,9 +77,9 @@ class GroupsJson
     public function getGroupName(string $groupTag)
     {
         if (empty($groupTag)) return false;
-        $code = $this->aliasMap[$groupTag] ?? '';
+        $code = $this->persisted['aliasMap'][$groupTag] ?? '';
         if (empty($code)) return false;
-        return $this->nameFromCodeMap[$code];
+        return $this->persisted['nameFromCodeMap'][$code];
     }
 
     /**
@@ -95,7 +96,7 @@ class GroupsJson
 
     public function getGroupCodeToNameMap(): array
     {
-        return $this->nameFromCodeMap;
+        return $this->persisted['nameFromCodeMap'];
     }
 
 }

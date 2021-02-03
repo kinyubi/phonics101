@@ -29,8 +29,10 @@ class Util
 
     public static function checkCache(bool $force = false): void
     {
-        if (self::isLocal() && !$force) return;
-        (new CacheTemplate())->clearTwigCache($force);
+        // if (self::isLocal() && !$force) return;
+        // $cache = new CacheTemplate();
+        // $cache->clearTwigCache($force);
+        // $cache->display();
     }
 
     /**

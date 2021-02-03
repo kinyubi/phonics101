@@ -19,6 +19,22 @@
 /*    vertical-align: baseline;*/
 /*}*/
 
+/* My custom defined colors */
+
+:root {
+    --vowel-tile: #E36B7B;
+    --consonant-tile: #85C1E9;
+
+    --vowel-tile--hover: #FC7788;
+    --consonant-tile--hover: #8CCBF5;
+}
+
+/* Bootstrap custom defined colors */
+.sample-readxyz   {background-color: var(--readxyz)}    /* 00aabe */
+.sample-readlite   {background-color: var(--readlite)}  /* 99dde5 */
+.sample-readultra {background-color: var(--readultra)}  /* f2fbfc */
+.sample-readred   {background-color: var(--readred)}    /* f05e58 */
+
 
 html, body {width: auto!important; overflow-x: hidden!important}
 
@@ -75,44 +91,44 @@ ul li {
 }
 
  /*--- new timer */
-button.timerButton {
-    height: 40px;
-    width: 100px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    cursor: pointer;
-    border-radius: 4px;
-}
+/*button.timerButton {*/
+/*    height: 40px;*/
+/*    width: 100px;*/
+/*    text-align: center;*/
+/*    font-family: Arial, sans-serif;*/
+/*    font-size: 20px;*/
+/*    cursor: pointer;*/
+/*    border-radius: 4px;*/
+/*}*/
 
-button.timerButton:hover {
-    background-color: hotpink;
-}
+/*button.timerButton:hover {*/
+/*    background-color: hotpink;*/
+/*}*/
 
-button.timerButton:active {
-    background-color: hotpink;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-}
+/*button.timerButton:active {*/
+/*    background-color: hotpink;*/
+/*    box-shadow: 0 5px #666;*/
+/*    transform: translateY(4px);*/
+/*}*/
 
-#minutes, #seconds {
-    font-size: 40px;
-}
+/*#minutes, #seconds {*/
+/*    font-size: 40px;*/
+/*}*/
 
-button.startButton {
-    border: 2px solid rgb(40, 167, 69);
+/*button.startButton {*/
+/*    border: 2px solid rgb(40, 167, 69);*/
 
-}
+/*}*/
 
-button.stopButton {
-    background-color: rgb(220, 53, 69);
-    color: white;
-}
+/*button.stopButton {*/
+/*    background-color: rgb(220, 53, 69);*/
+/*    color: white;*/
+/*}*/
 
-button.resetButton {
-    background-color: rgb(266, 193, 7);
-    color: rgb(33, 37, 41);
-}
+/*button.resetButton {*/
+/*    background-color: rgb(266, 193, 7);*/
+/*    color: rgb(33, 37, 41);*/
+/*}*/
 
 /* ----sound and spelling----------------------- */
 
@@ -249,45 +265,6 @@ td.info-thumb {
 }
 
 
-/*div.info-container {*/
-/*    max-width: 100px;*/
-/*    height: auto;*/
-/*    position: relative;*/
-/*    !*margin: 1.563em auto;*!*/
-/*}*/
-
-/*div.info-container a {*/
-/*    text-decoration: none;*/
-/*    color: white;*/
-/*    cursor: default;*/
-/*    font-weight: normal;*/
-/*}*/
-
-/*div.info-container a span {*/
-/*    visibility: hidden;*/
-/*    position: absolute;*/
-/*    left: -205px;*/
-/*    top: 2em;*/
-/*    background-color: white;*/
-/*    border-radius: 6px;*/
-/*    border: 2px solid lightgray;*/
-/*    color: #444444;*/
-/*    width: 200px;*/
-/*    font-size: 0.8em;*/
-/*    padding: 0.3em;*/
-/*    cursor: default;*/
-/*    line-height: 1.4;*/
-/*    opacity: 0;*/
-
-/*}*/
-
-/*div.info-container a:hover span {*/
-/*    visibility: visible;*/
-/*    opacity: 1;*/
-/*    background-color: white;*/
-/*    z-index: 1;*/
-/*}*/
-
 /* button code to handle hover effect */
 .btn-img {
   position: relative;
@@ -312,34 +289,11 @@ td.info-thumb {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
-/*!* Practice tab timer button *!*/
-/*.timerButton {*/
-/*    width: 60px;*/
-/*    text-align: center;*/
-/*    font-family: Arial, sans-serif;*/
-/*    font-size: 12px;*/
-/*    cursor: pointer;*/
-/*    padding: 3px;*/
-/*    border-radius: 4px;*/
-/*    margin: 3px;*/
-/*    border-width: 2px;*/
-/*    border-style: solid;*/
-
-/*}*/
-
-/*.timerButton:hover {*/
-/*    background-color: #cccccc;*/
-/*    color: white;*/
-/*}*/
-
-/*.timerButton:active {*/
-/*    transform: translateY(4px);*/
-/*}*/
 
 .progressButton {
     font-family: "Comic Sans MS", Geneva, sans-serif;
-    border: 3px solid #00aabe;
-    color: #00aabe;
+    border: 3px solid var(--readxyz);
+    color: var(--readxyz);
     /*width: 175px;*/
     /*height: 40px;*/
     line-height: 1.5rem;
@@ -368,14 +322,6 @@ a.img-contain img {
     margin: auto;
 }
 
-/*figcaption {*/
-/*    position: absolute;*/
-/*    background-color: transparent;*/
-/*    top: 100%;*/
-/*    left: 0;*/
-/*    right: 0;*/
-/*    display: block;*/
-/*}*/
 
 .bw3 {border-width: 3px; border-style: solid;}
 
@@ -439,7 +385,7 @@ a.img-contain img {
 
 /*iframe {overflow: hidden;}*/
 
-/* classes based on screen size (if using max-midth order largest to smallest) */
+/* classes based on screen size (if using max-width order largest to smallest) */
 .nodec {text-decoration: none !important;}
 
  /* 0 - 575 pixels wide - phone */
@@ -447,14 +393,15 @@ a.img-contain img {
     .sfp {font-size: .6rem !important;}
     .wordlist {font-size: 1.5rem !important;}
     .scaled {transform:scale(.5, .5);}
-    .tile-size {height: 24px; width: 24px; line-height: 24px; font-size: 1em !important; font-weight: bold}
+    .size--tile-1 {height: 24px; width: 24px; line-height: 24px; font-size: 1em !important; font-weight: bold}
+    .size--tile-2 {height: 24px; width: 36px; line-height: 24px; font-size: 1em !important; font-weight: bold}
+    .size--tile-3 {height: 24px; width: 48px; line-height: 24px; font-size: 1em !important; font-weight: bold}
     .size--tab-icon {height: 50px; width: 50px}
     .size--side-icon {height: 24px; width: 24px}
     .size--key-icon {height: 35px; width: 35px}
     .size--list-icon {height: 18px; width: 18px}
-    .tabbar-height {height: 140px;}
-    .title-bar--height {height: 60px}
-    .button-text {font-size: 1rem;}
+    .height--title-bar {height: 60px}
+    .button-text {font-size: .75rem;}
 }
 
 
@@ -463,14 +410,15 @@ a.img-contain img {
      .sfp {font-size: .6rem !important;}
      .wordlist {font-size: 2rem !important;}
      .scaled {transform:scale(.6, .6);}
-     .tile-size {height: 30px; width: 30px; line-height: 30px; font-size: 1.2em !important; font-weight: bold}
+     .size--tile-1 {height: 30px; width: 30px; line-height: 30px; font-size: 1.2em !important; font-weight: bold}
+     .size--tile-2 {height: 30px; width: 45px; line-height: 30px; font-size: 1.2em !important; font-weight: bold}
+     .size--tile-3 {height: 30px; width: 60px; line-height: 30px; font-size: 1.2em !important; font-weight: bold}
      .size--tab-icon {height: 50px; width: 50px}
      .size--side-icon {height: 30px; width: 30px}
      .size--key-icon {height: 45px; width: 45px}
      .size--list-icon {height: 24px; width: 24px}
-     .tabbar-height {height: 140px;}
-     .title-bar--height {height: 50px}
-     .button-text {font-size: 1rem;}
+     .height--title-bar {height: 50px}
+     .button-text {font-size: .8rem;}
  }
 
  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
@@ -478,27 +426,29 @@ a.img-contain img {
      .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 2.5rem !important;}
      .scaled {transform:scale(.75, .75);}
-     .tile-size {height: 40px; width: 40px; line-height: 40px; font-size: 1.5em !important; font-weight: bold}
+     .size--tile-1 {height: 40px; width: 40px; line-height: 40px; font-size: 1.5em !important; font-weight: bold}
+     .size--tile-2 {height: 40px; width: 60px; line-height: 40px; font-size: 1.5em !important; font-weight: bold}
+     .size--tile-3 {height: 40px; width: 80px; line-height: 40px; font-size: 1.5em !important; font-weight: bold}
      .size--tab-icon {height: 42px; width: 42px}
      .size--side-icon {height: 40px; width: 40px}
      .size--key-icon {height: 60px; width: 60px}
      .size--list-icon {height: 30px; width: 30px}
-     .tabbar-height {height: 140px;}
-     .title-bar--height {height: 60px}
-     .button-text {font-size: 1.25rem;}
+     .height--title-bar {height: 60px}
+     .button-text {font-size: 1.1rem;}
  }
  /* Large devices (desktops, 992px and up) */
  @media (min-width: 992px) {
      .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 3rem !important;}
      .scaled {transform:scale(1.0, 1.0);}
-     .tile-size {height: 60px; width: 60px; line-height: 60px; font-size: 2em !important; font-weight: bold}
+     .size--tile-1 {height: 60px; width: 60px; line-height: 60px; font-size: 2em !important; font-weight: bold}
+     .size--tile-2 {height: 60px; width: 90px; line-height: 60px; font-size: 2em !important; font-weight: bold}
+     .size--tile-3 {height: 60px; width: 120px; line-height: 60px; font-size: 2em !important; font-weight: bold}
      .size--tab-icon {height: 60px; width: 60px}
      .size--side-icon {height: 50px; width: 50px}
      .size--key-icon {height: 75px; width: 75px}
      .size--list-icon {height: 35px; width: 35px}
-     .tabbar-height {height: 100px;}
-     .title-bar--height {height: 60px}
+     .height--title-bar {height: 60px}
      .button-text {font-size: 1.5rem;}
  }
 
@@ -542,7 +492,7 @@ a.img-contain img {
 
 /* classes to handle background images in accordion */
 .accordion--image {
-  height: 7vh;
+  height: 6vh;
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: contain; /* Resize the background image to cover the entire container */
@@ -567,7 +517,7 @@ a.img-contain img {
   background-size: contain; /* Resize the background image to cover the entire container */
 }
 
-.mastery--nomastery {
+.mastery--no-mastery {
     background-image: url("/images/lessonlist/lesson-nomastery.png");
 }
 .mastery--advancing {
@@ -624,4 +574,30 @@ a.img-contain img {
     background-color: white !important;
     -ms-flex-align: baseline !important;
     align-items: baseline !important;
+}
+
+/* define styling for the tiles in the spinner(spell) tab and the write tab */
+/* use with .wordlist .size--list-icon */
+.tile {
+	border-style: solid;
+	border-width: 1px;
+	color: #2C3E50;
+	text-align: center;
+	border-radius: 5px;
+	box-shadow: 2px 2px 1px #888888;
+    cursor: pointer;
+	margin: 3px !important;
+}
+.tile-vowel {background-color: var(--vowel-tile)}
+.tile-vowel:hover {background-color: var(--vowel-tile--hover)}
+.tile-consonant {background-color: var(--consonant-tile)}
+.tile-consonant:hover {background-color: var(--consonant-tile--hover)}
+
+.center-x {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

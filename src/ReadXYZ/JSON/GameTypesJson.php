@@ -28,11 +28,11 @@ class GameTypesJson
      active: bool
  */
 
-    private array $aliasMap = [];
+
     /**
      * @var stdClass[]
      */
-    private array $universalGames = [];
+
     /**
      * TabTypeJson constructor.
      * @see https://goessner.net/articles/JsonPath/
@@ -40,21 +40,28 @@ class GameTypesJson
      */
     private function __construct()
     {
+        $this->cachingEnabled = false;
         $this->baseConstruct('abc_gametypes.json', 'gameTypeId');
         $this->makeMap();
-        foreach ($this->objects as $object) {
-            if(not(empty($object->url))) $this->universalGames[] = $object;
-        }
     }
 
     private function makeMap()
     {
-        $key = $this->primaryKey;
-        foreach ($this->objects as $object) {
-            $this->map[$object->$key] = $object;
-            $this->aliasMap[$object->gameTypeId] = $object->gameTypeId;
-            $this->aliasMap[$object->gameTitle] = $object->gameTypeId;
+        if ($this->cacheUsed) return;
+        $timer = $this->startTimer('creating object' . __CLASS__ . '.');
+        $this->persisted['aliasMap'] = [];
+        $key = $this->persisted['primaryKey'];
+        foreach ($this->persisted['objects'] as $object) {
+            $this->persisted['map'][$object->$key] = $object;
+            $this->persisted['aliasMap'] [$object->gameTypeId] = $object->gameTypeId;
+            $this->persisted['aliasMap'] [$object->gameTitle] = $object->gameTypeId;
         }
+        $this->persisted['universalGames'] = [];
+        foreach ($this->persisted['objects'] as $object) {
+            if(not(empty($object->url))) $this->persisted['universalGames'][] = $object;
+        }
+        $this->stopTimer($timer);
+        $this->cacheData();
     }
 
     /**
@@ -64,7 +71,7 @@ class GameTypesJson
     private function getId(string $tag)
     {
         if (empty($tag)) return false;
-        $id = $this->aliasMap[$tag] ?? '';
+        $id = $this->persisted['aliasMap'][$tag] ?? '';
         if (empty($id)) return false;
         return $id;
     }
@@ -73,7 +80,7 @@ class GameTypesJson
     {
         $id = $this->getId($tag);
         if ($id === false) return null;
-        return $this->map[$id];
+        return $this->persisted['map'][$id];
     }
 
     public function exists(string $tag): bool
@@ -87,7 +94,7 @@ class GameTypesJson
      */
     public function getUniversal(): array
     {
-        return $this->universalGames;
+        return $this->persisted['universalGames'];
     }
 
 }

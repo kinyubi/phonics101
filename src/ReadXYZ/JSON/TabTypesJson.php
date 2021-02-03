@@ -15,7 +15,6 @@ class TabTypesJson
 {
     use JsonTrait;
     protected static TabTypesJson   $instance;
-    protected array $aliasMap = [];
 
     /**
      * TabTypeJson constructor.
@@ -25,35 +24,48 @@ class TabTypesJson
     protected function __construct()
     {
         $this->baseConstruct('abc_tabtypes.json', 'tabTypeId');
-        $this->baseMakeMap();
-        $this->makeAliasMap();
+        $this->makeMap();
     }
 
     /**
      * creates a map of aliases we'll use for our overridden get method
      * @return void
      */
-    protected function makeAliasMap(): void
+    protected function makeMap(): void
     {
-        foreach ($this->map as $key => $object) {
-            $this->aliasMap[$object->tabTypeId] = $object->tabTypeId;
-            $this->aliasMap[$object->tabDisplayAs] = $object->tabTypeId;
+        if ($this->cacheUsed) return;
+        $timer = $this->startTimer('creating object' . __CLASS__ . '.');
+        $this->persisted['aliasMap'] = [];
+        foreach ($this->persisted['objects'] as $object) {
+            $this->persisted['map'][$object->tabTypeId] = $object;
+            $this->persisted['aliasMap'][$object->tabTypeId] = $object->tabTypeId;
+            $this->persisted['aliasMap'][$object->tabDisplayAs] = $object->tabTypeId;
             foreach ($object->aliases as $alias) {
-                $this->aliasMap[$alias] = $object->tabTypeId;
+                $this->persisted['aliasMap'][$alias] = $object->tabTypeId;
             }
         }
+        $this->stopTimer($timer);
+        $this->cacheData();
     }
 
-    public function getTabId(string $tabId): string
+    /**
+     * @param string $tabId
+     * @return string|false
+     */
+    public function getTabId(string $tabId)
     {
-        return $this->aliasMap[$tabId] ?? '';
+        return $this->persisted['aliasMap'][$tabId] ?? false;
     }
 
+    /**
+     * @param string $tabId
+     * @return stdClass|null
+     */
     public function get(string $tabId): ?stdClass
     {
-        $key = $this->aliasMap[$tabId] ?? '';
+        $key = $this->persisted['aliasMap'][$tabId] ?? '';
         if (empty($key)) {return null;}
-        return $this->map[$key] ?? null;
+        return $this->persisted['map'][$key] ?? null;
     }
 
 

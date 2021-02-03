@@ -13,24 +13,39 @@ class ScreenCookie
     public const COMPUTER_DEVICE = 'computer';
     public const UNKNOWN_DEVICE = 'unknown';
 
+    private static ScreenCookie $instance;
 
+    private function __construct() {Session::sessionContinue();}
 
-    public static function getScreenInfo()
+    public static function getInstance(): ScreenCookie
     {
-        Session::sessionContinue();
+        if ( ! isset(self::$instance)) {
+            self::$instance = new ScreenCookie();
+        }
+
+        return self::$instance;
+    }
+
+    public function getScreenInfo()
+    {
         if (!isset($_COOKIE['readxyz_screen'])) {
             return self::makeObject(0,0,0, 0, self::UNKNOWN_DEVICE);
         }
         $dims = explode(',', $_COOKIE['readxyz_screen']);
         $type = self::getDeviceType($dims[0], $dims[1]);
-        return self::makeObject(intval($dims[0]), intval($dims[1]), intval($dims[2]), intval($dims[3]), $type);
+        $screenInfo = self::makeObject(intval($dims[0]), intval($dims[1]), intval($dims[2]), intval($dims[3]), $type);
+        $_SESSION['SCREEN_DIM'] = $screenInfo;
+        return $screenInfo;
     }
 
-    public static function getDeviceType(int $width, int $height): string
+    public function getDeviceType(int $width=0, int $height=0): string
     {
         if ($width == 0) {
-            $type = self::UNKNOWN_DEVICE;
-        } elseif ($width < 500 || $height < 500) {
+            $screenInfo = $this->getScreenInfo();
+            $width = $screenInfo->screenWidth;
+            $height = $screenInfo->screenHeight;
+        }
+        if ($width < 500 || $height < 500) {
             $type = self::PHONE_DEVICE;
         } elseif ($width < 900 || $height < 900) {
             $type = self::TABLET_DEVICE;
@@ -40,10 +55,10 @@ class ScreenCookie
         return $type;
     }
 
-    public static function isScreenSizeSmall(): bool
+    public function isScreenSizeSmall(): bool
     {
         $sizes = self::getScreenInfo();
-        return ($sizes->screenWidth < 800);
+        return ($sizes->screenWidth < 800 || $sizes->screenHeight < 800);
     }
 
     private static function makeObject(int $screenWidth, int $screenHeight, int $windowWidth, int $windowHeight, string $type)

@@ -1,7 +1,7 @@
-[{
+[
+    {
         "type": "header",
-        "version": "5.0.4",
-        "comment": "Export to JSON plugin for PHPMyAdmin"
+        "comment": "abc_zoo_animals"
     },
     {
         "type": "database",
@@ -10,706 +10,708 @@
     {
         "type": "table",
         "name": "abc_zoo_animals",
+        "version": "1.0124",
         "database": "readxyz0_phonics",
-        "data": [{
+        "data": [
+            {
                 "animalCode": "anteater",
                 "fileName": "/images/animals/named/anteater.jpg",
                 "grayFileName": "/images/animals/gray/anteater_gray.jpg",
                 "friendlyName": "Anteater",
-                "associatedLesson": null
+                "ordinal": 72
             },
             {
                 "animalCode": "arcticfox",
                 "fileName": "/images/animals/named/arcticfox.jpg",
                 "grayFileName": "/images/animals/gray/arcticfox_gray.jpg",
                 "friendlyName": "Arctic Fox",
-                "associatedLesson": null
+                "ordinal": 86
             },
             {
                 "animalCode": "bear",
                 "fileName": "/images/animals/named/bear.jpg",
                 "grayFileName": "/images/animals/gray/bear_gray.jpg",
                 "friendlyName": "Bear",
-                "associatedLesson": null
+                "ordinal": 5
             },
             {
                 "animalCode": "beaver",
                 "fileName": "/images/animals/named/beaver.jpg",
                 "grayFileName": "/images/animals/gray/beaver_gray.jpg",
                 "friendlyName": "Beaver",
-                "associatedLesson": null
+                "ordinal": 37
             },
             {
                 "animalCode": "bee",
                 "fileName": "/images/animals/named/bee.jpg",
                 "grayFileName": "/images/animals/gray/bee_gray.jpg",
                 "friendlyName": "Bee",
-                "associatedLesson": null
+                "ordinal": 73
             },
             {
                 "animalCode": "beetle",
                 "fileName": "/images/animals/named/beetle.jpg",
                 "grayFileName": "/images/animals/gray/beetle_gray.jpg",
                 "friendlyName": "Beetle",
-                "associatedLesson": null
+                "ordinal": 94
             },
             {
                 "animalCode": "bison",
                 "fileName": "/images/animals/named/bison.jpg",
                 "grayFileName": "/images/animals/gray/bison_gray.jpg",
                 "friendlyName": "Bison",
-                "associatedLesson": null
+                "ordinal": 78
             },
             {
                 "animalCode": "butterfly",
                 "fileName": "/images/animals/named/butterfly.jpg",
                 "grayFileName": "/images/animals/gray/butterfly_gray.jpg",
                 "friendlyName": "Butterfly",
-                "associatedLesson": null
+                "ordinal": 39
             },
             {
                 "animalCode": "camel",
                 "fileName": "/images/animals/named/camel.jpg",
                 "grayFileName": "/images/animals/gray/camel_gray.jpg",
                 "friendlyName": "Camel",
-                "associatedLesson": null
+                "ordinal": 45
             },
             {
                 "animalCode": "cat",
                 "fileName": "/images/animals/named/cat.jpg",
                 "grayFileName": "/images/animals/gray/cat_gray.jpg",
                 "friendlyName": "Cat",
-                "associatedLesson": null
+                "ordinal": 7
             },
             {
                 "animalCode": "cheetah",
                 "fileName": "/images/animals/named/cheetah.jpg",
                 "grayFileName": "/images/animals/gray/cheetah_gray.jpg",
                 "friendlyName": "Cheetah",
-                "associatedLesson": null
+                "ordinal": 82
             },
             {
                 "animalCode": "chicken",
                 "fileName": "/images/animals/named/chicken.jpg",
                 "grayFileName": "/images/animals/gray/chicken_gray.jpg",
                 "friendlyName": "Chicken",
-                "associatedLesson": null
+                "ordinal": 65
             },
             {
                 "animalCode": "chimpanzee",
                 "fileName": "/images/animals/named/chimpanzee.jpg",
                 "grayFileName": "/images/animals/gray/chimpanzee_gray.jpg",
                 "friendlyName": "Chimpanzee",
-                "associatedLesson": null
+                "ordinal": 33
             },
             {
                 "animalCode": "cougar",
                 "fileName": "/images/animals/named/cougar.jpg",
                 "grayFileName": "/images/animals/gray/cougar_gray.jpg",
                 "friendlyName": "Cougar",
-                "associatedLesson": null
+                "ordinal": 64
             },
             {
                 "animalCode": "cow",
                 "fileName": "/images/animals/named/cow.jpg",
                 "grayFileName": "/images/animals/gray/cow_gray.jpg",
                 "friendlyName": "Cow",
-                "associatedLesson": null
+                "ordinal": 15
             },
             {
                 "animalCode": "crab",
                 "fileName": "/images/animals/named/crab.jpg",
                 "grayFileName": "/images/animals/gray/crab_gray.jpg",
                 "friendlyName": "Crab",
-                "associatedLesson": null
+                "ordinal": 59
             },
             {
                 "animalCode": "crocodile",
                 "fileName": "/images/animals/named/crocodile.jpg",
                 "grayFileName": "/images/animals/gray/crocodile_gray.jpg",
                 "friendlyName": "Crocodile",
-                "associatedLesson": null
+                "ordinal": 66
             },
             {
                 "animalCode": "deer",
                 "fileName": "/images/animals/named/deer.jpg",
                 "grayFileName": "/images/animals/gray/deer_gray.jpg",
                 "friendlyName": "Deer",
-                "associatedLesson": null
+                "ordinal": 88
             },
             {
                 "animalCode": "dog",
                 "fileName": "/images/animals/named/dog.jpg",
                 "grayFileName": "/images/animals/gray/dog_gray.jpg",
                 "friendlyName": "Dog",
-                "associatedLesson": null
+                "ordinal": 6
             },
             {
                 "animalCode": "dolphin",
                 "fileName": "/images/animals/named/dolphin.jpg",
                 "grayFileName": "/images/animals/gray/dolphin_gray.jpg",
                 "friendlyName": "Dolphin",
-                "associatedLesson": null
+                "ordinal": 9
             },
             {
                 "animalCode": "duck",
                 "fileName": "/images/animals/named/duck.jpg",
                 "grayFileName": "/images/animals/gray/duck_gray.jpg",
                 "friendlyName": "Duck",
-                "associatedLesson": null
+                "ordinal": 55
             },
             {
                 "animalCode": "eagle",
                 "fileName": "/images/animals/named/eagle.jpg",
                 "grayFileName": "/images/animals/gray/eagle_gray.jpg",
                 "friendlyName": "Eagle",
-                "associatedLesson": null
+                "ordinal": 58
             },
             {
                 "animalCode": "elephant",
                 "fileName": "/images/animals/named/elephant.jpg",
                 "grayFileName": "/images/animals/gray/elephant_gray.jpg",
                 "friendlyName": "Elephant",
-                "associatedLesson": null
+                "ordinal": 0
             },
             {
                 "animalCode": "emu",
                 "fileName": "/images/animals/named/emu.jpg",
                 "grayFileName": "/images/animals/gray/emu_gray.jpg",
                 "friendlyName": "Emu",
-                "associatedLesson": null
+                "ordinal": 91
             },
             {
                 "animalCode": "flamingo",
                 "fileName": "/images/animals/named/flamingo.jpg",
                 "grayFileName": "/images/animals/gray/flamingo_gray.jpg",
                 "friendlyName": "Flamingo",
-                "associatedLesson": null
+                "ordinal": 46
             },
             {
                 "animalCode": "fox",
                 "fileName": "/images/animals/named/fox.jpg",
                 "grayFileName": "/images/animals/gray/fox_gray.jpg",
                 "friendlyName": "Fox",
-                "associatedLesson": null
+                "ordinal": 28
             },
             {
                 "animalCode": "frog",
                 "fileName": "/images/animals/named/frog.jpg",
                 "grayFileName": "/images/animals/gray/frog_gray.jpg",
                 "friendlyName": "Frog",
-                "associatedLesson": null
+                "ordinal": 38
             },
             {
                 "animalCode": "giraffe",
                 "fileName": "/images/animals/named/giraffe.jpg",
                 "grayFileName": "/images/animals/gray/giraffe_gray.jpg",
                 "friendlyName": "Giraffe",
-                "associatedLesson": null
+                "ordinal": 17
             },
             {
                 "animalCode": "goat",
                 "fileName": "/images/animals/named/goat.jpg",
                 "grayFileName": "/images/animals/gray/goat_gray.jpg",
                 "friendlyName": "Goat",
-                "associatedLesson": null
+                "ordinal": 19
             },
             {
                 "animalCode": "gorilla",
                 "fileName": "/images/animals/named/gorilla.jpg",
                 "grayFileName": "/images/animals/gray/gorilla_gray.jpg",
                 "friendlyName": "Gorilla",
-                "associatedLesson": null
+                "ordinal": 31
             },
             {
                 "animalCode": "guineapig",
                 "fileName": "/images/animals/named/guineapig.jpg",
                 "grayFileName": "/images/animals/gray/guineapig_gray.jpg",
                 "friendlyName": "Guinea Pig",
-                "associatedLesson": null
+                "ordinal": 80
             },
             {
                 "animalCode": "hamster",
                 "fileName": "/images/animals/named/hamster.jpg",
                 "grayFileName": "/images/animals/gray/hamster_gray.jpg",
                 "friendlyName": "Hamster",
-                "associatedLesson": null
+                "ordinal": 23
             },
             {
                 "animalCode": "hedgehog",
                 "fileName": "/images/animals/named/hedgehog.jpg",
                 "grayFileName": "/images/animals/gray/hedgehog_gray.jpg",
                 "friendlyName": "Hedgehog",
-                "associatedLesson": null
+                "ordinal": 24
             },
             {
                 "animalCode": "hippo",
                 "fileName": "/images/animals/named/hippo.jpg",
                 "grayFileName": "/images/animals/gray/hippo_gray.jpg",
                 "friendlyName": "Hippo",
-                "associatedLesson": null
+                "ordinal": 30
             },
             {
                 "animalCode": "horse",
                 "fileName": "/images/animals/named/horse.jpg",
                 "grayFileName": "/images/animals/gray/horse_gray.jpg",
                 "friendlyName": "Horse",
-                "associatedLesson": null
+                "ordinal": 10
             },
             {
                 "animalCode": "hummingbird",
                 "fileName": "/images/animals/named/hummingbird.jpg",
                 "grayFileName": "/images/animals/gray/hummingbird_gray.jpg",
                 "friendlyName": "Hummingbird",
-                "associatedLesson": null
+                "ordinal": 74
             },
             {
                 "animalCode": "jaguar",
                 "fileName": "/images/animals/named/jaguar.jpg",
                 "grayFileName": "/images/animals/gray/jaguar_gray.jpg",
                 "friendlyName": "Jaguar",
-                "associatedLesson": null
+                "ordinal": 90
             },
             {
                 "animalCode": "jellyfish",
                 "fileName": "/images/animals/named/jellyfish.jpg",
                 "grayFileName": "/images/animals/gray/jellyfish_gray.jpg",
                 "friendlyName": "Jellyfish",
-                "associatedLesson": null
+                "ordinal": 13
             },
             {
                 "animalCode": "kangaroo",
                 "fileName": "/images/animals/named/kangaroo.jpg",
                 "grayFileName": "/images/animals/gray/kangaroo_gray.jpg",
                 "friendlyName": "Kangaroo",
-                "associatedLesson": null
+                "ordinal": 77
             },
             {
                 "animalCode": "kiwi",
                 "fileName": "/images/animals/named/kiwi.jpg",
                 "grayFileName": "/images/animals/gray/kiwi_gray.jpg",
                 "friendlyName": "Kiwi",
-                "associatedLesson": null
+                "ordinal": 79
             },
             {
                 "animalCode": "koala",
                 "fileName": "/images/animals/named/koala.jpg",
                 "grayFileName": "/images/animals/gray/koala_gray.jpg",
                 "friendlyName": "Koala",
-                "associatedLesson": null
+                "ordinal": 27
             },
             {
                 "animalCode": "ladybug",
                 "fileName": "/images/animals/named/ladybug.jpg",
                 "grayFileName": "/images/animals/gray/ladybug_gray.jpg",
                 "friendlyName": "Ladybug",
-                "associatedLesson": null
+                "ordinal": 61
             },
             {
                 "animalCode": "lemur",
                 "fileName": "/images/animals/named/lemur.jpg",
                 "grayFileName": "/images/animals/gray/lemur_gray.jpg",
                 "friendlyName": "Lemur",
-                "associatedLesson": null
+                "ordinal": 35
             },
             {
                 "animalCode": "leopard",
                 "fileName": "/images/animals/named/leopard.jpg",
                 "grayFileName": "/images/animals/gray/leopard_gray.jpg",
                 "friendlyName": "Leopard",
-                "associatedLesson": null
+                "ordinal": 8
             },
             {
                 "animalCode": "lion",
                 "fileName": "/images/animals/named/lion.jpg",
                 "grayFileName": "/images/animals/gray/lion_gray.jpg",
                 "friendlyName": "Lion",
-                "associatedLesson": null
+                "ordinal": 4
             },
             {
                 "animalCode": "llama",
                 "fileName": "/images/animals/named/llama.jpg",
                 "grayFileName": "/images/animals/gray/llama_gray.jpg",
                 "friendlyName": "Llama",
-                "associatedLesson": null
+                "ordinal": 81
             },
             {
                 "animalCode": "lobster",
                 "fileName": "/images/animals/named/lobster.jpg",
                 "grayFileName": "/images/animals/gray/lobster_gray.jpg",
                 "friendlyName": "Lobster",
-                "associatedLesson": null
+                "ordinal": 95
             },
             {
                 "animalCode": "mantis",
                 "fileName": "/images/animals/named/mantis.jpg",
                 "grayFileName": "/images/animals/gray/mantis_gray.jpg",
                 "friendlyName": "Mantis",
-                "associatedLesson": null
+                "ordinal": 99
             },
             {
                 "animalCode": "monkey",
                 "fileName": "/images/animals/named/monkey.jpg",
                 "grayFileName": "/images/animals/gray/monkey_gray.jpg",
                 "friendlyName": "Monkey",
-                "associatedLesson": null
+                "ordinal": 1
             },
             {
                 "animalCode": "mouse",
                 "fileName": "/images/animals/named/mouse.jpg",
                 "grayFileName": "/images/animals/gray/mouse_gray.jpg",
                 "friendlyName": "Mouse",
-                "associatedLesson": null
+                "ordinal": 75
             },
             {
                 "animalCode": "octopus",
                 "fileName": "/images/animals/named/octopus.jpg",
                 "grayFileName": "/images/animals/gray/octopus_gray.jpg",
                 "friendlyName": "Octopus",
-                "associatedLesson": null
+                "ordinal": 76
             },
             {
                 "animalCode": "orca",
                 "fileName": "/images/animals/named/orca.jpg",
                 "grayFileName": "/images/animals/gray/orca_gray.jpg",
                 "friendlyName": "Orca",
-                "associatedLesson": null
+                "ordinal": 87
             },
             {
                 "animalCode": "ostrich",
                 "fileName": "/images/animals/named/ostrich.jpg",
                 "grayFileName": "/images/animals/gray/ostrich_gray.jpg",
                 "friendlyName": "Ostrich",
-                "associatedLesson": null
+                "ordinal": 67
             },
             {
                 "animalCode": "otter",
                 "fileName": "/images/animals/named/otter.jpg",
                 "grayFileName": "/images/animals/gray/otter_gray.jpg",
                 "friendlyName": "Otter",
-                "associatedLesson": null
+                "ordinal": 21
             },
             {
                 "animalCode": "owl",
                 "fileName": "/images/animals/named/owl.jpg",
                 "grayFileName": "/images/animals/gray/owl_gray.jpg",
                 "friendlyName": "Owl",
-                "associatedLesson": null
+                "ordinal": 32
             },
             {
                 "animalCode": "panda",
                 "fileName": "/images/animals/named/panda.jpg",
                 "grayFileName": "/images/animals/gray/panda_gray.jpg",
                 "friendlyName": "Panda",
-                "associatedLesson": null
+                "ordinal": 3
             },
             {
                 "animalCode": "panther",
                 "fileName": "/images/animals/named/panther.jpg",
                 "grayFileName": "/images/animals/gray/panther_gray.jpg",
                 "friendlyName": "Panther",
-                "associatedLesson": null
+                "ordinal": 69
             },
             {
                 "animalCode": "parrot",
                 "fileName": "/images/animals/named/parrot.jpg",
                 "grayFileName": "/images/animals/gray/parrot_gray.jpg",
                 "friendlyName": "Parrot",
-                "associatedLesson": null
+                "ordinal": 40
             },
             {
                 "animalCode": "peacock",
                 "fileName": "/images/animals/named/peacock.jpg",
                 "grayFileName": "/images/animals/gray/peacock_gray.jpg",
                 "friendlyName": "Peacock",
-                "associatedLesson": null
+                "ordinal": 68
             },
             {
                 "animalCode": "penguin",
                 "fileName": "/images/animals/named/penguin.jpg",
                 "grayFileName": "/images/animals/gray/penguin_gray.jpg",
                 "friendlyName": "Penguin",
-                "associatedLesson": null
+                "ordinal": 14
             },
             {
                 "animalCode": "pig",
                 "fileName": "/images/animals/named/pig.jpg",
                 "grayFileName": "/images/animals/gray/pig_gray.jpg",
                 "friendlyName": "Pig",
-                "associatedLesson": null
+                "ordinal": 22
             },
             {
                 "animalCode": "pigeon",
                 "fileName": "/images/animals/named/pigeon.jpg",
                 "grayFileName": "/images/animals/gray/pigeon_gray.jpg",
                 "friendlyName": "Pigeon",
-                "associatedLesson": null
+                "ordinal": 25
             },
             {
                 "animalCode": "platypus",
                 "fileName": "/images/animals/named/platypus.jpg",
                 "grayFileName": "/images/animals/gray/platypus_gray.jpg",
                 "friendlyName": "Platypus",
-                "associatedLesson": null
+                "ordinal": 29
             },
             {
                 "animalCode": "polarbear",
                 "fileName": "/images/animals/named/polarbear.jpg",
                 "grayFileName": "/images/animals/gray/polarbear_gray.jpg",
                 "friendlyName": "Polar Bear",
-                "associatedLesson": null
+                "ordinal": 47
             },
             {
                 "animalCode": "porcupine",
                 "fileName": "/images/animals/named/porcupine.jpg",
                 "grayFileName": "/images/animals/gray/porcupine_gray.jpg",
                 "friendlyName": "Porcupine",
-                "associatedLesson": null
+                "ordinal": 71
             },
             {
                 "animalCode": "pufferfish",
                 "fileName": "/images/animals/named/pufferfish.jpg",
                 "grayFileName": "/images/animals/gray/pufferfish_gray.jpg",
                 "friendlyName": "Puffer Fish",
-                "associatedLesson": null
+                "ordinal": 56
             },
             {
                 "animalCode": "rabbit",
                 "fileName": "/images/animals/named/rabbit.jpg",
                 "grayFileName": "/images/animals/gray/rabbit_gray.jpg",
                 "friendlyName": "Rabbit",
-                "associatedLesson": null
+                "ordinal": 44
             },
             {
                 "animalCode": "raccoon",
                 "fileName": "/images/animals/named/raccoon.jpg",
                 "grayFileName": "/images/animals/gray/raccoon_gray.jpg",
                 "friendlyName": "Raccoon",
-                "associatedLesson": null
+                "ordinal": 18
             },
             {
                 "animalCode": "rat",
                 "fileName": "/images/animals/named/rat.jpg",
                 "grayFileName": "/images/animals/gray/rat_gray.jpg",
                 "friendlyName": "Rat",
-                "associatedLesson": null
+                "ordinal": 34
             },
             {
                 "animalCode": "redpanda",
                 "fileName": "/images/animals/named/redpanda.jpg",
                 "grayFileName": "/images/animals/gray/redpanda_gray.jpg",
                 "friendlyName": "Red Panda",
-                "associatedLesson": null
+                "ordinal": 41
             },
             {
                 "animalCode": "reindeer",
                 "fileName": "/images/animals/named/reindeer.jpg",
                 "grayFileName": "/images/animals/gray/reindeer_gray.jpg",
                 "friendlyName": "Reindeer",
-                "associatedLesson": null
+                "ordinal": 97
             },
             {
                 "animalCode": "rhino",
                 "fileName": "/images/animals/named/rhino.jpg",
                 "grayFileName": "/images/animals/gray/rhino_gray.jpg",
                 "friendlyName": "Rhino",
-                "associatedLesson": null
+                "ordinal": 20
             },
             {
                 "animalCode": "salmon",
                 "fileName": "/images/animals/named/salmon.jpg",
                 "grayFileName": "/images/animals/gray/salmon_gray.jpg",
                 "friendlyName": "Salmon",
-                "associatedLesson": null
+                "ordinal": 12
             },
             {
                 "animalCode": "scorpion",
                 "fileName": "/images/animals/named/scorpion.jpg",
                 "grayFileName": "/images/animals/gray/scorpion_gray.jpg",
                 "friendlyName": "Scorpion",
-                "associatedLesson": null
+                "ordinal": 96
             },
             {
                 "animalCode": "seahorse",
                 "fileName": "/images/animals/named/seahorse.jpg",
                 "grayFileName": "/images/animals/gray/seahorse_gray.jpg",
                 "friendlyName": "Seahorse",
-                "associatedLesson": null
+                "ordinal": 48
             },
             {
                 "animalCode": "seal",
                 "fileName": "/images/animals/named/seal.jpg",
                 "grayFileName": "/images/animals/gray/seal_gray.jpg",
                 "friendlyName": "Seal",
-                "associatedLesson": null
+                "ordinal": 70
             },
             {
                 "animalCode": "shark",
                 "fileName": "/images/animals/named/shark.jpg",
                 "grayFileName": "/images/animals/gray/shark_gray.jpg",
                 "friendlyName": "Shark",
-                "associatedLesson": null
+                "ordinal": 57
             },
             {
                 "animalCode": "sheep",
                 "fileName": "/images/animals/named/sheep.jpg",
                 "grayFileName": "/images/animals/gray/sheep_gray.jpg",
                 "friendlyName": "Sheep",
-                "associatedLesson": null
+                "ordinal": 26
             },
             {
                 "animalCode": "shrimp",
                 "fileName": "/images/animals/named/shrimp.jpg",
                 "grayFileName": "/images/animals/gray/shrimp_gray.jpg",
                 "friendlyName": "Shrimp",
-                "associatedLesson": null
+                "ordinal": 89
             },
             {
                 "animalCode": "skunk",
                 "fileName": "/images/animals/named/skunk.jpg",
                 "grayFileName": "/images/animals/gray/skunk_gray.jpg",
                 "friendlyName": "Skunk",
-                "associatedLesson": null
+                "ordinal": 50
             },
             {
                 "animalCode": "sloth",
                 "fileName": "/images/animals/named/sloth.jpg",
                 "grayFileName": "/images/animals/gray/sloth_gray.jpg",
                 "friendlyName": "Sloth",
-                "associatedLesson": null
+                "ordinal": 49
             },
             {
                 "animalCode": "snail",
                 "fileName": "/images/animals/named/snail.jpg",
                 "grayFileName": "/images/animals/gray/snail_gray.jpg",
                 "friendlyName": "Snail",
-                "associatedLesson": null
+                "ordinal": 54
             },
             {
                 "animalCode": "snake",
                 "fileName": "/images/animals/named/snake.jpg",
                 "grayFileName": "/images/animals/gray/snake_gray.jpg",
                 "friendlyName": "Snake",
-                "associatedLesson": null
+                "ordinal": 63
             },
             {
                 "animalCode": "spider",
                 "fileName": "/images/animals/named/spider.jpg",
                 "grayFileName": "/images/animals/gray/spider_gray.jpg",
                 "friendlyName": "Spider",
-                "associatedLesson": null
+                "ordinal": 98
             },
             {
                 "animalCode": "squirrel",
                 "fileName": "/images/animals/named/squirrel.jpg",
                 "grayFileName": "/images/animals/gray/squirrel_gray.jpg",
                 "friendlyName": "Squirrel",
-                "associatedLesson": null
+                "ordinal": 42
             },
             {
                 "animalCode": "starfish",
                 "fileName": "/images/animals/named/starfish.jpg",
                 "grayFileName": "/images/animals/gray/starfish_gray.jpg",
                 "friendlyName": "Starfish",
-                "associatedLesson": null
+                "ordinal": 51
             },
             {
                 "animalCode": "stingray",
                 "fileName": "/images/animals/named/stingray.jpg",
                 "grayFileName": "/images/animals/gray/stingray_gray.jpg",
                 "friendlyName": "Stingray",
-                "associatedLesson": null
+                "ordinal": 93
             },
             {
                 "animalCode": "sugarglider",
                 "fileName": "/images/animals/named/sugarglider.jpg",
                 "grayFileName": "/images/animals/gray/sugarglider_gray.jpg",
                 "friendlyName": "Sugar Glider",
-                "associatedLesson": null
+                "ordinal": 53
             },
             {
                 "animalCode": "swan",
                 "fileName": "/images/animals/named/swan.jpg",
                 "grayFileName": "/images/animals/gray/swan_gray.jpg",
                 "friendlyName": "Swan",
-                "associatedLesson": null
+                "ordinal": 52
             },
             {
                 "animalCode": "tiger",
                 "fileName": "/images/animals/named/tiger.jpg",
                 "grayFileName": "/images/animals/gray/tiger_gray.jpg",
                 "friendlyName": "Tiger",
-                "associatedLesson": null
+                "ordinal": 2
             },
             {
                 "animalCode": "toad",
                 "fileName": "/images/animals/named/toad.jpg",
                 "grayFileName": "/images/animals/gray/toad_gray.jpg",
                 "friendlyName": "Toad",
-                "associatedLesson": null
+                "ordinal": 92
             },
             {
                 "animalCode": "tortoise",
                 "fileName": "/images/animals/named/tortoise.jpg",
                 "grayFileName": "/images/animals/gray/tortoise_gray.jpg",
                 "friendlyName": "Tortoise",
-                "associatedLesson": null
+                "ordinal": 60
             },
             {
                 "animalCode": "toucan",
                 "fileName": "/images/animals/named/toucan.jpg",
                 "grayFileName": "/images/animals/gray/toucan_gray.jpg",
                 "friendlyName": "Toucan",
-                "associatedLesson": null
+                "ordinal": 36
             },
             {
                 "animalCode": "turkey",
                 "fileName": "/images/animals/named/turkey.jpg",
                 "grayFileName": "/images/animals/gray/turkey_gray.jpg",
                 "friendlyName": "Turkey",
-                "associatedLesson": null
+                "ordinal": 62
             },
             {
                 "animalCode": "turtle",
                 "fileName": "/images/animals/named/turtle.jpg",
                 "grayFileName": "/images/animals/gray/turtle_gray.jpg",
                 "friendlyName": "Turtle",
-                "associatedLesson": null
+                "ordinal": 83
             },
             {
                 "animalCode": "walrus",
                 "fileName": "/images/animals/named/walrus.jpg",
                 "grayFileName": "/images/animals/gray/walrus_gray.jpg",
                 "friendlyName": "Walrus",
-                "associatedLesson": null
+                "ordinal": 84
             },
             {
                 "animalCode": "whale",
                 "fileName": "/images/animals/named/whale.jpg",
                 "grayFileName": "/images/animals/gray/whale_gray.jpg",
                 "friendlyName": "Whale",
-                "associatedLesson": null
+                "ordinal": 16
             },
             {
                 "animalCode": "wolf",
                 "fileName": "/images/animals/named/wolf.jpg",
                 "grayFileName": "/images/animals/gray/wolf_gray.jpg",
                 "friendlyName": "Wolf",
-                "associatedLesson": null
+                "ordinal": 11
             },
             {
                 "animalCode": "yak",
                 "fileName": "/images/animals/named/yak.jpg",
                 "grayFileName": "/images/animals/gray/yak_gray.jpg",
                 "friendlyName": "Yak",
-                "associatedLesson": null
+                "ordinal": 85
             },
             {
                 "animalCode": "zebra",
                 "fileName": "/images/animals/named/zebra.jpg",
                 "grayFileName": "/images/animals/gray/zebra_gray.jpg",
                 "friendlyName": "Zebra",
-                "associatedLesson": null
+                "ordinal": 43
             }
         ]
 

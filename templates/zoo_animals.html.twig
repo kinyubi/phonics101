@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{# arguments:
+		title
+#}
+{% block body %}
+	<div class="row d-flex justify-content-between">
+		<div class="h1 mx-auto w-100 p-3">{{ title|raw }}</div>
+	</div>
+	<div class="row d-flex justify-content-start">
+		{% for animal in animals %}
+			<img src="{{ animal.fileName }}" alt="{{ animal.friendlyName }}" title=""{{ animal.friendlyName }} class="m-1">
+		{% endfor %}
+	</div>
+
+{% endblock %}

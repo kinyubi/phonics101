@@ -6,7 +6,12 @@ namespace App\ReadXYZ\Models;
 
 use App\ReadXYZ\Data\SystemLogData;
 use App\ReadXYZ\Enum\LogLevel;
+use App\ReadXYZ\Helpers\Util;
 
+/**
+ * Class Log logs messages to
+ * @package App\ReadXYZ\Models
+ */
 class Log
 {
 
@@ -35,6 +40,14 @@ class Log
         self::write('WARNING', $message, $method, $file, $line);
     }
 
+    public static function elapsedTime(string $message, float $mSecs)
+    {
+        $stamp = Util::getHumanReadableDateTime();
+        $file = Util::getProjectPath('docs/elapsedTimes.log');
+        $fullMessage = sprintf("%s Elapsed time: %.4f %s\n", $stamp, $mSecs, $message);
+        error_log($fullMessage, 3, $file);
+    }
+
 
     private static function write(string $level, string $message, string $method='', string $file='', int $line=0): void
     {
@@ -43,5 +56,10 @@ class Log
         $lcLevel = strtolower($level);
         if (!LogLevel::isValid($lcLevel)) $lcLevel = LogLevel::FATAL;
         (new SystemLogData())->add($lcLevel, '',$message);
+    }
+
+    private static function writeTime(string $message, float $msecs)
+    {
+
     }
 }

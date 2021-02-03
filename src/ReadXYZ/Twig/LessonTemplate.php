@@ -12,11 +12,12 @@ use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\JSON\LessonsJson;
 use App\ReadXYZ\JSON\TabTypesJson;
 use App\ReadXYZ\JSON\WarmupsJson;
+use App\ReadXYZ\JSON\ZooAnimalsJson;
+use App\ReadXYZ\Lessons\Lesson;
 use App\ReadXYZ\Lessons\SideNote;
 use App\ReadXYZ\Models\BreadCrumbs;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Page\LessonPage;
-use App\ReadXYZ\Lessons\Lesson;
 
 class LessonTemplate
 {
@@ -26,6 +27,7 @@ class LessonTemplate
     private string     $lessonName;
     private string     $initialTabName;
     private string     $trainerCode;
+    private string         $studentCode;
 
     /**
      * LessonTemplate constructor.
@@ -42,9 +44,11 @@ class LessonTemplate
         Session::updateLesson($lessonName);
 
         $studentName = Session::getStudentName();
+        $this->studentCode = Session::getStudentCode();
         $this->lesson = $this->lessonsJson->getLesson($lessonName);
         if ($this->lesson == null) {
-            return Util::redBox("A lesson named $lessonName does not exist.");
+            Util::redBox("A lesson named $lessonName does not exist.");
+            exit;
         }
         $this->page = new LessonPage($lessonName, $studentName);
     }
@@ -57,21 +61,27 @@ class LessonTemplate
      */
     public function display(string $initialTab=''): void
     {
+        Session::updateTicTacToe($this->lesson->getTicTacToeWords());
+        $zooTemplate = new ZooTemplate($this->studentCode);
         if ($initialTab) {
             $this->initialTabName = $initialTab;
         }
         $sideNote              = SideNote::getInstance();
         $args                  = [];
         $args['students']      = Views::getInstance()->getStudentNamesForUser($this->trainerCode);
+        $args['zooUrl']        = $zooTemplate->getZooUrl();
         $args['page']          = $this->page;
         $args['lesson']        = $this->lesson;
         $args['tabTypes']      = TabTypesJson::getInstance();
-        $args['isSmallScreen'] = ScreenCookie::isScreenSizeSmall();
+        $args['isSmallScreen'] = ScreenCookie::getInstance()->isScreenSizeSmall();
         $args['sideNote']      = SideNote::getInstance();
         $args['testCurve']     = $sideNote->getTestCurveHTML();
         $args['learningCurve'] = $sideNote->getLearningCurveHTML();
         $args['masteredWords'] = (new WordMasteryData())->getMasteredWords();
         $args['this_crumb'] = $this->lesson->lessonName;
+        $args['animals']       = ZooAnimalsJson::getInstance()->getStudentAnimalSet(Session::getStudentCode());
+
+
         if ($this->initialTabName) {
             $args['initialTabName'] = $this->initialTabName;
         }
@@ -85,7 +95,9 @@ class LessonTemplate
         }
 
         $breadcrumbs = (new BreadCrumbs())->getPrevious('lesson');
-        if ($breadcrumbs) $args['previous_crumbs'] = $breadcrumbs;
+        if ($breadcrumbs) {
+            $args['previous_crumbs'] = $breadcrumbs;
+        }
         $this->page->addArguments($args);
         $this->page->displayLesson();
     }

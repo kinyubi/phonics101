@@ -22,31 +22,39 @@ class WarmupsJson
      */
     protected function __construct()
     {
-        $this->baseConstruct('abc_warmups.json', 'lessonName');
+        $this->baseConstruct('abc_warmups.json', 'lessonId');
+        if (! empty($this->persisted['map'])) return;
         $this->makeMap();
     }
 
     public function exists($lessonId): bool
     {
-        return isset($this->map[$lessonId]);
+        return isset($this->persisted['map'][$lessonId]);
     }
 
     protected function makeMap(): void
     {
-
-        foreach ($this->objects as $object) {
+        if ($this->cacheUsed) return;
+        $timer = $this->startTimer('creating object' . __CLASS__ . '.');
+        foreach ($this->persisted['objects'] as $object) {
             $items = [];
             foreach ($object->warmups as $item) {
                 $items[] = new WarmupItem($item->directions, $item->parts);
             }
             $warmup = new Warmup($object->lessonId, $object->instructions, $items);
-            $this->map[$object->lessonId] = $warmup;
+            $this->persisted['map'][$object->lessonId] = $warmup;
         }
+        $this->stopTimer($timer);
+        $this->cacheData();
     }
 
-    public function get(string $lessonTag): ?Warmup
+    /**
+     * gets the Warmup instance associated with the specified lessonId
+     * @param string $id
+     * @return Warmup|null a warmup instance for the given lessonId or null if not found
+     */
+    public function get(string $id): ?Warmup
     {
-        $id = LessonsJson::getInstance()->getLessonId($lessonTag);
-        return $this->map[$id] ?? null;
+        return $this->persisted['map'][$id] ?? null;
     }
 }

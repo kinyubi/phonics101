@@ -450,12 +450,12 @@
                 "visible": true
             },
             {
-                "lessonId": "at+ap",
+                "lessonId": "at_ap",
                 "lessonName": "at + ap",
                 "ignoreMe1": "Blending.at + ap",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
-                    "at + ap",
+                    "at + ap", "at+ap",
                     "Cat + Cap"
                 ],
                 "groupCode": "a",
@@ -618,7 +618,7 @@
                 "visible": true
             },
             {
-                "lessonId": "at+ag",
+                "lessonId": "at_ag",
                 "lessonName": "at + ag",
                 "ignoreMe1": "Blending.at + ag",
                 "ignoreMe2": "Blending",
@@ -785,12 +785,13 @@
                 "visible": true
             },
             {
-                "lessonId": "at+ap+ag+an",
+                "lessonId": "at_ap_ag_an",
                 "lessonName": "at + ap + ag + an",
                 "ignoreMe1": "Blending.at + ap + ag + an",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "at + ap + ag + an",
+                    "at+ap+ag+an",
                     "Cat + Cap + Bag + Fan"
                 ],
                 "groupCode": "a",
@@ -1116,12 +1117,13 @@
                 "visible": true
             },
             {
-                "lessonId": "at+it",
+                "lessonId": "at_it",
                 "lessonName": "at + it",
                 "ignoreMe1": "Blending.at + it",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "at + it",
+                    "at+it",
                     "Bat + Bit"
                 ],
                 "groupCode": "i",
@@ -1292,12 +1294,13 @@
                 "visible": true
             },
             {
-                "lessonId": "ag+ig",
+                "lessonId": "ag_ig",
                 "lessonName": "ag + ig",
                 "ignoreMe1": "Blending.ag + ig",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ag + ig",
+                    "ag+ig",
                     "Bag + Big"
                 ],
                 "groupCode": "i",
@@ -1382,12 +1385,13 @@
                 "visible": true
             },
             {
-                "lessonId": "it+ig+ip+in",
+                "lessonId": "it_ig_ip_in",
                 "lessonName": "it + ig + ip + in",
                 "ignoreMe1": "Blending.it + ig + ip + in",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "it + ig + ip + in",
+                    "it+ig+ip+in",
                     "Bit + Big"
                 ],
                 "groupCode": "i",
@@ -1472,12 +1476,13 @@
                 "visible": true
             },
             {
-                "lessonId": "a+i",
+                "lessonId": "a_i",
                 "lessonName": "/a/ + /i/",
                 "ignoreMe1": "Blending./a/ + /i/",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/a/ + /i/",
+                    "a+i",
                     "Contrast /a/ + /i/"
                 ],
                 "groupCode": "i",
@@ -1808,12 +1813,13 @@
                 "visible": true
             },
             {
-                "lessonId": "ot+og+op",
+                "lessonId": "ot_og_op",
                 "lessonName": "ot + og + op",
                 "ignoreMe1": "Blending.ot + og + op",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ot + og + op",
+                    "ot+og+op",
                     "Cot + Cog + Cop"
                 ],
                 "groupCode": "o_u",
@@ -1892,12 +1898,13 @@
                 "visible": true
             },
             {
-                "lessonId": "a+i+o",
+                "lessonId": "a_i_o",
                 "lessonName": "/a/ + /i/ + /o/",
                 "ignoreMe1": "Blending./a/ + /i/ + /o/",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/a/ + /i/ + /o/",
+                    "a+i+o",
                     "Contrast /a/ + /i/ + /o/"
                 ],
                 "groupCode": "o_u",
@@ -2149,12 +2156,13 @@
                 "visible": true
             },
             {
-                "lessonId": "ut+ug+up+un",
+                "lessonId": "ut_ug_up_un",
                 "lessonName": "ut + ug + up + un",
                 "ignoreMe1": "Blending.ut + ug + up + un",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ut + ug + up + un",
+                    "ut+ug+up+un",
                     "But Nut Rut"
                 ],
                 "groupCode": "o_u",
@@ -2320,12 +2328,13 @@
                 "visible": true
             },
             {
-                "lessonId": "u+i+o",
+                "lessonId": "u_i_o",
                 "lessonName": "/u/ + i/ + /o/",
                 "ignoreMe1": "Blending./u/ + i/ + /o/",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/u/ + i/ + /o/",
+                    "u+i+o",
                     "Contrast /i/ and /u/"
                 ],
                 "groupCode": "o_u",
@@ -2570,12 +2579,13 @@
                 "visible": true
             },
             {
-                "lessonId": "et+eg+en",
+                "lessonId": "et_eg_en",
                 "lessonName": "et + eg + en",
                 "ignoreMe1": "Blending.et + eg + en",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "et + eg + en",
+                    "et+eg+en",
                     "Bet Get Jet"
                 ],
                 "groupCode": "cvc_wrap",
@@ -3640,12 +3650,13 @@
                 "visible": true
             },
             {
-                "lessonId": "a_e+a",
+                "lessonId": "a_e_a",
                 "lessonName": "a_e + /a/",
                 "ignoreMe1": "Blending.a_e + /a/",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "a_e + /a/",
+                    "a_e+a",
                     "Contrast a_e /ay/ and a /ah/"
                 ],
                 "groupCode": "magic_e",
@@ -3809,12 +3820,13 @@
                 "visible": true
             },
             {
-                "lessonId": "i_e+i",
+                "lessonId": "i_e_i",
                 "lessonName": "i_e + /i/",
                 "ignoreMe1": "Blending.i_e + /i/",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "i_e + /i/",
+                    "i_e+i",
                     "Contrast i_e /igh/ and i /ih/"
                 ],
                 "groupCode": "magic_e",
@@ -3972,12 +3984,13 @@
                 "visible": true
             },
             {
-                "lessonId": "o_e+o",
+                "lessonId": "o_e_o",
                 "lessonName": "o_e + /o/",
                 "ignoreMe1": "Blending.o_e + /o/",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "o_e + /o/",
+                    "o_e+o",
                     "Contrast o_e /h/ and o /aw/"
                 ],
                 "groupCode": "magic_e",
@@ -4144,12 +4157,13 @@
                 "visible": true
             },
             {
-                "lessonId": "u_e+u",
+                "lessonId": "u_e_u",
                 "lessonName": "u_e + /u/",
                 "ignoreMe1": "Blending.u_e + /u/",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "u_e + /u/",
+                    "u_e+u",
                     "Contrast u_e /ue/ and u /uh/"
                 ],
                 "groupCode": "magic_e",
@@ -4229,12 +4243,13 @@
                 "visible": true
             },
             {
-                "lessonId": "?e_syllables",
+                "lessonId": "e_syllables",
                 "lessonName": "cvc + ?_e syllables",
                 "ignoreMe1": "Blending.cvc + ?_e syllables",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "cvc + ?_e syllables",
+                    "?e_syllables",
                     ""
                 ],
                 "groupCode": "magic_e",
@@ -4785,12 +4800,13 @@
                 "visible": true
             },
             {
-                "lessonId": "ngs+nks",
+                "lessonId": "ngs_nks",
                 "lessonName": "-ngs + -nks",
                 "ignoreMe1": "Blending.-ngs + -nks",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-ngs + -nks",
+                    "ngs+nks",
                     "Suffix Digraphs ngs, nks"
                 ],
                 "groupCode": "blends",
@@ -5025,12 +5041,13 @@
                 "visible": true
             },
             {
-                "lessonId": "prefix+suffix",
+                "lessonId": "prefix_suffix",
                 "lessonName": "prefix + suffix blends",
                 "ignoreMe1": "Blending.prefix + suffix blends",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "prefix + suffix blends",
+                    "prefix+suffix",
                     "Prefix and suffix clusters"
                 ],
                 "groupCode": "blends",
@@ -5187,12 +5204,13 @@
                 "visible": true
             },
             {
-                "lessonId": "kn+gn+wr",
+                "lessonId": "kn_gn_wr",
                 "lessonName": "kn + gn + wr",
                 "ignoreMe1": "Blending.kn + gn + wr",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "kn + gn + wr",
+                    "kn+gn+wr",
                     "Silent Prefix Clusters kn-, gn-, wr- ..."
                 ],
                 "groupCode": "blends",
@@ -6032,12 +6050,13 @@
                 "visible": true
             },
             {
-                "lessonId": "e_e+eh",
+                "lessonId": "e_e_eh",
                 "lessonName": "e_e + /eh/",
                 "ignoreMe1": "Blending.e_e + /eh/",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "e_e + /eh/",
+                    "e_e+eh",
                     "Contrast e_e /ee/ and e /eh/"
                 ],
                 "groupCode": "magic_e_blends",
@@ -6112,7 +6131,7 @@
                 "visible": true
             },
             {
-                "lessonId": "r-controlled ?_e",
+                "lessonId": "r_controlled_e",
                 "lessonName": "r-controlled ?_e",
                 "ignoreMe1": "Blending.r-controlled ?_e",
                 "ignoreMe2": "Blending",
@@ -6200,12 +6219,13 @@
                 "visible": true
             },
             {
-                "lessonId": "dge+nge",
+                "lessonId": "dge_nge",
                 "lessonName": "dge + nge",
                 "ignoreMe1": "Blending.dge + nge",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "dge + nge",
+                    "dge+nge",
                     "Digraphs (dge,nge)"
                 ],
                 "groupCode": "blend_wrap",
@@ -6518,12 +6538,13 @@
                 "visible": true
             },
             {
-                "lessonId": "ed+ing_?e",
+                "lessonId": "ed_ing_e",
                 "lessonName": "-ed + -ing for magic e",
                 "ignoreMe1": "Blending.-ed + -ing for magic e",
                 "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-ed + -ing for magic e",
+                    "ed+ing_?e",
                     "Suffix -ed and -ing"
                 ],
                 "groupCode": "blend_wrap",

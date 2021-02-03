@@ -78,3 +78,37 @@ function reload() {
 $(document).ready(function () {
     checkSoundBoxCookie();
 });
+
+function dropOnSquare(event) {
+    event.preventDefault();
+    let moverId = event.dataTransfer.getData("text");
+    let receiverId = event.target.id;
+    checkStatus(moverId, receiverId);
+}
+
+function touchSquare(event) {
+    const receptacles = document.getElementsByClassName('receptacle');
+    let mover = event.target;
+    let receiver = null;
+    for (let r of receptacles) {
+        if (detectContainment(mover, r)) {
+            receiver = r;
+            break;
+        }
+    }
+    if (receiver) {
+        checkStatus(mover.id, receiver.id);
+        mover.removeEventListener('touchend', touchSquare, {passive: true});
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function (event) {
+    const receptacles = document.getElementsByClassName('receptacle');
+    for (let receiver of receptacles) {
+        receiver.addEventListener('drop', dropOnSquare, false);
+    }
+    const movers = document.getElementsByClassName('mover');
+    for (let mover of movers) {
+        mover.addEventListener('touchend', touchSquare, {passive: true});
+    }
+});

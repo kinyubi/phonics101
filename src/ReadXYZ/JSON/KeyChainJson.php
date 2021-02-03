@@ -32,14 +32,14 @@ class KeyChainJson
     public function get(string $key): ?object
     {
         $code = GroupsJson::getInstance()->getGroupCode($key) ?? null;
-        return $code ? $this->map[$code] : null;
+        return $code ? $this->persisted['map'][$code] : null;
     }
 
     public function exists(string $key): bool
     {
         $code = GroupsJson::getInstance()->getGroupCode($key) ?? null;
         if ($code == null) return false;
-        return $this->map[$code] != null;
+        return $this->persisted['map'][$code] != null;
     }
 
 }

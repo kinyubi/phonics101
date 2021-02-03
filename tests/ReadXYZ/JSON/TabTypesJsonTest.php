@@ -18,11 +18,4 @@ class TabTypesJsonTest extends TestCase
         $x = $j->get('missing');
         $this->assertNull($x);
     }
-
-    public function testGetImplicitVersion()
-    {
-        $j = TabTypesJson::getInstance();
-        $v = $j->getImplicitVersion();
-        $this->assertTrue(Regex::isValidVersion($v));
-    }
 }

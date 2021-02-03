@@ -40,7 +40,7 @@ class Lesson
     public string       $pronounceImageThumb;
     /** @var string[] */
     public ?array       $contrastImages;
-    public int          $ordering = 0;
+    public int          $ordinal = 0;
     public bool         $visible;
     public ?array       $wordLists;
     public array        $notes;
@@ -56,15 +56,18 @@ class Lesson
      *
      * @param stdClass $lesson
      */
-    public function __construct(stdClass $lesson)
+    public function __construct(?stdClass $lesson = null)
     {
+        if ($lesson == null) {
+            return;
+        } // handle the caching instance
         // $start = Debug::startTimer();
         $this->lessonId       = $lesson->lessonId;
         $this->lessonCode     = $lesson->lessonId;
         $this->lessonName     = $lesson->lessonName;
         $this->alternateNames = $lesson->alternateNames;
         $this->groupCode      = $lesson->groupCode;
-
+        $this->ordinal        = $lesson->ordinal;
         $this->wordList             = CSV::listToArray($lesson->wordList) ?? [];
         $this->supplementalWordList = CSV::listToArray($lesson->supplementalWordList) ?? [];
         $this->allWords             = array_merge($this->wordList, $this->supplementalWordList);
@@ -89,9 +92,6 @@ class Lesson
         $gameTypesJson  = GameTypesJson::getInstance();
         $universalGames = $gameTypesJson->getUniversal();
         for ($i = 0; $i < count($universalGames); $i++) {
-            if ($universalGames[$i]->gameTypeId == 'tic-tac-toe') {
-                $_SESSION['TicTacToe'] = $this->getTicTacToeWords();
-            }
             $this->games[$universalGames[$i]->belongsOnTab][] = $universalGames[$i];
         }
 
@@ -138,11 +138,36 @@ class Lesson
         // Debug::logElapsedTime($start, 'Lesson::__construct(' . $lesson->lessonName . ')');
     }
 
+// ======================== STATIC METHODS =====================
+    public static function __set_state($array)
+    {
+        $lesson                       = new Lesson();
+        $lesson->lessonId             = $array['lessonId'];
+        $lesson->lessonName           = $array['lessonName'];
+        $lesson->lessonCode           = $lesson->lessonId;
+        $lesson->alternateNames       = $array['alternateNames'];
+        $lesson->groupCode            = $array['groupCode'];
+        $lesson->stretchList          = $array['stretchList'];
+        $lesson->fluencySentences     = $array['fluencySentences'];
+        $lesson->games                = $array['games'];
+        $lesson->tabNames             = $array['tabNames'];
+        $lesson->spinner              = $array['spinner'];
+        $lesson->pronounceImage       = $array['pronounceImage'];
+        $lesson->pronounceImageThumb  = $array['pronounceImageThumb'];
+        $lesson->ordinal              = $array['ordinal'];
+        $lesson->visible              = $array['visible'];
+        $lesson->wordLists            = $array['wordLists'];
+        $lesson->allWords             = $array['allWords'];
+        $lesson->book                 = $array['book'];
+        $lesson->wordList             = $array['wordList'];
+        $lesson->supplementalWordList = $array['supplementalWordList'];
+        return $lesson;
+    }
 
 // ======================== PRIVATE METHODS =====================
 
 
-    private function getTicTacToeWords(): array
+    public function getTicTacToeWords(): array
     {
         $initialWords = $this->wordList;
         $words        = $initialWords;

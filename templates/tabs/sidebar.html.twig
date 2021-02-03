@@ -4,7 +4,7 @@
 #}
 {% block SideBar %}
   {% set tabId = tabInfo.tabTypeId %}
-  {% set infoDim = isSmallScreen ? 30 : 50 %}
+  {% set infoDim = smaller ? 30 : 50 %}
   {% set information = sideNote.getNote(lesson.groupCode, tabId) %}
   {% set isBdpLesson = 'b-d-p' in lesson.lessonName %}
 
@@ -32,8 +32,8 @@
     {# GAMES #}
     <table id="{{ tabId }}-sidebar-contents" class="table table-sm table-borderless">
       <tbody>
-      {% set h =  isSmallScreen ? 68 : 115 %}
-      {% set w = isSmallScreen  ? 75 : 150 %}
+      {% set h =  smaller ? 68 : 115 %}
+      {% set w = smaller  ? 75 : 150 %}
 
       {% for game in lesson.games[tabId]|default %}
         <tr class="d-flex justify-content-center align-items-center">

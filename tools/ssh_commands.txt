@@ -1,0 +1,10 @@
+cd c:\laragon\bin
+pageant.exe
+# Add the key ~/.ssh/siteground_rsa.ppk to pageant
+
+putty.exe   #username in u54-ghv0gos7evzj
+cd www/test.readxyz.com/src/ReadXYZ
+rm -rf cache
+
+cd ../../public_html/generated
+

@@ -5,12 +5,13 @@ namespace App\ReadXYZ\Data;
 
 
 use App\ReadXYZ\Enum\ActiveType;
-use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\DbVersion;
+use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Regex;
-use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Helpers\PhonicsException;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Twig\ZooTemplate;
+use stdClass;
 
 class StudentsData extends AbstractData
 {
@@ -57,7 +58,7 @@ EOT;
     public function add(string $studentName, string $userName, string $studentCode=''): DbResult
     {
         $studentCode = $this->smartQuotes($this->newStudentCode($studentCode));
-        $compositeCode = $this->smartQuotes($this->createCompositeCode($studentName, $userName));
+        $compositeCode = $this->smartQuotes(self::createCompositeCode($studentName, $userName));
         $query = "INSERT INTO abc_students(studentCode, userName, studentName, compositeCode, dateCreated , dateLastAccessed) VALUES($studentCode, '$userName', $compositeCode, '$studentName', CURDATE(), CURDATE())";
         $result = $this->query($query, QueryType::STATEMENT);
         if ($result->wasSuccessful()) {
@@ -69,16 +70,16 @@ EOT;
     }
 
     /**
+     * does student exist and is he active
      * @param string $studentTag
      * @return bool
      * @throws PhonicsException on ill-formed SQL
      */
     public function doesStudentExist(string $studentTag): bool
     {
-        $active = ActiveType::IS_ACTIVE;
-        $where = "(studentCode = '$studentTag' OR compositeCode = '$studentTag') AND active = '$active'";
-        $query = "SELECT * FROM abc_students WHERE $where";
-        return $this->throwableQuery($query, QueryType::EXISTS);
+        $object = $this->get($studentTag);
+        if ($object == null) return false;
+        return $object->active == ActiveType::IS_ACTIVE;
     }
 
     /**
@@ -89,9 +90,8 @@ EOT;
      */
     public function getStudentCode(string $studentTag): string
     {
-        $where = "studentCode = '$studentTag' OR compositeCode = '$studentTag'";
-        $query = "SELECT studentCode FROM abc_students WHERE $where ";
-        return $this->throwableQuery($query, QueryType::SCALAR);
+        $object = $this->get($studentTag);
+        return ($object != null) ? $object->studentCode : '';
     }
 
     /**
@@ -101,9 +101,38 @@ EOT;
      */
     public function getStudentName(string $studentTag): string
     {
-        $where = "studentCode = '$studentTag' OR compositeCode = '$studentTag'";
-        $query = "SELECT studentName FROM abc_students WHERE $where";
-        return $this->throwableQuery($query, QueryType::SCALAR);
+        $object = $this->get($studentTag);
+        return ($object != null) ? $object->studentName : '';
+    }
+
+    /**
+     * @param string $studentTag
+     * @return int
+     * @throws PhonicsException
+     */
+    public function advanceAnimal(string $studentTag): string
+    {
+        $object = $this->get($studentTag);
+        if ($object == null) return '0';
+        if ($object->lastAwarded > (time() - 1200)) return '0'; //award only once every 20 minutes
+        $index = $object->nextAnimal;
+        $time = time();
+        $studentCode = $object->studentCode;
+        if ($index < 99) {
+            $query = "UPDATE abc_students SET nextAnimal = nextAnimal + 1, lastAwarded = $time WHERE studentCode = '$studentCode'";
+            $this->throwableQuery($query, QueryType::STATEMENT);
+            $zooTemplate = new ZooTemplate($studentCode);
+            $zooTemplate->deleteExisting();
+            $zooTemplate->createZooPage();
+            return strval($index + 1);
+        }
+        return strval($index);
+    }
+
+    public function getAnimalIndex(string $studentTag): int
+    {
+        $object = $this->get($studentTag);
+        return ($object != null) ? $object->nextAnimal : 0;
     }
 
     /**
@@ -125,7 +154,20 @@ EOT;
         }
     }
 
-    private function createCompositeCode(string $studentName, string $userName): string
+    /**
+     * fields (studentCode, userName, studentName, compositeCode, avatarFileName, s2MemberId, nextAnimal, ...)
+     * @param string $studentTag
+     * @throws PhonicsException
+     */
+    public function get(string $studentTag): ?stdClass
+    {
+        $where = "studentCode = '$studentTag' OR compositeCode = '$studentTag'";
+        $query = "SELECT * FROM abc_students WHERE $where";
+        return $this->throwableQuery($query, QueryType::SINGLE_OBJECT);
+    }
+
+// ======================== PRIVATE METHODS =====================
+    private static function createCompositeCode(string $studentName, string $userName): string
     {
         return $userName . '-' . $studentName;
     }

@@ -121,14 +121,25 @@ class Page
      */
     public function display(string $template): void
     {
+        echo $this->getHtml($template);
+    }
+
+    /**
+     * return the html for the page
+     * @param string $template
+     * @return string generated html
+     * @throws PhonicsException
+     */
+    public function getHtml(string $template): string
+    {
         $this->addArgument(self::PAGE_TITLE, $this->pageTitle);
         $this->addArgument(self::NAVBAR, $this->navBar);
         $this->addArgument(self::ERRORS, $this->errors);
-        $this->addArgument(self::IS_SMALL_SCREEN, ScreenCookie::isScreenSizeSmall());
+        $this->addArgument(self::IS_SMALL_SCREEN, ScreenCookie::getInstance()->isScreenSizeSmall());
         $this->addArgument(self::PREV_CRUMBS, $this->prevCrumbs);
         $this->addArgument(self::THIS_CRUMB, $this->crumb);
 
-        echo TwigFactory::getInstance()->renderTemplate($template, $this->arguments);
+        return TwigFactory::getInstance()->renderTemplate($template, $this->arguments);
     }
 
     public function setPageCrumb(string $crumb): void

@@ -50,7 +50,28 @@ function setScreenCookie() {
     Cookies.set(cookieName, cookieValue, { expires: 1 });
 }
 
+function format(fmt, ...args){
+    return fmt.split("%%").reduce((aggregate, chunk, i) => aggregate + chunk + (args[i] || ""), "");
+}
 
+function seeZoo() {
+    let width = (screen.availWidth < 700) ? screen.availWidth - 20 : Math.min((window.innerWidth - 40), 900);
+    let height = (screen.availWidth < 700) ? screen.availHeight -20 : window.innerHeight - 40;
+    let staticConfig = 'toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no,status=no,left=10,top=10';
+    let specs = format('height=%%,width=%%,%%', height, width, staticConfig);
+    window.open('/seeZoo', 'newwindow', specs);
+    // setTimeout( function(){document.location.href='/My_Folder/PHP/file_2.php'}, 1000 );
+}
+
+function doNothing(data) {}
+
+function noAward(data) {
+    if (data === '0') {
+        alert("Sorry. You can't earn prizes that quickly.")
+    } else {
+        window.location.assign('/reloadLesson');
+    }
+}
 
 $(document).ready(function () {
     WSpin.init();

@@ -113,18 +113,18 @@ class LessonsJsonTest extends TestCase
     public function testGetLessonCode()
     {
         $j = LessonsJson::getInstance();
-        $this->assertEquals('u_e+u', $j->getLessonCode('u_e+u'));
-        $this->assertEquals('u_e+u', $j->getLessonCode('u_e + /u/'));
-        $this->assertEquals('u_e+u', $j->getLessonCode('Contrast u_e /ue/ and u /uh/'));
+        $this->assertEquals('u_e_u', $j->getLessonCode('u_e+u'));
+        $this->assertEquals('u_e_u', $j->getLessonCode('u_e + /u/'));
+        $this->assertEquals('u_e_u', $j->getLessonCode('Contrast u_e /ue/ and u /uh/'));
         $this->assertFalse($j->getLessonCode('freaky friday'));
     }
 
     public function testGetLessonId()
     {
         $j = LessonsJson::getInstance();
-        $this->assertEquals('u_e+u', $j->getLessonId('u_e+u'));
-        $this->assertEquals('u_e+u', $j->getLessonId('u_e + /u/'));
-        $this->assertEquals('u_e+u', $j->getLessonId('Contrast u_e /ue/ and u /uh/'));
+        $this->assertEquals('u_e_u', $j->getLessonId('u_e+u'));
+        $this->assertEquals('u_e_u', $j->getLessonId('u_e + /u/'));
+        $this->assertEquals('u_e_u', $j->getLessonId('Contrast u_e /ue/ and u /uh/'));
         $this->assertFalse($j->getLessonId('freaky friday'));
     }
 

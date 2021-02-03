@@ -3,6 +3,7 @@
 namespace App\ReadXYZ\Twig;
 
 use App\ReadXYZ\Helpers\PhonicsException;
+use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Helpers\Util;
 use Throwable;
 use Twig\Environment;
@@ -37,6 +38,10 @@ class TwigFactory
         $path = Util::getProjectPath('templates');
         $loader = new FilesystemLoader([$path, "$path/parts", "$path/tabs", "$path/forms"]);
         $this->twigEnvironment = new Environment($loader, $options);
+        $this->twigEnvironment->addGlobal('session', $_SESSION);
+        $screenCookie = ScreenCookie::getInstance();
+        $this->twigEnvironment->addGlobal('screen', $screenCookie);
+        $this->twigEnvironment->addGlobal('smaller', $screenCookie->isScreenSizeSmall());
         if (Util::isLocal()) {
             $this->twigEnvironment->addExtension(new DebugExtension());
         }

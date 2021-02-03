@@ -1,9 +1,12 @@
 <?php
-$cssJsVer = '?ver=1.0102.0';
 $bootstrapVer = '?ver=1.0117.0';
 require dirname(__DIR__) . '/autoload.php';
 use App\ReadXYZ\Helpers\Location;
+use App\ReadXYZ\JSON\ZooAnimalsJson;
+use App\ReadXYZ\Models\Session;
 
+$cssJsVer = '?ver=1.0102.0';
+$bootstrapVer = '?ver=1.01.17.0';
 $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'cap,gap,lap,map,rap,sap,tap,zap,nap',
           'bag,hag,jag,lag,nag,rag,sag,tag,wag',
@@ -21,18 +24,8 @@ $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'bud,dub,dud,pub,pug,pup,dub,bud,dud',
           'bet,get,jet,let,met,net,pet,set,wet'];
 
-$animals = [
-    'elephant', 'monkey', 'tiger', 'panda', 'lion', 'bear', 'dog', 'cat', 'leopard', 'dolphin',
-    'horse', 'wolf', 'salmon', 'jellyfish', 'penguin', 'cow', 'whale', 'giraffe', 'raccoon', 'goat',
-    'rhino', 'otter', 'pig', 'hamster', 'hedgehog', 'pigeon', 'sheep', 'koala', 'fox', 'platypus',
-    'hippo', 'gorilla', 'owl', 'chimpanzee', 'rat', 'lemur', 'toucan', 'beaver', 'frog', 'butterfly',
-    'parrot', 'redpanda', 'squirrel', 'zebra', 'rabbit', 'camel', 'flamingo', 'polarbear', 'seahorse', 'sloth',
-    'skunk', 'starfish', 'swan', 'sugarglider', 'snail', 'duck', 'pufferfish', 'shark', 'eagle', 'crab',
-    'tortoise', 'ladybug', 'turkey', 'snake', 'cougar', 'chicken', 'crocodile', 'ostrich', 'peacock', 'panther',
-    'seal', 'porcupine', 'anteater', 'bee', 'hummingbird', 'mouse', 'octopus', 'kangaroo', 'bison', 'kiwi',
-    'guineapig', 'llama', 'cheetah', 'turtle', 'walrus', 'yak', 'arcticfox', 'orca', 'deer', 'shrimp',
-    'jaguar', 'emu', 'toad', 'stingray', 'beetle', 'lobster', 'scorpion', 'reindeer', 'spider', 'mantis'
-];
+$animals = ZooAnimalsJson::getInstance()->getAnimalNames();
+Session::sessionContinue();
 
 if (isset($_GET['P1']) && in_array($_GET['P1'], $animals)) {
     $player1 = $_GET['P1'];
@@ -164,7 +157,7 @@ $cat = location::getTicTacToeAnimal($player2);
           border-bottom: 5px solid #00aabe;
       }
 
-      #buttons {
+      #new-game {
           text-align: center;
           padding-top: 15px;
       }
@@ -310,8 +303,8 @@ $cat = location::getTicTacToeAnimal($player2);
           </table>
         </div>
 
-        <div id="buttons">
-          <button class="ticTacToe" onClick="window.location.reload();">New Game</button>
+        <div id="buttons" class="d-flex justify-content-center w-100 h-100 mt-5">
+            <button class="ticTacToe mx-auto mt-4" onClick="window.location.reload();">New Game</button>
         </div>
       </div>
     </div>

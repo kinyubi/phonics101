@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Models;
 
 use App\ReadXYZ\Data\CompareLocalRemote;
+use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\TrainersData;
 use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Handlers\CrudHandler;
@@ -13,12 +14,15 @@ use App\ReadXYZ\Handlers\StudentSelector;
 use App\ReadXYZ\Handlers\TimerForms;
 use App\ReadXYZ\Handlers\WordMasteryForm;
 use App\ReadXYZ\Helpers\PhonicsException;
+use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Twig\CacheTemplate;
 use App\ReadXYZ\Twig\CrudTemplate;
 use App\ReadXYZ\Twig\LessonListTemplate;
 use App\ReadXYZ\Twig\LessonTemplate;
 use App\ReadXYZ\Twig\LoginTemplate;
+use App\ReadXYZ\Twig\TicTacToeTemplate;
+use App\ReadXYZ\Twig\ZooTemplate;
 use App\ReadXYZ\Twig\StudentListTemplate;
 
 class RouteMe
@@ -154,6 +158,10 @@ class RouteMe
                     case 'lesson':
                         LessonSelector::route($postParameters, $routeParts);
                         break;
+                    case 'award':
+                        $result = (new StudentsData())->advanceAnimal(Session::getStudentCode());
+                        echo $result;
+                        break;
                     default:
                 }
                 break;
@@ -161,7 +169,6 @@ class RouteMe
 
             case 'clear':
                 (new CacheTemplate())->display();
-                break;
 
             case 'crud':
                 // see tables_crud.html.twig
@@ -204,6 +211,7 @@ class RouteMe
                 (new CompareLocalRemote())->analyze();
                 break;
             case 'default':
+            case 'reloadLesson':
             case '':
                 if (Session::hasLesson()) {
                     (new LessonTemplate(Session::getCurrentLessonName(), ''))->display();

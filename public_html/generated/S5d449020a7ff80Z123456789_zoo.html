@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>readXYZ </title>
+
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+	<!--[if IE]>
+	<link rel="shortcut icon" href="/images/favicons/favicon.ico"><![endif]-->
+	<link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
+	<link rel="shortcut icon" href="/images/favicons/favicon.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
+
+	<script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css?ver=1.0202.0">
+
+	<link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
+
+	<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="/css/phonics.css?ver=1.0202.0" media="all">
+
+	
+	<script src="/js/jquery-3.5.1.js"></script>
+	<script src="/js/jquery.colorbox.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap4-custom/bootstrap.bundle.js?ver=1.0117.0"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+	<script src="/js/phonics.js?ver=1.0202.0"></script>
+
+	</head>
+
+<body>
+
+	
+<div class="m-0 p-0 p-sm-1 p-md-3 p-lg-5 container-fluid" id="base-container" style="max-width: 950px;">
+
+		<div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2" id="readxyz-title">
+				<div class="ml-0 float-left col-3 bg-image--title"></div>
+						
+			
+						
+
+	</div>
+		
+
+		
+			<div class="row d-flex justify-content-between">
+		<div class="h1 mx-auto w-100 p-3">Mark's Animal Friends</div>
+	</div>
+	<div class="row d-flex justify-content-start">
+					<img src="/images/animals/named/beaver.jpg" alt="Beaver" title=""Beaver class="m-1">
+					<img src="/images/animals/named/bear.jpg" alt="Bear" title=""Bear class="m-1">
+					<img src="/images/animals/named/arcticfox.jpg" alt="Arctic Fox" title=""Arctic Fox class="m-1">
+					<img src="/images/animals/named/anteater.jpg" alt="Anteater" title=""Anteater class="m-1">
+			</div>
+
+
+</div> 
+
+
+<script>
+    $(document).ready(function () {
+			        $('.modal-backdrop').removeClass("modal-backdrop");
+        $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
+
+        $(window).resize(function () {
+            setScreenCookie();
+        });
+
+        $(".ajax").colorbox();
+        $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
+        $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
+        $(".inline").colorbox({inline: true, width: "50%"});
+        $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
+        $(".zoo-animals").colorbox({
+            iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
+            top: 20, overlayClose: false, scrolling: true
+        });
+
+								
+        $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
+
+        $(document).bind('cbox_open', function () {
+            $('html').addClass("body__scroll_disable");
+        }).bind('cbox_cleanup', function () {
+            $('html').removeClass("body__scroll_disable");
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
+

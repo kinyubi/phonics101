@@ -65,11 +65,5 @@ class GroupsJsonTest extends TestCase
 
     }
 
-    public function testGetImplicitVersion()
-    {
-        $j = GroupsJson::getInstance();
-        $v = $j->getImplicitVersion();
-        $this->assertTrue(Regex::isValidVersion($v));
-    }
 
 }

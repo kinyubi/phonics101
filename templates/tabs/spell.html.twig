@@ -29,7 +29,7 @@
                    role="group" data-toggle="tooltip" data-placement="top"
                    title="Select a letter from each group to make a word.">
                 {% for letter in lesson.spinner.prefixList %}
-                  {% set clickFunc = func ~ "('p','" ~ letter ~ "')" %}
+                  {% set clickFunc =  "WSpin.wordSpinner('p','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button"
                           onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">
                     {{ letter }}
@@ -50,7 +50,7 @@
             <div class="row">
               <div class="d-flex flex-wrap align-items-center tac" role="group">
                 {% for letter in lesson.spinner.vowel %}
-                  {% set clickFunc = func ~ "('v','" ~ letter ~ "')" %}
+                  {% set clickFunc =  "WSpin.wordSpinner('v','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-danger rounded m-1 p-1 tac col-12"
                           type="button" onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">{{ letter }}
                   </button>
@@ -69,7 +69,7 @@
             <div class="row">
               <div class="d-flex flex-wrap align-items-center tac" role="group">
                 {% for letter in lesson.spinner.suffixList %}
-                  {% set clickFunc = func ~ "('s','" ~ letter ~ "')" %}
+                  {% set clickFunc = "WSpin.wordSpinner('s','" ~ letter ~ "')" %}
                   <button class="btn btn-outline-primary rounded m-1 p-1 tac col-12"
                           type="button" onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">{{ letter }}
                   </button>

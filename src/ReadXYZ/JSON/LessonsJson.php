@@ -10,37 +10,17 @@ use App\ReadXYZ\Enum\MasteryLevel;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Lessons\Lesson;
 use App\ReadXYZ\Models\Session;
-use stdClass;
+use JsonSerializable;
 
 /**
  * Class LessonsJson is a singleton class. Converts JSON to Lesson objects.
  * parent methods include getAll (returns $t
  * @package App\ReadXYZ\JSON
  */
-class LessonsJson
+class LessonsJson implements JsonSerializable
 {
     use JsonTrait;
     protected static LessonsJson   $instance;
-
-    /**
-     * @var array  [ [lessonId/lessonName/alternateName => lessonId] ]
-     */
-    protected array $aliasMap = [];
-
-    /**
-     * @var array // [ [groupCode => ['groupName' => groupName, 'lessons' => [ ['lessonId' => lessonId, 'lessonName' => lessonName] ]
-     */
-    protected array $accordion = [];
-
-    /**
-     * @var array [ [lessonId/groupCode => lessonName/groupName] ]
-     */
-    protected array $titles    = [];
-
-    /**
-     * @var array [ [lessonId => groupCode ]
-     */
-    protected array $groupCodes = [];
 
     /**
      * LessonsJson constructor.
@@ -48,16 +28,16 @@ class LessonsJson
      */
     protected function __construct()
     {
+        $this->cachingEnabled = true;
         $this->baseConstruct('abc_lessons.json', 'lessonId');
         $this->makeMap();
-        $this->createAccordionTemplate();
     }
 
     public function get(string $tag): ?Lesson
     {
-        $key = $this->aliasMap[$tag] ?? '';
+        $key = $this->persisted['aliasMap'][$tag] ?? '';
         if (empty($key)) return null;
-        return  $this->map[$key];
+        return  $this->persisted['map'][$key];
     }
 
     /**
@@ -67,7 +47,7 @@ class LessonsJson
      */
     public function getLessonId(string $lessonTag)
     {
-        return $this->aliasMap[$lessonTag] ?? false;
+        return $this->persisted['aliasMap'][$lessonTag] ?? false;
     }
 
     /**
@@ -88,7 +68,7 @@ class LessonsJson
     {
         $id = $this->getLessonId($lessonTag);
         if ($id === false) return false;
-        return $this->map[$id]->lessonName ?? false;
+        return $this->persisted['map'][$id]->lessonName ?? false;
     }
 
     /**
@@ -99,7 +79,7 @@ class LessonsJson
     {
         $id = $this->getLessonId($lessonTag);
         if ($id === false) return false;
-        return GroupsJson::getInstance()->getGroupName($this->groupCodes[$id]) ?? false;
+        return GroupsJson::getInstance()->getGroupName($this->persisted['groupCodes'][$id]) ?? false;
     }
 
     /**
@@ -110,17 +90,30 @@ class LessonsJson
     {
         $id = $this->getLessonId($lessonTag);
         if ($id === false) return false;
-        return $this->groupCodes[$id] ?? false;
+        return $this->persisted['groupCodes'][$id] ?? false;
     }
 
     public function getAccordion(): array
     {
-        return $this->accordion;
+        return $this->persisted['accordion'];
     }
 
     public function getLesson(string $lessonTag): ?Lesson
     {
         return $this->get($lessonTag);
+    }
+
+    public function getRandomLessonCode(): Lesson
+    {
+        $index = random_int(0, count($this->persisted['objects']) - 1);
+        return $this->persisted['objects'][$index]->lessonCode;
+    }
+
+    public function getOrdinal(string $lessonTag): int
+    {
+        $id = $this->getLessonId($lessonTag);
+        if ($id === false) return 0;
+        return $this->persisted['map'][$id]->ordinal ?? 0;
     }
 
     /**
@@ -129,29 +122,33 @@ class LessonsJson
      */
     protected function makeMap(): void
     {
-        $key = $this->primaryKey;
+        if ($this->cacheUsed) return;
+        $timer = $this->startTimer('creating object' . __CLASS__ . '.');
+        $key = $this->persisted['primaryKey'];
         $ordinal = 0;
-        foreach ($this->objects as $object) {
+        $this->persisted['aliasMap'] = [];
+        foreach ($this->persisted['objects'] as $object) {
             $lessonId = $object->lessonId;
-            $title = $object->lessonName;
             $object->lessonCode = $lessonId;
             $object->ordinal = ++$ordinal;
-            $this->map[$object->$key] = new Lesson($object);
-            $this->aliasMap[$lessonId] = $lessonId;
-            $this->groupCodes[$lessonId] = $object->groupCode;
+            $this->persisted['map'][$object->$key] = new Lesson($object);
+            $this->persisted['aliasMap'][$lessonId] = $lessonId;
+            $this->persisted['groupCodes'][$lessonId] = $object->groupCode;
             if (isset($object->lessonName)) {
-                $this->aliasMap[$object->lessonName] = $lessonId;
-                $this->titles[$lessonId]   = $title;
+                $this->persisted['aliasMap'][$object->lessonName] = $lessonId;
+
             }
 
             if (isset($object->alternateNames)) {
                 foreach ($object->alternateNames as $name) {
                     if (empty($name)) continue;
-                    $this->aliasMap[$name] = $lessonId;
+                    $this->persisted['aliasMap'][$name] = $lessonId;
                 }
             }
         }
-
+        $this->createAccordionTemplate();
+        $this->stopTimer($timer);
+        $this->cacheData();
     }
 
     /**
@@ -168,12 +165,12 @@ class LessonsJson
     {
         $groupMap = GroupsJson::getInstance()->getGroupCodeToNameMap();
         foreach ($groupMap as $code =>$name) {
-            $this->accordion[$code] = ['groupName' => $name, 'lessons' => []];
+            $this->persisted['accordion'][$code] = ['groupName' => $name, 'lessons' => []];
         }
-        foreach ($this->map as $item) {
+        foreach ($this->persisted['map'] as $item) {
             $id = $item->lessonId;
             $groupCode = $item->groupCode;
-            $this->accordion[$groupCode]['lessons'][$id] = ['lessonName' => $item->lessonName, 'mastery' => 0];
+            $this->persisted['accordion'][$groupCode]['lessons'][$id] = ['lessonName' => $item->lessonName, 'mastery' => 0];
         }
     }
 
@@ -182,21 +179,26 @@ class LessonsJson
      */
     public function getAccordionWithMastery(string $studentTag=''): array
     {
-        $accordion = $this->accordion;
+        $accordion = $this->persisted['accordion'];
         $studentCode = empty($studentTag) ? Session::getStudentCode() : (new StudentsData())->getStudentCode($studentTag);
 
         if (empty($studentCode)) return $accordion;
         $mastery = (new StudentLessonsData($studentCode))->getLessonMastery();
         foreach($mastery as $lesson) {
-            $groupCode = $this->groupCodes[$lesson->lessonCode] ?? false;
+            $groupCode = $this->persisted['groupCodes'][$lesson->lessonCode] ?? false;
             if ($groupCode) {
                 $id = $lesson->lessonCode;
-                if (isset($accordion[$groupCode]['lessons'][$id])) {
+                if (isset($this->persisted['accordion'][$groupCode]['lessons'][$id])) {
                     $accordion[$groupCode]['lessons'][$id]['mastery'] = MasteryLevel::toIntegral($lesson->masteryLevel);
                 }
             }
 
         }
         return $accordion;
+    }
+
+    public function jsonSerialize()
+    {
+        // TODO: Implement jsonSerialize() method.
     }
 }

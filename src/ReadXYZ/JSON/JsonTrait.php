@@ -7,56 +7,54 @@ namespace App\ReadXYZ\JSON;
 use App\ReadXYZ\Enum\BoolEnumTreatment;
 use App\ReadXYZ\Enum\JsonDecode;
 use App\ReadXYZ\Helpers\PhonicsException;
-use stdClass;
+use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\Models\Timer;
 
 trait JsonTrait
 {
+    protected array  $persisted             = [
+        'map'           => [],
+        'jsonVersion'   => '',
+        'booleanFields' => [],
+        'primaryKey'    => '',
+        'sourceModDate' => 0,
+        'objects'       => []
+    ];
+    protected bool   $cachingEnabled        = false;
+    protected bool   $cacheUsed             = false;
     protected string $sourceFile = '';
-    protected string     $json         = '';
-    protected array     $booleanFields = [];
-    protected string    $version = '';
-    protected string     $implicitVersion = '';
-    protected array     $map             = [];
-    protected string     $primaryKey = '';
-    protected array     $objects     = [];
-    protected bool      $doesJsonHaveVersioning = false;
+    protected string $cacheFile             = '';
+    protected float  $cachedConstructTime   = 0;
+    protected float  $uncachedConstructTime = 0;
 
-    /**
-     * JsonTrait constructor. We only populate primaryKey, json, objects and map if primary key is provided,
-     * otherwise caller is responsible for overriding MapMap and populating those fields
-     * @param string $sourceFile
-     * @param string $primaryKey
-     * @throws PhonicsException
-     */
-    private function baseConstruct(string $sourceFile, string $primaryKey = '')
+// ======================== STATIC METHODS =====================
+    public static function clearCache(): void
     {
-        $dataDir          = __DIR__ . '/data/';
-        $sourceFile = $dataDir . $sourceFile;
-        if ( ! file_exists($sourceFile)) {
-            throw new PhonicsException("$sourceFile does not exist.");
-        }
-        $this->sourceFile = $sourceFile;
-        $this->implicitVersion = self::getImplicitVersion($sourceFile);
-        if ($primaryKey) {
-            $this->primaryKey = $primaryKey;
-            $this->json      = file_get_contents($sourceFile);
-            $this->objects    = $this->importDataAsStdClass();
+        $glob = glob(__DIR__ . '/data/*.cache');
+        foreach ($glob as $file) {
+            unlink($file);
         }
     }
 
-// ======================== STATIC METHODS =====================
 
     /**
      * Takes a file or a json string, and puts the json into the format used when exporting mySQL data to JSON.
      * If already in that format, it's OK. The resultant JSON is saved to the specified output file in the 'data'
      * subdirectory.
-     * @param string $source a filename or a JSON string
+     * @param string|array $source a filename or a JSON string or an array
      * @param string $tableName
      * @param string $outputFileName
      * @throws PhonicsException
      */
-    public static function convert(string $source, string $tableName, string $outputFileName)
+    public static function convert($source, string $tableName, string $outputFileName)
     {
+        if (is_array($source)) {
+            if (isAssociative($source)) {
+                $data = array_values($source);
+            } else {
+                $data = $source;
+            }
+        } else {
         if (strlen($source) < 100) {
             $json    = file_get_contents($source);
             $version = JsonTrait::getImplicitVersion($source);
@@ -64,29 +62,34 @@ trait JsonTrait
             $json    = $source;
             $version = JsonTrait::getImplicitVersion();
         }
+            $data    = JsonDecode::decode($json, JsonDecode::RETURN_STDCLASS);
+        }
 
-        $data    = JsonDecode::decode($json, JsonDecode::RETURN_STDCLASS);
+
         $objects = [];
         foreach ($data as $item) {
             $objects[] = $item;
         }
         $targetFile = __DIR__ . "/data/$outputFileName";
-        $object     = (object)['data' =>
-                                   [['type' => 'header', 'comment' => $tableName],
+        $data       = ['data' =>
+                           [
+                               ['type' => 'header', 'comment' => $tableName],
                                     ['type' => 'database', 'name' => 'readxyz0_phonics'],
                                     [
                                         'type'     => 'table',
                                         'name'     => $tableName,
-                                        'version'  => $version,
+                                   'version'  => self::timeToVersion(),
                                         'database' => 'readxyz0_phonics',
                                         'data'     => $objects]
-                                   ]];
+                           ]
+        ];
+        $object     = (object)$data;
         $json       = json_encode($object->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         file_put_contents($targetFile, $json);
     }
 
     /**
-     * covert file modified date to version string of format. if file is empty use current data.
+     * convert file modified date to version string of format. if file is empty use current data.
      * <last-digit-of-year>.<2-digit-month><2-digit-day>.<revision-number(0-9)>
      * @param string $fileName
      * @return string
@@ -94,80 +97,12 @@ trait JsonTrait
     public static function getImplicitVersion(string $fileName = ''): string
     {
         if (empty($fileName)) {
-            $stamp = date('y.md', time());
+            return self::timeToVersion();
         } elseif ( ! file_exists($fileName)) {
             return '';
         } else {
-            $stamp = date('y.md', filemtime($fileName));
+            return self::timeToVersion(filemtime($fileName));
         }
-        return substr($stamp, 1) . '.1';
-    }
-
-// ======================== PUBLIC METHODS =====================
-
-    /**
-     * @param string $keyValue
-     * @return bool
-     * @throws PhonicsException
-     */
-    public function exists(string $keyValue): bool
-    {
-        return $this->get($keyValue) != null;
-    }
-
-    /**
-     * @param string $key
-     * @return object|null
-     */
-    public function get(string $key): ?object
-    {
-        return $this->map[$key] ?? null;
-    }
-
-    /**
-     * return a mapped array of elements
-     * @return array
-     */
-    public function getAll(): array
-    {
-        return $this->map;
-    }
-
-    /**
-     * the number of elements in the map
-     * @return int
-     */
-    public function getCount(): int
-    {
-        return count($this->map);
-    }
-
-// ======================== PROTECTED METHODS =====================
-    /**
-     * @throws PhonicsException
-     */
-    protected function fixMissingVersion(): void
-    {
-        if ($this->version) {
-            return;
-        }
-        if ($this->doesJsonHaveVersioning == false) {
-            return;
-        }
-        if (empty($this->implicitVersion)) {
-            return;
-        }
-
-        $objects = JsonDecode::decode($this->json, JsonDecode::RETURN_STDCLASS);
-        if ( ! isset($object[2]->data)) {
-            return;
-        }
-
-        $objects[2]->version = $this->implicitVersion;
-        $json                = json_encode($objects, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        rename($this->sourceFile, $this->sourceFile . '.bak');
-        file_put_contents($this->sourceFile, $json);
-        $this->version = $this->implicitVersion;
     }
 
     public static function getInstance()
@@ -181,53 +116,183 @@ trait JsonTrait
     }
 
     /**
+     * convert epoch time to version string of the format Y.MMDD.N
+     * @param int $epochTime
+     * @return string
+     */
+    public static function timeToVersion(int $epochTime = 0): string
+    {
+        if ($epochTime == 0) {
+            $epochTime = time();
+        }
+
+        return substr(date('y.md', $epochTime), 1);
+    }
+
+// ======================== PUBLIC METHODS =====================
+
+    /**
+     * @param string $keyValue
+     * @return bool
+     */
+    public function exists(string $keyValue): bool
+    {
+        return $this->get($keyValue) != null;
+    }
+
+    /**
+     * @param string $key
+     * @return object|string|null
+     */
+    public function get(string $key)
+    {
+        return $this->persisted['map'][$key] ?? null;
+    }
+
+    /**
+     * return a mapped array of elements
+     * @return array
+     */
+    public function getAll(): array
+    {
+        return $this->persisted['map'];
+    }
+
+    /**
+     * the number of elements in the map
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return count($this->persisted['map']);
+    }
+
+// ======================== PROTECTED METHODS =====================
+    /**
+     * JsonTrait constructor. We only populate primaryKey, json, objects and map if primary key is provided,
+     * otherwise caller is responsible for overriding MapMap and populating those fields
+     * @param string $sourceFile
+     * @param string $primaryKey
+     * @throws PhonicsException
+     */
+    protected function baseConstruct(string $sourceFile, string $primaryKey)
+    {
+        $dataDir          = __DIR__ . '/data/';
+        $this->sourceFile = $dataDir . $sourceFile;
+
+        if ( ! file_exists($this->sourceFile)) {
+            throw new PhonicsException("$sourceFile does not exist.");
+        }
+        $jsonModTime = filemtime($this->sourceFile);
+        if ($this->cachingEnabled) {
+            $this->cacheFile = $this->sourceFile . '.cache';
+
+            if (file_exists($this->cacheFile)) {
+                $cacheModTime = filemtime($this->cacheFile);
+                if ($cacheModTime > $jsonModTime) {
+                    $this->cacheUsed = true;
+                }
+            }
+            if ($this->cacheUsed) {
+                $timer           = $this->startTimer('retrieving cached ' . __CLASS__ . '.');
+                $this->persisted = include($this->cacheFile);
+                $this->stopTimer($timer);
+            }
+        }
+        if (not($this->cacheUsed)) {
+            $this->persisted['sourceModDate'] = $jsonModTime;
+            $this->persisted['sourceFile']    = $this->sourceFile;
+            $this->persisted['primaryKey']    = $primaryKey;
+            $json                             = file_get_contents($this->sourceFile);
+            $this->persisted['objects']       = $this->importDataAsStdClass($json);
+        }
+        }
+
+    /**
+     * Minimal version of makeMap.
+     * @return void
+     */
+    protected function baseMakeMap(): void
+    {
+        // only perform if we need to create cache
+        if ($this->cacheUsed) {
+            return;
+        }
+        $timer = $this->startTimer('creating object' . __CLASS__ . '.');
+        $key   = $this->persisted['primaryKey'];
+        foreach ($this->persisted['objects'] as $object) {
+            $this->persisted['map'][$object->$key] = $object;
+        }
+        $this->stopTimer($timer);
+        $this->cacheData();
+    }
+
+    protected function cacheData(): void
+    {
+        // only perform if we need to create cache
+        if ($this->cacheUsed) {
+            return;
+        }
+        if ( ! $this->cachingEnabled) {
+            return;
+        }
+        $timer = $this->startTimer('caching ' . __CLASS__ . '.');
+        if (isset($this->persisted['objects'])) {
+            unset($this->persisted['objects']);
+        }
+        file_put_contents($this->cacheFile, "<?php\nreturn " . var_export($this->persisted, true) . ";");
+        $this->stopTimer($timer);
+    }
+
+    /**
      * returns table records as an associative array
+     * @param string $json
      * @return array
      * @throws PhonicsException
      */
-    protected function importDataAsAssociativeArray(): array
+    protected function importDataAsAssociativeArray(string $json): array
     {
-        return self::importDataFromSource(JsonDecode::RETURN_ASSOCIATIVE_ARRAY);
+        return self::importDataFromSource($json, JsonDecode::RETURN_ASSOCIATIVE_ARRAY);
     }
 
     /**
      * returns table records as an array of stdClass objects
+     * @param string $json
      * @return array
      * @throws PhonicsException
      */
-    protected function importDataAsStdClass()
+    protected function importDataAsStdClass(string $json)
     {
-        return self::importDataFromSource(JsonDecode::RETURN_STDCLASS);
+        return self::importDataFromSource($json, JsonDecode::RETURN_STDCLASS);
     }
 
     /**
      * base class for getDataAsStdClass and getDataAsAssociativeArray. If the JSON file is an export
      * from phpMyAdmin the data is in the third element of the returned array in the 'data' field.
+     * @param string $json
      * @param bool $returnType
      * @return mixed
      * @throws PhonicsException
      */
-    protected function importDataFromSource(bool $returnType = JsonDecode::RETURN_STDCLASS)
+    protected function importDataFromSource(string $json, bool $returnType = JsonDecode::RETURN_STDCLASS)
     {
-        $data = JsonDecode::decode($this->json, $returnType);
+        $data = JsonDecode::decode($json, $returnType);
 
         if ((JsonDecode::RETURN_STDCLASS == $returnType) && isset($data[2]->data)) {
-            $this->version                = $data[2]->version ?? '';
+            $this->persisted['version'] = $data[2]->version ?? '';
             $myData                       = $data[2]->data;
-            $this->doesJsonHaveVersioning = true;
         } elseif ((JsonDecode::RETURN_ASSOCIATIVE_ARRAY == $returnType) && isset($data[2]['data'])) {
-            $this->version                = $data[2]['version'] ?? '';
+            $this->persisted['version'] = $data[2]['version'] ?? '';
             $myData                       = $data[2]['data'];
-            $this->doesJsonHaveVersioning = true;
         } else {
             $myData = $data;
         }
-        if ($this->doesJsonHaveVersioning && empty($this->version)) {
-            $this->fixMissingVersion();
+        if (empty($this->persisted['version'])) {
+            $this->persisted['version'] = self::timeToVersion($this->persisted['sourceModDate']);
         }
         if (not(empty($this->booleanField))) {
             for ($i = 0; $i < count($myData); $i++) {
-                foreach ($this->booleanFields as $fieldName) {
+                foreach ($this->persisted['booleanFields'] as $fieldName) {
                     $myData[$i]->$fieldName = BoolEnumTreatment::enumToBool($myData[$i]->$fieldName);
                 }
             }
@@ -235,15 +300,18 @@ trait JsonTrait
         return $myData;
     }
 
-    /**
-     * @return void
-     */
-    protected function baseMakeMap(): void
+    protected function startTimer(string $description): ?Timer
     {
-        $key = $this->primaryKey;
-        foreach ($this->objects as $object) {
-            $this->map[$object->$key] = $object;
-        }
+        return ($this->cachingEnabled) ? new Timer($description, Util::isLocal()) : null;
     }
+
+    protected function stopTimer(?Timer $timerObject): float
+    {
+        if ($timerObject == null) {
+            return 0;
+        }
+        return $timerObject->stop();
+    }
+// ======================== PRIVATE METHODS =====================
 
 }

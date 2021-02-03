@@ -420,6 +420,11 @@ class Session
         self::set($student, self::STUDENTS);
     }
 
+    public static function updateTicTacToe(array $words): void
+    {
+        self::sessionContinue();
+        $_SESSION['TicTacToe'] = $words;
+    }
     /**
      * Updates the Session with the given user. Accepts trainerCode or userName as first parameter.
      * If this call is based on S2Member information, we don't know the trainerCode

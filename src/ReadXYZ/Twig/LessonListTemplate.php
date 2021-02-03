@@ -4,10 +4,11 @@
 namespace App\ReadXYZ\Twig;
 
 
+use App\ReadXYZ\Enum\GeneratedType;
 use App\ReadXYZ\Helpers\PhonicsException;
-use App\ReadXYZ\JSON\GroupsJson;
 use App\ReadXYZ\JSON\KeyChainJson;
 use App\ReadXYZ\JSON\LessonsJson;
+use App\ReadXYZ\JSON\ZooAnimalsJson;
 use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\BreadCrumbs;
@@ -34,15 +35,18 @@ class LessonListTemplate
 
         // make breadcrumbs
         $crumbs = (new BreadCrumbs())->getPrevious($currentCrumb);
-
+        $zooTemplate = new ZooTemplate($student->studentCode);
 
         $args = [
             'accordion'         => $lessons->getAccordionWithMastery(),
             'studentName'       => $studentName,
-            'mostRecentLesson'  => $student->lessonCode,
+            'mostRecentLessonCode'  => Session::getCurrentLessonCode(),
+            'mostRecentLessonName'  => Session::getCurrentLessonName(),
             'keychainAnimals'   => KeyChainJson::getInstance()->getAll(), //sync with twig
             'this_crumb'        => $currentCrumb,
+            'zooUrl'            => $zooTemplate->getZooUrl(),
             'LessonsJson'       => $lessons,
+            'animals'           => ZooAnimalsJson::getInstance()->getStudentAnimalSet($student->studentCode),
             'isLocal' => Util::isLocal()
         ];
 

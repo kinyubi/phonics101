@@ -30,19 +30,6 @@
      .box {height: {{ boxDim }};width: {{ boxDim }};padding: 3px;}
      .box__border {border: 3px solid black;display: flex;justify-content: center;align-items: center;}
      .ball__border {border: 3px solid white;display: flex;justify-content: center;align-items: center;width: {{ boxDim }} }
-
-     /* use with .wordlist .size--list-icon */
-     .tile {
-     	border-style: solid;
-     	border-width: 1px;
-     	color: #2C3E50;
-     	text-align: center;
-     	border-radius: 5px;
-     	box-shadow: 2px 2px 1px #888888;
-     	margin: 3px !important;
-     }
-     .tile-vowel {background-color:#EC7063}
-     .tile-consonant {background-color: #85C1E9}
  </style>
  <div class="container bg-white mx-2 pt-1" id="{{ tabId }}-container" style="max-width: 800px; width:95%">
  {#  <div id="write-tab-container" class="container" style="max-width: 600px; width:95%"> #}
@@ -55,7 +42,7 @@
 
      {# DROPDOWN BUTTON -- COLOR #}
      <div class="btn-group my-3 mx-1 p-0">
-       <button id="color-button" type="button" class="btn-readxyz dropdown-toggle"
+       <button id="color-button" type="button" class="btn-readxyz dropdown-toggle button-text"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:{{ buttonWidth }}">Color
        </button>
        <div class="dropdown-menu" aria-labelledby="color-button">
@@ -71,7 +58,7 @@
 
      {# DROPDOWN BUTTON -- COUNT #}
      <div class="btn-group  my-3 mx-1 p-0 ">
-       <button id="count-button" type="button" class="btn-readxyz dropdown-toggle"
+       <button id="count-button" type="button" class="btn-readxyz dropdown-toggle button-text"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:{{ buttonWidth }}">Count
        </button>
        <div class="dropdown-menu" aria-labelledby="count-button">
@@ -83,7 +70,7 @@
 
      {# BUTTON -- RESET #}
      <div class="btn-group  my-3 mx-1 p-0 ">
-       <button type="button" class="btn-readxyz px-2" onclick="reload()" style="border:none; width:{{ buttonWidth }};">Reset</button>
+       <button type="button" class="btn-readxyz px-2 button-text" onclick="reload()" style="border:none; width:{{ buttonWidth }};">Reset</button>
      </div>
    </div>
    {# ROW -- BUTTONS (End) #}
@@ -114,7 +101,7 @@
    <div class="row d-flex flex-wrap py-3 pl-3">
      {% for letter in soundLetters %}
         {% set vc = (letter|first in ['a','e','i','o','u']) ? 'tile-vowel' : 'tile-consonant' %}
-          <div class="tile-size tile  {{ vc }}" style="margin:3px !important;">{{ letter }}</div>
+          <div class="size--tile-{{ letter|length }} tile  {{ vc }}" style="margin:3px !important;">{{ letter }}</div>
      {% endfor %}
    </div>
    <div id="soundbox-lesson-name" style="display: none">{{ lesson.lessonId }}</div>

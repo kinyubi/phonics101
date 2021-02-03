@@ -358,7 +358,7 @@
         ]
       },
       {
-        "lessonId": "at+ap",
+        "lessonId": "at_ap",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -475,7 +475,7 @@
         ]
       },
       {
-        "lessonId": "at+ag",
+        "lessonId": "at_ag",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -595,7 +595,7 @@
         ]
       },
       {
-        "lessonId": "at+ap+ag+an",
+        "lessonId": "at_ap_ag_an",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -839,7 +839,7 @@
         ]
       },
       {
-        "lessonId": "at+it",
+        "lessonId": "at_it",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -966,7 +966,7 @@
         ]
       },
       {
-        "lessonId": "ag+ig",
+        "lessonId": "ag_ig",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -1031,7 +1031,7 @@
         ]
       },
       {
-        "lessonId": "it+ig+ip+in",
+        "lessonId": "it_ig_ip_in",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -1095,7 +1095,7 @@
         ]
       },
       {
-        "lessonId": "a+i",
+        "lessonId": "a_i",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -1339,7 +1339,7 @@
         ]
       },
       {
-        "lessonId": "ot+og+op",
+        "lessonId": "ot_og_op",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -1399,7 +1399,7 @@
         ]
       },
       {
-        "lessonId": "a+i+o",
+        "lessonId": "a_i_o",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -1585,7 +1585,7 @@
         ]
       },
       {
-        "lessonId": "ut+ug+up+un",
+        "lessonId": "ut_ug_up_un",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -1708,7 +1708,7 @@
         ]
       },
       {
-        "lessonId": "u+i+o",
+        "lessonId": "u_i_o",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -1891,7 +1891,7 @@
         ]
       },
       {
-        "lessonId": "et+eg+en",
+        "lessonId": "et_eg_en",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -2693,7 +2693,7 @@
         ]
       },
       {
-        "lessonId": "a_e+a",
+        "lessonId": "a_e_a",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -2816,7 +2816,7 @@
         ]
       },
       {
-        "lessonId": "i_e+i",
+        "lessonId": "i_e_i",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -2939,7 +2939,7 @@
         ]
       },
       {
-        "lessonId": "o_e+o",
+        "lessonId": "o_e_o",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -3064,7 +3064,7 @@
         ]
       },
       {
-        "lessonId": "u_e+u",
+        "lessonId": "u_e_u",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -3125,7 +3125,7 @@
         ]
       },
       {
-        "lessonId": "?e_syllables",
+        "lessonId": "e_syllables",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -3558,7 +3558,7 @@
         ]
       },
       {
-        "lessonId": "ngs+nks",
+        "lessonId": "ngs_nks",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -3743,7 +3743,7 @@
         ]
       },
       {
-        "lessonId": "prefix+suffix",
+        "lessonId": "prefix_suffix",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -3865,7 +3865,7 @@
         ]
       },
       {
-        "lessonId": "kn+gn+wr",
+        "lessonId": "kn_gn_wr",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -4537,7 +4537,7 @@
         ]
       },
       {
-        "lessonId": "e_e+eh",
+        "lessonId": "e_e_eh",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -4601,7 +4601,7 @@
         ]
       },
       {
-        "lessonId": "r-controlled ?_e",
+        "lessonId": "r_controlled_e",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -4662,7 +4662,7 @@
         ]
       },
       {
-        "lessonId": "dge+nge",
+        "lessonId": "dge_nge",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {
@@ -4906,7 +4906,7 @@
         ]
       },
       {
-        "lessonId": "ed+ing_?e",
+        "lessonId": "ed_ing_e",
         "instructions": "I am going to ask you some questions. During this exercise, you will watch me and listen.  Roll the die to see which question you get to answer next.",
         "warmups": [
           {

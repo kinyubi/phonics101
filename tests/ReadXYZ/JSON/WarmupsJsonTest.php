@@ -22,7 +22,7 @@ class WarmupsJsonTest extends TestCase
         $j = WarmupsJson::getInstance();
         $at = $j->get('at');
         $this->assertEquals('at', $at->lessonId);
-        $this->assertTrue(Util::startsWith('Script', $at->instructions));
+        $this->assertTrue(Util::startsWith('I am', $at->instructions));
         $this->assertCount(6, $at->warmupItems);
         $item = $at->warmupItems[1];
         $this->assertTrue(Util::startsWith("What is the", $item->directions));
