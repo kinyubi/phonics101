@@ -89,7 +89,7 @@ class LessonTemplate
             $args['warmups']   = WarmupsJson::getInstance()->get($this->lesson->lessonId);
         }
         if (isset($this->lesson->soundLetters)) {
-            $args['soundLetters'] = $this->lesson->soundLetters;
+            $args['soundLetters'] = str_split($this->lesson->soundLetters);
         } else {
             $args['soundLetters'] = str_split('abcdefghijklmnopqrstuvwxyz');
         }

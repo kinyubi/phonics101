@@ -16,7 +16,6 @@ otherJS
 	navbar          : [ [ displayText => link ]  ] (by default, part of titleBar block)
 	previous_crumbs : [ [ displayText => link ]  ] (by default, part of titleBar block)
 	this_crumb      : displayText (no link
-
 #}
 {% from "macros.html.twig" import dialog, dialogAnchor, dialogButton %}
 {% set cssJsVer = '1.0202.0' %}
@@ -25,39 +24,39 @@ otherJS
 
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>readXYZ {{ browserTabText }}</title>
+    <meta charset="UTF-8">
+    <title>readXYZ {{ browserTabText }}</title>
 
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-	<meta name="apple-mobile-web-app-capable" content="yes"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
 
-	<!--[if IE]>
-	<link rel="shortcut icon" href="/images/favicons/favicon.ico"><![endif]-->
-	<link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
-	<link rel="shortcut icon" href="/images/favicons/favicon.ico">
-	<link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
+    <!--[if IE]>
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico"><![endif]-->
+    <link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
 
-	<script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css?ver={{ cssJsVer }}">
+    <script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css?ver={{ cssJsVer }}">
 
-	<link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
+    <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
 
-	<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="/css/phonics.css?ver={{ cssJsVer }}" media="all">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/phonics.css?ver={{ cssJsVer }}" media="all">
 
-	{% block otherStyles %}{% endblock %}
+    {% block otherStyles %}{% endblock %}
 
-	<script src="/js/jquery-3.5.1.js"></script>
-	<script src="/js/jquery.colorbox.js"></script>
-	<script src="/js/popper.min.js"></script>
-	<script src="/js/bootstrap4-custom/bootstrap.bundle.js?ver={{ bootstrapVer }}"></script>
-	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-	<script src="/js/phonics.js?ver={{ cssJsVer }}"></script>
+    <script src="/js/jquery-3.5.1.js"></script>
+    <script src="/js/jquery.colorbox.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap4-custom/bootstrap.bundle.js?ver={{ bootstrapVer }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script src="/js/phonics.js?ver={{ cssJsVer }}"></script>
 
-	{% block otherScripts %}{% endblock %}
+    {% block otherScripts %}{% endblock %}
 </head>
 
 <body>
@@ -65,110 +64,110 @@ otherJS
 
 {# MODALS BLOCK #}
 {% block modals %}
-	{% if errors %}
-		<div class="modal" id="modalError" tabindex="-1" role="dialog"
-		     aria-labelledby="modalErrorLabel" aria-hidden="true" style="width: 40%">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header bg-danger text-light">
-						<h5 class="modal-title" id="modalErrorLabel">{{ pageTitle }}</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div id="modalErrorText" class="modal-body">
-						{{ errors|raw }}
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	{% endif %}
+    {% if errors %}
+        <div class="modal" id="modalError" tabindex="-1" role="dialog"
+             aria-labelledby="modalErrorLabel" aria-hidden="true" style="width: 40%">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-light">
+                        <h5 class="modal-title" id="modalErrorLabel">{{ pageTitle }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalErrorText" class="modal-body">
+                        {{ errors|raw }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {# Container for the whole page #}
 <div class="m-0 p-0 p-sm-1 p-md-3 p-lg-5 container-fluid" id="base-container" style="max-width: 950px;">
 
-{#  breadcrumbs in the titlebar
+    {# breadcrumbs in the titlebar
    if a user has multiple students:  <username> / students / lessons / <lessonname>
 	 if a user has one student:        <username> / <studentname> / lessons / <lessonname>
-#}
-{% block titleBar %}
-	{# TITLE BAR - START #}
-	<div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2" id="readxyz-title">
-		{# title bar: logo #}
-		<div class="ml-0 float-left col-3 bg-image--title"></div>
-		{# title bar: nav items #}
-		{% for title, link in navBar %}
-			<a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
-		{% endfor %}
-		{# title bar - breadcrumbs #}
+    #}
+    {% block titleBar %}
+        {# TITLE BAR - START #}
+        <div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2" id="readxyz-title">
+            {# title bar: logo #}
+            <div class="ml-0 float-left col-3 bg-image--title"></div>
+            {# title bar: nav items #}
+            {% for title, link in navBar %}
+                <a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
+            {% endfor %}
+            {# title bar - breadcrumbs #}
 
-			{% if previous_crumbs or this_crumb %}
-				<div class="my-auto mx-3">
-					<nav aria-label="breadcrumb" >
-					  <ol class="breadcrumb h6">
-						  {% for crumb in previous_crumbs %}
-							  {% set decoration = ((crumb.link is empty) or (crumb.link == '#')) ? 'style="text-decoration: none;color: #6c757d;"' : '' %}
-					    <li class="breadcrumb-item"><a href="{{ crumb.link }}"  {{ decoration }}>{{ crumb.text }}</a></li>
-						  {% endfor %}
-						  {% if this_crumb %}
-					    <li class="breadcrumb-item active " aria-current="page">{{ this_crumb }}</li>
-							  {% endif %}
-					  </ol>
-					</nav>
-				</div>
-			{% endif %}
+            {% if previous_crumbs or this_crumb %}
+                <div class="my-auto mx-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb h6">
+                            {% for crumb in previous_crumbs %}
+                                {% set decoration = ((crumb.link is empty) or (crumb.link == '#')) ? 'style="text-decoration: none;color: #6c757d;"' : '' %}
+                                <li class="breadcrumb-item"><a href="{{ crumb.link }}" {{ decoration }}>{{ crumb.text }}</a></li>
+                            {% endfor %}
+                            {% if this_crumb %}
+                                <li class="breadcrumb-item active " aria-current="page">{{ this_crumb }}</li>
+                            {% endif %}
+                        </ol>
+                    </nav>
+                </div>
+            {% endif %}
 
-		{# placeholder to allow screen to define zoo animals #}
-		{% set useModal = false %}
-		{% if (animals and not hideTitleAnimals) %}
-			{% set studentCode = session.currStudent|default %}
-			{% set studentName = (studentCode is empty) ? '' : session['STUDENTS'][studentCode].studentName %}
-			{% set zooClass = (studentName is empty) ?  '' : 'zoo-animals' %}
-			{% set zooUrl = (zooClass is empty) ? '#' : zooUrl %}
-			{% set dim = smaller ? '40px' : '75px' %}
-			{% set anchorStyle = 'height:' ~ dim ~ ';width:' ~ dim %}
-			{% set imgStyle = 'style="width:90%"' %}
-			<a class="img-contain col-1 {{ zooClass }}" href="{{ zooUrl }}" {{ anchorStyle }}>
-				<img src="{{ animals[0].fileName }}" alt="{{ animals[0].friendlyName }}"  title="See my zoo" {{ imgStyle }}">
-			</a>
+            {# placeholder to allow screen to define zoo animals #}
+            {% set useModal = false %}
+            {% if (animals and not hideTitleAnimals) %}
+                {% set studentCode = session.currStudent|default %}
+                {% set studentName = (studentCode is empty) ? '' : session['STUDENTS'][studentCode].studentName %}
+                {% set zooClass = (studentName is empty) ?  '' : 'zoo-animals' %}
+                {% set zooUrl = (zooClass is empty) ? '#' : zooUrl %}
+                {% set dim = smaller ? '40px' : '75px' %}
+                {% set anchorStyle = 'height:' ~ dim ~ ';width:' ~ dim %}
+                {% set imgStyle = 'style="width:90%"' %}
+                <a class="img-contain col-1 {{ zooClass }}" href="{{ zooUrl }}" {{ anchorStyle }}>
+                    <img src="{{ animals[0].fileName }}" alt="{{ animals[0].friendlyName }}" title="See my zoo" {{ imgStyle }}">
+                </a>
 
-			{% set titleText = 'Award the ' ~ animals[1].friendlyName ~ ' to ' ~ studentName %}
-			<a class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" {{ anchorStyle }}>
-				<img src="{{ animals[1].grayFileName }}" alt="{{ animals[1].friendlyName }}"
-				     title="{{ titleText }}" {{ imgStyle }}>
-			</a>
-			{# dialog(id, title, text, clickTarget, doneFunc)  #}
-			{{ dialog("award-confirm", "Award Ceremony", titleText, '/handler/award', 'noAward') }}
-		{% endif %}
+                {% set titleText = 'Award the ' ~ animals[1].friendlyName ~ ' to ' ~ studentName %}
+                <a class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" {{ anchorStyle }}>
+                    <img src="{{ animals[1].grayFileName }}" alt="{{ animals[1].friendlyName }}"
+                         title="{{ titleText }}" {{ imgStyle }}>
+                </a>
+                {# dialog(id, title, text, clickTarget, doneFunc) #}
+                {{ dialog("award-confirm", "Award Ceremony", titleText, '/handler/award', 'noAward') }}
+            {% endif %}
 
 
-	</div>
-	{% endblock titleBar %}
-	{# TITLE BAR - END #}
+        </div>
+    {% endblock titleBar %}
+    {# TITLE BAR - END #}
 
-{#	#}{# ERRORS BLOCK #}
-{#	{% block errors %}#}
-{#		#}{# display any error messages #}
-{#		{% if errors|default %}#}
-{#			<div class="container border border-danger p-0">#}
-{#				<div class="row">#}
-{#					<h2 class="bg-danger text-white">ERROR</h2>#}
-{#					<p class="text-danger">{{ errorMessage | raw }}</p>#}
-{#				</div>#}
-{#			</div>#}
-{#	#}
-{#		{% endif %}#}
-{#{% endblock errors %}#}
+    {# #}{# ERRORS BLOCK #}
+    {# {% block errors %} #}
+    {# #}{# display any error messages #}
+    {# {% if errors|default %} #}
+    {# <div class="container border border-danger p-0"> #}
+    {# <div class="row"> #}
+    {# <h2 class="bg-danger text-white">ERROR</h2> #}
+    {# <p class="text-danger">{{ errorMessage | raw }}</p> #}
+    {# </div> #}
+    {# </div> #}
+    {# #}
+    {# {% endif %} #}
+    {# {% endblock errors %} #}
 
-	{# TABBAR BLOCK #}
-	{% block tabBar %}{% endblock %}
+    {# TABBAR BLOCK #}
+    {% block tabBar %}{% endblock %}
 
-	{# BODY BLOCK #}
-	{% block body %}{% endblock %}
+    {# BODY BLOCK #}
+    {% block body %}{% endblock %}
 
 </div> {# end of base-container #}
 
@@ -177,8 +176,10 @@ otherJS
 {# Tail end of HTML body where scripts go #}
 
 <script>
+    {% set game_dimensions__ = smaller ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
+    {% set sound_box_dimensions__ = smaller ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
     $(document).ready(function () {
-			{# when bootstrap modal is active, don't dim background #}
+        {# when bootstrap modal is active, don't dim background #}
         $('.modal-backdrop').removeClass("modal-backdrop");
         $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
 
@@ -195,11 +196,20 @@ otherJS
             iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
             top: 20, overlayClose: false, scrolling: true
         });
+        $(".tic-tac-toe").colorbox({
+            iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "760px",
+            top: 20, overlayClose: false, scrolling: false
+        });
 
-				{# show the modal if we have an error #}
-				{% if errors|default %}
-	        $("#modalError").modal("show");
-				{% endif %}
+        $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ game_dimensions__ }}});
+        $(".sound-box").colorbox({
+            iframe: true, scrolling: false, overlayClose: false, {{ sound_box_dimensions__ }}
+        });
+
+        {# show the modal if we have an error #}
+        {% if errors|default %}
+        $("#modalError").modal("show");
+        {% endif %}
 
         $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
 

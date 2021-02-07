@@ -1,0 +1,31 @@
+[
+    {
+        "type": "header",
+        "comment": "abc_lessons"
+    },
+    {
+        "type": "database",
+        "name": "readxyz0_phonics"
+    },
+  {
+    "type": "table",
+    "name": "abc_lessons",
+    "version": "1.0108.1",
+    "database": "readxyz0_phonics",
+    "data": [
+      {
+        "id": "write_instructions_1", "phrases": [
+        "<h4>Pick a word from the list. Sound it out and then spell it</h4>",
+        "<h5>To sound out the word</h5>",
+        "<p>Moving from left to right, as you make the sound of the letter(s), click the ball to move it into the box</p>",
+        "<h5>To spell the word</h5>",
+        "<p>Click a tile and then click the box it belongs in until you have finished spelling the word</p>"
+      ]
+      },
+      {"id": "test_phrases", "phrases": ["This", "is", "a", "test."]},
+      {"id": "test_phrases_as_a_string", "phrases": "This is a test."},
+      {"id": "test_phrase", "phrase": "This is a test."},
+      {"id": "test_phrase_as_an_array", "phrase": ["This", "is", "a", "test."]}
+    ]
+  }
+  ]

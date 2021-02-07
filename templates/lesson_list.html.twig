@@ -9,7 +9,8 @@ inherited inputs:
 inputs:
     accordion[]     : $accordion[$groupCode]['groupName' => groupName, 'lessons' => [lessonId]['lessonName' => x, 'mastery' => y]
     studentName     : obtained by calling Session::getStudentName()
-    mostRecentLesson: lessonName of lesson most recently worked on
+    mostRecentLessonCode: lessonName of lesson most recently worked on
+    mostRecentLessonName:
     groupInfo       : Info based on vw_group_with_keychain view
     lessonName      : associative array: lessonName => displayAs
     isLocal         : obtained by Util::isLocal()
@@ -20,7 +21,7 @@ inputs:
 {% block title %}ReadXYZ Lessons{% endblock title %}
 
 {% block body %}
-	{% set iconList = ['nomastery', 'advancing', 'mastered'] %}
+	{% set iconList = ['no-mastery', 'advancing', 'mastered'] %}
 	{% set iconTip = ['Unmastered', 'Advancing', 'Mastered'] %}
 	<style>
       a span {
@@ -32,16 +33,16 @@ inputs:
 	<div class="row d-flex bg-white justify-content-start mx-2 flex-wrap">
 
 	{# DISPLAY MOST RECENT LESSON IF IT'S IN THE COOKIE #}
-	{% if mostRecentLesson %}
+	{% if mostRecentLessonCode %}
 		<div id="lesson-accordion" class="col-md-12 col-sm-12 col-lg-5 lesson-list--width">
 		<div id="most-recent" class="card bg-readlite">
 			<div class="card-header">
 				<div class="row d-flex flex-nowrap just align-items-center ">
-					{% set href = '/handler/lesson/' ~ mostRecentLesson|url_encode %}
-					<a href="{{ href }}" id="most-recent-lesson">
+					{% set href = '/handler/lesson/' ~ mostRecentLessonCode %}
+					<a href="{{ href }}" id="most-recent-lesson" class="row d-flex justify-content-between align-items-baseline flex-nowrap">
 						<i class="fa fa-bolt text-warning fa-2x mx-3" aria-hidden="true"></i>
-						<span class="h3 text-dark mx-4">{{ lessonJson.getLessonName(mostRecentLesson)|escape('html') }}</span>
-						<span class="text-secondary">(most recent lesson)</span>
+						<div class="h3 text-dark mx-4">{{ mostRecentLessonName|escape('html') }}</div>
+						<div class="text-secondary h5">(most recent lesson)</div>
 					</a>
 				</div>
 			</div>
@@ -53,7 +54,7 @@ inputs:
 	{# FOR EACH GROUP #}
 	<div id="lesson-accordion" class="col-md-12 col-sm-12 col-lg-5 lesson-list--width">
 		{% for groupCode, groupInfo in accordion %}
-			{% set groupName = groupsInfo.groupName %}
+			{% set groupName = groupInfo.groupName %}
 			{% set groupIndex = loop.index %}
 			{% set groupHeader = 'header-' ~ loop.index %}
 			{% set groupCollapse = 'collapse-' ~ loop.index %}
@@ -62,11 +63,11 @@ inputs:
 				<div class="card-header bg-white" id="{{ groupHeader }}">
 					<a class="card-link" data-toggle="collapse" data-target="#{{ groupCollapse }}"
 					   aria-controls="{{ groupCollapse }}" aria-expanded="false" style="cursor: pointer">
-						<div class="row d-flex flex-nowrap align-items-center mb-2">
+						<div class="row d-flex flex-nowrap align-items-center ">
 							<div class="col-1">
 								<img src="/images/lessonlist/accordion-unexpanded.png" alt="-" class="size--list-icon"/>
 							</div>
-							<div class="h5 ml-3 text-dark col-6">{{ groupName }}</div>
+							<div class="ml-3 text-dark col-6 button-text">{{ groupName }}</div>
 							<div class="col-4 accordion--image" style="background-image: url({{ groupAnimal }})">
 							</div>
 						</div>
@@ -87,6 +88,7 @@ inputs:
 									<div class="list-group-item list-group-item-white">
 										<div class="row d-flex flex-nowrap" style="height: 2em;">
 											<div data-toggle="tooltip" title="{{ iconTip[mastery] }}"
+											     {# depending on mastery level, use mastery--no-mastery, mastery--advancing or mastery--mastered #}
 											     class="col-1 h-75 align-self-center mastery--image mastery--{{ iconList[mastery] }}"></div>
 											<a role="button" href="{{ href }}" class="h4 text-dark ml-3">{{ lessonName }}</a>
 										</div>

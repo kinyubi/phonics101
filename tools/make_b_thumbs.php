@@ -3,7 +3,7 @@
 // This program goes through all of the b-*.jpg files
 use App\ReadXYZ\Helpers\Util;
 
-require dirname(dirname(__DIR__)) . '/autoload.php';
+require 'autoload.php';
 
 foreach (glob('../b-*.jpg') as $fileName) {
     $image = imagecreatefromjpeg($fileName);

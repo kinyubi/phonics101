@@ -20,16 +20,20 @@
    {% set colors = [color, color, color, color, color] %}
  {% endif %}
 
- {% set boxDimNum = isSmallScreen ? 70 : 210 %}
- {% set ballDimNum = isSmallScreen ? 30 : 90 %}
- {% set boxDim = "%dpx"|format(boxDimNum) %}
- {% set ballDim = "%dpx"|format(ballDimNum) %}
- {% set ballSpace = "%dpx"|format(boxDimNum + 6) %}
- {% set buttonWidth = "%dpx"|format(boxDimNum * 9/10) %}
  <style>
-     .box {height: {{ boxDim }};width: {{ boxDim }};padding: 3px;}
+    .letter-tile {
+        height: clamp(1.5em, 4vw, 3em);
+        width: clamp(1.5em, 4vw, 3em);
+        line-height: clamp(1.5em, 4vw, 3em);
+        font-size: clamp(1em, 5.8vw, 2.2em);
+        margin: 3px;
+        font-weight: bold;
+    }
+
+
+     .box {height: clamp(70px, 25vw, 210px);width:clamp(70px, 25vw, 210px) ;padding: 3px;}
      .box__border {border: 3px solid black;display: flex;justify-content: center;align-items: center;}
-     .ball__border {border: 3px solid white;display: flex;justify-content: center;align-items: center;width: {{ boxDim }} }
+     .ball__border {border: 3px solid white;display: flex;justify-content: center;align-items: center;width: clamp(70px, 25vw, 210px)  }
  </style>
  <div class="container bg-white mx-2 pt-1" id="{{ tabId }}-container" style="max-width: 800px; width:95%">
  {#  <div id="write-tab-container" class="container" style="max-width: 600px; width:95%"> #}
@@ -43,7 +47,7 @@
      {# DROPDOWN BUTTON -- COLOR #}
      <div class="btn-group my-3 mx-1 p-0">
        <button id="color-button" type="button" class="btn-readxyz dropdown-toggle button-text"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:{{ buttonWidth }}">Color
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:clamp(66px, 23vw, 200px)">Color
        </button>
        <div class="dropdown-menu" aria-labelledby="color-button">
          <a class="dropdown-item" href="#" onclick="setColor('red')"><i class="fas fa-circle fa-2x" style="color:red"></i></a>
@@ -59,7 +63,7 @@
      {# DROPDOWN BUTTON -- COUNT #}
      <div class="btn-group  my-3 mx-1 p-0 ">
        <button id="count-button" type="button" class="btn-readxyz dropdown-toggle button-text"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:{{ buttonWidth }}">Count
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:clamp(66px, 23vw, 200px)">Count
        </button>
        <div class="dropdown-menu" aria-labelledby="count-button">
          <a class="dropdown-item" href="#" onclick="setCount(3)"><span class="h3">3</span></a>
@@ -70,7 +74,7 @@
 
      {# BUTTON -- RESET #}
      <div class="btn-group  my-3 mx-1 p-0 ">
-       <button type="button" class="btn-readxyz px-2 button-text" onclick="reload()" style="border:none; width:{{ buttonWidth }};">Reset</button>
+       <button type="button" class="btn-readxyz px-2 button-text" onclick="reload()" style="border:none; width:clamp(66px, 23vw, 200px);">Reset</button>
      </div>
    </div>
    {# ROW -- BUTTONS (End) #}
@@ -88,7 +92,7 @@
      {% for i in range(0,count -1) %}
        <div class="ball__border">
          <div id="ball-{{ i }}" class="m-2 pt-1" onclick="moveBall({{ i }})">
-           <i class="fas fa-circle  tac" style="color:{{ colors[loop.index0] }}; font-size: {{ ballDim }}"></i>
+           <i class="fas fa-circle  tac" style="color:{{ colors[loop.index0] }}; font-size: clamp(35px, 13vw, 90px);"></i>
          </div>
        </div>
      {% endfor %}
@@ -96,12 +100,14 @@
    {# ROW -- BALLS (End) #}
 
    {# ROW -- INSTRUCTIONS #}
-   <div class="row d-flex justify-content-center">Click or touch the ball to move it into the box.</div>
+   <div class="row d-flex justify-content-center" style="font-size: clamp(1em, 2vh, 2em);">
+       Click or touch the ball to move it into the box.
+   </div>
 
    <div class="row d-flex flex-wrap py-3 pl-3">
      {% for letter in soundLetters %}
         {% set vc = (letter|first in ['a','e','i','o','u']) ? 'tile-vowel' : 'tile-consonant' %}
-          <div class="size--tile-{{ letter|length }} tile  {{ vc }}" style="margin:3px !important;">{{ letter }}</div>
+          <div class="letter-tile tile  {{ vc }}" style="margin:3px !important;">{{ letter }}</div>
      {% endfor %}
    </div>
    <div id="soundbox-lesson-name" style="display: none">{{ lesson.lessonId }}</div>

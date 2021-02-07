@@ -10,6 +10,7 @@
 /var/
 /vendor/
 cache/
+
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -23,7 +24,7 @@ cache/
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-public/generated/
+public_html/generated/
 
 ###_gsdata_/
 

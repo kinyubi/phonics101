@@ -23,6 +23,9 @@
   },
   "require-dev": {
     "ext-curl": "*",
+    "codeception/codeception": "^4.1",
+    "codeception/module-phpbrowser": "^1.0",
+    "codeception/module-webdriver": "^1.2",
     "phpunit/phpunit": "^9.4"
   },
   "config": {
@@ -37,13 +40,14 @@
     ],
     "psr-4": {
       "Peekmo\\": "src/3rdParty/Peekmo/",
-      "App\\": "src/",
-      "Tests\\":"tests/"
+      "App\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-    }
+      "Tests\\":"tests/"
+    },
+    "psr-0": {"App\\Tests\\": "tests/_support"}
   },
   "scripts": {
         "auto-scripts": [],

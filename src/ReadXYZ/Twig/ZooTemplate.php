@@ -17,7 +17,8 @@ class ZooTemplate
 {
 
     private GeneratedType $generator;
-
+    private string $studentCode;
+    private ?\stdClass $student;
     /**
      * ZooTemplate constructor.
      * @param string $studentTag
@@ -25,15 +26,18 @@ class ZooTemplate
      */
     public function __construct(string $studentTag = '')
     {
+        $studentsData = new StudentsData();
         if (empty($studentTag)) {
             $this->studentCode = Session::getStudentCode();
         } else {
-            $this->studentCode = (new StudentsData())->getStudentCode($studentTag);
+            $this->studentCode = $studentsData->getStudentCode($studentTag);
         }
+        $this->student = $studentsData->get($this->studentCode);
         $this->generator = new GeneratedType(GeneratedType::Zoo, $this->studentCode);
     }
 
 // ======================== PUBLIC METHODS =====================
+
     /**
      * @throws PhonicsException
      * @throws Exception
@@ -42,25 +46,23 @@ class ZooTemplate
     {
         $args        = [];
         $page        = new Page('My Animals');
-        $studentName = Session::getStudentName();
-        $studentCode = Session::getStudentCode();
+
         $zoo         = ZooAnimalsJson::getInstance();
 
-        $studentData = new StudentsData();
-        $lastAnimal  = $studentData->getAnimalIndex($studentCode);
+
+        $lastAnimal  = $this->student->nextAnimal;
+        $studentName = $this->student->studentName;
         $pretend     = (0 == $lastAnimal);
         if ($pretend) {
-            $lastAnimal    = random_int(10, 75);
+            $lastAnimal    = random_int(25, 75);
             $args['title'] = "Earn these animal prizes!";
         } else {
             $args['title'] = "$studentName's Animal Friends";
         }
 
-
         $args['hideTitleAnimals'] = true;
-        $url                      = sprintf('/generated/%s_zoo.html', $studentCode);
-        $filePath                 = Util::getPublicPath($url);
-        $animals                  = array_slice($zoo->getStudentZoo(), 0, $lastAnimal + 1);
+        $filePath = $this->generator->getFileName();
+        $animals  = array_slice($zoo->getStudentZoo($lastAnimal), 0, $lastAnimal + 1);
         shuffle($animals);
         $args['animals'] = $animals;
         $page->addArguments($args);
@@ -82,6 +84,7 @@ class ZooTemplate
 
     /**
      * @return string
+     * @throws PhonicsException
      */
     public function getZooUrl()
     {
@@ -90,6 +93,10 @@ class ZooTemplate
     }
 
 // ======================== PRIVATE METHODS =====================
+
+    /**
+     * @throws PhonicsException
+     */
     private function createIfMissing(): void
     {
         if ( ! file_exists($this->generator->getFileName())) {

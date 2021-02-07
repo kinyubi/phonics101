@@ -16,18 +16,14 @@
             {
                 "lessonId": "vowels",
                 "lessonName": "Vowels",
-                "ignoreMe1": "Blending.Vowels",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "Vowels",
                     ""
                 ],
                 "groupCode": "letters",
-                "ignoreMe3": "Letters",
-                "ignoreMe5": "Vowels",
                 "wordList": "a,e,i,o,u",
                 "supplementalWordList": "A,E,I,O,U",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "A/a,E/e,I/i,O/o,U/u",
                 "book": "1.1 Short Vowel Sounds",
                 "fluencySentences": [
@@ -75,27 +71,18 @@
                     "prefixList": "",
                     "vowel": "a,e,i,o,u",
                     "suffixList": ""
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "upper",
                 "lessonName": "Consonants 1",
-                "ignoreMe1": "Blending.Consonants 1",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
-                    "Consonants 1",
-                    ""
+                    "Consonants 1"
                 ],
                 "groupCode": "letters",
-                "ignoreMe3": "Letters",
-                "ignoreMe5": "Consonants 1",
                 "wordList": "s,t,p,n,c,k,h,r,m,d,g",
                 "supplementalWordList": "S,T,P,N,C,K,H,R,M,D,G",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "S/s,T/t,P/p,N/n,C/c,K/k,H/h,R/r,M/m,D/d,G/g",
                 "book": "1.2 Consonant Sounds",
                 "fluencySentences": [
@@ -143,27 +130,18 @@
                     "prefixList": "s,t,p,n,c,k,h,r,m,d,g",
                     "vowel": "",
                     "suffixList": ""
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "lower",
                 "lessonName": "Consonants 2",
-                "ignoreMe1": "Blending.Consonants 2",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
-                    "Consonants 2",
-                    ""
+                    "Consonants 2"
                 ],
                 "groupCode": "letters",
-                "ignoreMe3": "Letters",
-                "ignoreMe5": "Consonants 2",
                 "wordList": "l,f,b,q,j,z,w,v,y,x,ch,sh,th",
                 "supplementalWordList": "L,F,B,Q,J,Z,W,V,Y,X,Ch,Sh,Th",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "L/l,F/f,B/b,Q/q,J/j,Z/z,W/w,V/v,Y/y,X/x,Ch/ch,Sh/sh,Th/th",
                 "book": "1.3 Consonant Sounds 2",
                 "fluencySentences": [
@@ -206,27 +184,18 @@
                     "prefixList": "l,f,b,q,j,z,w,v,y,x,ch,sh,th",
                     "vowel": "",
                     "suffixList": ""
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "mixed",
                 "lessonName": "Review",
-                "ignoreMe1": "Blending.Review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
-                    "Review",
-                    ""
+                    "Review"
                 ],
                 "groupCode": "letters",
-                "ignoreMe3": "Letters",
-                "ignoreMe5": "Letter Review",
                 "wordList": "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,sh,ch,th",
                 "supplementalWordList": "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "s/l/t,a/f/e,p/ch/i,q/sh/b,n/r/th,c/z/k,h/w/o,v/m/y,x/d/g",
                 "fluencySentences": [
                     "af ab ag ap ad",
@@ -275,28 +244,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,q,r,s,t,v,w,x,y,z,ch,sh,th",
                     "vowel": "a,e,i,o,u",
                     "suffixList": ""
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "at",
                 "lessonName": "at",
-                "ignoreMe1": "Blending.at",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "at",
                     "Fat Cat Sat"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "at",
                 "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat",
                 "chain": "bat,cat,fat,hat,sat,mat,pat,rat",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "b-a-t/bat,c-a-t/cat,f-a-t/fat,h-a-t/hat,l-a-t/lat,m-a-t/mat,p-a-t/pat,r-a-t/rat,s-a-t/sat,t-a-t/tat,v-a-t/vat",
                 "book": "2.1 Pat and Nat",
                 "fluencySentences": [
@@ -360,27 +320,19 @@
                     "vowel": "a",
                     "suffixList": "t"
                 },
-                "pronounceImage": "b-a.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-a.jpg"
             },
             {
                 "lessonId": "ap",
                 "lessonName": "ap",
-                "ignoreMe1": "Blending.ap",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ap",
                     "Cap Gap Tap"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "ap",
                 "wordList": "cap,gap,lap,map,rap,sap,tap,yap,wap,zap",
                 "chain": "cap,gap,lap,map,rap,sap,tap,yap,wap,zap",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "cat/cap,lat/lap,mat/map,pat/pap,rat/rap,sat/sap,tat/tap",
                 "book": "2.2 Kat and Pap",
                 "fluencySentences": [
@@ -443,28 +395,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "p"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "at_ap",
                 "lessonName": "at + ap",
-                "ignoreMe1": "Blending.at + ap",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "at + ap", "at+ap",
                     "Cat + Cap"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "at + ap",
                 "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat,cap,gap,lap,map,rap,sap,tap,yap,wap,zap",
                 "chain": "mat,map,rap,rat,cat,cap,sap,sat,tat,tap",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "cat/cap,lat/lap,mat/map,pat/pap,rat/rap,sat/sap,tat/tap",
                 "book": "2.2 Kat and Pap",
                 "fluencySentences": [
@@ -527,28 +470,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "t,p"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "ag",
                 "lessonName": "ag",
-                "ignoreMe1": "Blending.ag",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ag",
                     "Bag Nag Tag"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "ag",
                 "wordList": "bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag",
                 "chain": "bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "gap/gag,lap/lag,nap/nag,rap/rag,sap/sag,tap/tag,zap/zag",
                 "book": "2.3 Nag and Tag",
                 "fluencySentences": [
@@ -611,28 +545,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "g"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "at_ag",
                 "lessonName": "at + ag",
-                "ignoreMe1": "Blending.at + ag",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "at + ag",
                     "Bat + Bag"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "at + ag",
                 "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag",
                 "chain": "hat,hag,rag,rat,sat,sag,tag,tat,bat,bag,jag",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bat/bag,hat/hag,lat/lag,mat/mag,rat/rag,sat/sag,tat/tag",
                 "fluencySentences": [
                     "The rat is in the gap.",
@@ -694,28 +619,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "t,g"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "an",
                 "lessonName": "an",
-                "ignoreMe1": "Blending.an",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "an",
                     "Fan Can Tan"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "an",
                 "wordList": "ban,can,Dan,fan,Jan,man,pan,ran,tan,van",
                 "chain": "ban,can,Dan,fan,Jan,man,pan,ran,tan,van",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bat/ban,cat/can,fat/fan,lat/lan,mat/man,pat/pan,rat/ran,vat/van",
                 "book": "2.4 Dan and Jan",
                 "fluencySentences": [
@@ -778,29 +694,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "n"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "at_ap_ag_an",
                 "lessonName": "at + ap + ag + an",
-                "ignoreMe1": "Blending.at + ap + ag + an",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "at + ap + ag + an",
                     "at+ap+ag+an",
                     "Cat + Cap + Bag + Fan"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "at + ap + ag + an",
                 "wordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat,cap,gap,lap,map,rap,sap,tap,yap,wap,zap,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag,ban,can,Dan,fan,Jan,man,pan,ran,tan,van",
                 "chain": "cat,cap,can,fan,fat,rat,rag,rap,ran,tan",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bat/bag/ban,cat/cap/can,lag/lap/lan,mat/map/man,pap/pat/pan,rat/rag/ran,sat/sag/sap,tag/tap/tan",
                 "book": "2.5 The Tan Van",
                 "fluencySentences": [
@@ -863,28 +770,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "t,p,g,n"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "bdp_a",
                 "lessonName": "b-d-p for /a/",
-                "ignoreMe1": "Blending.b-d-p for /a/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "b-d-p for /a/",
                     "b-d-p for /a/ words"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "b-d-p for <sound>a</sound>",
                 "wordList": "bad,bag,bat,ban,dad,dab,pad,pap,pan,pat",
                 "chain": "bag,bat,ban,bad,dad,dab,pad,pan,pap,pat",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "b/b/d/b/d/d,d/d/b/d/b/d,d/b/b/d/d,p/d/b/p/b,b/b/d/p/p,d/d/b/d/b,b/d/p/p/b/,b/d/b/b/p,p/d/b/d/d,b/b/b/d/p,p/d/b/b/d",
                 "book": "2.6 Mat Can Dab",
                 "fluencySentences": [
@@ -943,27 +841,20 @@
                     "vowel": "a",
                     "suffixList": "b,d,g,n,p,t"
                 },
-                "pronounceImage": "b-d-p_poster.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-d-p_poster.jpg"
             },
             {
                 "lessonId": "a_review",
                 "lessonName": "/a/ review",
-                "ignoreMe1": "Blending./a/ review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/a/ review",
                     "All Cat Words"
                 ],
                 "groupCode": "a",
-                "ignoreMe3": "/a/",
-                "ignoreMe5": "<sound>a</sound> review",
                 "wordList": "bam,Dan,fab,fad,fax,gab,gas,had,ham,has,jab,jam,lab,Dan,fab,fad,fax,gas,had,ham,has,jab,jam,lab,lag,lap,mad,man,map,max,nab,Pam,rad,ram,sad,Sam,tab,wax,yak,yam",
                 "chain": "ram,rag,wag,wax,fax,tax,tan,ran,rad,sad",
                 "supplementalWordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,tat,cap,gap,lap,map,rap,sap,tap,yap,wap,zap,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag,ban,can,Dan,fan,Jan,man,pan,ran,tan,van,bad,dad,dab,pad,pap",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bat,bad/bam,fat/fad/fax,lass/lad/lag,rad/rag/ram,cam/cat/cap,hat/has/ham,jag/jam/jab,pan/pad/pal,tab/tad/tax,mad/max/man,sad/sax/Sam,gab/gal/gas",
                 "book": "2.8 Wax the Cab",
                 "fluencySentences": [
@@ -1026,28 +917,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "it",
                 "lessonName": "it",
-                "ignoreMe1": "Blending.it",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "it",
                     "Bit Pit Sit"
                 ],
                 "groupCode": "i",
-                "ignoreMe3": "/i/",
-                "ignoreMe5": "it",
                 "wordList": "it,bit,fit,hit,kit,lit,pit,sit,wit,zit",
                 "chain": "bit,fit,fat,hat,hit,pit,pat,sat,sit,zit",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "b-i-t/bit,f-i-t/fit,h-i-t/hit,k-i-t/kit,l-i-t/lit,p-i-t/pit,s-i-t/sit,w-i-t/wit,z-i-t/zit",
                 "book": "3.1 Kit Hit It",
                 "fluencySentences": [
@@ -1111,28 +993,20 @@
                     "vowel": "a,i",
                     "suffixList": "t"
                 },
-                "pronounceImage": "b-i.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-i.jpg"
             },
             {
                 "lessonId": "at_it",
                 "lessonName": "at + it",
-                "ignoreMe1": "Blending.at + it",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "at + it",
                     "at+it",
                     "Bat + Bit"
                 ],
                 "groupCode": "i",
-                "ignoreMe3": "/i/",
-                "ignoreMe5": "at + it",
                 "wordList": "it,bit,fit,hit,kit,lit,mitt,pit,sit,wit,zit,fat,cat,hat,sat,mat,pat,bat,rat,vat,tat",
                 "chain": "wit,sit,sat,fat,fit,hit,hat,mat,bat,bit",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "at/it,bat/bit,cat/kit,fat/fit,hat/hit,lat/lit,mat/mitt,pat/pit,sat/sit",
                 "book": "3.1 Kit Hit It",
                 "fluencySentences": [
@@ -1201,30 +1075,22 @@
                     "vowel": "a,i",
                     "suffixList": "t"
                 },
-                "pronounceImage": "",
                 "contrastImage": [
                     "b-ah.jpg",
                     "b-ih.jpg"
-                ],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "ig",
                 "lessonName": "ig",
-                "ignoreMe1": "Blending.ig",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ig",
                     "Big Dig Fig"
                 ],
                 "groupCode": "i",
-                "ignoreMe3": "/i/",
-                "ignoreMe5": "ig",
                 "wordList": "big,dig,fig,gig,jig,pig,rig,wig,zig",
                 "chain": "big,dig,fig,gig,jig,pig,rig,wig,zig",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "b-i-g/big,d-i-g/dig,f-i-g/fig,g-i-g/gig,j-i-g/jig,p-i-g/pig,r-i-g/rig,w-i-g/wig/z-i-g/zig",
                 "book": "3.2 Pig in a Wig",
                 "fluencySentences": [
@@ -1287,29 +1153,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "i",
                     "suffixList": "g"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "ag_ig",
                 "lessonName": "ag + ig",
-                "ignoreMe1": "Blending.ag + ig",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ag + ig",
                     "ag+ig",
                     "Bag + Big"
                 ],
                 "groupCode": "i",
-                "ignoreMe3": "/i/",
-                "ignoreMe5": "ag + ig",
                 "wordList": "bag,hag,jag,lag,nag,rag,sag,tag,wag,big,dig,fig,gig,jig,pig,rig,wig,zig",
                 "chain": "dig,big,bag,hag,jag,jig,pig,rig,rag,nag",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bag/big,gag/gig,jag/jig,rag/rig,wag/wig,zag/zig",
                 "book": "3.2 Pig in a Wig",
                 "fluencySentences": [
@@ -1378,29 +1235,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i",
                     "suffixList": "g"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "it_ig_ip_in",
                 "lessonName": "it + ig + ip + in",
-                "ignoreMe1": "Blending.it + ig + ip + in",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "it + ig + ip + in",
                     "it+ig+ip+in",
                     "Bit + Big"
                 ],
                 "groupCode": "i",
-                "ignoreMe3": "/i/",
-                "ignoreMe5": "it + ig + ip + in",
                 "wordList": "big,dig,fig,gig,jig,pig,rig,wig,zig,bit,fit,hit,kit,pit,sit,wit,zit,dip,hip,lip,nip,rip,sip,tip,yip,zip,bin,din,fin,gin,kin,pin,sin,tin,win",
                 "chain": "fit,fig,fin,tin,tip,lip,lit,hit,hip,sip",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bit/big/bin,fit/fig/fin,pit/pig/pin,wit/wig/win,dig/dip/din,sit/sip/sin,kit/kip/kin",
                 "book": "l3b3",
                 "fluencySentences": [
@@ -1469,29 +1317,21 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "i",
                     "suffixList": "g,n,p,t"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "a_i",
                 "lessonName": "/a/ + /i/",
-                "ignoreMe1": "Blending./a/ + /i/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/a/ + /i/",
                     "a+i",
                     "Contrast /a/ + /i/"
                 ],
                 "groupCode": "i",
-                "ignoreMe3": "/i/",
-                "ignoreMe5": "<sound>a</sound> + <sound>i</sound>",
                 "wordList": "bid,did,fib,nib,hid,lid,mid,rid,him,Jim,Kim,rim,bin,din,fin,kin,min,pin,tin,vin,lip,nip,pip,rip,sip,tip,yip,zip,sis,his",
                 "chain": "fin,fan,tan,tap,tip,lip,lap,lag,rag,rig",
                 "supplementalWordList": "fab,jab,nab,had,lad,mad,rad,pal,gal,Hal,ham,jam,Cam,ram,ban,Dan,fan,can,man,pan,tan,van,lap,nap,pap,rap,sap,tap,yap,zap,has,bad,dad",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "nap/nip,sap/sip,jag/jig,rag/rig,gag/gig,tap/tip,rap/rip,wag/wig,lap/lip,fat/fit,pat/pit,sat/sit,ham/him",
                 "book": "l3b3",
                 "fluencySentences": [
@@ -1561,30 +1401,22 @@
                     "vowel": "a,i",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
                 },
-                "pronounceImage": "",
                 "contrastImage": [
                     "b-a.jpg",
                     "b-i.jpg"
-                ],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "bdp_i",
                 "lessonName": "b-d-p for /i/",
-                "ignoreMe1": "Blending.b-d-p for /i/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "b-d-p for /i/",
                     "b-d-p for /a/ and /i/ words"
                 ],
                 "groupCode": "i",
-                "ignoreMe3": "/i/",
-                "ignoreMe5": "b-d-p for <sound>i</sound>",
                 "wordList": "bib,dib,did,bid,pap,bad,pad,dad,bad",
                 "chain": "bib,dib,did,bid,bad,pad,dad,did,bid",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "b/b/d/b/d/d,d/d/b/d/b/d,d/b/b/d/d,p/d/b/p/b,b/b/d/p/p,d/d/b/d/b,b/d/p/p/b/,b/d/b/b/p,p/d/b/d/d,b/b/b/d/p,p/d/b/b/d",
                 "book": "3.4 Kim and Jim",
                 "fluencySentences": [
@@ -1644,27 +1476,20 @@
                     "vowel": "a,i",
                     "suffixList": "b,d,p"
                 },
-                "pronounceImage": "b-d-p_poster.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-d-p_poster.jpg"
             },
             {
                 "lessonId": "i_review",
                 "lessonName": "/i/ review",
-                "ignoreMe1": "Blending./i/ review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/i/ review",
                     "All Bit Words"
                 ],
                 "groupCode": "i",
-                "ignoreMe3": "/i/",
-                "ignoreMe5": "<sound>i</sound> review",
                 "wordList": "bin,din,dim,dip,fib,fin,fix,him,hip,his,Jim,kid,lid,lip,mid,mix,nip,pin,rib,rid,rim,rip,sin,sip,sis,six,Tim,tin,tip,wiz,yip,zip",
                 "chain": "mix,fix,fax,tax,sax,six,sin,tin,win,wig",
                 "supplementalWordList": "bib,bid,big,bit,dib,did,dig,fig,fit,gig,hit,jig,kit,mitt,pit,pig,rig,sit,wit,wig,zig,zit,bat,bag,bad,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,jazz,lab,lag,lap,mad,man,map,mat,max,nab,nag,nap,pad,Pam,pan,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tan,tap,van,vat,wag,wax,yap,zap",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ban/bin,rad/rid,fan/fin,has/his,rad/rid,tan/tin,fax/fix,hat/hit,sax/six,had/hid,dad/did",
                 "book": "3.4 Kim and Jim",
                 "fluencySentences": [
@@ -1722,28 +1547,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "ot",
                 "lessonName": "ot",
-                "ignoreMe1": "Blending.ot",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ot",
                     "Cot Dot Jot"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "ot",
                 "wordList": "bot,cot,dot,got,hot,jot,lot,not,pot,rot,tot",
                 "chain": "bot,cot,dot,got,hot,jot,lot,not,pot,rot",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "cat/cot,bat/bot,hat/hot,lat/lot,pat/pot,rat/rot,tat/tot",
                 "book": "l4b1",
                 "fluencySentences": [
@@ -1807,28 +1623,20 @@
                     "vowel": "o",
                     "suffixList": "t"
                 },
-                "pronounceImage": "b-o.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-o.jpg"
             },
             {
                 "lessonId": "ot_og_op",
                 "lessonName": "ot + og + op",
-                "ignoreMe1": "Blending.ot + og + op",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ot + og + op",
                     "ot+og+op",
                     "Cot + Cog + Cop"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "ot + og + op",
                 "wordList": "bot,cot,dot,got,hot,jot,lot,not,pot,rot,tot,bog,cog,dog,fog,hog,jog,log,pog,bop,cop,hop,lop,mop,pop,sop,top",
                 "chain": "dot,dog,bog,bot,bop,cop,cot,jot,jog,fog",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bot/bog,dog/dog,cot/cop,jot/jog,hot/hop,lot/log,tot/top,pot/pog",
                 "book": "l4b2",
                 "fluencySentences": [
@@ -1891,29 +1699,21 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "o",
                     "suffixList": "g,p,t"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "a_i_o",
                 "lessonName": "/a/ + /i/ + /o/",
-                "ignoreMe1": "Blending./a/ + /i/ + /o/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/a/ + /i/ + /o/",
                     "a+i+o",
                     "Contrast /a/ + /i/ + /o/"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "<sound>a</sound> + <sound>i</sound> + <sound>o</sound>",
                 "wordList": "Bob,box,cod,con,Don,fob,fox,gob,job,lob,mob,mod,mom,nod,non,pox,rob,rod,Ron,sob,sod,Tom",
                 "chain": "box,fox,fix,fax,fan,ran,ram,ham,has,his",
                 "supplementalWordList": "pod,pop,bad,dab,dad,Dan,fab,fad,fax,gab,gas,had,ham,has,jab,jam,lab,mad,man,max,nab,pad,Pam,ram,ran,sad,Sam,tab,wax,bib,bid,bin,dib,did,dim,fib,fin,fix,him,his,Jim,kid,lid,mid,mix,pin,rib,rid,rim,sid,sin,sis,six,Tim,tin,wiz",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "rad/rid/rod,bag/big/bog,hat/hit/hot,pat/pit/pot,mad/mid/mod,fab/fib/fob,jag/jig/jog,tap/tip/top,fax/fix/fox",
                 "book": "l4b2",
                 "fluencySentences": [
@@ -1978,28 +1778,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i,o",
                     "suffixList": "b,d,g,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "bdp_o",
                 "lessonName": "b-d-p for /o/",
-                "ignoreMe1": "Blending.b-d-p for /o/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "b-d-p for /o/",
                     "b-d-p for Bat-Bit-Bot Words"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "b-d-p for <sound>o</sound>",
                 "wordList": "bob,pod,dob,pop,bop,bib,dib,bid,did,dip,pap,dad,dab,bad,pad",
                 "chain": "pod,pop,bop,bob,bib,bid,did,dad,bad,pad",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "b/b/d/b/d/d,d/d/b/d/b/d,d/b/b/d/d,p/d/b/p/b,b/b/d/p/p,d/d/b/d/b,b/d/p/p/b/,b/d/b/b/p,p/d/b/d/d,b/b/b/d/p,p/d/b/b/d",
                 "fluencySentences": [
                     "Dad and his pop bid on a big pig.",
@@ -2062,27 +1853,20 @@
                     "vowel": "a,i,o",
                     "suffixList": "b,d,p"
                 },
-                "pronounceImage": "b-d-p_poster.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-d-p_poster.jpg"
             },
             {
                 "lessonId": "o_review",
                 "lessonName": "/o/ review",
-                "ignoreMe1": "Blending./o/ review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/o/ review",
                     "All Cot Words"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "<sound>o</sound> review",
                 "wordList": "Bob,bog,bop,box,dog,dot,fob,fog,fop,fox,gob,got,hog,hop,hot,job,jog,jot,lob,log,lot,mob,mod,mom,mop,nod,non,not,pod,pop,pot,pox,rob,rod,Ron,rot,sob,sod,sop,tom,top,tot",
                 "chain": "big,bag,bog,dog,dot,rot,rob,cob,job,jab",
                 "supplementalWordList": "bat,bag,bad,bass,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,lab,lag,lap,mad,man,map,mat,max,nab,nag,nap,pad,Pam,pan,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tam,tan,tap,van,vat,wag,wax,zap,bib,big,bid,bin,bit,dib,did,dig,din,dim,dip,fib,fin,fig,fill,fit,fix,fizz,gig,hid,him,hip,his,hip,jig,Jim,kid,kit,lid,lip,mid,mix,nip,nit,pill,pin,pit,pig,rib,rid,rig,rim,rip,sid,sin,sip,sis,sit,six,Tim,tin,tip,wig,wit,wiz,yip,zig,zip,zit,bib,big,bid,bin,bit,dib,did,dig,din,dim,dip,fib,fin,fig,fit,fix,gig,hid,him,hip,his,hit,jig,Jim,kid,kit,lid,lip,mid,mix,nip,nit,pin,pit,pig,rib,rid,rig,rim,rip,sid,sin,sip,sis,sit,six,Tim,tin,tip,wig,wit,wiz,yip,zig,zip,zit",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "mop/mob/mom,cot/con/cog,rot/rob/rod,jog/job/jot,log/lob/lot,hog/hot/hop,bod/bog/bop,dot/dog/don,fob/fox/fog",
                 "fluencySentences": [
                     "Pam's mom got a job from Ron's boss.",
@@ -2149,29 +1933,21 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i,o",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "ut_ug_up_un",
                 "lessonName": "ut + ug + up + un",
-                "ignoreMe1": "Blending.ut + ug + up + un",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "ut + ug + up + un",
                     "ut+ug+up+un",
                     "But Nut Rut"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "ut + ug + up + un",
                 "wordList": "but,cut,gut,hut,jut,nut,rut,tut,bug,dug,hug,jug,lug,mug,pug,rug,cup,pup,sup,yup",
                 "chain": "rut,rug,run,ran,rag,sag,tag,tug,bug,bag,big,bog",
                 "supplementalWordList": "bat,cat,fat,hat,mat,pat,rat,sat,tat,bit,fit,hit,kit,pit,sit,wit,zit,bot,cot,dot,got,hot,jot,lot,not,pot,rot,tot,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag,big,dig,fig,gig,jig,pig,rig,wig,zig,bog,cog,dog,fog,hog,jog,log,pog",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "but/bug,hut/hug,jut/jug,rut/rug,tut/tug,cut/cup,put/pug",
                 "fluencySentences": [
                     "Tom will hop over a rut and go in the hut.",
@@ -2234,27 +2010,20 @@
                     "vowel": "a,i,o,u",
                     "suffixList": "g,p,t"
                 },
-                "pronounceImage": "b-u.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-u.jpg"
             },
             {
                 "lessonId": "u_a",
                 "lessonName": "/u/ + /a/",
-                "ignoreMe1": "Blending./u/ + /a/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/u/ + /a/",
                     "Contrast /a/ and /u/"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "<sound>u</sound> + <sound>a</sound>",
                 "wordList": "bud,bus,bun,fun,pun,run,sun,dub,dud,hum,mud,mum,nub,nun,pus,pup,rum,sud",
                 "chain": "bud,bad,sad,sud,sum,sub,tub,tab,tap,tad,mad,mud",
                 "supplementalWordList": "bad,bass,ban,dab,dad,ham,fab,fan,fad,fax,gab,gap,gas,had,ham,has,jab,jag,jam,lab,lat,lap,mad,man,map,max,nab,nap,pad,Pam,pan,ram,ran,rap,sad,Sam,tab,tan,tap,van,wax,yap,zap",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bad/bud,dad/dud,fan/fun,tab/tub,Sam/sum,tax/tux,ran/run,dab/dub,ham/hum,mad/mud,yap/yup ",
                 "fluencySentences": [
                     "It is fun to put the cup in the tub.",
@@ -2321,29 +2090,21 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i,o,u",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "u_i_o",
                 "lessonName": "/u/ + i/ + /o/",
-                "ignoreMe1": "Blending./u/ + i/ + /o/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/u/ + i/ + /o/",
                     "u+i+o",
                     "Contrast /i/ and /u/"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "<sound>u</sound> + i/ + <sound>o</sound>",
                 "wordList": "bum,nub,rub,sub,Gus,bud,hub,bus,cup,cud,cub,pub,bus,rub,sud,sum,tub,tux",
                 "chain": "rib,rub,rob,sob,sub,sun,bun,ban,fan,fun,fin",
                 "supplementalWordList": "din,dim,dip,fin,fix,hid,him,hip,his,kid,lid,lip,mid,nit,pin,rib,rim,sid,sin,sip,sis,six,yip,bop,box,fop,fox,hop,job,lob,mob,mod,mom,mop,nod,non,not,pod,pop,pox,rob,rod,Ron,sob,sod",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bit/bot/but,pit/pot/putt,jig/jog/jug,hit/hot/hut,bid/bod/bud,rib/rob/rub,nit/not/nut,pip/pop/pup",
                 "fluencySentences": [
                     "Jill will kiss Jim on the bus.",
@@ -2405,28 +2166,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i,o,u",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "bdp_u",
                 "lessonName": "b-d-p for /u/",
-                "ignoreMe1": "Blending.b-d-p for /u/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "b-d-p for /u/",
                     "b-d-p for Bat-Bit-Bot-But Words"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "b-d-p for <sound>u</sound>",
                 "wordList": "bud,dub,dud,pub,pug,pup,Bob,pod,pop,bop,bib,dib,bid,did,dip,pap,dad,bab,dab,bad,pad",
                 "chain": "bud,dud,dub,pub,pup,pop,bop,bod,bid,bud",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "b/b/d/b/d/d,d/d/b/d/b/d,d/b/b/d/d,p/d/b/p/b,b/b/d/p/p,d/d/b/d/b,b/d/p/p/b/,b/d/b/b/p,p/d/b/d/d,b/b/b/d/p,p/d/b/b/d",
                 "fluencySentences": [
                     "Bud the pug is a bad pup.",
@@ -2490,27 +2242,20 @@
                     "vowel": "a,i,o,u",
                     "suffixList": "b,d,p"
                 },
-                "pronounceImage": "b-d-p_poster.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-d-p_poster.jpg"
             },
             {
                 "lessonId": "u_review",
                 "lessonName": "/u/ review",
-                "ignoreMe1": "Blending./u/ review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/u/ review",
                     "All Bug Words"
                 ],
                 "groupCode": "o_u",
-                "ignoreMe3": "Short /o/ and /u/",
-                "ignoreMe5": "<sound>u</sound> review",
                 "wordList": "bud,bug,bum,bun,but,bus,dub,dud,dug,fun,hub,hug,hut,hum,jug,jut,lug,mud,mug,mum,nub,nun,nut,pub,pug,pun,pup,pus,run,rug,rut,sub,sum,sun,sup,tub,tug,tut,tux",
                 "chain": "mud,bud,bug,dug,hug,hum,sum,sub,tub,tab,cab,cub",
                 "supplementalWordList": "fat,cat,hat,sat,mat,pat,bat,rat,vat,cap,gap,lap,map,rap,sap,tap,zap,bag,hag,jag,lag,nag,rag,sag,tag,wag,bit,fit,hit,kit,mitt,pit,sit,wit,zit,big,dig,fig,jig,pig,rig,wig,zig,dip,hip,lip,nip,pip,rip,sip,zip,cot,dot,got,hot,jot,lot,not,pot,rot,tot,bog,cog,dog,fog,hog,jog,log,cop,fop,hop,lop,pop,top",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bug/bog/bag/big,dug/dog/dag/dig,hut/hot/hat/hit,but/bot/bat/bit,bun/bon/ban/bin,cut/cot/cat/kit,jug/jog/jag/jig,cup/cop/cap/Kip,nut/not/Nat/nit",
                 "fluencySentences": [
                     "The mutt dug a rut and hid Tim's mitt in it.",
@@ -2572,29 +2317,21 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i,o,u",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "et_eg_en",
                 "lessonName": "et + eg + en",
-                "ignoreMe1": "Blending.et + eg + en",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "et + eg + en",
                     "et+eg+en",
                     "Bet Get Jet"
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "et + eg + en",
                 "wordList": "bet,get,jet,let,met,net,pet,set,vet,wet,beg,keg,leg,Meg,peg,Ben,den,fen,hen,Jen,Ken,men,ten,pen",
                 "chain": "pen,pan,pin,pun,pug,pig,peg,beg,big,bag,bog",
                 "supplementalWordList": "bat,cat,fat,hat,mat,pat,rat,sat,tat,vat,bit,fit,hit,kit,lit,pit,sit,wit,zit,bot,cot,dot,got,hot,jot,lot,not,pot,rot,tot,but,cut,gut,hut,jut,nut,rut,tut,bug,dug,hug,jug,lug,mug,pug,rug,bag,gag,hag,jag,lag,nag,rag,sag,tag,wag,zag,big,dig,fig,gig,jig,pig,rig,wig,zig,bog,cog,dog,fog,hog,jog,log,pog",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bet/beg,pet/pen,met/men,jet/Jen,pet/peg,bet/Ben,met/Meg,let/leg",
                 "fluencySentences": [
                     "I bet he will go to the vet with his pet.",
@@ -2657,27 +2394,20 @@
                     "vowel": "a,e,i,o,u",
                     "suffixList": "g,n,t"
                 },
-                "pronounceImage": "b-e.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-e.jpg"
             },
             {
                 "lessonId": "e_review",
                 "lessonName": "/e/ review",
-                "ignoreMe1": "Blending./e/ review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/e/ review",
                     "Contrast /o/ and /e/"
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "<sound>e</sound> review",
                 "wordList": "Deb,Ned,Ted,den,pep,gem,gel,hem,pen,yep,hex,pep,bed,web,wed,Wes,yes,bed,fed,led,med,red,gel,Mel,hem,yep,rep,hex,Jed,ref,rep,yes",
                 "chain": "web,wed,fed,led,leg,peg,pen,ten,hen,hex,hem,gem",
                 "supplementalWordList": "bad,fad,lad,mad,pad,rad,tad,gal,ham,pan,pap,rap,yap,bass,lid,mid,rid,big,pig,him,bin,din,fin,kin,pin,tin,pip,rip,yip,lit,pit,wit,sit,dob,nod,don,pop,Jon,pod,bed,bod,med,mod,red,rod,beg,bog,leg,log,peg,pog,bot,bet,got,get,jot,jet,lot,let,not,net,pot,pet,gum,hum,pun,yup,pup,fun,bud,bun,pug,dub,mud,bug,lug,mug,bus,but,gut,jut,nut",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "pog/pug/peg,pop/pup/pep,jot/jut/jet,got/gut/get,bot/but/bet,not/nut/net,mod/mud/med",
                 "fluencySentences": [
                     "Tess got a doll and a red ball from Dad.",
@@ -2744,28 +2474,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "bdp_review",
                 "lessonName": "b-d-p for /e/",
-                "ignoreMe1": "Blending.b-d-p for /e/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "b-d-p for /e/",
                     "b-d-p Review"
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "b-d-p for <sound>e</sound>",
                 "wordList": "bud,bug,bod,bad,bid,bed,bop,bog,bab,dub,dud,dug,dad,dab,did,dip,Deb,pad,pap,pip,pub,pup,pep",
                 "chain": "bud,bug,bog,big,bid,bed,beg,bug,dug,pug,pup,pub",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bad/bed,dad/dab,pad/bad,bid/dib,dab/dad,dub/dud,bud/dud,did/bid",
                 "fluencySentences": [
                     "Nat the rat bit the mitt.",
@@ -2828,27 +2549,20 @@
                     "vowel": "a,e,i,o,u",
                     "suffixList": "b,d,p"
                 },
-                "pronounceImage": "b-d-p_poster.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-d-p_poster.jpg"
             },
             {
                 "lessonId": "grand_review",
                 "lessonName": "Grand Review",
-                "ignoreMe1": "Blending.Grand Review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "Grand Review",
                     "Grand Review"
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "Grand Review",
                 "wordList": "bed,Ben,bet,beg,den,fed,fen,gem,gel,hen,hex,jet,led,leg,let,Meg,men,met,Ned,net,pen,peg,pet,set,ten,vet,web,wed,wet",
                 "chain": "yes,yet,get,pet,pen,men,ten,tin,tan,ban,bad,bed",
                 "supplementalWordList": "bud,bug,bum,bun,but,bus,dub,dud,dug,dun,fun,hub,hug,hut,hum,jug,jut,lug,mud,mug,mum,nub,nun,nut,pub,pug,pun,pup,pus,run,rug,rut,sub,sum,sun,sup,tub,tug,tut,tux,bib,big,bid,bin,bit,dib,did,dig,din,dim,dip,fib,fin,fig,fit,fix,gig,hid,him,hip,his,hit,jib,jig,Jim,jip,kid,kit,lid,lip,mid,mix,nip,nit,pin,pit,pig,rib,rid,rig,rim,rip,sid,sin,sip,sis,sit,six,Tim,tin,tip,wig,wit,wiz,yip,zig,zip,zit,bat,bag,bad,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,lab,lag,lap,mad,man,map,mat,max,nab,nag,nap,pad,Pam,pan,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tam,tan,tap,van,vat,wag,wax,zap,Bob,bog,bop,box,dog,dot,fob,fog,fop,fox,gob,got,hog,hop,hot,job,jog,jot,lob,log,lot,mob,mod,mom,mop,nod,non,not,pod,pop,pot,pox,rob,rod,Ron,rot,sob,sod,sop,tom,top,tot",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bed/bod/bad/bid/bud,pet/pot/pat/pit/put,fed/fod/fad/fid/fud,med/mod/mad/mid/mud,let/lot/lat/lit/lut,bet/bot/bat/bit/but,beg/bog/bag/big/bug",
                 "fluencySentences": [
                     "",
@@ -2900,28 +2614,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "b,d,g,k,l,m,n,p,s,t,x"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "floss",
                 "lessonName": "FLOSS",
-                "ignoreMe1": "Blending.FLOSS",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "FLOSS",
                     ""
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "FLOSS",
                 "wordList": "well,sell,tell,bell,buzz,mess,less,fuss,puff,ruff,riff,toss,loss,hiss,miss,fizz,fuzz,jazz,fill,hill,mill,will,doll,buzz,buff,bass,mass,pass,cuff,off,kiss,ball,fall,tall,wall",
                 "chain": "fuzz,fizz,fill,hill,hall,mall,mass,moss,miss,mill,miff,muff,puff",
                 "supplementalWordList": "huff,Bess,Tess,gill,Jill,till,cuss,duff,Jill,Bill,Ross,diss,hall,mall,dill,sill,muff,bill,till,pill,lass,sass,fuss,moss,boss",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "well/sell/tell,hill/fill/pill,fall/ball/tall,bass/mass/pass,fuss/muss/cuss,kiss/miss/hiss,buff/cuff/muff,boss/moss/toss",
                 "fluencySentences": [
                     "Bill will toss the ball to Jill. Will she miss the ball and fall? No. Jill is tall. She will get the ball and pass it off to Bess."
@@ -2986,28 +2692,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "ff,ll,ss,zz"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "ck_endings",
                 "lessonName": "-ck",
-                "ignoreMe1": "Blending.-ck",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-ck",
                     "ck Endings"
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "-ck",
                 "wordList": "back,lack,pack,rack,sack,tack,yack,deck,kick,pick,sick,tick,wick,dock,hock,jock,lock,mock,rock,sock,duck,luck,tuck",
                 "chain": "back,lack,luck,tuck,tick,tock,rock,rack,sack,sock,sick,kick,pick,pack",
                 "supplementalWordList": "Zack,hack,hick,bock,guck,muck,Jack,yack,suck",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "back/lack/sack,jock/lock/rock,pick/sick/tick,deck/peck/neck,luck/buck/duck,tack/rack/yack,hick/lick/wick,sock/dock/mock",
                 "fluencySentences": [
                     "Jack will tuck the rock in the sack.",
@@ -3057,28 +2755,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "ck"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "sh_th_ch",
                 "lessonName": "sh + th + ch",
-                "ignoreMe1": "Blending.sh + th + ch",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "sh + th + ch",
                     ""
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "sh + th + ch",
                 "wordList": "bash,cash,dash,dish,fish,hush,mash,rash,rush,wish,bath,math,path,with,moth,ash,mash,shut,shop,chip,chat,chin,then,this,that   ",
                 "chain": "with,wish,fish,dish,dash,cash,rash,rush,mush,much,such",
                 "supplementalWordList": "lush,posh,hath,Beth,hash,sham,chug,Josh,mesh,mush,moth,lash,chop,shot,thin",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ca-sh/cash,da-sh/dash,di-sh/dish,wi-sh/wish,hu-sh/hush,mu-sh/mush,ma-th/math,pa-th/path,wi-th/with,sh-op/shop,ch-in/chin,ch-at/chat,th-is/this/th-at/that",
                 "fluencySentences": [
                     "The dish has a chip in it.",
@@ -3145,28 +2835,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z,ch,sh,th",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "m,n,p,s,t,ch,sh,th"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "s_endings",
                 "lessonName": "-s for cvc",
-                "ignoreMe1": "Blending.-s for cvc",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-s for cvc",
                     ""
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "-s for cvc",
                 "wordList": "cats,rags,maps,fans,pans,rams,pigs,ribs,kids,hills,pins,wins,rims,sobs,logs,cops,pots,pets,nets,legs,rugs,hugs,pups,hums,begs,runs,bells,sells,socks,rocks,ducks,kicks,sacks",
                 "chain": "socks,rocks,racks,rags,rams,hams,hats,cats,bats,bags,begs,bugs,hugs",
                 "supplementalWordList": "buds,bugs,huts,jugs,mugs,nuns,nuts,tubs,tugs,bibs,bids,bits,digs,dips,fins,fills,hips,hits,kits,lips,pills,pits,tips,wigs,zips,bats,bags,fads,fans,gaps,hams,hats,mats,pads,rams,rats,vans,dogs,dolls,dots,hogs,hops,jobs,mobs,mops,nods,rods,rots,tops,packs,racks,docks,locks,decks",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bug/bugs,dig/digs,tip/tips,ham/hams,dot/dots,doll/dolls,top/tops,van/vans,dog/dogs,bat/bats,mug/mugs,pit/pits,hat/hats",
                 "fluencySentences": [
                     "The pigs are in the pens.",
@@ -3233,28 +2915,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "bs,ds,gs,lls,ms,ns,ps,ts"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "y_endings",
                 "lessonName": "-y for cvc",
-                "ignoreMe1": "Blending.-y for cvc",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-y for cvc",
                     ""
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "-y for cvc",
                 "wordList": "happy,batty,buggy,sunny,funny,muggy,puppy,kitty,bunny,runny,bitty,witty,giddy,hippy,muddy,buddy,nutty,silly,putty,messy,missy,fuzzy,fizzy,mommy,daddy,penny,foggy,belly",
                 "chain": "batty,baggy,buggy,bunny,sunny,runny,funny,fuzzy,fizzy,dizzy",
                 "supplementalWordList": "saggy,baggy,puffy,jetty,peppy,dizzy,tizzy",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bat/batty,fun/funny,pup/puppy,dad/daddy,mom/mommy,fizz/fizzy,wit/witty,bud/buddy,mud/muddy,fog/foggy,mess/messy,sun/sunny,fuzz/fuzzy,hip/hippy,run/runny",
                 "fluencySentences": [
                     "Mommy and Daddy are mad.",
@@ -3322,27 +2996,18 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "ddy,ffy,ggy,lly,nny,ppy,ssy,tty,zzy"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "er_est_cvc",
                 "lessonName": "-er and -est for cvc",
-                "ignoreMe1": "Blending.-er and -est for cvc",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-er and -est for cvc",
                     ""
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "-er and -est for cvc",
                 "wordList": "bigger,biggest,fatter,fattest,hotter,hottest,sadder,saddest,dimmer,dimmest,wetter,wettest,seller,letter,better,robber,zipper,dinner,winner",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "big/bigger/biggest,fat/fatter/fattest,sad/sadder/saddest,fit/fitter/fittest,dim/dimmer/dimmest,buff/buffer/buffest,mad/madder/maddest,wet/wetter/wettest",
                 "fluencySentences": [
                     "Jim is big.",
@@ -3404,27 +3069,19 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "ed_ing_cvc",
                 "lessonName": "-ed and -ing for cvc",
-                "ignoreMe1": "Blending.-ed and -ing for cvc",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-ed and -ing for cvc",
                     ""
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "-ed and -ing for cvc",
                 "wordList": "passed,passing,ripped,ripping,missed,missing,nodded,nodding,tossed,tossing,popped,popping,hugged,hugging,hummed,humming,messed,messing,petted,petting,tapped,tapping,robbed,robbing",
                 "supplementalWordList": "hemmed,hemming,fitted,fitting,lapped,lapping,gagged,gagging,potted,potting,puffed,puffing,fussed,fussing,bagged,bagging",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "rob/robbed/robbing,pass/passed/passing,mess/messed/messing,miss/missed/missing,toss/tossed/tossing,tap/tapped/tapping,rip/ripped/ripping,pet/petted/petting,pop/popped/popping",
                 "fluencySentences": [
                     "The silly puppy ripped the rug. ",
@@ -3485,27 +3142,19 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "cvc_syllables",
                 "lessonName": "cvc syllables",
-                "ignoreMe1": "Blending.cvc syllables",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "cvc syllables",
                     ""
                 ],
                 "groupCode": "cvc_wrap",
-                "ignoreMe3": "CVC Wrap-up",
-                "ignoreMe5": "cvc syllables",
                 "wordList": "sunset,kitten,hidden,bedbug,basket,picnic,helmet,mitten,cactus,napkin,pencil,tennis,magnet,cannot,fabric,mascot,velvet,submit,muffin",
                 "supplementalWordList": "combat,goblet,musket,catnip,hubcap,mitten,pigpen,happen,nutmeg",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "sun-set/sunset,kit-ten/kitten,bak-ket/basket,pic-nic/picnic,fab-ric/fabric,mag-net/magnet,nap-kin/napkin,hel-met/helmet,sub-mit/submit,cac-tus/cactus,ten-nis/tennis,muf-fin/muffin",
                 "fluencySentences": [
                     "Rabbit and kitten went on a picnic. A bug is in the basket.",
@@ -3560,28 +3209,20 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "a_e",
                 "lessonName": "a_e",
-                "ignoreMe1": "Blending.a_e",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "a_e",
                     "a_e spelling of /ay/ spinner"
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "a_e",
                 "wordList": "hate,mate,wade,tame,tape,fade,made,pane,rage,vane,bake,bale,cage,cake,came,daze,date,fade,fame,fate,game,gate,case,gape",
                 "chain": "hate,mate,made,mane,cane,came,same,sale,male,make,cake,take,lake",
                 "supplementalWordList": "haze,lake,late,male,mane,maze,page,pave,rake,rave,safe,sale,same,save,bane,kale,dame,gale,jade,rate,cane",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "hat/hate,mat/mate,tap/tape,mad/made,pan/pane,rat/rate,rag/rage,fat/fate,gap/gape,ban/bane",
                 "fluencySentences": [
                     "Pam will fix the rip on the page with tape.",
@@ -3643,29 +3284,21 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "c,d,f,g,k,l,m,n,p,s,t,v,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "a_e_a",
                 "lessonName": "a_e + /a/",
-                "ignoreMe1": "Blending.a_e + /a/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "a_e + /a/",
                     "a_e+a",
                     "Contrast a_e /ay/ and a /ah/"
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "a_e + <sound>a</sound>",
                 "wordList": "haze,lake,late,male,mane,maze,page,pave,rake,rave,safe,sale,same,save,bane,kale,dame,gale,jade,rate,cane,face,race,pace,lace",
                 "chain": "daze,haze,hate,late,date,dame,came,lame,lake,fake,face,race,rate",
                 "supplementalWordList": "hate,mate,wade,tame,tape,fade,made,pane,rage,vane,bake,bale,bane,cage,cake,came,daze,date,fade,fame,fate,game,gate,rat,bag,bad,bass,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,jazz,lab,lag,lap,mad,man,map,mass,mat,max,nab,nag,nap,pad,Pam,pan,pass,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tam,tan,tap,van,vat,wag,wax,zap",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "can/cane,van/vane,lat/late,sam/same,gal/gale,man/mane,cam/came,bad/bade,fad/fade",
                 "fluencySentences": [
                     "The snake had scales on it.",
@@ -3728,28 +3361,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "c,d,f,g,k,l,m,n,p,s,t,v,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "i_e",
                 "lessonName": "i_e",
-                "ignoreMe1": "Blending.i_e",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "i_e",
                     "i_e spelling of /igh/"
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "i_e",
                 "wordList": "mine,mite,nice,nine,pike,pine,pipe,rice,ride,ripe,rise,side,site,size,tide,tile,time,tire,wide,wife,wine,wipe,wire,wise,bide,bile,dire,jive",
                 "chain": "mine,mane,sane,same,tame,time,lime,like,lake,lane,pane,pine",
                 "supplementalWordList": "mime,mire,rile,vile,vibe,vice,dike,hive,Mike,bike,bite,dice,dime,dine,dive,file,fine,fire,five,hide,hike,hire,kite,lice,life,lime,line,mice,mile",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "pin/pine,pip/pipe,rip/ripe,rid/ride,sit/site,Tim/time,win/wine,bid/bide",
                 "fluencySentences": [
                     "The kite hit the pine tree and got stuck!",
@@ -3814,28 +3439,21 @@
                     "vowel": "a,i",
                     "suffixList": "c,d,f,g,k,l,m,n,p,s,t,v,z"
                 },
-                "pronounceImage": "b-igh.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-igh.jpg"
             },
             {
                 "lessonId": "i_e_i",
                 "lessonName": "i_e + /i/",
-                "ignoreMe1": "Blending.i_e + /i/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "i_e + /i/",
                     "i_e+i",
                     "Contrast i_e /igh/ and i /ih/"
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "i_e + <sound>i</sound>",
                 "wordList": "mime,mire,rile,vile,vibe,vice,dike,hive,Mike,bide,bike,bite,dice,dime,dine,dive,file,fine,fire,five,hide,hike,hire,kite,lice,life,lime,line,mice,mile,jive",
                 "chain": "bike,bake,lake,like,lice,mice,mile,tile,tale,sale,sake,fake,fave,five",
                 "supplementalWordList": "mine,mite,nice,nine,pike,pine,pipe,rice,ride,ripe,rise,side,site,size,tide,tile,time,tire,wide,wife,wine,wipe,wire,wise,bile,dire,bib,big,bid,Bill,bin,bit,dib,did,dig,dill,din,dim,diss,dip,fib,fin,fig,fill,fit,fix,fizz,gig,gill,hid,hill,him,hip,his,hiss,hit,jib,jig,Jim,jip,kid,kit,kiss,lid,lip,mid,miff,miss,mitt,mix,nip,nit,pill,pin,pit,pig,rib,rid,riff,rig,rim,rip,sid,sill,sin,sip,sis,sit,six,tiff,Tim,till,tin,tip,wig,will,wit,wiz,yip,zig,zip,zit",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "sin/sine,dim/dime,kit/kite,bit/bite,din/dine,hid/hide,win/wine,rip/ripe",
                 "fluencySentences": [
                     "Mike will bite the lime and smile.",
@@ -3892,28 +3510,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "o_e",
                 "lessonName": "o_e",
-                "ignoreMe1": "Blending.o_e",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "o_e",
                     "o_e spelling of /oh/"
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "o_e",
                 "wordList": "bone,code,cone,come,dope,dose,doze,hole,home,hope,hose,joke,lobe,lope,mode,mole,mope,node,nope,nose,note,poke",
                 "chain": "nope,nose,hose,hone,bone,cone,code,rode,rose,pose,poke,woke",
                 "supplementalWordList": "pole,pose,robe,rode,role,rope,rose,tone,tote,vote,woke,yoke,zone,dole,dote,hone,hove,mote,pope,rote,rove,vole,wove,sole,coke,cove",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "cod/code,lob/lobe,mod/mode,mop/mope,nod/node,not/note,pop/pope,rod/rode,rot/rote,tot/tote,wok/woke",
                 "fluencySentences": [
                     "The mole will poke a hole in the dirt.",
@@ -3978,28 +3588,21 @@
                     "vowel": "a,i,o",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,z"
                 },
-                "pronounceImage": "b-oh.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-oh.jpg"
             },
             {
                 "lessonId": "o_e_o",
                 "lessonName": "o_e + /o/",
-                "ignoreMe1": "Blending.o_e + /o/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "o_e + /o/",
                     "o_e+o",
                     "Contrast o_e /h/ and o /aw/"
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "o_e + <sound>o</sound>",
                 "wordList": "pole,pope,pose,robe,rode,role,rope,rose,rote,rove,sole,sore,tone,tote,vole,vote,woke,wove,yoke,zone",
                 "chain": "rode,ride,rise,rose,rope,hope,hose,pose,pope,pipe,pike,poke,woke,wake",
                 "supplementalWordList": "bone,code,coke,cone,core,cove,dole,come,dope,dose,dote,doze,fore,gore,hole,home,hone,hope,hose,hove,joke,lobe,lope,lore,mode,mole,mope,more,mote,node,nope,nose,note,poke,Bob,bog,boss,bop,box,dog,doff,doll,don,dot,fob,fog,fop,fox,gob,God,got,hog,hop,hot,job,jog,jot,lob,log,lot,loss,mob,mod,mom,moss,mop,nod,non,not,pod,pop,pot,pox,rob,rod,Ron,rot,sob,sod,sop,tom,toss,top,tot",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "cod/code,lob/lobe,mod/mode,mop/mope,nod/node,not/note,pop/pope,rod/rode,rot/rote,tot/tote,wok/woke",
                 "fluencySentences": [
                     " Jim will ride home on his bike and open the note Jane wrote to him.",
@@ -4066,28 +3669,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i,o",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "u_e",
                 "lessonName": "u_e",
-                "ignoreMe1": "Blending.u_e",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "u_e",
                     "u_e spelling of /ue/"
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "u_e",
                 "wordList": "cube,cute,dude,duke,dune,dupe,fume,fuse,huge,jute,lube,luge,lute,mule,muse,mute,nuke,puke,rude,rule,tube,tune",
                 "chain": "lube,tube,cube,cute,jute,lute,mute,mule,muse,fuse,fume",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "cub/cube,cut/cute,dud/dude,dun/dune,hug/huge,jut/jute,lug/luge,tub/tube",
                 "fluencySentences": [
                     "The rude dude had a nuke but the Duke made a truce.",
@@ -4151,28 +3745,21 @@
                     "vowel": "a,i,o,u",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,z"
                 },
-                "pronounceImage": "b-ue.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-ue.jpg"
             },
             {
                 "lessonId": "u_e_u",
                 "lessonName": "u_e + /u/",
-                "ignoreMe1": "Blending.u_e + /u/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "u_e + /u/",
                     "u_e+u",
                     "Contrast u_e /ue/ and u /uh/"
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "u_e + <sound>u</sound>",
                 "wordList": "nuke,puke,rude,rule,tube,tune,cube,cute,dude,duke,dune,dupe,fume,fuse,huge,jute,lube,luge,lute,mule,muse,mute",
                 "chain": "rude,rode,ride,tide,tine,tune,tube,cube,lube,lute,late,lake,like",
                 "supplementalWordList": "bud,buff,bug,bum,bun,but,butt,bus,buzz,dub,dud,duff,dug,dun,fun,fuzz,hub,huff,hull,hug,hut,hum,jug,jut,lug,mud,muff,mug,mum,muss,nub,nun,nut,pub,puff,pug,pun,putt,pup,pus,run,ruff,rug,rut,sub,sum,sun,sup,tub,tug,tut,tux",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "cub/cube,cut/cute,dud/dude,dun/dune,hug/huge,jut/jute,lug/luge,tub/tube",
                 "fluencySentences": [
                     "Luke\u2019s hut is made of mud and jute.",
@@ -4236,28 +3823,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y,z",
                     "vowel": "a,i,o,u",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "e_syllables",
                 "lessonName": "cvc + ?_e syllables",
-                "ignoreMe1": "Blending.cvc + ?_e syllables",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "cvc + ?_e syllables",
                     "?e_syllables",
                     ""
                 ],
                 "groupCode": "magic_e",
-                "ignoreMe3": "Magic e",
-                "ignoreMe5": "cvc + ?_e syllables",
                 "wordList": "reptile,mistake,cupcake,pancake,mandate,combine,bonfire,sunshine,divide,confuse,costume,tadpole,vampire,sunrise,nickname,pollute",
                 "supplementalWordList": "inhale,unmade,inline,inside,escape,umpire,alone,remote,arrive,immune,divide,update",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "rep-tile/reptile,mis-take/mistake,cup-cake/cupcake,pan-cake/pancake,man-date/mandate,com-bine/combine,bon-fire/bonfire,cos-tume/costume,tad-pole/tadpole,vam-pire/vampire,sun-rise/sunrise",
                 "fluencySentences": [
                     "The vampire made a mistake. ",
@@ -4319,28 +3898,19 @@
                     "prefixList": " ",
                     "vowel": " ",
                     "suffixList": " "
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "blend_warmup",
                 "lessonName": "blend warmup",
-                "ignoreMe1": "Blending.blend warmup",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "blend warmup",
                     "Prefix Blend Warmup"
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "blend warmup",
                 "wordList": "bl,cl,fl,gl,pl,sc,sl,sm,sn,sp,st,sw,tw,spl",
                 "chain": "bl,cl,fl,gl,pl,sl,sc,sm,sn,sp,st,sw,tw",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "b-l/bl,c-l/cl,f-l/fl,g-l/gl,p-l/pl,s-c/sc,s-l/sl,s-m/sm,s-n/sn,s-p/sp,s-t/st,s-w/sw,t-w/tw",
                 "fluencySentences": [
                     " ",
@@ -4377,28 +3947,20 @@
                     "prefixList": "b,c,f,g,p,s,t",
                     "vowel": "c,l,m,n,p,t,w",
                     "suffixList": ""
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "prefix_blends",
                 "lessonName": "prefix blends",
-                "ignoreMe1": "Blending.prefix blends",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "prefix blends",
                     "Prefix Clusters bl, cl, fl, ..."
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "prefix blends",
                 "wordList": "black,clap,flax,flat,glass,plan,stab,snap,span,click,flip,glad,quit,quiz,skin,skip,stick,spit,spill,swim,twin,fled,sled,stem,blog,flop,slot,smog,spot,stop,club,plus,stub,club,still",
                 "chain": "flip,flap,flop,slop,slap,slip,clip,clap,clop,clot,spot,snot,slot",
                 "supplementalWordList": "clam,clan,flab,flap,glam,scab,slab,slam,slap,swam,snag,spat,scat,blip,clip,flip,flit,glib,snip,slit,slip,slim,spin,split,swig,bled,fled,Greg,shed,glen,pled,swell,blob,blot,clog,clot,flog,plod,plop,plot,slog,smog,snob,snot,plug,plum,snug,smug,slum,scum,stud,snub",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "lack/black,lap/clap,lad/glad,lass/glass,tab/stab,nap/snap,pan/span,lick/click,lip/flip,kin/skin,tick/stick,pit/spit,pill/spill,win/twin,led/fled,log/blog,lot/slot,pot/spot,top/stop",
                 "fluencySentences": [
                     "Greg did slip and snag his pants on a stick.",
@@ -4455,28 +4017,20 @@
                     "prefixList": "bl,cl,fl,gl,pl,sc,sk,sl,sm,sn,sp,st,sw,tw,spl",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "b,ck,d,g,ll,m,n,p,s,ss,t"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "suffix_blends",
                 "lessonName": "suffix blends",
-                "ignoreMe1": "Blending.suffix blends",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "suffix blends",
                     "Suffix Clusters"
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "suffix blends",
                 "wordList": "band,camp,fact,gasp,half,hand,lamp,land,mask,ramp,raft,task,belt,bent,desk,felt,help,melt,rent,sent,text,went,last,best,lost,fast,test,fist,just,disk,film,gift,milk,wind,bomb,fund,hulk,hunt,jump,numb,punt,tusk",
                 "chain": "fist,fast,past,cast,camp,lamp,damp,dump,bump,bunt,punt,pant,pact",
                 "supplementalWordList": "bump,dump,damp,cask,calf,daft,gash,haft,jamb,lamb,lank,pant,pact,rasp,tact,belt,bend,deft,dent,fend,heft,kelp,kept,lent,meld,mend,pent,tend,vent,welk,wept,cast,mast,past,vast,jest,zest,gist,bust,dust,nest,pest,rest,west,gust,wist,bilk,dint,gilt,kiln,limb,lint,lisp,ritz,sift,tilt,vint,wimp,wisp,dolf,fond,font,bulk,bunt,cult,cusp,duct,dumb,gulf,muck,musk,puck,pulp,lump,rump,sump",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ban/band,cam/camp,ram/ramp,ben/bent,win/wind,fun/fund,pun/punt,run/runt,bum/bump,sum/sump",
                 "fluencySentences": [
                     "The calf had a hump on his back.",
@@ -4539,28 +4093,20 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "ck,ct,ft,lf,lk,lp,mb,mp,nd,ng,nk,nt,pt,sh,sk,sp,st"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "blends_s",
                 "lessonName": "suffix blends + s",
-                "ignoreMe1": "Blending.suffix blends + s",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "suffix blends + s",
                     "Suffix Clusters with s"
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "suffix blends + s",
                 "wordList": "bands,camps,facts,hands,lambs,masks,pants,tasks,bends,dents,desks,helps,melts,rents,vents,films,gifts,gives,gasps,tilts,docks,socks,bumps,dusts,gusts,hunts,jumps,punts,tusks,casts",
                 "chain": "pants,punts,hunts,runts,rants,rasps,racks,tacks,tasks,casts,camps,ramps",
                 "supplementalWordList": "casks,hacks,lamps,lands,masts,pacts,ramps,rafts,rasps,belts,debts,jests,melds,mends,nests,pests,rests,tests,texts,disks,fists,kilns,limbs,lisps,sifts,wimps,winds,wisps,bombs,fonts,hocks,jocks,mocks,romps,bucks,bulks,bunts,busts,busks,cults,ducks,ducts,dumps,funds,gulfs,hulks,humps,lucks,lumps,mucks,musks,numbs,pulps,rumps",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "camp/camps,lamp/lamps,raft/rafts,bomb/bombs,rest/rests,mend/mends,nest/nests,belt/belts,text/texts,fist/fists,wind/winds,land/lands",
                 "fluencySentences": [
                     "The lamps cost ten bucks and six cents.",
@@ -4617,28 +4163,19 @@
                     "prefixList": "b,c,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "cks,cts,fts,lfs,lks,lps,mbs,mps,nds,nts,pts,sks,sps,sts"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "ng",
                 "lessonName": "-ng",
-                "ignoreMe1": "Blending.-ng",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-ng",
                     ""
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "-ng",
                 "wordList": "bang,bing,bong,ding,dung,fang,gang,gong,hang,hung,king,long,mung,ping,pong,rang,ring,rung,sang,sing,song,sung,wing,zing",
                 "chain": "bang,bong,dong,ding,dang,gang,hang,hung,rung,ring,sing,wing,zing",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ring/ping/king,rung/sung/hung,rang/sang/tang,song/pong/gong,zing/wing/sing,fang/gang/bang",
                 "fluencySentences": [
                     "The king did sing a song.",
@@ -4705,28 +4242,19 @@
                     "prefixList": "b,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "ng"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "nk",
                 "lessonName": "-nk",
-                "ignoreMe1": "Blending.-nk",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-nk",
                     ""
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "-nk",
                 "wordList": "bank,bonk,bunk,dank,dunk,fink,funk,hank,junk,link,mink,monk,pink,punk,rank,rink,sank,sink,sunk,tank,yank,ink",
                 "chain": "bank,bonk,bunk,dunk,sunk,sank,sink,link,rink,rank,tank,yank",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bank/sank/tank,rink/wink/pink,yank/thank/rank,sink/link/mink,bunk/dunk/funk,gunk/hunk/junk",
                 "fluencySentences": [
                     "Sam is a punk.",
@@ -4793,29 +4321,21 @@
                     "prefixList": "b,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "nk"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "ngs_nks",
                 "lessonName": "-ngs + -nks",
-                "ignoreMe1": "Blending.-ngs + -nks",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-ngs + -nks",
                     "ngs+nks",
                     "Suffix Digraphs ngs, nks"
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "-ngs + -nks",
                 "wordList": "bangs,dings,fangs,gangs,hangs,kings,rings,sings,songs,wings,banks,bonks,bunks,dunks,junks,links,monks,punks,ranks,rinks,sinks,tanks",
                 "chain": "dings,wings,sings,kings,rings,rinks,ranks,tanks,banks,bonks,bunks,dunks",
                 "supplementalWordList": "yanks,bongs,pings,rungs,finks,minks",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "rings/rungs,rinks/ranks,dings/dongs,bonks/bunks,monks/minks,bunks/banks,sings/songs",
                 "fluencySentences": [
                     "The monks sang songs to punks in the gangs.",
@@ -4877,28 +4397,20 @@
                     "prefixList": "b,d,f,g,h,j,k,l,m,n,p,r,s,t,v,w,y",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "ngs,nks"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "r_control_pref",
                 "lessonName": "r-controlled prefixes",
-                "ignoreMe1": "Blending.r-controlled prefixes",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "r-controlled prefixes",
                     "r-Controlled prefixes br, cr, fr, ..."
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "r-controlled prefixes",
                 "wordList": "brag,crab,crack,grab,track,trap,drip,strip,trip,press,shred,dress,crop,drop,broth,brush,drum,truck,trust,scrub,brat,bran,cram,drug,drag,drab,drat,gram,sprat,scrim,scruff,track,trash,crash",
                 "chain": "crib,crab,grab,drab,scab,scam,tram,trap,trip,strip,strap,flap,flip",
                 "supplementalWordList": "tram,brim,crib,frill,grip,grim,grin,prim,prick,trim,bred,fret,prep,trek,frock,grog,prod,prom,trot,crud,crush,grub,shrug ",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "rag/brag,rack/crack,rap/trap,rip/drip,rum/drum,rust/trust,ram/cram,rug/drug,rag/drag,rash/crash,rib/crib,rim/trim,red/bred",
                 "fluencySentences": [
                     "The rat on the rug has a rag on his rib.",
@@ -4955,28 +4467,20 @@
                     "prefixList": "b,br,cr,d,dr,f,fr,g,gr,p,pr,sc,scr,sp,spr,st,str,sh,shr,t,tr",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "b,ck,d,ff,g,ll,m,n,p,ss,sh,t"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "digraph_blends",
                 "lessonName": "digraph blends",
-                "ignoreMe1": "Blending.digraph blends",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "digraph blends",
                     "Digraphs in Prefix"
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "digraph blends",
                 "wordList": "quit,quick,quack,quill,quip,quad,smith,squad,that,then,thick,thrush,whack,whiz,chin,check,chop,chest,chat,chill,chip,chap,chick,chock,chuck,thin,thump,them,throb,thrill,shush,shrub,shrill",
                 "chain": "whim,whip,ship,shop,chop,chap,chip,chick,quick,quack,whack,what",
                 "supplementalWordList": "with,whim,whip,shrug,this,thin,with,shod,shot,shop,sham,shut,ship,shin,chum",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "qu-it/quit,th-ick/thick,wh-iz/whiz,ch-in/chin,th-em/them,qu-ick/quick,th-at/that,wh-ack/whack,ch-ick/chick",
                 "fluencySentences": [
                     "The duck will squint and quack at the moth.",
@@ -5034,29 +4538,21 @@
                     "prefixList": "ch,sh,th,wh,qu",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "b,ck,d,g,ll,m,n,p,sh,t,th,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "prefix_suffix",
                 "lessonName": "prefix + suffix blends",
-                "ignoreMe1": "Blending.prefix + suffix blends",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "prefix + suffix blends",
                     "prefix+suffix",
                     "Prefix and suffix clusters"
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "prefix + suffix blends",
                 "wordList": "blast,clasp,flash,grand,plant,snack,stamp,stand,splash,blunt,clump,plump,stump,stung,flint,slick,stick,splint,click,clock,stock,slept,spent,swept,tramp,crept,trust,brunch,trump,crumb,shrimp,quilt",
                 "chain": "stick,stock,stomp,clomp,clump,plump,stump,stung,flung,flunk,stunk,stunt,blunt",
                 "supplementalWordList": "grunt,bland,clash,gland,scalp,scamp,smack,stash,swath,blush,pluck,plumb,plush,slump,slush,stuck,blimp,flick,glint,glitz,block,flock,smock,cleft,smelt,speck,blend,tramp,sprint,crept,trend,frost,prompt,trust,trump,brunch,crumb,spritz,crest,Brent,front,frond,grunt,sloth,slosh,flush,crush,blush,plush",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "land/bland,runt/grunt,lash/flash,last/blast,lump/clump,lock/clock,wept/swept,rust/trust,rush/crush,limp/blimp",
                 "fluencySentences": [
                     "The flock will land in a clump and splash.",
@@ -5113,28 +4609,20 @@
                     "prefixList": "bl,br,cl,cr,dr,fl,fr,gl,gr,pr,sc,scr,shr,sk,sm,sn,spl,spr,st,str,tr,tw",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "ch,ck,ct,ft.lf,lk,lp,mb,mp,nd,ng,nk,nt,pt,sh,sk,sp,st"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "r_control_blend",
                 "lessonName": "r-controlled blends",
-                "ignoreMe1": "Blending.r-controlled blends",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "r-controlled blends",
                     ""
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "r-controlled blends",
                 "wordList": "car,for,fir,her,dark,fork,word,fur,work,north,herd,firm,form,torn,darn,cart,part,harp,burn,hurt,turn,fern,star,spark,shark,stir,shirt,short,birth,dirt,girl,first,start,bird,march,card,church,third,skirt,swirl",
                 "chain": "turn,torn,born,barn,farm,form,fork,pork,cork,cord,card,hard,harp",
                 "supplementalWordList": "bar,far,char,jar,mar,par,tar,war,nor,hark,lark,cork,dork,pork,lord,ford,forth,worth,perm,dorm,norm,mart,tart,carp,stark,stork,chart,hard,barn,arm,dart,art,worm,whirl,tarp,born,worn,bark,mark,park,per,yarn",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "car/card,her/herd,for/form,par/part,for/fork,bar/barn,far/farm,tar/tart,fir/firm",
                 "fluencySentences": [
                     "We have worked hard taking the dirt back and forth.",
@@ -5197,29 +4685,20 @@
                     "prefixList": "b,c,d,f,g,h,j,l,m,n,p,s,st,t,w,y,ch,th",
                     "vowel": "ar,er,ir,or,ur",
                     "suffixList": "d,k,l,m,n,p,st,t,th"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "kn_gn_wr",
                 "lessonName": "kn + gn + wr",
-                "ignoreMe1": "Blending.kn + gn + wr",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "kn + gn + wr",
                     "kn+gn+wr",
                     "Silent Prefix Clusters kn-, gn-, wr- ..."
                 ],
                 "groupCode": "blends",
-                "ignoreMe3": "Blends",
-                "ignoreMe5": "kn + gn + wr",
                 "wordList": "knot,knit,knack,knave,knee,knew,knight,knob,knock,know,gnat,gnaw,gnash,gnarl,gnome,gnu,wrack,wrap,wring,writ,wretch,wren,wrest,wrung",
                 "chain": "knack,knock,knob,knot,knit,writ,wrist,wring,wrung",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "not/knot,new/knew,night/knight,rack/wrack,ring/wring,rest/wrest,rung/wrung,rap/wrap",
                 "fluencySentences": [
                     "The knight knit knee socks for the gnome.",
@@ -5276,28 +4755,20 @@
                     "prefixList": "n,kn,gn,r,wr",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "b,ck,ct,ft,lf,lk,lp,mb,mp,nd,ng,nk,nt,pt,sh,sk,sp,st,t"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "a_e_harder",
                 "lessonName": "a_e harder",
-                "ignoreMe1": "Blending.a_e harder",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "a_e harder",
                     "a_e spelling of /ay/ harder"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "a_e harder",
                 "wordList": "brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape,blade,blame,brake,shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale",
                 "chain": "slate,state,snake,brake,brave,crave,craze,blaze,glaze,glade,blade,blame,flame,frame",
                 "supplementalWordList": "rate,cane,bane,hate,mate,wade,tame,tape,fade,made,pane,rage,vane,bake,bale,bane,cage,cake,came,dame,daze,date,fade,fame,fate,gale,game,gate,haze,jade,kale,lake,late,male,mane,maze,page,pave,rake,rave,safe,sale,same,save",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ate/cr-ate/crate,ame/fl-ame/flame,ate/pl-ate/plate,ake/sh-ake/shake,age/st-age/stage,ale/wh-ale/whale,ace/pl-ace/place,ade/bl-ade/blade,ate/st-ate/state,ape/scr-ape/scrape",
                 "fluencySentences": [
                     "He will blame the plane crash on the snake.",
@@ -5354,28 +4825,20 @@
                     "prefixList": "bl,br,cl,cr,dr,fl,fr,gl,gr,pr,sc,scr,sk,sn,spl,spr,st,str,tr,tw",
                     "vowel": "a",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,s,t,v,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "a_e_review",
                 "lessonName": "a_e review",
-                "ignoreMe1": "Blending.a_e review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "a_e review",
                     "a_e spelling of /ay/ mixed"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "a_e review",
                 "wordList": "shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale,blade,blame,brake,brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape",
                 "chain": "stage,state,stale,scale,shale,shade,shake,shame,blame,flame,frame,came,cape,scrape",
                 "supplementalWordList": "rate,cane,bane,hate,mate,wade,tame,tape,fade,made,pane,rage,vane,bake,bale,bane,cage,cake,came,dame,daze,date,fade,fame,fate,gale,game,gate,haze,jade,kale,lake,late,male,mane,maze,page,pave,rake,rave,safe,sale,same,save,slat,shad,sham,slat,snack,stag,stat,glad,plan,scrap,brat,plat,trap,pram,gran,bat,bag,bad,bass,dab,dad,Dan,fab,fad,fan,fat,fax,gab,gag,gap,gas,had,ham,hat,has,jab,jag,jam,jazz,lab,lag,lap,mad,man,map,mass,mat,max,nab,nag,nap,pad,Pam,pan,pass,pat,ram,ran,rap,rat,sad,sag,Sam,sat,tab,tag,tam,tan,tap,van,vat,wag,wax,zap",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "plat/plate,slat/slate,stat/state,glad/glade,plan/plane,scrap/scrape,sham/shame,stag/stage",
                 "fluencySentences": [
                     "The plate had a big cake with a glaze on it. It is stale.",
@@ -5432,28 +4895,20 @@
                     "prefixList": "b,bl,br,c,cl,cr,d,dr,f,fl,fr,g,gl,gr,h,j,k,l,m,n,p,pr,r,s,sc,scr,sh,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "i_e_harder",
                 "lessonName": "i_e harder",
-                "ignoreMe1": "Blending.i_e harder",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "i_e harder",
                     "Contrast a_e and i_e"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "i_e harder",
                 "wordList": "bribe,bride,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,spice,spike,spine,spire,spite,stile,tribe,trike",
                 "chain": "bribe,bride,slide,stride,stripe,strike,trike,spike,spine,spice,spire,fire,tire",
                 "supplementalWordList": "twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,brine,chide,smite,snide,snipe,tripe,trite,bide,bike,bile,bite,cite,dice,dike,dime,dine,dire,dive,file,fine,fire,five,hide,hike,hire,hive,jive,kite,lice,life,lime,line,mice,Mike,mile,mime,mine,mire,mite,nice,nine,pike,pine,pipe,rice,ride,rile,ripe,rise,side,site,size,tide,tile,time,tire,vibe,vice,vile,wide,wife,wine,wipe,wire,wise",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ide/br-ide/bride,ipe/gr-ipe/gripe,ite/sp-ite/spite,ine/sp-ine/spine,ice/sp-ice/spice,ile/sm-ile/smile,ine/sh-ine/shine,ide/sl-ide/slide,ime/gr-ime/grime",
                 "fluencySentences": [
                     "Nate ate the whale on the white plate.",
@@ -5516,28 +4971,20 @@
                     "prefixList": "b,bl,br,c,ch,cl,cr,d,dr,f,fl,fr,g,gl,h,j,l,m,n,p,ph,pr,r,s,sc,scr,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a,i",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "i_e_mixed",
                 "lessonName": "i_e mixed",
-                "ignoreMe1": "Blending.i_e mixed",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "i_e mixed",
                     "a_e spelling of /ay/ mixed"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "i_e mixed",
                 "wordList": "twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,brine,chide,smite,snide,snipe,tripe,trite  ",
                 "chain": "strike,stripe,strive,thrive,chive,chime,time,tine,shine,spine,twine,whine,white,write,sprite,spite",
                 "supplementalWordList": "bribe,bride,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,spice,spike,spine,spire,spite,stile,tribe,trike,snip,spit,spin,still,trick,trip,twin,win,wit,strip,big,bid,bin,bitdid,dig,dill,dim,diss,dip,fib,fin,fig,fill,fit,fix,fizz,gig,hid,hill,him,hip,his,hiss,hit,jig,kid,kit,kiss,lid,lip,mid,miff,miss,mitt,mix,nip,nit,pill,pin,pit,pig,rib,rid,riff,rig,rim,rip,sid,sill,sin,sip,sis,sit,six,till,tin,tip,wig,will,wit,wiz,yip,zig,zip,zit",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "twin/twine,writ/write,strip/stripe,slid/slide,trip/tripe,shin/shine,spit/spite,grip/gripe",
                 "fluencySentences": [
                     "The tribe will ride bikes a mile to find the hive.",
@@ -5589,28 +5036,20 @@
                     "prefixList": "b,bl,br,c,ch,cl,cr,d,dr,f,fl,fr,g,gl,h,j,l,m,n,p,ph,pr,r,s,sc,scr,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a,i",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "i_e_review",
                 "lessonName": "i_e review",
-                "ignoreMe1": "Blending.i_e review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "i_e review",
                     "Contrast a, a_e and i, i_e"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "i_e review",
                 "wordList": "bribe,bride,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,spice,spike,spine,spire,spite,stile,tribe,trike,twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,brine,chide,smite,snide,snipe,tripe,trite",
                 "chain": "bribe,bride,glide,pride,slide,slime,slice,twice,twine,shine,spine,whine,white,write,sprite",
                 "supplementalWordList": "shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale,blade,blame,brake,brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "kite/Kate,Mike/make,wide/wade,pine/pane,five/fave,lime/lame,pile/pale",
                 "fluencySentences": [
                     "The rat bit the tip of the snake.",
@@ -5664,28 +5103,20 @@
                     "prefixList": "b,bl,br,c,ch,cl,cr,d,dr,f,fl,fr,g,gl,h,j,l,m,n,p,ph,pr,r,s,sc,scr,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a,i",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "o_e_harder",
                 "lessonName": "o_e harder",
-                "ignoreMe1": "Blending.o_e harder",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "o_e harder",
                     "o_e spelling of /oh/ harder"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "o_e harder",
                 "wordList": "broke,choke,chose,clone,close,clove,crone,drone,drove,froze,glove,phone,probe,prone,scone,scope,shone,slope,smoke,stole,stone,shole,wrote,chrome,throne,stroke,strode,strobe",
                 "chain": "broke,choke,chose,prose,close,clone,scone,stone,throne,drone,drove,clove,glove",
                 "supplementalWordList": "bone,code,coke,cone,cove,dole,come,dope,dose,dote,doze,hole,home,hone,hope,hose,hove,joke,lobe,lope,mode,mole,mope,mote,node,nope,nose,note,poke,pole,pope,pose,robe,rode,role,rope,rose,rote,rove,sole,sore,tone,tote,vole,vote,woke,wove,yoke,zone",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "oke/br-oke/broke,ose/cl-ose/close,ove/dr-ove/drove,oze/fr-oze/froze,ope/sc-ope/scope,oke/sm-oke/smoke,ose/ch-ose/chose",
                 "fluencySentences": [
                     "The clone broke the drone when he was alone.",
@@ -5737,28 +5168,20 @@
                     "prefixList": "b,bl,br,c,ch,cl,cr,d,dr,f,fl,fr,g,gl,h,j,l,m,n,p,ph,pr,r,s,sc,scr,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a,i,o",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "o_e_mixed",
                 "lessonName": "o_e mixed",
-                "ignoreMe1": "Blending.o_e mixed",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "o_e mixed",
                     "o_e spelling of /oh/ mixed"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "o_e mixed",
                 "wordList": "broke,choke,chose,clone,close,clove,crone,drone,drove,froze,glove,phone,probe,prone,scone,scope,shone,slope,smoke,stole,stone,shole,wrote,chrome,throne,stroke,strode,strobe",
                 "chain": "globe,strobe,strode,stroke,smoke,bloke,broke,choke,chose,close,clove,clone,shone",
                 "supplementalWordList": "slop,clop,frog,clog,plot,slot,prom,clot,blog,trot,boss,bop,box,dog,doff,doll,don,dot,fob,fog,fop,fox,gob,God,got,hog,hop,hot,job,jog,jot,lob,log,lot,loss,mob,mod,mom,moss,mop,nod,non,not,pod,pop,pot,pox,rob,rod,Ron,rot,sob,sod,sop,tom,toss,top,tot",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "oke/str-oke/stroke,ome/chr-ome/chrome,ote/wr-ote/wrote,ove/dr-ove/drove,ope/sl-ope/slope,ole/st-ole/stole,ode/str-ode/strode",
                 "fluencySentences": [
                     "Her glove froze on the pole.",
@@ -5812,28 +5235,20 @@
                     "prefixList": "b,bl,br,c,ch,cl,cr,d,dr,f,fl,fr,g,gl,h,j,l,m,n,p,ph,pr,r,s,sc,scr,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a,i,o",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "o_e_review",
                 "lessonName": "o_e review",
-                "ignoreMe1": "Blending.o_e review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "o_e review",
                     "Contrast a, a_e, i, i_e, and o, o_e"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "o_e review",
                 "wordList": "broke,choke,chose,clone,close,clove,crone,drone,drove,froze,glove,phone,probe,prone,scone,scope,shone,slope,smoke,stole,stone,shole,wrote,chrome,throne,stroke,strode,strobe",
                 "chain": "globe,probe,prone,drone,drove,drive,chive,strive,strike,stroke,smoke,choke,chose,chase,",
                 "supplementalWordList": "brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape,blade,blame,brake,shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale,broke,choke,chose,clone,close,clove,crone,drone,drove,froze,glove,phone,probe,prone,scone,scope,shone,slope,smoke,stole,stone,shole,wrote,chrome,throne,stroke,strode,strobe,bribe,bride,brine,chide,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,smite,snide,snipe,spice,spike,spine,spire,spite,stile,tribe,trike,tripe,trite,twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "oke/ike/ake,ove/ive/ave,one/ine/ane,ole/ile/ale,ome/ime/ame,ope/ipe/ape,ode/ide/ade",
                 "fluencySentences": [
                     "Mike broke the phone and swore at the store.",
@@ -5891,28 +5306,20 @@
                     "prefixList": "b,bl,br,c,ch,cl,cr,d,dr,f,fl,fr,g,gl,h,j,l,m,n,p,ph,pr,r,s,sc,scr,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a,i,o",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "u_e_mixed",
                 "lessonName": "u_e mixed",
-                "ignoreMe1": "Blending.u_e mixed",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "u_e mixed",
                     "Contrast i_e, i, u_e, and u"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "u_e mixed",
                 "wordList": "brute,chute,crude,fluke,flute,plume,prude,prune,truce,cube,cure,cute,dude,duke,dune,dupe,fume,fuse,huge,jute,lube,luge,lure,lute,mule,muse,mute,nuke,puke,pure,rude,rule,sure,tube,tune",
                 "chain": "prune,dune,dude,duke,puke,nuke,fluke,flute,chute,brute,cute,cube,tube,lube",
                 "supplementalWordList": "shut,plum,truck,cub,cut,duck,bud,buff,bug,bum,bun,but,butt,bus,buzz,dub,dud,duff,dug,dun,fun,fuzz,hub,huff,hull,hug,hut,hum,jug,jut,lug,mud,muff,mug,mum,muss,nub,nun,nut,pub,puff,pug,pun,putt,pup,pus,run,ruff,rug,rut,sub,sum,sun,sup,tub,tug,tut,tux",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "fl-uke/fluke,fl-ute/flute,pr-une/prune,pl-ume/plume,cr-ude/crude,ch-ute/chute,br-ute/brute,tr-uce/truce",
                 "fluencySentences": [
                     "Mike will use the tube of slime to lube the chute.",
@@ -5970,28 +5377,20 @@
                     "prefixList": "b,bl,br,c,ch,cl,cr,d,dr,f,fl,fr,g,gl,h,j,l,m,n,p,ph,pr,r,s,sc,scr,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a,i,o,u",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "u_e_review",
                 "lessonName": "u_e review",
-                "ignoreMe1": "Blending.u_e review",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "u_e review",
                     "Contrast i_e and u_e"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "u_e review",
                 "wordList": "brute,chute,crude,fluke,flute,plume,prude,prune,truce,cube,cure,cute,dude,duke,dune,dupe,fume,fuse,huge,jute,lube,luge,lure,lute,mule,muse,mute,nuke,puke,pure,rude,rule,tube,tune",
                 "chain": "spruce,truce,trace,space,spice,spike,like,luke,puke,fluke,flute,flume,plume,prune",
                 "supplementalWordList": "bribe,bride,brine,chide,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,smite,snide,snipe,spice,spike,spine,spire,spite,stile,tribe,trike,tripe,trite,twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,broke,choke,chore,chose,clone,close,clove,crone,drone,drove,froze,glove,grope,phone,probe,prone,scone,scope,score,shone,shore,slope,smoke,stole,stone,store,swore,shole,wrote,chrome,throne,stroke,strode,strobe,blade,blame,brake,brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape,shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ute/ote/ite/ate,ude/ode/ide/ade,uke/oke/ike/ake,ume/ome/ime/ame,une/one/ine/ane,ube/obe/ibe/abe,upe/ope/ipe/ape,ule/ole/ile/ale",
                 "fluencySentences": [
                     "The dude will gripe to his cute wife about the lime because it is not ripe.",
@@ -6043,29 +5442,21 @@
                     "prefixList": "b,bl,br,c,ch,cl,cr,d,dr,f,fl,fr,g,gl,h,j,l,m,n,p,ph,pr,r,s,sc,scr,sk,sn,spl,spr,st,str,t,tr,tw,v,w,y,z",
                     "vowel": "a,i,o,u",
                     "suffixList": "b,c,d,f,g,k,l,m,n,p,r,s,t,v,x,z"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "e_e_eh",
                 "lessonName": "e_e + /eh/",
-                "ignoreMe1": "Blending.e_e + /eh/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "e_e + /eh/",
                     "e_e+eh",
                     "Contrast e_e /ee/ and e /eh/"
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "e_e + <sound>eh</sound>",
                 "wordList": "cede,gene,mete,grebe,plebe,scene,swede,theme,these,scheme",
                 "chain": "plebe,grebe,gene,scene,cede,swede,scheme,theme,these,those,chose",
                 "supplementalWordList": "bed,bell,Ben,Bess,bet,beg,den,fed,fen,fez,gem,gel,hen,hex,jet,led,leg,let,less,Meg,men,met,mess,Ned,net,pen,peg,pet,set,sell,ten,Tess,tell,vet,web,wed,well,wet,bribe,bride,brine,chide,chime,chive,drive,glide,gripe,pride,prize,shine,shire,shine,slice,slide,slime,smile,smite,snide,snipe,spice,spike,spine,spire,spite,stile,tribe,trike,tripe,trite,twine,whine,white,write,shrine,sprite,stride,strife,strike,stripe,strive,thrive,broke,choke,chore,chose,clone,close,clove,crone,drone,drove,froze,glove,grope,phone,probe,prone,scone,scope,score,shone,shore,slope,smoke,stole,stone,store,swore,shole,wrote,chrome,throne,stroke,strode,strobe,blade,blame,brake,brave,crate,craze,flame,frame,glade,glaze,grate,grave,graze,place,plane,plate,scale,scrape,shale,stale,shade,shake,shame,slate,slave,snake,spade,stage,state,trade,whale",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ebe/gr-ebe/grebe,ene/g-ene/gene,ebe/pl-ebe/plebe,ene/sc-ene/scene,ede/sw-ede/swede,eme/th-eme/theme,ese/th-ese/these,eme/sch-eme/scheme",
                 "fluencySentences": [
                     "Meg had a scheme to sell a pet to the vet.",
@@ -6124,28 +5515,20 @@
                     "prefixList": "c,g,m,p,pl,s,sc,sw,sch,th",
                     "vowel": "e",
                     "suffixList": "b,d,m,n,s,t"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "r_controlled_e",
                 "lessonName": "r-controlled ?_e",
-                "ignoreMe1": "Blending.r-controlled ?_e",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "r-controlled ?_e",
                     ""
                 ],
                 "groupCode": "magic_e_blends",
-                "ignoreMe3": "Magic e Blends",
-                "ignoreMe5": "r-controlled ?_e",
                 "wordList": "bare,care,dare,fare,hare,mare,rare,core,more,pore,sore,tore,wore,fire,hire,tire,wire,here,were,cure,pure,sure,store,shore,score,chore,snore,spire,share,scare,flare,sware,stare,glare,there,where",
                 "chain": "snore,score,scare,flare,sware,stare,store,sore,more,mare,glare,hare,hire,here,there,where",
                 "supplementalWordList": "bore,gore,lore,fore,yore,dire,mire,mere,swore,spore,snare,spare,shire,lure",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bare/care/dare,hare/mare/rare,core/more/chore,tore/sore/bore,pure/cure/sure,hire/fire/tire,store/score/snore",
                 "fluencySentences": [
                     "She will stare and glare at you if you do not share the candy you got at the store.",
@@ -6212,29 +5595,20 @@
                     "prefixList": "b,c,d,fl,g,gl,h,j,l,m,p,r,s,sc,sh,sn,st,sw,t,th,w,wh,y",
                     "vowel": "ar,er,ir,or,ur",
                     "suffixList": "e"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "dge_nge",
                 "lessonName": "dge + nge",
-                "ignoreMe1": "Blending.dge + nge",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "dge + nge",
                     "dge+nge",
                     "Digraphs (dge,nge)"
                 ],
                 "groupCode": "blend_wrap",
-                "ignoreMe3": "Blend Wrap-up",
-                "ignoreMe5": "dge + nge",
                 "wordList": "badge,budge,bridge,binge,dodge,drudge,dredge,edge,fridge,fudge,fringe,grudge,hedge,hinge,judge,lodge,ledge,lunge,Midge,pudge,pledge,plunge,sludge,range,trudge,wedge",
                 "chain": "badge,budge,fudge,drudge,dredge,edge,wedge,hedge,hinge,fringe,binge,bunge,plunge,lunge",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "udge/pudge/judge,edge/ledge/hedge,udge/trudge/drudge,idge/fridge/bridge,inge/hinge/binge,odge/dodge/lodge,udge/pudge/budge",
                 "fluencySentences": [
                     "The police have to show their badges when they arrest the men.",
@@ -6293,28 +5667,19 @@
                     "prefixList": "b,d,dr,f,fr,g,gr,h,j,l,m,p,pl,s,sl,r,tr,w",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "dge,nge"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "nce",
                 "lessonName": "nce + nse",
-                "ignoreMe1": "Blending.nce + nse",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "nce + nse",
                     "Digraphs nce"
                 ],
                 "groupCode": "blend_wrap",
-                "ignoreMe3": "Blend Wrap-up",
-                "ignoreMe5": "nce + nse",
                 "wordList": "dance,dunce,fence,hence,mince,pence,since,vince,wince,chance,glance,prance,trance,stance,quince,prince,sense,tense,dense,sconce,rinse",
                 "chain": "since,mince,wince,prince,prance,trance,stance,chance,glance,dance,dunce",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "prince/prance,dunce/dance,wince/wence,since/sense,Vince/Vance,hence/hince,sense/since",
                 "fluencySentences": [
                     "Vince the Prince went to France as soon as he got the chance.",
@@ -6371,27 +5736,18 @@
                     "prefixList": "ch,d,f,gl,h,m,p,pr,qu,s,st,t,tr,v,w",
                     "vowel": "a,e,i,o,u",
                     "suffixList": "nce"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "er_est_blends",
                 "lessonName": "-er and -est for blends",
-                "ignoreMe1": "Blending.-er and -est for blends",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-er and -est for blends",
                     ""
                 ],
                 "groupCode": "blend_wrap",
-                "ignoreMe3": "Blend Wrap-up",
-                "ignoreMe5": "-er and -est for blends",
                 "wordList": "long,longer,longest,short,shorter,shortest,thick,thicker,thickest,thin,thinner,thinnest,brave,braver,bravest,close,closer,closest,rude,ruder,rudest,tame,tamer,tamest,cute,cuter,cutest,safe,safer,safest,",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "long/longer/longest,short/shorter/shortest,thick/thicker/thickest,thin/thinner/thinnest,close/closer/closest/far/farther/farthest,safer/safer/safest,cute/cuter/cutest",
                 "fluencySentences": [
                     "That rabbit is the tamest",
@@ -6452,27 +5808,19 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "ed_ing_blends",
                 "lessonName": "-ed and -ing for blends",
-                "ignoreMe1": "Blending.-ed and -ing for blends",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-ed and -ing for blends",
                     ""
                 ],
                 "groupCode": "blend_wrap",
-                "ignoreMe3": "Blend Wrap-up",
-                "ignoreMe5": "-ed and -ing for blends",
                 "wordList": "camped,camping,landed,landing,jumped,jumping,hunted,hunting,fished,fishing,helped,helping,rented,renting,texted,texting,lasted,lasting,tested,testing,filmed,filming,dusted,dusting,nested,nesting,brushed,brushing",
                 "supplementalWordList": "banked,banking,ranked,ranking,gasped,gasping,masked,masking,rafted,rafting,milked,milking,funded,funding,rested,resting,busted,busting",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "camp/camped/camping,land/landed/landing,jump/jumped/jumping,hunt/hunted/hunting,help/helped/helping,last/lasted/lasting,test/tested/testing,film/filmed/filming,rent/rented,renting",
                 "fluencySentences": [
                     "Jim rented a cabin. He texted Matt and asked him to go hunting and camping with him. He will be resting and fishing too."
@@ -6531,28 +5879,20 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "ed_ing_e",
                 "lessonName": "-ed + -ing for magic e",
-                "ignoreMe1": "Blending.-ed + -ing for magic e",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "-ed + -ing for magic e",
                     "ed+ing_?e",
                     "Suffix -ed and -ing"
                 ],
                 "groupCode": "blend_wrap",
-                "ignoreMe3": "Blend Wrap-up",
-                "ignoreMe5": "-ed + -ing for magic e",
                 "wordList": "baked,baking,cared,caring,chased,chasing,dared,daring,dined,dining,hiked,hiking,hoped,hoping,lived,living,loved,loving,raced,racing,raged,raging,traded,trading,used,using,shared,sharing",
                 "supplementalWordList": "sensed,sensing,blamed,blaming,tubed,tubing,closed,closing,smiled,smiling,biked,biking,placed,placing,joked,joking",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bake/baked/baking,care/cared/caring,hike/hiked/hiking,race/raced/racing,love/loved,loving,use/used/using,live/lived/living,bike/biked/biking,joke/joked/joking",
                 "fluencySentences": [
                     "I loved racing cars and riding bikes when I lived in Texas. I hiked and camped too. I am hoping we can go tubing on the sledding hill now that I live  where it is colder."
@@ -6611,26 +5951,18 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "le",
                 "lessonName": "Consonant le",
-                "ignoreMe1": "Blending.Consonant le",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     ""
                 ],
                 "groupCode": "blend_wrap",
-                "ignoreMe3": "Blend Wrap-up",
-                "ignoreMe5": "Consonant le Syllables",
                 "wordList": "bottle,puddle,bubble,apple,pickle,turtle,candle,tickle,jungle,marble,triple,purple,humble,gamble,puzzle,gentle,tumble,cattle,uncle,circle,simple,sample",
                 "supplementalWordList": "fumble,ripple,rattle,rubble,buckle,kettle,giggle,fiddle,pebble,riddle,paddle,huddle,dazzle,muddle,topple,dimple,juggle,jumble,saddle",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "can+dle/candle,mar+ble/marble,jun+gle/jungle,tri+ple/triple,tum+ble/tumble,sim+ple/simple,cir+cle/circle,gam+ble/gamble,gen+tle/gentle,tur+tle/turtle",
                 "fluencySentences": [
                     "Mom will tickle the little boy. They giggle, do a puzzle, and blow bubbles. Then mom will have an apple and the boy will drink a bottle."
@@ -6689,27 +6021,19 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "contractions",
                 "lessonName": "Contractions",
-                "ignoreMe1": "Blending.Contractions",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "Contractions",
                     "Contractions"
                 ],
                 "groupCode": "blend_wrap",
-                "ignoreMe3": "Blend Wrap-up",
-                "ignoreMe5": "Contractions",
                 "wordList": "can't,aren't,don't,doesn't,didn't,haven't,hasn't,isn't,couldn't,wasn't,why'd,I'll,you'll,he'll,she'll,I'd,you'd,here's,how's,it's,that's,there's,what's,when's,where's,why's,who's,I've,you've,I'm,you're,he's,she's,we're,they're,let's,won't",
                 "supplementalWordList": "shouldn't,wouldn't,we've,they've,could've,how'd,they'll,who'll,it'll,would've,we'll,should've,weren't,who'd,he'd,she'd,they'd",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "can not/can't,are not/aren't,do not/don't,did not/didn't,have not/haven't,has not/hasn't,is not/isn't,could not/couldn't,should not/shouldn't,was not/wasn't,were not/weren't,how did/how'd,who did/who'd,why did/why'd,I will/I'll,it is/it's,you have/you've,she is/she's,he is/he's",
                 "fluencySentences": [
                     "I'm sorry. I didn't mean to keep it.",
@@ -6769,26 +6093,18 @@
                     "prefixList": " ",
                     "vowel": " ",
                     "suffixList": " "
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "open",
                 "lessonName": "Open Syllables",
-                "ignoreMe1": "Blending.open",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     ""
                 ],
                 "groupCode": "word_play",
-                "ignoreMe3": "Word Play",
-                "ignoreMe5": "Open Syllables",
                 "wordList": "tiger,human,frozen,music,basic,bacon,relax,fever,siren,viper,begin,basis,spider,paper,remote,silent,pilot,robot",
                 "supplementalWordList": "minus,virus,wafer,rodent,total,beside,secret,vapor,meter",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "ba+con/bacon,mi+nus/minus,to+tal/total,be+side/beside,ti+ger/tiger,hu+man/human,si+ren/siren,be+gin/begin,re+mote/remote,hu+man,human,fro+zen/frozen,re+lax/relax,spi+der/spider,si+lent/silent,pa+per/paper",
                 "fluencySentences": [
                     "I have a fever so I will relax and listen to music. ",
@@ -6845,25 +6161,18 @@
                     "fluency",
                     "test"
                 ],
-                "pronounceImage": "b-oh.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-oh.jpg"
             },
             {
                 "lessonId": "prefixes",
                 "lessonName": "Common Prefixes",
-                "ignoreMe1": "Blending.prefixes",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     ""
                 ],
                 "groupCode": "word_play",
-                "ignoreMe3": "Word Play",
-                "ignoreMe5": "Common Prefixes",
                 "wordList": "in,mis,re,sub,pre,de,un,im,con,mid,en,dis,em,non",
                 "supplementalWordList": "unlock,unplug,until,misled,mistake,rerun,retell,remix,replace,dislike,dispose,discard,prefix,premade,import,export,confide,midlife,midterm,subject,encode,decode,embed,emblem,confuse,nonfat,nonstop,transmit,transfer,transport,invade,inside,dislike,disarm,unless",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "in+side/inside,dis+like/dilike,pre+test/pretest,un+plug/unplug,im+port/import,mis+take/mistake,re+set/reset,un+zip/unzip,de+lete/delete,sub+mit/submit,non+stop/nonstop",
                 "fluencySentences": [
                     "I made a mistake. Can I retake the midterm exam? There was a misprint in the subtest instructions. They will be rewrtiten and reprinted before I retake it."
@@ -6922,26 +6231,18 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "suffixes",
                 "lessonName": "Common Suffixes",
-                "ignoreMe1": "Blending.suffixes",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     ""
                 ],
                 "groupCode": "word_play",
-                "ignoreMe3": "Word Play",
-                "ignoreMe5": "Common Suffixes",
                 "wordList": "able,ible,al,en,ful,ic,ion,ive,less,ment,ness,ly,es",
                 "supplementalWordList": "fixable,livable,mixable,visible,flexible,terrible,medal,sandal,given,dozen,happen,helpful,hopeful,toxic,manic,mimic,action,caption,active,unless,jobless,reckless,fragment,torment,sadness,fitness,madly,quickly,foxes,illness,fitness",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "fix+able/fixable,vis+ible/visible,wish+ful/wishful,act+ion/action,fest+ive/festive,job+less/jobless,seg+ment/segment,sad+ness/sadness,ill+ness/illness,bad+ly/badly,box+es/boxes",
                 "fluencySentences": [
                     "His terrible illness is fixable. He needs to be less reckless and more active. I am hopeful that he will work on his fitness to get better quickly. "
@@ -6990,26 +6291,17 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "act",
                 "lessonName": "Matrix - act",
-                "ignoreMe1": "Blending.act",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     ""
                 ],
                 "groupCode": "word_play",
-                "ignoreMe3": "Word Play",
-                "ignoreMe5": "Matrix - act",
                 "wordList": "acts,acted,acting,actor,action,active,activist,actively,actual,actually,react,reaction,reacted,reactor,reactive,reactively,reactions,activists,reactors,actions,reacting,inactive,inaction",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "act+ed/acted,act+ing/acting,act+or/actor,re+act/react,act+ion/action,re+act+ion/reaction,act+ive/active,act+ive+ist/activist,re+act+ive/reactive,re+act+ive+ly/reactively,act+u+al/actual,in+act+ion/inaction",
                 "fluencySentences": [
                     "The actor is an activist. He is actually taking action because he is upset about the inaction of others. He is acting reactively. "
@@ -7068,26 +6360,17 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "help",
                 "lessonName": "Matrix - help",
-                "ignoreMe1": "Blending.help",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     ""
                 ],
                 "groupCode": "word_play",
-                "ignoreMe3": "Word Play",
-                "ignoreMe5": "Matrix - help",
                 "wordList": "helplessness,helpfulness,unhelpfully,helplessly,unhelpful,helpfully,helpless,helpings,unhelped,helping,helpful,helpers,helper,helped,helps",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "help+ful/helpful,help+ful+ness/helpfulness,help+less/helpless,help+less+ly/helplessly,help+less+ness/helplessness,un+help+ful/unhelpful,un+help+ful+ly/unhelpfully,help+ing/helping",
                 "fluencySentences": [
                     "I like to be helpful, but sometimes I am helplessly unhelpful. I love my mom's helpfulness. She is always helping me."
@@ -7146,26 +6429,17 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "port",
                 "lessonName": "Matrix - port",
-                "ignoreMe1": "Blending.port",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     ""
                 ],
                 "groupCode": "word_play",
-                "ignoreMe3": "Word Play",
-                "ignoreMe5": "Matrix - port",
                 "wordList": "import,imports,imported,importing,report,reports,reported,reporting,reporter,portable,reportable,portal,deport,deported,portion,deportation,portals,transport",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "im+port/import,re+port/report,re+port+ed/reported,re+port+ing/reporting,port+able/portable,port+al/portal,port+ion/portion,re+port+er/reporter,im+port+ed/imported",
                 "fluencySentences": [
                     "The reporter is reporting about important events. A portion of the report was about imports like portable tablets and phones."
@@ -7219,26 +6493,18 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "struct",
                 "lessonName": "Matrix - struct",
-                "ignoreMe1": "Blending.struct",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     ""
                 ],
                 "groupCode": "word_play",
-                "ignoreMe3": "Word Play",
-                "ignoreMe5": "Matrix - struct",
                 "wordList": "structure,structural,structurally,construct,constructive,construction,obstruct,obstruction,obstructive,destruct,destructive,destruction,instruct,instruction,instructor,instructor",
                 "supplementalWordList": "instructively,instructiveness,deconstruct,deconstruction,deconstructive,indestructible,reconstruction,reconstructive,instructive",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "struct+ure+al/structural,con+struct+ed/constructed,con+struct+ion/construction,in+struct+ive/instructive,in+struct+ion/instruction,de+struct+ed/destructed,de+struct+ion/destruction,re+con+struct+ive/reconstructive,de+con+struct+ing/deconstructing",
                 "fluencySentences": [
                     "We began construction on the structure. We used instructions so it would be structually sound, but a storm could cause destruction."
@@ -7302,28 +6568,19 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "oh",
                 "lessonName": "/oh/",
-                "ignoreMe1": "Blending./oh/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/ow/",
                     "ow"
                 ],
                 "groupCode": "phonics_1",
-                "ignoreMe3": "Phonics 1",
-                "ignoreMe5": "<sound>oh</sound>",
                 "wordList": "most,host,post,toast,bow,low,slow,snow,toe,foe,Joe,doe,know,row,sow,tow,blown,flown,moat,cloak,coach,roach,roam,throat,coat,float,bloat,boast,coast,hoax,goat,loan,loaf,boat,road,roast,foam,soap,mow",
                 "chain": "coat,coast,toast,tow,mow,most,moat,moan,loan,low,bow,tow,toe,doe",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "slow/snow,toe/doe,blown/flown,goat/boat,foam/roam,moan/loan,most/post,float/bloat,row/low",
                 "fluencySentences": [
                     "The coach wants him to eat oatmeal but he likes pork and pot roast.",
@@ -7383,27 +6640,19 @@
                     "vowel": "o,oa,oe,ow",
                     "suffixList": "ch,f,n,t,st"
                 },
-                "pronounceImage": "b-oh.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-oh.jpg"
             },
             {
                 "lessonId": "ow",
                 "lessonName": "/ow/",
-                "ignoreMe1": "Blending./ow/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/ow/",
                     "ow"
                 ],
                 "groupCode": "phonics_1",
-                "ignoreMe3": "Phonics 1",
-                "ignoreMe5": "<sound>ow</sound>",
                 "wordList": "howl,cow,how,now,wow,chow,fowl,crown,down,town,crowd,owl,jowl,prowl,town,out,loud,cloud,proud,round,grout,foul,brown,found,loud,count,pout,shout",
                 "chain": "cow,now,wow,how,howl,fowl,foul,down,town,pout,loud",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "cow/now,down/town,proud/cloud,found/hound,howl/jowl,round/found,pout/shout,round/pound",
                 "fluencySentences": [
                     "I want to look in the lost and found for my brown jacket.",
@@ -7463,27 +6712,19 @@
                     "vowel": "ou,ow",
                     "suffixList": "d,l,n,t"
                 },
-                "pronounceImage": "b-ow.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-ow.jpg"
             },
             {
                 "lessonId": "oy",
                 "lessonName": "/oy/",
-                "ignoreMe1": "Blending./oy/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/oy/",
                     "oy"
                 ],
                 "groupCode": "phonics_1",
-                "ignoreMe3": "Phonics 1",
-                "ignoreMe5": "<sound>oy</sound>",
                 "wordList": "boy,toy,soy,coy,joy,ploy,royal,alloy,loyal,enjoy,oil,boil,coil,foil,broil,foist,void,oink,roil,soil,toil,point,joint",
                 "chain": "toy,joy,boy,boil,coil,foil,roil,soil,toil,void,point,joint,joist",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "boy/toy,royal/loyal,oil/coil,soil/toil,point/joint,soy/joy,foil/roil",
                 "fluencySentences": [
                     "Are you employed at the toyshop?",
@@ -7546,27 +6787,20 @@
                     "vowel": "oy,oi",
                     "suffixList": "d,l,nt,st"
                 },
-                "pronounceImage": "b-oy.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-oy.jpg"
             },
             {
                 "lessonId": "long_oo",
                 "lessonName": "Long /oo/",
-                "ignoreMe1": "Blending.Long /oo/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "Long /oo/",
                     "Long oo"
                 ],
                 "groupCode": "phonics_1",
-                "ignoreMe3": "Phonics 1",
-                "ignoreMe5": "Long <sound>oo</sound>",
                 "wordList": "roof,tooth,fool,room,shoot,zoo,blue,glue,clue,screw,crew,drew,brew,juice,cruise,suit,lose,move,whose,Tuesday,flute,prune,chute,cute,flew,stew,broom,cool,bruise,moon",
                 "chain": "boo,zoo,cue,clue,glue,blue,blew,drew,grew,flew,slew,suit,soot,loot,loop,loom,zoom,room",
                 "supplementalWordList": "grew,noon,pool,scoop,loop,smooth,through,truth,soup,do,group,two,you,who,true,school,loose,food,rooster",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "blue/glue,crew/brew,flew/slew,room/broom,crew/screw,lose/whose,flute/chute,fool/cool,cruise/bruise,soup/group,moon/noon,scoop/loop",
                 "fluencySentences": [
                     "I will brew a few cups of coffee and bring some fresh fruit.",
@@ -7627,27 +6861,19 @@
                     "vowel": "ew,oo,ue",
                     "suffixList": "m,p,t"
                 },
-                "pronounceImage": "b-oo.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-oo.jpg"
             },
             {
                 "lessonId": "short_oo",
                 "lessonName": "Short /oo/",
-                "ignoreMe1": "Blending.Short /oo/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "Short /oo/",
                     "Short oo"
                 ],
                 "groupCode": "phonics_1",
-                "ignoreMe3": "Phonics 1",
-                "ignoreMe5": "Short <sound>oo</sound>",
                 "wordList": "book,put,could,would,should,cook,brook,shook,hook,good,hood,cookie,hoof,stood,took,look,wood,foot,woof,soot,nook,rook,bush,push,bully,bull",
                 "chain": "put,push,bush,book,look,hook,hood,good,wood,woof,would,could,should",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "could/would,cook/book,hood/good,took/look,brook/shook,woof/hoof,stood/wood,bush/push",
                 "fluencySentences": [
                     "I understood the story in the book.",
@@ -7707,28 +6933,19 @@
                     "prefixList": "b,c,g,h,l,p,sh,w",
                     "vowel": "ou,oo,u",
                     "suffixList": "d,f,k,ld,sh,t"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "aw",
                 "lessonName": "/aw/",
-                "ignoreMe1": "Blending./aw/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/aw/",
                     "aw"
                 ],
                 "groupCode": "phonics_1",
-                "ignoreMe3": "Phonics 1",
-                "ignoreMe5": "<sound>aw</sound>",
                 "wordList": "dog,bop,brawl,crawl,claw,draw,fawn,gnaw,jaw,law,lawn,paw,pawn,saw,stalk,walk,thaw,yawn,ball,call,wall,small,sauce,August,stalk,talk,walk,chalk,fault,",
                 "chain": "jaw,paw,law,lawn,pawn,yawn,walk,talk,stalk,stall,wall,call,tall,taunt,haunt,jaunt",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "jaw/law,lawn/pawn,claw/slaw,talk/walk,salt/malt,thaw/gnaw,brawl/crawl,fought/ought",
                 "fluencySentences": [
                     "Did the ball hit your jaw?",
@@ -7789,27 +7006,19 @@
                     "vowel": "a,aw,au",
                     "suffixList": "lk,ll,n,nt"
                 },
-                "pronounceImage": "b-aw.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-aw.jpg"
             },
             {
                 "lessonId": "ay",
                 "lessonName": "/ay/",
-                "ignoreMe1": "Blending./ay/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/ay/",
                     "ay"
                 ],
                 "groupCode": "phonics_1",
-                "ignoreMe3": "Phonics 1",
-                "ignoreMe5": "<sound>ay</sound>",
                 "wordList": "day,say,clay,play,spray,tray,pray,way,mail,tail,brain,paid,chain,rain,train,paint,stain,wait,gain,drain,sail,sprain,trail,plain,quail,eight,sleigh,neighbor,weight,angel,apron,basic,fatal,data,table,paper,break,steak,great,prey,they,grey,straight,veil,rein,fail",
                 "chain": "day,way,clay,pray,tray,say,sail,rail,tail,trail,train,plain,stain,brain,break,steak",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "day/say,clay/play,spray/tray,brain/train,paint/saint,drain/sprain,paid/laid,sail/fail",
                 "fluencySentences": [
                     "May the stray dog stay and play?",
@@ -7871,27 +7080,19 @@
                     "vowel": "ai,ay,ea",
                     "suffixList": "k,l,n"
                 },
-                "pronounceImage": "b-ay.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-ay.jpg"
             },
             {
                 "lessonId": "air",
                 "lessonName": "/air/",
-                "ignoreMe1": "Blending./air/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/air/",
                     "air"
                 ],
                 "groupCode": "phonics_1",
-                "ignoreMe3": "Phonics 1",
-                "ignoreMe5": "<sound>air</sound>",
                 "wordList": "care,bare,fare,fair,flair,lair,pair,hair,air,chair,stair,dairy,fairy,impair,repair,where,there,tear,bear,pear,wear,swear,their",
                 "chain": "bear,bare,care,fare,fair,lair,hair,pair,pear,wear,tear",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bare/care,fair/pair,hair/lair,pear/wear,tear/bear,dairy/fairy,where/there,stair/chair",
                 "fluencySentences": [
                     "What did you prepare for lunch?",
@@ -7952,27 +7153,19 @@
                     "vowel": "air,are,ear",
                     "suffixList": ""
                 },
-                "pronounceImage": "b-air.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-air.jpg"
             },
             {
                 "lessonId": "ee_ee_e",
                 "lessonName": "/ee/ (ee, -e)",
-                "ignoreMe1": "Blending./ee/ (ee, -e)",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/ee/ (ee, -e)",
                     "ee (ee, -e)"
                 ],
                 "groupCode": "phonics_2",
-                "ignoreMe3": "Phonics 2",
-                "ignoreMe5": "<sound>ee</sound> (ee, -e)",
                 "wordList": "green,seed,queen,free,tree,eel,feet,bee,beet,beef,feel,peel,peek,sheep,creek,cheek,deep,feed,meet,keep,sleep,sheet,street,sweet,teeth,teen,three,wheel,week,bleed,me,she,we,be,he,freed",
                 "chain": "me,be,we,week,weed,seed,feed,feet,meet,beet,sheet,sheep,keep,keen,teen",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "free/tree,feet/meet,feel/peel,peek/cheek,seen/seen,me/we,be/he,freed/breed",
                 "fluencySentences": [
                     "He got sick and fell into a deep, deep sleep.",
@@ -8033,27 +7226,19 @@
                     "vowel": "e,ee",
                     "suffixList": "d,k,n,p,t"
                 },
-                "pronounceImage": "b-ee.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-ee.jpg"
             },
             {
                 "lessonId": "ee_ea",
                 "lessonName": "/ee/ (ea)",
-                "ignoreMe1": "Blending./ee/ (ea)",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/ee/ (ea)",
                     "ee (ea)"
                 ],
                 "groupCode": "phonics_2",
-                "ignoreMe3": "Phonics 2",
-                "ignoreMe5": "<sound>ee</sound> (ea)",
                 "wordList": "least,treat,eat,mean,scream,weak,beach,feast,meat,flea,neat,seal,cheat,heal,peach,seat,clean,jeans,speak,cream,leaf,reach,teach,dream,lean,read,each",
                 "chain": "read,reach,peach,beach,beat,meat,neat,seat,seal,heal,meal,mean,lean",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "mean/lean,meat/neat,seal/heal,reach/teach,least/feast,seat/heat,dream/cream",
                 "fluencySentences": [
                     "I like to be clean and neat.",
@@ -8114,28 +7299,19 @@
                     "prefixList": "b,h,l,m,n,p,r,s",
                     "vowel": "ea",
                     "suffixList": "ch,d,l,n,t"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "eh_ea",
                 "lessonName": "/eh/ (ea)",
-                "ignoreMe1": "Blending./eh/ (ea)",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/eh/ (ea)",
                     "eh (ea)"
                 ],
                 "groupCode": "phonics_2",
-                "ignoreMe3": "Phonics 2",
-                "ignoreMe5": "<sound>eh</sound> (ea)",
                 "wordList": "bread,head,spread,health,stead,heaven,stealth,breath,instead,sweat,dead,lead,thread,leapt,threat,tread,deaf,meant,wealth,death,read,weapon",
                 "chain": "deaf,dead,head,read,lead,stead,bread,breath,death",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "bread/dread,head/lead,wealth/health,tread/dead,death/breath,sweat/threat,stealth/wealth",
                 "fluencySentences": [
                     "I like to be clean and neat.",
@@ -8191,27 +7367,18 @@
                     "prefixList": "b,br,d,h,l,r,st",
                     "vowel": "ea",
                     "suffixList": "d,f,th"
-                },
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                }
             },
             {
                 "lessonId": "ee_y_ey_ie",
                 "lessonName": "/ee/ (y, ey, ie)",
-                "ignoreMe1": "Blending./ee/ (y, ey, ie)",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/ee/ (y, ey, ie)",
                     "ee (y, ey, ie)"
                 ],
                 "groupCode": "phonics_2",
-                "ignoreMe3": "Phonics 2",
-                "ignoreMe5": "<sound>ee</sound> (y, ey, ie)",
                 "wordList": "baby,study,rusty,lady,candy,skinny,lucky,study,hungry,party,ugly,easy,windy,creepy,key,monkey,chimney,hockey,honey,valley,donkey,money,jockey,cookie,baggie,genie",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "monk/monkey,cook/cookie,jock/jockey,bag/baggie,rust/rusty,skin/skinny,luck/lucky,creep/creepy",
                 "fluencySentences": [
                     "Mommy washed the sticky cookie off of the fussy baby.",
@@ -8270,27 +7437,18 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "ee_ie_ei",
                 "lessonName": "/ee/ (ie, ei)",
-                "ignoreMe1": "Blending./ee/ (ie, ei)",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/ee/ (ie, ei)",
                     "ee (ie, ei)"
                 ],
                 "groupCode": "phonics_2",
-                "ignoreMe3": "Phonics 2",
-                "ignoreMe5": "<sound>ee</sound> (ie, ei)",
                 "wordList": "believe,belief,chief,frieze,piece,shield,brie,field,grief,siege,brief,fiend,niece,thief,ceiling,protein,receipt,receive,either,seize,relief",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "believe/receive,chief/brief,field/shield,receipt/receive,piece/niece,belief/relief,seize/freize",
                 "fluencySentences": [
                     "Do you want a piece of bread and brie?",
@@ -8343,28 +7501,19 @@
                     "mastery",
                     "fluency",
                     "test"
-                ],
-                "pronounceImage": "",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                ]
             },
             {
                 "lessonId": "igh",
                 "lessonName": "/igh/",
-                "ignoreMe1": "Blending./igh/",
-                "ignoreMe2": "Blending",
                 "alternateNames": [
                     "/igh/",
                     "igh"
                 ],
                 "groupCode": "phonics_2",
-                "ignoreMe3": "Phonics 2",
-                "ignoreMe5": "<sound>igh</sound>",
                 "wordList": "bribe,life,stripe,shine,write,hide,kite,crime,quite,high,sigh,bright,fight,flight,might,delight,night,tight,right,by,my,cry,dry,fly,spy,why,deny,reply,July,apply,cycle,rhyme,python,die,lie,pie,fries,replies,spies",
                 "chain": "high,sigh,sight,fight,night,tight,right,might,my,by",
-                "supplementalWordList": "",
-                "ignoreMe6": "",
+                "soundLetters": "abcdefghijklmnopqrstuvwxyz",
                 "stretchList": "pie/die,might/night,flight/plight,cry/dry,deny/reply,fries/cries,high/sigh,fight/sight",
                 "fluencySentences": [
                     "A bright light was shining in the sky at night.",
@@ -8423,10 +7572,7 @@
                     "vowel": "igh,y",
                     "suffixList": "t"
                 },
-                "pronounceImage": "b-igh.jpg",
-                "ignoreMe7": [],
-                "ignoreMe4": 0,
-                "visible": true
+                "pronounceImage": "b-igh.jpg"
             }
         ]
     }

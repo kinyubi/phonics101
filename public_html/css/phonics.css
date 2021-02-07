@@ -401,7 +401,7 @@ a.img-contain img {
     .size--key-icon {height: 35px; width: 35px}
     .size--list-icon {height: 18px; width: 18px}
     .height--title-bar {height: 60px}
-    .button-text {font-size: .75rem;}
+    .button-text {font-size: 1rem;}
 }
 
 
@@ -418,7 +418,7 @@ a.img-contain img {
      .size--key-icon {height: 45px; width: 45px}
      .size--list-icon {height: 24px; width: 24px}
      .height--title-bar {height: 50px}
-     .button-text {font-size: .8rem;}
+     .button-text {font-size: 1.1rem;}
  }
 
  /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
@@ -434,7 +434,7 @@ a.img-contain img {
      .size--key-icon {height: 60px; width: 60px}
      .size--list-icon {height: 30px; width: 30px}
      .height--title-bar {height: 60px}
-     .button-text {font-size: 1.1rem;}
+     .button-text {font-size: 1.25rem;}
  }
  /* Large devices (desktops, 992px and up) */
  @media (min-width: 992px) {

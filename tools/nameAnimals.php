@@ -1,6 +1,6 @@
 <?php
 
-require 'autoload.php';
+require  __DIR__ . '/autoload.php';
 
 $animals = [
     'elephant', 'monkey', 'tiger', 'panda', 'lion', 'bear', 'dog', 'cat', 'leopard', 'dolphin',

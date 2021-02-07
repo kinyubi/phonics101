@@ -41,20 +41,19 @@ class Lesson
     /** @var string[] */
     public ?array       $contrastImages;
     public int          $ordinal = 0;
-    public bool         $visible;
     public ?array       $wordLists;
     public array        $notes;
     public array        $allWords;
+    public string       $soundLetters;
     public string       $book;
     private string      $lessonCode;
     private ?array      $wordList;
     private ?array      $supplementalWordList;
 
-
     /**
      * Lesson constructor. The input is a stdClass object from the abc_lessons table in readxyz0_phonics database
      *
-     * @param stdClass $lesson
+     * @param stdClass|null $lesson
      */
     public function __construct(?stdClass $lesson = null)
     {
@@ -69,7 +68,7 @@ class Lesson
         $this->groupCode      = $lesson->groupCode;
         $this->ordinal        = $lesson->ordinal;
         $this->wordList             = CSV::listToArray($lesson->wordList) ?? [];
-        $this->supplementalWordList = CSV::listToArray($lesson->supplementalWordList) ?? [];
+        $this->supplementalWordList = CSV::listToArray($lesson->supplementalWordList ?? '') ?? [];
         $this->allWords             = array_merge($this->wordList, $this->supplementalWordList);
         if (isset($lesson->contrastImages)) {
             $array = $lesson->contrastImages;
@@ -77,7 +76,7 @@ class Lesson
                 $this->contrastImages = $array;
             }
         }
-
+        $this->soundLetters     = $lesson->soundLetters ?? 'abcdefghijklmnopqrstubwxyz';
         $this->stretchList      = is_string($lesson->stretchList) ? CSV::stretchListToArray($lesson->stretchList) : $lesson->stretchList;
         $this->fluencySentences = $lesson->fluencySentences;
         $this->games            = [];
@@ -125,8 +124,6 @@ class Lesson
         $this->pronounceImage      = Location::getPronounceImage($lesson->pronounceImage ?? '');
         $this->pronounceImageThumb = Location::getPronounceImageThumb($lesson->pronounceImage ?? '');
 
-        $this->visible = $lesson->visible;
-
         $this->wordLists = (null === $this->wordList) ? null : [];
         if ($this->tabNames && (null !== $this->wordList)) {
             foreach ($this->tabNames as $tabName) {
@@ -155,12 +152,12 @@ class Lesson
         $lesson->pronounceImage       = $array['pronounceImage'];
         $lesson->pronounceImageThumb  = $array['pronounceImageThumb'];
         $lesson->ordinal              = $array['ordinal'];
-        $lesson->visible              = $array['visible'];
         $lesson->wordLists            = $array['wordLists'];
         $lesson->allWords             = $array['allWords'];
         $lesson->book                 = $array['book'];
         $lesson->wordList             = $array['wordList'];
         $lesson->supplementalWordList = $array['supplementalWordList'];
+        $lesson->soundLetters         = $array['soundLetters'] ?? '';
         return $lesson;
     }
 
