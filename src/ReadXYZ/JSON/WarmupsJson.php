@@ -55,6 +55,10 @@ class WarmupsJson
      */
     public function get(string $id): ?Warmup
     {
-        return $this->persisted['map'][$id] ?? null;
+        if (isset($this->persisted['map'][$id])) {
+            return clone $this->persisted['map'][$id];
+        } else {
+            return null;
+        }
     }
 }

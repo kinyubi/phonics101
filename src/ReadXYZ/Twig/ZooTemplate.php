@@ -54,7 +54,7 @@ class ZooTemplate
         $studentName = $this->student->studentName;
         $pretend     = (0 == $lastAnimal);
         if ($pretend) {
-            $lastAnimal    = random_int(25, 75);
+            $lastAnimal    = random_int(40, 95);
             $args['title'] = "Earn these animal prizes!";
         } else {
             $args['title'] = "$studentName's Animal Friends";
@@ -67,7 +67,6 @@ class ZooTemplate
         $args['animals'] = $animals;
         $page->addArguments($args);
 
-        $this->deleteExisting($this->generator->getFileName());
         $html = $page->getHtml('zoo_animals.html.twig');
         file_put_contents($filePath, $html);
     }

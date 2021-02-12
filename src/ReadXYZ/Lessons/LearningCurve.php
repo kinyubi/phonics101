@@ -64,7 +64,7 @@ class LearningCurve
         $files = glob("$generatedCache/*.png");
         $totalCt = count($files);
         $failedCt = $successCt = 0;
-        $cutoffTime = time() - (60 * 60 * 48);
+        $cutoffTime = time() - (60 * 60 * 24);
         foreach ($files as $file) {
             $modTime = filemtime($file);
             if ($modTime < $cutoffTime) {

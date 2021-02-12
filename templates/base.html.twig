@@ -131,12 +131,12 @@ otherJS
                 {% set dim = smaller ? '40px' : '75px' %}
                 {% set anchorStyle = 'height:' ~ dim ~ ';width:' ~ dim %}
                 {% set imgStyle = 'style="width:90%"' %}
-                <a class="img-contain col-1 {{ zooClass }}" href="{{ zooUrl }}" {{ anchorStyle }}>
+                <a id="current-animal" class="img-contain col-1 {{ zooClass }}" href="{{ zooUrl }}" {{ anchorStyle }}>
                     <img src="{{ animals[0].fileName }}" alt="{{ animals[0].friendlyName }}" title="See my zoo" {{ imgStyle }}">
                 </a>
 
                 {% set titleText = 'Award the ' ~ animals[1].friendlyName ~ ' to ' ~ studentName %}
-                <a class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" {{ anchorStyle }}>
+                <a id="next-animal" class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" {{ anchorStyle }}>
                     <img src="{{ animals[1].grayFileName }}" alt="{{ animals[1].friendlyName }}"
                          title="{{ titleText }}" {{ imgStyle }}>
                 </a>
@@ -193,13 +193,21 @@ otherJS
         $(".inline").colorbox({inline: true, width: "50%"});
         $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
         $(".zoo-animals").colorbox({
+            iframe: true, innerWidth: "90%", maxWidth: "900px", innerHeight: "100%", maxHeight: "700px",
+            top: 20, overlayClose: false, scrolling: true
+        });
+        $(".zoo-animals-sm").colorbox({
             iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
             top: 20, overlayClose: false, scrolling: true
         });
         $(".tic-tac-toe").colorbox({
-            iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "760px",
+            iframe: true, innerWidth: "660px", maxWidth: "95%", innerHeight: "660px", maxHeight: "90%",
             top: 20, overlayClose: false, scrolling: false
         });
+        // $(".tic-tac-toe").colorbox({
+        //     iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "760px",
+        //     top: 20, overlayClose: false, scrolling: false
+        // });
 
         $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ game_dimensions__ }}});
         $(".sound-box").colorbox({

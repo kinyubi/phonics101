@@ -146,7 +146,11 @@ trait JsonTrait
      */
     public function get(string $key)
     {
-        return $this->persisted['map'][$key] ?? null;
+        if (isset($this->persisted['map'][$key] )) {
+            return clone $this->persisted['map'][$key] ;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -221,7 +225,7 @@ trait JsonTrait
         $timer = $this->startTimer('creating object' . __CLASS__ . '.');
         $key   = $this->persisted['primaryKey'];
         foreach ($this->persisted['objects'] as $object) {
-            $this->persisted['map'][$object->$key] = $object;
+            $this->persisted['map'][$object->$key] = clone $object;
         }
         $this->stopTimer($timer);
         $this->cacheData();

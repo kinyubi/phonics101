@@ -163,7 +163,7 @@ class Util
 
     public static function getPublicPath($filename = ''): string
     {
-        return self::stripExtraSlashes($_SERVER['DOCUMENT_ROOT'] . '/' . $filename);
+        return self::stripExtraSlashes($_SERVER['PUBLIC_ROOT'] . '/' . $filename);
     }
 
     public static function getReadXyzSourcePath($filename = ''): string

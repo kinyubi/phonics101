@@ -203,7 +203,9 @@ $cat = location::getTicTacToeAnimal($player2);
       }
 
       function checkStatus(moverId, receiverId) {
-          let idx = parseInt(receiverId.substring(1));
+          let startPos = receiverId.indexOf('-') + 1;
+          if (startPos === 0) return;
+          let idx = parseInt(receiverId.substring(startPos));
           moves++;
           if (moverId.charAt(0) === "r") {
               rats[idx] = 1;

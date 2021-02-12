@@ -104,9 +104,15 @@ class RouteMe
         $routeParts = empty($fullPath) ? ['default'] : explode('/', $fullPath);
 
         // the routines that consume routeParts should get integers instead of strings if numeric
+        // add code to the while loop where you want to look for a route part that is related to an
+        // action.
         for ($i=0; $i<count($routeParts); $i++) {
-            if (is_numeric($routeParts[$i])) {$routeParts[$i] = intval($routeParts[$i]);}
+            $part = $routeParts[$i];
+            if (is_numeric($part)) {$routeParts[$i] = intval($part);}
+
         }
+
+
         // we handle the instance when a handler is part of the request_url (discouraged).
         if (empty($mainRoute) && in_array($routeParts[0], ['handler', 'act', 'action'])) {
             if (count($routeParts) > 1) {

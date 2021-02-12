@@ -80,7 +80,8 @@ class GameTypesJson
     {
         $id = $this->getId($tag);
         if ($id === false) return null;
-        return $this->persisted['map'][$id];
+        $game = $this->persisted['map'][$id];
+        return clone $game;
     }
 
     public function exists(string $tag): bool

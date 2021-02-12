@@ -393,9 +393,6 @@ a.img-contain img {
     .sfp {font-size: .6rem !important;}
     .wordlist {font-size: 1.5rem !important;}
     .scaled {transform:scale(.5, .5);}
-    .size--tile-1 {height: 24px; width: 24px; line-height: 24px; font-size: 1em !important; font-weight: bold}
-    .size--tile-2 {height: 24px; width: 36px; line-height: 24px; font-size: 1em !important; font-weight: bold}
-    .size--tile-3 {height: 24px; width: 48px; line-height: 24px; font-size: 1em !important; font-weight: bold}
     .size--tab-icon {height: 50px; width: 50px}
     .size--side-icon {height: 24px; width: 24px}
     .size--key-icon {height: 35px; width: 35px}
@@ -410,9 +407,6 @@ a.img-contain img {
      .sfp {font-size: .6rem !important;}
      .wordlist {font-size: 2rem !important;}
      .scaled {transform:scale(.6, .6);}
-     .size--tile-1 {height: 30px; width: 30px; line-height: 30px; font-size: 1.2em !important; font-weight: bold}
-     .size--tile-2 {height: 30px; width: 45px; line-height: 30px; font-size: 1.2em !important; font-weight: bold}
-     .size--tile-3 {height: 30px; width: 60px; line-height: 30px; font-size: 1.2em !important; font-weight: bold}
      .size--tab-icon {height: 50px; width: 50px}
      .size--side-icon {height: 30px; width: 30px}
      .size--key-icon {height: 45px; width: 45px}
@@ -426,9 +420,6 @@ a.img-contain img {
      .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 2.5rem !important;}
      .scaled {transform:scale(.75, .75);}
-     .size--tile-1 {height: 40px; width: 40px; line-height: 40px; font-size: 1.5em !important; font-weight: bold}
-     .size--tile-2 {height: 40px; width: 60px; line-height: 40px; font-size: 1.5em !important; font-weight: bold}
-     .size--tile-3 {height: 40px; width: 80px; line-height: 40px; font-size: 1.5em !important; font-weight: bold}
      .size--tab-icon {height: 42px; width: 42px}
      .size--side-icon {height: 40px; width: 40px}
      .size--key-icon {height: 60px; width: 60px}
@@ -441,9 +432,6 @@ a.img-contain img {
      .sfp {font-size: .75rem !important;}
      .wordlist {font-size: 3rem !important;}
      .scaled {transform:scale(1.0, 1.0);}
-     .size--tile-1 {height: 60px; width: 60px; line-height: 60px; font-size: 2em !important; font-weight: bold}
-     .size--tile-2 {height: 60px; width: 90px; line-height: 60px; font-size: 2em !important; font-weight: bold}
-     .size--tile-3 {height: 60px; width: 120px; line-height: 60px; font-size: 2em !important; font-weight: bold}
      .size--tab-icon {height: 60px; width: 60px}
      .size--side-icon {height: 50px; width: 50px}
      .size--key-icon {height: 75px; width: 75px}
@@ -576,22 +564,6 @@ a.img-contain img {
     align-items: baseline !important;
 }
 
-/* define styling for the tiles in the spinner(spell) tab and the write tab */
-/* use with .wordlist .size--list-icon */
-.tile {
-	border-style: solid;
-	border-width: 1px;
-	color: #2C3E50;
-	text-align: center;
-	border-radius: 5px;
-	box-shadow: 2px 2px 1px #888888;
-    cursor: pointer;
-	margin: 3px !important;
-}
-.tile-vowel {background-color: var(--vowel-tile)}
-.tile-vowel:hover {background-color: var(--vowel-tile--hover)}
-.tile-consonant {background-color: var(--consonant-tile)}
-.tile-consonant:hover {background-color: var(--consonant-tile--hover)}
 
 .center-x {
   margin: 0;

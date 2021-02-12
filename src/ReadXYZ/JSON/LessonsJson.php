@@ -28,7 +28,7 @@ class LessonsJson implements JsonSerializable
      */
     protected function __construct()
     {
-        $this->cachingEnabled = true;
+        $this->cachingEnabled = false;
         $this->baseConstruct('abc_lessons.json', 'lessonId');
         $this->makeMap();
     }
@@ -124,32 +124,47 @@ class LessonsJson implements JsonSerializable
     {
         if ($this->cacheUsed) return;
         $timer = $this->startTimer('creating object' . __CLASS__ . '.');
-        $key = $this->persisted['primaryKey'];
         $ordinal = 0;
         $this->persisted['aliasMap'] = [];
-        foreach ($this->persisted['objects'] as $object) {
+        foreach ($this->persisted['objects'] as $objectX) {
+            $object = clone $objectX;
             $lessonId = $object->lessonId;
-            $object->lessonCode = $lessonId;
-            $object->ordinal = ++$ordinal;
-            $this->persisted['map'][$object->$key] = new Lesson($object);
+            $groupCode = $object->groupCode;
+            $lessonName = $object->lessonName;
+            $alternateNames = $object->alternateNames ?? [];
+            $lesson = new Lesson($object);
+            $lesson->ordinal = ++$ordinal;
+            $this->persisted['map'][$lessonId] = $lesson;
             $this->persisted['aliasMap'][$lessonId] = $lessonId;
-            $this->persisted['groupCodes'][$lessonId] = $object->groupCode;
-            if (isset($object->lessonName)) {
-                $this->persisted['aliasMap'][$object->lessonName] = $lessonId;
-
+            $this->persisted['groupCodes'][$lessonId] = $groupCode;
+            $this->persisted['aliasMap'][$lessonName] = $lessonId;
+            // $this->printWhack();
+            foreach ($alternateNames as $name) {
+                if (empty($name)) continue;
+                $this->persisted['aliasMap'][$name] = $lessonId;
             }
 
-            if (isset($object->alternateNames)) {
-                foreach ($object->alternateNames as $name) {
-                    if (empty($name)) continue;
-                    $this->persisted['aliasMap'][$name] = $lessonId;
-                }
-            }
         }
         $this->createAccordionTemplate();
         $this->stopTimer($timer);
         $this->cacheData();
     }
+
+    // private function printWhack()
+    // {
+    //     $urls = [];
+    //     foreach($this->persisted['map'] as $key => $lesson) {
+    //         foreach($lesson->games as $tab => $games) {
+    //             foreach($games as $game) {
+    //                 if ($game->gameTypeId == "whack-a-mole") {
+    //                     $urls[] = $game->url;
+    //                 }
+    //             }
+    //         }
+    //
+    //     }
+    //     $x = 45;
+    // }
 
     /**
      * create an array of display group and lesson names

@@ -3,14 +3,33 @@
 {# arguments:
 		title
 #}
+{% block titleBar %}
+{% endblock %}
+
 {% block body %}
-	<div class="row d-flex justify-content-between">
-		<div class="h1 mx-auto w-100 p-3">{{ title|raw }}</div>
+	<div id="zoo-header" class="row d-flex justify-content-between">
+		<div  class="h1 mx-auto w-100 p-3">{{ title|raw }}</div>
 	</div>
-	<div class="row d-flex justify-content-start">
+	<div class="row d-flex justify-content-start content">
 		{% for animal in animals %}
 			<img src="{{ animal.fileName }}" alt="{{ animal.friendlyName }}" title=""{{ animal.friendlyName }} class="m-1">
 		{% endfor %}
 	</div>
 
 {% endblock %}
+
+{% block otherStyles %}
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rock Salt">
+	<style>
+	#zoo-header {
+		font-family: "Rock Salt", Times, serif;
+		font-size: 48px;
+		color: var(--readxyz);
+		padding: 5px;
+		margin-bottom: 5vh;
+		text-align: center;
+	 }
+	</style>
+{% endblock %}
+
+

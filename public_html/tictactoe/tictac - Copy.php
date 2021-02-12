@@ -280,7 +280,7 @@ $cat = location::getTicTacToeAnimal($player2);
       <div class="gamePiece__wrapper"><img id="rat4" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
       <div class="gamePiece__wrapper"><img id="rat5" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
     </div>
-    <div id="ticTacToe">
+    <div id="tic-tac-toe">
       <div id="container">
 
         <div id="theboard">

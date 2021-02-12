@@ -32,7 +32,7 @@ class Lesson
     /** @var string[] */
     public ?array       $fluencySentences;
     /** @var stdClass[] */
-    public ?array       $games;
+    public ?array       $games = [];
     /** @var string[] */
     public ?array       $tabNames;
     public ?Spinner     $spinner;
@@ -66,7 +66,7 @@ class Lesson
         $this->lessonName     = $lesson->lessonName;
         $this->alternateNames = $lesson->alternateNames;
         $this->groupCode      = $lesson->groupCode;
-        $this->ordinal        = $lesson->ordinal;
+        $this->ordinal        = $lesson->ordinal ?? 0;
         $this->wordList             = CSV::listToArray($lesson->wordList) ?? [];
         $this->supplementalWordList = CSV::listToArray($lesson->supplementalWordList ?? '') ?? [];
         $this->allWords             = array_merge($this->wordList, $this->supplementalWordList);
@@ -104,8 +104,10 @@ class Lesson
             if ( ! $gameType) {
                 continue;
             }
-            $gameType->url                          = $game->url;
-            $this->games[$gameType->belongsOnTab][] = $gameType;
+            $url = $game->url;
+            $gameType->url                          = $url;
+            $tab = $gameType->belongsOnTab;
+            $this->games[$tab][] = clone $gameType;
         }
         $this->tabNames = [];
         $warmupJson = WarmupsJson::getInstance();

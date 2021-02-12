@@ -30,6 +30,7 @@ inputs:
           font: bold 20px Muli, Century Gothic, sans-serif;
       }
 	</style>
+
 	<div class="row d-flex bg-white justify-content-start mx-2 flex-wrap">
 
 	{# DISPLAY MOST RECENT LESSON IF IT'S IN THE COOKIE #}
@@ -107,3 +108,12 @@ inputs:
 {% endblock body %}
 
 
+{% block otherJS %}
+	<script>
+		$(document).ready(function () {
+			let leftBound = document.getElementById("lesson-accordion").getBoundingClientRect();
+			let rightBound = document.getElementById("next-animal") .getBoundingClientRect();
+			$('.card').css("min-width", (rightBound.right - leftBound.left -25).toString() + "px");
+		});
+	</script>
+{% endblock %}

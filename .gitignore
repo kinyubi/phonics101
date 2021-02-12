@@ -10,6 +10,7 @@
 /var/
 /vendor/
 cache/
+/node_modules/
 
 ###< symfony/framework-bundle ###
 
@@ -26,6 +27,8 @@ cache/
 
 public_html/generated/
 
-###_gsdata_/
+_gsdata_/
 
 *.log
+*.cache
+*.zip

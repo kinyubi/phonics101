@@ -54,7 +54,7 @@ class GroupsJson
     {
         $key = $this->persisted['aliasMap'][$groupTag] ?? '';
         if (empty($key)) return null;
-        return  $this->persisted['map'][$key];
+        return clone  $this->persisted['map'][$key];
     }
 
     /**

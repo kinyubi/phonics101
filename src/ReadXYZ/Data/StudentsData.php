@@ -122,7 +122,6 @@ EOT;
             $query = "UPDATE abc_students SET nextAnimal = nextAnimal + 1, lastAwarded = $time WHERE studentCode = '$studentCode'";
             $this->throwableQuery($query, QueryType::STATEMENT);
             $zooTemplate = new ZooTemplate($studentCode);
-            $zooTemplate->deleteExisting();
             $zooTemplate->createZooPage();
             return strval($index + 1);
         }

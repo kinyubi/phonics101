@@ -65,7 +65,7 @@ class TabTypesJson
     {
         $key = $this->persisted['aliasMap'][$tabId] ?? '';
         if (empty($key)) {return null;}
-        return $this->persisted['map'][$key] ?? null;
+        return clone $this->persisted['map'][$key] ;
     }
 
 

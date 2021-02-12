@@ -8,110 +8,249 @@
     games
 #}
 {% block WriteTab %}
- {% set count = count ?? 3 %}
- {% set color = color ?? 'random' %}
- {% set colorSet = ['red', 'green', 'orangered', 'blue', 'goldenrod'] %}
- {% if color == 'mixed' %}
-   {% set colors = colorSet %}
- {% elseif color == 'random' %}
-   {% set randColor = random(colorSet) %}
-   {% set colors = [randColor, randColor, randColor, randColor, randColor] %}
- {% else %}
-   {% set colors = [color, color, color, color, color] %}
- {% endif %}
+    {% set count = count ?? 3 %}
+    {% set color = color ?? 'random' %}
+    {% set colorSet = ['red', 'green', 'orangered', 'blue', 'goldenrod'] %}
+    {% if color == 'mixed' %}
+        {% set colors = colorSet %}
+    {% elseif color == 'random' %}
+        {% set randColor = random(colorSet) %}
+        {% set colors = [randColor, randColor, randColor, randColor, randColor] %}
+    {% else %}
+        {% set colors = [color, color, color, color, color] %}
+    {% endif %}
 
- <style>
-    .letter-tile {
-        height: clamp(1.5em, 4vw, 3em);
-        width: clamp(1.5em, 4vw, 3em);
-        line-height: clamp(1.5em, 4vw, 3em);
-        font-size: clamp(1em, 5.8vw, 2.2em);
-        margin: 3px;
-        font-weight: bold;
-    }
+    <style>
+        :root {
+            --box-dim: 20vw;
+            --ball-holder-height: 9vw;
+            --tile-holder-height: 7vw;
+            --ball-holder-width: 15vw;
+            --tile-holder-width: 15vw;
+            --tile-dim: 6vw;
+            --tile-font-size: 4vw;
+            --instruct-font-size: 3vw;
+            --tile-margin: 0;
+            --button-width: 18vw;
+            --ball-size: 7.2vw;
+            --table-padding: 1vw;
+        }
+        @media screen and (min-width: 768px) {
+          :root {
+              --box-dim: 200px;
+              --ball-holder-height: 100px;
+              --tile-holder-height: 70px;
+              --ball-holder-width: 150px;
+              --tile-holder-width: 150px;
+              --tile-dim: 3em;
+              --tile-font-size: 2em;
+              --instruct-font-size: 1.2em;
+              --tile-margin: 3px;
+              --button-width: 180px;
+              --ball-size: 80px;
+              --table-padding: 5px;
+          }
+        }
+
+        td {
+            text-align: center;
+            vertical-align: middle;
+            max-width: 98%;
+            max-height: 98%;
+        }
+
+        .box {
+            height: var(--box-dim);
+            width: var(--box-dim);
+            padding: 3px;
+        }
+
+        .box--border {
+            border: 3px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            width: var(--button-width) !important;
+        }
+
+        .instruct-size {
+            font-size: var(--instruct-font-size);
+            line-height: var(--instruct-font-size);
+        }
+
+        table {
+            padding: var(--table-padding);
+            margin: 0;
+        }
+
+        tbody, tr {max-width: 98%; max-height: 98%;}
+
+        .ball--border {
+            border: 3px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: var(--box-dim);
+        }
+
+        .letter-tile {
+            height: var(--tile-dim);
+            min-width: var(--tile-dim);
+            width: fit-content;
+            width: -moz-fit-content;
+            line-height: var(--tile-dim);
+            font-size: var(--tile-font-size);
+            padding: 3px;
+            font-weight: bold;
+        }
 
 
-     .box {height: clamp(70px, 25vw, 210px);width:clamp(70px, 25vw, 210px) ;padding: 3px;}
-     .box__border {border: 3px solid black;display: flex;justify-content: center;align-items: center;}
-     .ball__border {border: 3px solid white;display: flex;justify-content: center;align-items: center;width: clamp(70px, 25vw, 210px)  }
- </style>
- <div class="container bg-white mx-2 pt-1" id="{{ tabId }}-container" style="max-width: 800px; width:95%">
- {#  <div id="write-tab-container" class="container" style="max-width: 600px; width:95%"> #}
-   <div class="row d-flex justify-content-start p-2">
-     <h1 class="my-2 col-12 tac">Sound Boxes</h1>
-   </div>
+        .ballHolder {
+            height: var(--ball-holder-height);
+            width: var(--ball-holder-width);
+            text-align: center;
+        }
 
-   {# ROW -- BUTTONS (Start) #}
-   <div class="row d-flex justify-content-center ">
+        .tileHolder {
+            height: var(--tile-holder-height);
+            width: var(--tile-holder-width);
+            text-align: center;
+            margin: 1px;
+        }
 
-     {# DROPDOWN BUTTON -- COLOR #}
-     <div class="btn-group my-3 mx-1 p-0">
-       <button id="color-button" type="button" class="btn-readxyz dropdown-toggle button-text"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:clamp(66px, 23vw, 200px)">Color
-       </button>
-       <div class="dropdown-menu" aria-labelledby="color-button">
-         <a class="dropdown-item" href="#" onclick="setColor('red')"><i class="fas fa-circle fa-2x" style="color:red"></i></a>
-         <a class="dropdown-item" href="#" onclick="setColor('green')"><i class="fas fa-circle fa-2x" style="color:green"></i> </a>
-         <a class="dropdown-item" href="#" onclick="setColor('orangered')"><i class="fas fa-circle fa-2x" style="color:orangered"></i> </a>
-         <a class="dropdown-item" href="#" onclick="setColor('blue')"><i class="fas fa-circle fa-2x" style="color:blue"></i> </a>
-         <a class="dropdown-item" href="#" onclick="setColor('goldenrod')"><i class="fas fa-circle fa-2x" style="color:goldenrod"></i> </a>
-         <div class="dropdown-divider"></div>
-         <a class="dropdown-item" onclick="setColor('mixed')" href="#">Multi-color</a>
-       </div>
-     </div>
 
-     {# DROPDOWN BUTTON -- COUNT #}
-     <div class="btn-group  my-3 mx-1 p-0 ">
-       <button id="count-button" type="button" class="btn-readxyz dropdown-toggle button-text"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:clamp(66px, 23vw, 200px)">Count
-       </button>
-       <div class="dropdown-menu" aria-labelledby="count-button">
-         <a class="dropdown-item" href="#" onclick="setCount(3)"><span class="h3">3</span></a>
-         <a class="dropdown-item" href="#" onclick="setCount(4)"><span class="h3">4</span></a>
-         <a class="dropdown-item" href="#" onclick="setCount(5)"><span class="h3">5</span></a>
-       </div>
-     </div>
+        /* define styling for the tiles in the spinner(spell) tab and the write tab */
+        /* use with .wordlist .size--list-icon */
+        .tile {
+        	border-style: solid;
+        	border-width: 1px;
+        	color: #2C3E50;
+        	text-align: center;
+        	border-radius: 5px;
+        	box-shadow: 2px 2px 1px #888888;
+            cursor: pointer;
+        	margin: 3px !important;
+            padding:3px !important;
+        }
+        .tile-vowel {background-color: var(--vowel-tile)}
+        .tile-vowel:hover {background-color: var(--vowel-tile--hover)}
+        .tile-consonant {background-color: var(--consonant-tile)}
+        .tile-consonant:hover {background-color: var(--consonant-tile--hover)}
 
-     {# BUTTON -- RESET #}
-     <div class="btn-group  my-3 mx-1 p-0 ">
-       <button type="button" class="btn-readxyz px-2 button-text" onclick="reload()" style="border:none; width:clamp(66px, 23vw, 200px);">Reset</button>
-     </div>
-   </div>
-   {# ROW -- BUTTONS (End) #}
+        .start-hidden {visibility: hidden}
 
-   {# ROW -- RECEPTACLE BOXES (Start) #}
-   <div class="row d-flex justify-content-center flex-nowrap mb-2 ">
-     {% for i in range(0,count - 1) %}
-       <div id="box-{{ i }}" class="box box__border "></div>
-     {% endfor %}
-   </div>
-   {# ROW -- RECEPTACLE BOXES (End) #}
+    </style>
+    <div class="container bg-white mx-2 pt-1" id="{{ tabId }}-container" style="max-width: 800px; width:95%">
+        {# <div id="write-tab-container" class="container" style="max-width: 600px; width:95%"> #}
+        <div class="row d-flex justify-content-start p-2">
+            <h1 class="my-1 col-12 tac">Sound Boxes</h1>
+        </div>
 
-   {# ROW -- BALLS (Start) #}
-   <div class="row d-flex justify-content-center flex-nowrap">
-     {% for i in range(0,count -1) %}
-       <div class="ball__border">
-         <div id="ball-{{ i }}" class="m-2 pt-1" onclick="moveBall({{ i }})">
-           <i class="fas fa-circle  tac" style="color:{{ colors[loop.index0] }}; font-size: clamp(35px, 13vw, 90px);"></i>
-         </div>
-       </div>
-     {% endfor %}
-   </div>
-   {# ROW -- BALLS (End) #}
+        {# ROW -- BUTTONS (Start) #}
+        <div class="row d-flex justify-content-center ">
 
-   {# ROW -- INSTRUCTIONS #}
-   <div class="row d-flex justify-content-center" style="font-size: clamp(1em, 2vh, 2em);">
-       Click or touch the ball to move it into the box.
-   </div>
+            {# DROPDOWN BUTTON -- COLOR #}
+            <div class="btn-group my-3 mx-1 p-0 dropdown-">
+                <button id="color-button" type="button" class="btn-readxyz dropdown-toggle button-text" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="border:none;">Color
+                </button>
+                <div class="dropdown-menu" aria-labelledby="color-button">
+                    <a class="dropdown-item color-click" href="#" >
+                        <i class="fas fa-circle fa-2x" style="color:red"></i>
+                    </a>
+                    <a class="dropdown-item color-click" href="#" >
+                        <i class="fas fa-circle fa-2x" style="color:green"></i>
+                    </a>
+                    <a class="dropdown-item color-click" href="#" >
+                        <i class="fas fa-circle fa-2x" style="color:orangered"></i>
+                    </a>
+                    <a class="dropdown-item color-click" href="#" >
+                        <i class="fas fa-circle fa-2x" style="color:blue"></i>
+                    </a>
+                    <a class="dropdown-item color-click" href="#" >
+                        <i class="fas fa-circle fa-2x" style="color:goldenrod"></i>
+                    </a>
+                </div>
+            </div>
 
-   <div class="row d-flex flex-wrap py-3 pl-3">
-     {% for letter in soundLetters %}
-        {% set vc = (letter|first in ['a','e','i','o','u']) ? 'tile-vowel' : 'tile-consonant' %}
-          <div class="letter-tile tile  {{ vc }}" style="margin:3px !important;">{{ letter }}</div>
-     {% endfor %}
-   </div>
-   <div id="soundbox-lesson-name" style="display: none">{{ lesson.lessonId }}</div>
- </div>
+            {# DROPDOWN BUTTON -- COUNT #}
+            <div class="btn-group  my-3 mx-1 p-0 ">
+                <button id="count-button" type="button" class="btn-readxyz dropdown-toggle button-text"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none; width:var(--button-width)">Count
+                </button>
+                <div class="dropdown-menu" aria-labelledby="count-button">
+                    <a class="dropdown-item count-click" href="#"><span class="h3">3</span></a>
+                    <a class="dropdown-item count-click" href="#"><span class="h3">4</span></a>
+                    <a class="dropdown-item count-click" href="#"><span class="h3">5</span></a>
+                </div>
+            </div>
+
+            {# BUTTON -- RESET #}
+            <div class="btn-group  my-3 mx-1 p-0 ">
+                <button type="button" class="btn-readxyz px-2 button-text" onclick="reload()" style="border:none; width:var(--button-width);">Reset</button>
+            </div>
+        </div>
+        {# ROW -- BUTTONS (End) #}
+
+        {# ROW -- RECEPTACLE BOXES (Start) #}
+        <div class="row d-flex justify-content-center">
+            {% for i in range(0,count - 1) %}
+                {% set letterType = (i == 1) ? 'vowel' : 'consonant' %}
+                <table id="big-box-{{ i }}" class="box box--border {{ letterType }}">
+                    <tr id="ball-row-{{ i }}" class="ballHolder">
+                        <td id="ball-holder-{{ i }}" colspan="2" class="ballHolder"
+                            style="min-width: 95%; min-height: 47%; border-bottom: 1px dotted lightgrey ">
+
+                        </td>
+                    </tr>
+                    <tr id="tile-row-{{ i }}">
+                        <td id="tile-cell-{{ i }}"
+                            style="border-right: 1px dotted lightgrey">
+                            <div id="tile-holder-{{ i }}" class="tileHolder  mx-auto tac">
+                                <div id="box-tile-{{ i }}" class="letter-tile tile tile-consonant mb-2"
+                                     style="margin:3px !important; visibility: hidden">
+                                    <div id="letter-{{ i }}" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">{{ letter }}</div>                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            {% endfor %}
+        </div>
+        {# ROW -- RECEPTACLE BOXES (End) #}
+        <div id="tile-instructions" class="row d-flex justify-content-center instruct-size mx-3 my-1" style="visibility: hidden">
+        To add the letter, tap the tile in the box. To replace the letter tap in the box but not on the tile.
+        </div>
+        {# ROW -- BALLS (Start) #}
+        <div class="row d-flex justify-content-center flex-nowrap">
+            {% for i in range(0,count -1) %}
+                <div class="ball--border">
+                    <div id="ball-{{ i }}" class="m-0 pt-1 ball" onclick="soundBox.moveBall({{ i }})">
+                        <i class="fas fa-circle  tac" style="font-size: var(--ball-size);"></i>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {# ROW -- BALLS (End) #}
+
+        {# ROW -- INSTRUCTIONS #}
+        <div class="row d-flex justify-content-center instruct-size">
+            Click a ball or a tile to move it into the box.
+        </div>
+
+        <div class="row d-flex flex-wrap py-3 pl-3">
+            {% for letter in soundLetters %}
+                {% set vc = (letter|first in ['a','e','i','o','u']) ? 'tile-vowel' : 'tile-consonant' %}
+                <div id="tile-{{ letter }}" class="letter-tile tile mb-2 {{ vc }}"
+                     style="margin:3px !important;" onclick="soundBox.tileClicked('{{ letter }}')">
+                    <div id="cvc-{{ i }}" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">{{ letter }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="sound-box-lesson-name" style="display: none">{{ lesson.lessonId }}</div>
+    </div>
 
 {% endblock WriteTab %}
 
