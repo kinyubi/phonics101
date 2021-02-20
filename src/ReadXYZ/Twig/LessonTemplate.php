@@ -66,6 +66,7 @@ class LessonTemplate
         if ($initialTab) {
             $this->initialTabName = $initialTab;
         }
+
         $sideNote              = SideNote::getInstance();
         $args                  = [];
         $args['students']      = Views::getInstance()->getStudentNamesForUser($this->trainerCode);
@@ -79,6 +80,7 @@ class LessonTemplate
         $args['learningCurve'] = $sideNote->getLearningCurveHTML();
         $args['masteredWords'] = (new WordMasteryData())->getMasteredWords();
         $args['this_crumb'] = $this->lesson->lessonName;
+        $args['soundBox'] = $this->getSoundBoxCookie();
         $args['animals']       = ZooAnimalsJson::getInstance()->getStudentAnimalSet(Session::getStudentCode());
 
 
@@ -100,6 +102,14 @@ class LessonTemplate
         }
         $this->page->addArguments($args);
         $this->page->displayLesson();
+    }
+
+    private function getSoundBoxCookie(): object
+    {
+        $rawCookie = $_COOKIE['readxyz_sound_box'] ?? '3blue';
+        return (object) [
+            'count' => intval($rawCookie[0]), 'color' => substr($rawCookie, 1)
+        ];
     }
 
 }

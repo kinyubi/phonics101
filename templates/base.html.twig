@@ -98,7 +98,7 @@ otherJS
         {# TITLE BAR - START #}
         <div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2" id="readxyz-title">
             {# title bar: logo #}
-            <div class="ml-0 float-left col-3 bg-image--title"></div>
+            <div class="w-25 bg-image--title"></div>
             {# title bar: nav items #}
             {% for title, link in navBar %}
                 <a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
@@ -129,16 +129,15 @@ otherJS
                 {% set zooClass = (studentName is empty) ?  '' : 'zoo-animals' %}
                 {% set zooUrl = (zooClass is empty) ? '#' : zooUrl %}
                 {% set dim = smaller ? '40px' : '75px' %}
-                {% set anchorStyle = 'height:' ~ dim ~ ';width:' ~ dim %}
-                {% set imgStyle = 'style="width:90%"' %}
-                <a id="current-animal" class="img-contain col-1 {{ zooClass }}" href="{{ zooUrl }}" {{ anchorStyle }}>
-                    <img src="{{ animals[0].fileName }}" alt="{{ animals[0].friendlyName }}" title="See my zoo" {{ imgStyle }}">
+                <a id="current-animal" class="img-contain col-1 {{ zooClass }}" href="{{ zooUrl }}" >
+                    <img src="{{ animals[0].fileName }}" alt="{{ animals[0].friendlyName }}"
+                         title="See my zoo" class="mw-100 mh-100">
                 </a>
 
                 {% set titleText = 'Award the ' ~ animals[1].friendlyName ~ ' to ' ~ studentName %}
                 <a id="next-animal" class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" {{ anchorStyle }}>
                     <img src="{{ animals[1].grayFileName }}" alt="{{ animals[1].friendlyName }}"
-                         title="{{ titleText }}" {{ imgStyle }}>
+                         title="{{ titleText }}"  class="mw-100 mh-100">
                 </a>
                 {# dialog(id, title, text, clickTarget, doneFunc) #}
                 {{ dialog("award-confirm", "Award Ceremony", titleText, '/handler/award', 'noAward') }}

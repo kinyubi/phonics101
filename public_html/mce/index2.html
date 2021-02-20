@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+  <title>Testing</title>
+
+
+
+  <link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
+
+  <script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
+
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/phonics.css" media="all">
+
+  <script src="https://cdn.tiny.cloud/1/lfbb42hq8b49iuh4k4tiwqjvz9vcsnvsdp8596cwcavrbo6d/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+  <script>
+    tinymce.init({
+      selector: '.edit-me',
+      width: 1200,
+      height: 900,
+      plugins: [
+        'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+        'table emoticons template paste help'
+      ],
+      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | link image | print preview media fullpage | ' +
+        'forecolor backcolor emoticons | help',
+      menu: {
+        favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+      },
+      menubar: 'favs file edit view insert format tools table help',
+      content_css: "/css/all.css?"  + new Date().getTime()
+    });
+  </script>
+
+  <style>
+    :root {
+      --box-dim: 20vw;
+      --ball-holder-height: 9vw;
+      --tile-holder-height: 7vw;
+      --ball-holder-width: 15vw;
+      --tile-holder-width: 15vw;
+      --tile-dim: 6vw;
+      --tile-font-size: 4vw;
+      --instruct-font-size: 3vw;
+      --tile-margin: 0;
+      --button-width: 18vw;
+      --ball-size: 7.2vw;
+      --table-padding: 1vw;
+    }
+
+    @media screen and (min-width: 768px) {
+      :root {
+        --box-dim: 130px;
+        --ball-holder-height: 60px;
+        --tile-holder-height: 40px;
+        --ball-holder-width: 110px;
+        --tile-holder-width: 110px;
+        --tile-dim: 2em;
+        --tile-font-size: 1.4em;
+        --instruct-font-size: 1em;
+        --tile-margin: 2px;
+        --button-width: 120px;
+        --ball-size: 40px;
+        --table-padding: 4px;
+      }
+    }
+
+    td {
+      text-align: center;
+      vertical-align: middle;
+      max-width: 98%;
+      max-height: 98%;
+    }
+
+    .box {
+      height: var(--box-dim);
+      width: var(--box-dim);
+      padding: 3px;
+    }
+
+    .box--border {
+      border: 3px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      width: var(--button-width) !important;
+    }
+
+    .instruct-size {
+      font-size: var(--instruct-font-size);
+      line-height: var(--instruct-font-size);
+    }
+
+    table {
+      padding: var(--table-padding);
+      margin: 0;
+    }
+
+    tbody, tr {max-width: 98%; max-height: 98%;}
+
+    .ball--border {
+      border: 3px solid white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: var(--box-dim);
+    }
+
+    .letter-tile {
+      height: var(--tile-dim);
+      min-width: var(--tile-dim);
+      width: fit-content;
+      width: -moz-fit-content;
+      line-height: var(--tile-dim);
+      font-size: var(--tile-font-size);
+      padding: 3px;
+      font-weight: bold;
+    }
+
+
+    .ballHolder {
+      height: var(--ball-holder-height);
+      width: var(--ball-holder-width);
+      text-align: center;
+    }
+
+    .tileHolder {
+      height: var(--tile-holder-height);
+      width: var(--tile-holder-width);
+      text-align: center;
+      margin: 1px;
+    }
+
+    .boxTile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .boxLetter {
+      flex-shrink: 0;
+    }
+
+
+    /* define styling for the tiles in the spinner(spell) tab and the write tab */
+    /* use with .wordlist .size--list-icon */
+    .tile {
+      border-style: solid;
+      border-width: 1px;
+      color: #2C3E50;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 2px 2px 1px #888888;
+      cursor: pointer;
+      margin: 3px !important;
+      padding: 3px !important;
+    }
+
+    .tile-vowel {background-color: var(--vowel-tile)}
+
+    .tile-vowel:hover {background-color: var(--vowel-tile--hover)}
+
+    .tile-consonant {background-color: var(--consonant-tile)}
+
+    .tile-consonant:hover {background-color: var(--consonant-tile--hover)}
+
+    .start-hidden {visibility: hidden}
+
+  </style>
+
+  <script src="/js/jquery-3.5.1.js"></script>
+  <script src="/js/jquery.colorbox.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap4-custom/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+  <script src="/js/phonics.js"></script>
+  <script src="/js/timers.js"></script>
+  <script src="/js/sound_box.js"></script>
+
+</head>
+
+<body>
+
+
+<div class="m-0 p-0 p-sm-1 p-md-3 p-lg-5 container-fluid" id="base-container" style="max-width: 950px;">
+
+  <div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2" id="readxyz-title">
+    <div class="ml-0 float-left col-3 bg-image--title"></div>
+
+    <div class="my-auto mx-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb h6">
+          <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color: #6c757d;">Admin</a></li>
+          <li class="breadcrumb-item"><a href="/studentlist">students</a></li>
+          <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color: #6c757d;">Annie</a></li>
+          <li class="breadcrumb-item"><a href="/lessons">lessons</a></li>
+          <li class="breadcrumb-item active " aria-current="page">ap</li>
+        </ol>
+      </nav>
+    </div>
+
+    <a id="current-animal" class="img-contain col-1 zoo-animals cboxElement" href="/generated/S5c9e79a6534ca0Z123456789_000_zoo.html" style="height:75px;width:75px">
+      <img src="/images/animals/named/dog.jpg" alt="Dog" title="See my zoo" style="width:90%">
+    </a>
+
+    <a id="next-animal" class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" style="height:75px;width:75px">
+      <img src="/images/animals/gray/cat_gray.jpg" alt="Cat" title="Award the Cat to Annie" style="width:90%">
+    </a>
+    <!-- Modal -->
+    <div class="modal fade" id="award-confirm" tabindex="-1" role="dialog" aria-labelledby="award-confirmLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Award Ceremony</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Award the Cat to Annie</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-readred" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-readxyz yes" data-dismiss="modal">Proceed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $('.yes').click(function () {
+          $.post("/handler/award").done(function (data) {
+            noAward(data);
+          });
+        });
+      });
+    </script>
+
+
+  </div>
+
+
+  <div class="container-fluid p-0 bg-white" id="lesson-container">
+
+    <div class="row d-flex flex-lg-nowrap justify-content-start" id="tabs-container">
+      <div class="tab-content w-100" id="myTabContent">
+
+        <div id="write-body" class="tab-pane fade show active edit-me" role="tabpanel" aria-labelledby="write-tab">
+
+          <div class="container bg-white mx-2 pt-1" id="write-container" style="max-width: 800px; width:95%">
+            <div class="row d-flex justify-content-start p-2">
+              <h1 class="my-1 col-12 tac">Sound Boxes</h1>
+            </div>
+
+            <div class="row d-flex justify-content-center ">
+
+              <div class="btn-group my-3 mx-1 p-0 dropdown-">
+                <button id="color-button" type="button" class="btn-readxyz dropdown-toggle button-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none;">Color
+                </button>
+                <div class="dropdown-menu" aria-labelledby="color-button">
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:red" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:green" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:orangered" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:blue" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:goldenrod" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="btn-group  my-3 mx-1 p-0 ">
+                <button id="count-button" type="button" class="btn-readxyz dropdown-toggle button-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="border:none; width:var(--button-width)">Count
+                </button>
+                <div class="dropdown-menu" aria-labelledby="count-button">
+                  <a class="dropdown-item count-click" href="#"><span class="h3">3</span></a>
+                  <a class="dropdown-item count-click" href="#"><span class="h3">4</span></a>
+                  <a class="dropdown-item count-click" href="#"><span class="h3">5</span></a>
+                </div>
+              </div>
+
+              <div class="btn-group  my-3 mx-1 p-0 ">
+                <button type="button" class="btn-readxyz px-2 button-text" onclick="reload()" style="border:none; width:var(--button-width);">Reset</button>
+              </div>
+            </div>
+
+            <div class="row d-flex justify-content-center">
+              <table id="big-box-0" class="box box--border consonant">
+                <tbody>
+                <tr id="ball-row-0" class="ballHolder">
+                  <td id="ball-holder-0" colspan="2" class="ballHolder" style="min-width: 95%; min-height: 47%; border-bottom: 1px dotted lightgrey ">
+
+                  </td>
+                </tr>
+                <tr id="tile-row-0">
+                  <td id="tile-cell-0" style="border-right: 1px dotted lightgrey">
+                    <div id="tile-holder-0" class="tileHolder boxTile">
+                      <div id="box-tile-0" class="letter-tile tile tile-consonant mb-2 boxLetter mx-auto" style="margin:3px !important; visibility: hidden">
+                        <div id="letter-0" class="mx-auto" style="vertical-align: center; line-height: var(--tile-font-size)"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <table id="big-box-1" class="box box--border vowel">
+                <tbody>
+                <tr id="ball-row-1" class="ballHolder">
+                  <td id="ball-holder-1" colspan="2" class="ballHolder" style="min-width: 95%; min-height: 47%; border-bottom: 1px dotted lightgrey ">
+
+                  </td>
+                </tr>
+                <tr id="tile-row-1">
+                  <td id="tile-cell-1" style="border-right: 1px dotted lightgrey">
+                    <div id="tile-holder-1" class="tileHolder boxTile">
+                      <div id="box-tile-1" class="letter-tile tile tile-consonant mb-2 boxLetter mx-auto" style="margin:3px !important; visibility: hidden">
+                        <div id="letter-1" class="mx-auto" style="vertical-align: center; line-height: var(--tile-font-size)"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <table id="big-box-2" class="box box--border consonant">
+                <tbody>
+                <tr id="ball-row-2" class="ballHolder">
+                  <td id="ball-holder-2" colspan="2" class="ballHolder" style="min-width: 95%; min-height: 47%; border-bottom: 1px dotted lightgrey ">
+
+                  </td>
+                </tr>
+                <tr id="tile-row-2">
+                  <td id="tile-cell-2" style="border-right: 1px dotted lightgrey">
+                    <div id="tile-holder-2" class="tileHolder boxTile">
+                      <div id="box-tile-2" class="letter-tile tile tile-consonant mb-2 boxLetter mx-auto" style="margin:3px !important; visibility: hidden">
+                        <div id="letter-2" class="mx-auto" style="vertical-align: center; line-height: var(--tile-font-size)"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="tile-instructions" class="row d-flex justify-content-center instruct-size mx-3 my-1" style="visibility: hidden">
+              To add the letter, tap the tile in the box. To replace the letter tap in the box but not on the tile.
+            </div>
+            <div id="edit-me" class="row d-flex justify-content-center flex-nowrap">
+              <div class="ball--border">
+                <div id="ball-0" class="m-0 pt-1 ball" onclick="soundBox.moveBall(0)" style="color: green;">
+                  <i class="fas fa-circle  tac" style="font-size: var(--ball-size);" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="ball--border">
+                <div id="ball-1" class="m-0 pt-1 ball" onclick="soundBox.moveBall(1)" style="color: green;">
+                  <i class="fas fa-circle  tac" style="font-size: var(--ball-size);" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="ball--border">
+                <div id="ball-2" class="m-0 pt-1 ball" onclick="soundBox.moveBall(2)" style="color: green;">
+                  <i class="fas fa-circle  tac" style="font-size: var(--ball-size);" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="row d-flex justify-content-center instruct-size">
+              Click a ball or a tile to move it into the box.
+            </div>
+
+            <div class="row d-flex flex-wrap py-3 pl-3">
+              <div id="tile-a" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('a')">
+                <div id="cvc-a" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">a</div>
+              </div>
+              <div id="tile-b" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('b')">
+                <div id="cvc-b" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">b</div>
+              </div>
+              <div id="tile-c" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('c')">
+                <div id="cvc-c" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">c</div>
+              </div>
+              <div id="tile-d" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('d')">
+                <div id="cvc-d" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">d</div>
+              </div>
+              <div id="tile-e" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('e')">
+                <div id="cvc-e" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">e</div>
+              </div>
+              <div id="tile-f" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('f')">
+                <div id="cvc-f" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">f</div>
+              </div>
+              <div id="tile-g" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('g')">
+                <div id="cvc-g" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">g</div>
+              </div>
+              <div id="tile-h" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('h')">
+                <div id="cvc-h" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">h</div>
+              </div>
+              <div id="tile-i" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('i')">
+                <div id="cvc-i" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">i</div>
+              </div>
+              <div id="tile-j" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('j')">
+                <div id="cvc-j" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">j</div>
+              </div>
+              <div id="tile-k" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('k')">
+                <div id="cvc-k" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">k</div>
+              </div>
+              <div id="tile-l" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('l')">
+                <div id="cvc-l" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">l</div>
+              </div>
+              <div id="tile-m" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('m')">
+                <div id="cvc-m" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">m</div>
+              </div>
+              <div id="tile-n" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('n')">
+                <div id="cvc-n" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">n</div>
+              </div>
+              <div id="tile-o" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('o')">
+                <div id="cvc-o" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">o</div>
+              </div>
+              <div id="tile-p" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('p')">
+                <div id="cvc-p" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">p</div>
+              </div>
+              <div id="tile-q" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('q')">
+                <div id="cvc-q" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">q</div>
+              </div>
+              <div id="tile-r" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('r')">
+                <div id="cvc-r" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">r</div>
+              </div>
+              <div id="tile-s" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('s')">
+                <div id="cvc-s" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">s</div>
+              </div>
+              <div id="tile-t" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('t')">
+                <div id="cvc-t" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">t</div>
+              </div>
+              <div id="tile-u" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('u')">
+                <div id="cvc-u" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">u</div>
+              </div>
+              <div id="tile-v" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('v')">
+                <div id="cvc-v" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">v</div>
+              </div>
+              <div id="tile-w" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('w')">
+                <div id="cvc-w" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">w</div>
+              </div>
+              <div id="tile-x" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('x')">
+                <div id="cvc-x" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">x</div>
+              </div>
+              <div id="tile-y" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('y')">
+                <div id="cvc-y" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">y</div>
+              </div>
+              <div id="tile-z" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('z')">
+                <div id="cvc-z" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">z</div>
+              </div>
+            </div>
+            <div id="sound-box-lesson-name" style="display: none">ap</div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    $(document).ready(function () {
+      $('.modal-backdrop').removeClass("modal-backdrop");
+      $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
+
+      $(window).resize(function () {
+        setScreenCookie();
+      });
+
+      $(".ajax").colorbox();
+      $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
+      $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
+      $(".inline").colorbox({inline: true, width: "50%"});
+      $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
+      $(".zoo-animals").colorbox({
+        iframe: true, innerWidth: "90%", maxWidth: "900px", innerHeight: "100%", maxHeight: "700px",
+        top: 20, overlayClose: false, scrolling: true
+      });
+      $(".zoo-animals-sm").colorbox({
+        iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
+        top: 20, overlayClose: false, scrolling: true
+      });
+      $(".tic-tac-toe").colorbox({
+        iframe: true, innerWidth: "660px", maxWidth: "95%", innerHeight: "660px", maxHeight: "90%",
+        top: 20, overlayClose: false, scrolling: false
+      });
+      // $(".tic-tac-toe").colorbox({
+      //     iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "760px",
+      //     top: 20, overlayClose: false, scrolling: false
+      // });
+
+      $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", width: "750px", height: "540px"});
+      $(".sound-box").colorbox({
+        iframe: true, scrolling: false, overlayClose: false, width: "450px", height: "400px"
+      });
+
+
+      $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
+
+      $(document).bind('cbox_open', function () {
+        $('html').addClass("body__scroll_disable");
+      }).bind('cbox_cleanup', function () {
+        $('html').removeClass("body__scroll_disable");
+      });
+
+    });
+
+  </script>
+
+
+  <div id="cboxOverlay" style="display: none;"></div>
+  <div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
+    <div id="cboxWrapper">
+      <div>
+        <div id="cboxTopLeft" style="float: left;"></div>
+        <div id="cboxTopCenter" style="float: left;"></div>
+        <div id="cboxTopRight" style="float: left;"></div>
+      </div>
+      <div style="clear: left;">
+        <div id="cboxMiddleLeft" style="float: left;"></div>
+        <div id="cboxContent" style="float: left;">
+          <div id="cboxTitle" style="float: left;"></div>
+          <div id="cboxCurrent" style="float: left;"></div>
+          <button type="button" id="cboxPrevious"></button>
+          <button type="button" id="cboxNext"></button>
+          <button type="button" id="cboxSlideshow"></button>
+          <div id="cboxLoadingOverlay" style="float: left;"></div>
+          <div id="cboxLoadingGraphic" style="float: left;"></div>
+        </div>
+        <div id="cboxMiddleRight" style="float: left;"></div>
+      </div>
+      <div style="clear: left;">
+        <div id="cboxBottomLeft" style="float: left;"></div>
+        <div id="cboxBottomCenter" style="float: left;"></div>
+        <div id="cboxBottomRight" style="float: left;"></div>
+      </div>
+    </div>
+    <div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div>
+  </div>
+</div>
+</body>
+</html>

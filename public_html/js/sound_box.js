@@ -6,10 +6,18 @@ let soundBox = {
     count: 3,
     tileLetter: '',
 
-    moveBall: function(num) {
-        let ball = document.getElementById('ball-' + num.toString());
-        let box = document.getElementById('ball-holder-' + num.toString());
-        box.appendChild(ball);
+    moveLowerBall: function(num) {
+        let lowerBall = document.getElementById('ball-' + num.toString());
+        let upperBall = document.getElementById('uball-' + num.toString());
+        lowerBall.style.visibility = "hidden";
+        upperBall.style.visibility = "visible";
+    },
+
+    moveUpperBall: function(num) {
+        let lowerBall = document.getElementById('ball-' + num.toString());
+        let upperBall = document.getElementById('uball-' + num.toString());
+        lowerBall.style.visibility = "visible";
+        upperBall.style.visibility = "hidden";
     },
 
     tileClicked: function(letter) {
@@ -18,50 +26,28 @@ let soundBox = {
         instructions.style.visibility = "visible";
     },
 
-    boxClicked: function(e) {
-        let me = e.target;
-        let id = me.id;
-        let idNum = id.charAt(id.length-1);
-        try {
-            if(soundBox.tileLetter !== '') {
-                let boxTile = document.getElementById(("box-tile-" + idNum));
-                let letter = soundBox.tileLetter;
-                soundBox.tileLetter = "";
-                boxTile.style.visibility = "visible";
+    erase: function (idNum) {
+        let letterTile = document.getElementById(("box-letters-" + idNum));
+        letterTile.innerText = '';
+    },
 
-                if (id.startsWith("big-box")) {
-                    boxTile.innerText = letter;
-                    return false;
-                } else if (id.startsWith("ball-row")) {
-                    boxTile.innerText = letter;
-                    return false;
-                } else if (id.startsWith("ball-holder")) {
-                    boxTile.innerText = letter;
-                    return false;
-                } else if (id.startsWith("tile-row")) {
-                    boxTile.innerText = letter;
-                    return false;
-                } else if (id.startsWith("tile-cell")) {
-                    boxTile.innerText = letter;
-                    return false;
-                } else if (id.startsWith("tile-holder")) {
-                    boxTile.innerText = letter;
-                    return false;
-                } else if (id.startsWith("box-tile")) {
-                    let tileText = boxTile.innerText;
-                    if (tileText.length > 2) return false;
-                    boxTile.innerText = tileText + letter;
-                    return false;
-                } else if (id.startsWith("letter")) {
+    exchange: function(idNum) {
+        let letterTile = document.getElementById(("box-letters-" + idNum));
+        const instructions = document.getElementById("tile-instructions");
+        letterTile.innerText = soundBox.tileLetter;
+        instructions.style.visibility = "hidden";
+        soundBox.tileLetter = "";
+    },
 
-                }
-            }
-        } catch (err) {
-            console.error("rats", err.message);
-        } finally {
-            const instructions = document.getElementById("tile-instructions");
-            instructions.style.visibility = "hidden";
-        }
+    appendLetter: function(idNum) {
+        let letterTile = document.getElementById(("box-letters-" + idNum));
+        let tileText = letterTile.innerText;
+        let letter = soundBox.tileLetter;
+        soundBox.tileLetter = "";
+        const instructions = document.getElementById("tile-instructions");
+        instructions.style.visibility = "hidden";
+        if (tileText.length > 3) return ;
+        letterTile.innerText = tileText + letter;
     },
 
     writeCookie: function() {
@@ -146,10 +132,6 @@ $(document).ready(function () {
     let countButtons = document.getElementsByClassName("count-click");
     for (let el of countButtons) {
         el.addEventListener('click', soundBox.setCount, false);
-    }
-    let boxes = document.getElementsByClassName("box");
-    for (let el of boxes) {
-        el.addEventListener('click', soundBox.boxClicked, false);
     }
 
 });

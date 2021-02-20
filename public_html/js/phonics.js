@@ -39,6 +39,10 @@ function enableScroll() {
     document.body.classList.remove("body__scroll_disable");
 }
 
+function eraseSpellBox() {
+    $("#spinResult").html("");
+}
+
 // ====================================================
 // Sets a cookie to give PHP screen and window size
 // ====================================================

@@ -1,38 +1,36 @@
-
 {# inputs
   tabId
   tabInfo
   lesson
 #}
 {% block MasteryTab %}
-  {% from "macros.html.twig" import tabHeader  %}
-  <div class="container-fluid bg-white" id="{{ tabId }}-container">
-    <div class="row  d-flex flex-nowrap  m-2 justify-content-start">
-      <div id="{{ tabId }}-main" class="col-9">
-        {{ tabHeader(tabInfo) }}
-        <div class="row">
-          <form id="masteryform" name="masteryform" method="POST" action="/">
-            <div class="row d-flex flex-wrap ">
-              {% for word in lesson.wordLists['mastery'] %}
-                {% set checked = (word in masteredWords) ? 'checked' : '' %}
-                <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
-                  <input type="checkbox" name="word1[]" class="size--list-icon "
-                         id="wordId{{ loop.index }}"
-                         value="{{ word }}" {{ checked }}/>
-                  <label class="mx-2 wordlist" for="wordId{{ loop.index }}">{{ word }}</label>
-                </div>
-              {% endfor %}
-              <input type="hidden" name="wordlist" value="{{ lesson.allWords|join(',') }}"/>
-              <input type="hidden" name="handler" value="mastery" />
-            </div>
-          </form>
-        </div>
-      </div>
-      <div id="{{ tabId }}-sidebar" class="col-3 mx-1 ">
-        {{ block('SideBar', 'sidebar.html.twig') }}
-      </div>
-    </div>
+    {% from "macros.html.twig" import tabHeader %}
+    <div class="container-fluid bg-white" id="{{ tabId }}-container">
+        <div class="row  d-flex flex-nowrap  m-2 justify-content-start">
+            <div id="{{ tabId }}-main" class="col col-9">
+                {{ tabHeader(tabInfo) }}
 
-  </div>
+                <form id="masteryform" name="masteryform" method="POST" action="/">
+                    <div class="row d-flex justify-content-start">
+                        {% for word in lesson.wordLists['mastery'] %}
+                            {% set checked = (word in masteredWords) ? 'checked' : '' %}
+                            <div class="checkbox col-6  mt-1" style="vertical-align: baseline">
+                                <input type="checkbox" name="word1[]" class="size--list-icon "
+                                       id="wordId{{ loop.index }}" value="{{ word }}" {{ checked }}/>
+                                <label class="mx-2 wordlist" for="wordId{{ loop.index }}">{{ word }}</label>
+                            </div>
+                        {% endfor %}
+                        <input type="hidden" name="wordlist" value="{{ lesson.allWords|join(',') }}"/>
+                        <input type="hidden" name="handler" value="mastery"/>
+                    </div>
+                </form>
+
+            </div>
+            <div id="{{ tabId }}-sidebar" class="col-3 mx-1 ">
+                {{ block('SideBar', 'sidebar.html.twig') }}
+            </div>
+        </div>
+
+    </div>
 
 {% endblock MasteryTab %}

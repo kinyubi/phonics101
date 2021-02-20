@@ -16,26 +16,19 @@
       {# main column 75% wide #}
       <div class="col-9">
         {{ tabHeader(tabInfo) }}
-        <div class="row d-flex flex-nowrap" >
+        <div class="row d-flex flex-nowrap justify-content-between" >
 
           {# Prefix letters column #}
           {% if lesson.spinner.prefixList|default %}
           <div class="col">
-            <div class="row ">
+            <div class="row d-flex justify-content-center w-100">
               <div class="h3 py-3 tac col-12 d-sm-block d-none" role="heading">First</div>
             </div>
-            <div class="row ">
-              <div class="d-flex flex-wrap align-items-center tac "
-                   role="group" data-toggle="tooltip" data-placement="top"
-                   title="Select a letter from each group to make a word.">
+            <div class="row" >
                 {% for letter in lesson.spinner.prefixList %}
                   {% set clickFunc =  "WSpin.wordSpinner('p','" ~ letter ~ "')" %}
-                  <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button"
-                          onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">
-                    {{ letter }}
-                  </button>
+                  <div class="tile tile-consonant" onclick="{{ clickFunc }}">{{ letter }}</div>
                 {% endfor %}
-              </div>
             </div>
 
           </div>
@@ -43,19 +36,15 @@
 
           {# Vowel column #}
           {% if lesson.spinner.vowel|default %}
-          <div class="col">
-            <div class="row">
-              <div class="h3 py-3 tac d-sm-block d-none">Vowel</div>
+          <div class="col" >
+            <div class="row d-flex justify-content-center w-100">
+              <div class="h3 py-3 tac d-sm-block d-none w-100">Vowel</div>
             </div>
-            <div class="row">
-              <div class="d-flex flex-wrap align-items-center tac" role="group">
+            <div class="row w-100 d-flex justify-content-center">
                 {% for letter in lesson.spinner.vowel %}
                   {% set clickFunc =  "WSpin.wordSpinner('v','" ~ letter ~ "')" %}
-                  <button class="btn btn-outline-danger rounded m-1 p-1 tac col-12"
-                          type="button" onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">{{ letter }}
-                  </button>
+                  <div class="tile tile-vowel" onclick="{{ clickFunc }}" >{{ letter }}</div>
                 {% endfor %}
-              </div>
             </div>
           </div>
           {% endif %}
@@ -63,25 +52,23 @@
           {# Suffix letters column #}
           {% if lesson.spinner.suffixList|default %}
           <div class="col">
-            <div class="row">
-              <div class="h3 py-3 tac  d-sm-block d-none">Last</div>
+            <div class="row d-flex justify-content-center w-100">
+              <div class="h3 py-3 tac  d-sm-block d-none w-100">Last</div>
             </div>
-            <div class="row">
-              <div class="d-flex flex-wrap align-items-center tac" role="group">
+            <div class="row w-100 d-flex justify-content-center">
                 {% for letter in lesson.spinner.suffixList %}
                   {% set clickFunc = "WSpin.wordSpinner('s','" ~ letter ~ "')" %}
-                  <button class="btn btn-outline-primary rounded m-1 p-1 tac col-12"
-                          type="button" onclick="{{ clickFunc }}" style="min-width:34px;font-weight:bold; font-size:1.5em">{{ letter }}
-                  </button>
+                  <div class="tile tile-consonant" onclick="{{ clickFunc }}">{{ letter }}</div>
                 {% endfor %}
-              </div>
             </div>
           </div>
           {% endif %}
 
         </div>
-        <div class="row">
-          <div id="spinResult" class="col-md-12 wordlist bg-light mt-2 p-1" style="height: 1.75em">
+        <div class="row d-flex align-items-center">
+          <div id="spinResult" class="col col-9 wordlist bg-light mt-2 p-1" style="height: 1.75em"></div>
+          <div id="spell-erase" class="col col-3  mt-2 p-1"  onclick="eraseSpellBox()">
+            <i class="fa fa-eraser fa-3x text-readxyz" data-toggle="tooltip" title="Erase all letters in the box"></i>
           </div>
         </div>
       </div>

@@ -38,6 +38,10 @@ Optional Arguments
 
 {% block otherStyles %}
   <link rel="stylesheet" href="/pdfflip/pflip/css/pdfflip.css">
+  <link rel="stylesheet" href="/css/sound_box.css">
+  <style>
+
+  </style>
 {% endblock otherStyles %}
 
 {% block otherScripts %}
@@ -50,13 +54,13 @@ Optional Arguments
 {# The tab bar displays the home button and tab buttons #}
 {% block tabBar %}
   <div class="container-fluid p-0 bg-white" id="lesson-container" >
-    <div class="row m-0 p-0 justify-content-start bg-readlite" style="width: auto;">
+    <div id="tab-bar" class="row m-0 p-0 justify-content-start bg-readlite" style="width: auto;">
       {% set visibleTab = (initialTabName is empty) ? (lesson.tabNames|first|lower) : initialTabName|lower %}
 
       {# TAB BAR #}
       <nav>
         <div class="nav nav-tabs bg-tab bg-readlite" id="nav-tab" role="tablist" >
-          <a class=" p-2 size--tab-icon " id="lessons-home" href="/lessons" style="text-decoration: none !important;">
+          <a class=" p-2 size--tab-icon " id="lessons-home-link" href="/lessons" style="text-decoration: none !important;">
             <div class="d-flex flex-column justify-content-between">
               <img src="/images/tabs/home.png" alt="home" height="60%" width="60%" class="m-auto "/>
               <div class="text-white m-auto nodec sfp pt-1" style="vertical-align: bottom">Home</div>
@@ -79,7 +83,7 @@ Optional Arguments
           {% if lesson.book %}
             {% set url = '/pdfflip/' ~ lesson.book ~ '.pdf' %}
             {% set bgImage = 'url(/images/tabs/book.png)' %}
-            <a class="nav-item  p-2 _PDFF_link size--tab-icon" id="lessons-home" source="{{ url }}" style="text-decoration: none !important;">
+            <a class="nav-item  p-2 _PDFF_link size--tab-icon" id="lessons-book-link" source="{{ url }}" style="text-decoration: none !important;">
               <div class="d-flex flex-column">
                 <img src="/images/tabs/book.png" alt="home" height="60%" width="60%" class="m-auto "/>
                 <div class="text-white m-auto nodec sfp pt-1" style="vertical-align: bottom">Storytime</div>
@@ -94,7 +98,7 @@ Optional Arguments
     {% block body %}
     {# TAB CONTENT #}
     {% set visibleTab = (initialTabName is empty) ? (lesson.tabNames|first|lower) : initialTabName|lower %}
-    <div class="row d-flex flex-lg-nowrap justify-content-start" id="lesson-tab-content">
+    <div class="row d-flex flex-lg-nowrap justify-content-start" id="tabs-container">
       <div class="tab-content w-100" id="myTabContent">
           {# CONTENT FOR EACH TAB #}
         {% for tabId in lesson.tabNames %}

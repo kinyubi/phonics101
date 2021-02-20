@@ -1,155 +1,27 @@
-{# Tap and Write Tab (Elkonin boxes #}
+{# Tap and Write Tab (Elkonin boxes
 
-
-{# inputs
-    tabName
-    wordList
-    sidebarHtml
-    games
+input soundBox.color, soundBox.count
 #}
 {% block WriteTab %}
     {% set count = count ?? 3 %}
     {% set color = color ?? 'random' %}
     {% set colorSet = ['red', 'green', 'orangered', 'blue', 'goldenrod'] %}
-    {% if color == 'mixed' %}
-        {% set colors = colorSet %}
-    {% elseif color == 'random' %}
+
+    {% if color == 'random' %}
         {% set randColor = random(colorSet) %}
         {% set colors = [randColor, randColor, randColor, randColor, randColor] %}
     {% else %}
         {% set colors = [color, color, color, color, color] %}
     {% endif %}
 
-    <style>
-        :root {
-            --box-dim: 20vw;
-            --ball-holder-height: 9vw;
-            --tile-holder-height: 7vw;
-            --ball-holder-width: 15vw;
-            --tile-holder-width: 15vw;
-            --tile-dim: 6vw;
-            --tile-font-size: 4vw;
-            --instruct-font-size: 3vw;
-            --tile-margin: 0;
-            --button-width: 18vw;
-            --ball-size: 7.2vw;
-            --table-padding: 1vw;
-        }
-        @media screen and (min-width: 768px) {
-          :root {
-              --box-dim: 200px;
-              --ball-holder-height: 100px;
-              --tile-holder-height: 70px;
-              --ball-holder-width: 150px;
-              --tile-holder-width: 150px;
-              --tile-dim: 3em;
-              --tile-font-size: 2em;
-              --instruct-font-size: 1.2em;
-              --tile-margin: 3px;
-              --button-width: 180px;
-              --ball-size: 80px;
-              --table-padding: 5px;
-          }
-        }
 
-        td {
-            text-align: center;
-            vertical-align: middle;
-            max-width: 98%;
-            max-height: 98%;
-        }
-
-        .box {
-            height: var(--box-dim);
-            width: var(--box-dim);
-            padding: 3px;
-        }
-
-        .box--border {
-            border: 3px solid black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        button {
-            width: var(--button-width) !important;
-        }
-
-        .instruct-size {
-            font-size: var(--instruct-font-size);
-            line-height: var(--instruct-font-size);
-        }
-
-        table {
-            padding: var(--table-padding);
-            margin: 0;
-        }
-
-        tbody, tr {max-width: 98%; max-height: 98%;}
-
-        .ball--border {
-            border: 3px solid white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: var(--box-dim);
-        }
-
-        .letter-tile {
-            height: var(--tile-dim);
-            min-width: var(--tile-dim);
-            width: fit-content;
-            width: -moz-fit-content;
-            line-height: var(--tile-dim);
-            font-size: var(--tile-font-size);
-            padding: 3px;
-            font-weight: bold;
-        }
-
-
-        .ballHolder {
-            height: var(--ball-holder-height);
-            width: var(--ball-holder-width);
-            text-align: center;
-        }
-
-        .tileHolder {
-            height: var(--tile-holder-height);
-            width: var(--tile-holder-width);
-            text-align: center;
-            margin: 1px;
-        }
-
-
-        /* define styling for the tiles in the spinner(spell) tab and the write tab */
-        /* use with .wordlist .size--list-icon */
-        .tile {
-        	border-style: solid;
-        	border-width: 1px;
-        	color: #2C3E50;
-        	text-align: center;
-        	border-radius: 5px;
-        	box-shadow: 2px 2px 1px #888888;
-            cursor: pointer;
-        	margin: 3px !important;
-            padding:3px !important;
-        }
-        .tile-vowel {background-color: var(--vowel-tile)}
-        .tile-vowel:hover {background-color: var(--vowel-tile--hover)}
-        .tile-consonant {background-color: var(--consonant-tile)}
-        .tile-consonant:hover {background-color: var(--consonant-tile--hover)}
-
-        .start-hidden {visibility: hidden}
-
-    </style>
     <div class="container bg-white mx-2 pt-1" id="{{ tabId }}-container" style="max-width: 800px; width:95%">
         {# <div id="write-tab-container" class="container" style="max-width: 600px; width:95%"> #}
         <div class="row d-flex justify-content-start p-2">
             <h1 class="my-1 col-12 tac">Sound Boxes</h1>
         </div>
 
-        {# ROW -- BUTTONS (Start) #}
+        <!-- -------------- BUTTONS SECTION START ----------------------------- -->
         <div class="row d-flex justify-content-center ">
 
             {# DROPDOWN BUTTON -- COLOR #}
@@ -158,19 +30,19 @@
                         aria-haspopup="true" aria-expanded="false" style="border:none;">Color
                 </button>
                 <div class="dropdown-menu" aria-labelledby="color-button">
-                    <a class="dropdown-item color-click" href="#" >
+                    <a class="dropdown-item color-click" href="#">
                         <i class="fas fa-circle fa-2x" style="color:red"></i>
                     </a>
-                    <a class="dropdown-item color-click" href="#" >
+                    <a class="dropdown-item color-click" href="#">
                         <i class="fas fa-circle fa-2x" style="color:green"></i>
                     </a>
-                    <a class="dropdown-item color-click" href="#" >
+                    <a class="dropdown-item color-click" href="#">
                         <i class="fas fa-circle fa-2x" style="color:orangered"></i>
                     </a>
-                    <a class="dropdown-item color-click" href="#" >
+                    <a class="dropdown-item color-click" href="#">
                         <i class="fas fa-circle fa-2x" style="color:blue"></i>
                     </a>
-                    <a class="dropdown-item color-click" href="#" >
+                    <a class="dropdown-item color-click" href="#">
                         <i class="fas fa-circle fa-2x" style="color:goldenrod"></i>
                     </a>
                 </div>
@@ -193,41 +65,54 @@
                 <button type="button" class="btn-readxyz px-2 button-text" onclick="reload()" style="border:none; width:var(--button-width);">Reset</button>
             </div>
         </div>
-        {# ROW -- BUTTONS (End) #}
+        <!-- -------------- BUTTONS SECTION END ----------------------------- -->
 
         {# ROW -- RECEPTACLE BOXES (Start) #}
         <div class="row d-flex justify-content-center">
             {% for i in range(0,count - 1) %}
-                {% set letterType = (i == 1) ? 'vowel' : 'consonant' %}
-                <table id="big-box-{{ i }}" class="box box--border {{ letterType }}">
-                    <tr id="ball-row-{{ i }}" class="ballHolder">
-                        <td id="ball-holder-{{ i }}" colspan="2" class="ballHolder"
-                            style="min-width: 95%; min-height: 47%; border-bottom: 1px dotted lightgrey ">
 
-                        </td>
-                    </tr>
-                    <tr id="tile-row-{{ i }}">
-                        <td id="tile-cell-{{ i }}"
-                            style="border-right: 1px dotted lightgrey">
-                            <div id="tile-holder-{{ i }}" class="tileHolder  mx-auto tac">
-                                <div id="box-tile-{{ i }}" class="letter-tile tile tile-consonant mb-2"
-                                     style="margin:3px !important; visibility: hidden">
-                                    <div id="letter-{{ i }}" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">{{ letter }}</div>                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                {% set letterType = (i == 1) ? 'vowel' : 'consonant' %}
+
+                <div id="big-box-{{ i }}" class="box box--border p-0 d-flex flex-nowrap">
+                    <div  id="actions-{{ i }}"
+                         class="col col-4 m-0 h-100 d-flex flex-column justify-content-between" style="padding: 0 0 0 3px ">
+                        <button id="eraser-{{ i }}" class="btn btn-white w-100" onclick="soundBox.erase('{{ i }}')"
+                                type="button">
+                            <i class="fa fa-eraser text-readlite" data-toggle="tooltip"
+                               title="Erase all letters in the box"></i>
+                        </button>
+                        <button id="exchanger-{{ i }}" class="btn btn-white w-100" type="button"
+                                onclick="soundBox.exchange('{{ i }}')">
+                            <i class="fa fa-exchange text-readlite" data-toggle="tooltip"
+                               title="Exchange the letters in the box with the selected letter"></i>
+                        </button>
+                        <button id="appender-{{ i }}" class="btn btn-white w-100" type="button"
+                                onclick="soundBox.appendLetter('{{ i }}')">
+                            <i class="fa fa-plus text-readlite"
+                               data-toggle="tooltip" title="Append the selected letter to the letters in the box"></i>
+                        </button>
+                    </div>
+                    <div class="col col-8 m-0 p-0 h-100 flex-column" id="upper-ball-and-tile-{{ i }}">
+                        <div class="justify-content-center flex-column d-flex h-75" >
+                            <i id="uball-{{ i }}" class="fa fa-circle ball tac" style="visibility: hidden"
+                               onclick="soundBox.moveUpperBall('{{ i }}')"></i>
+                        </div>
+                        <div class="justify-content-center flex-column d-flex h-25" id="tile-holder-{{ i }}">
+                            <span id="box-letters-{{ i }}" class="tac upper-letter-tile"></span>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
         {# ROW -- RECEPTACLE BOXES (End) #}
         <div id="tile-instructions" class="row d-flex justify-content-center instruct-size mx-3 my-1" style="visibility: hidden">
-        To add the letter, tap the tile in the box. To replace the letter tap in the box but not on the tile.
+            Use replace or append buttons in each box to control to copy the selected letter to a box.
         </div>
         {# ROW -- BALLS (Start) #}
         <div class="row d-flex justify-content-center flex-nowrap">
             {% for i in range(0,count -1) %}
                 <div class="ball--border">
-                    <div id="ball-{{ i }}" class="m-0 pt-1 ball" onclick="soundBox.moveBall({{ i }})">
+                    <div id="ball-{{ i }}" class="m-0 pt-1 ball" onclick="soundBox.moveLowerBall('{{ i }}')">
                         <i class="fas fa-circle  tac" style="font-size: var(--ball-size);"></i>
                     </div>
                 </div>
@@ -237,15 +122,15 @@
 
         {# ROW -- INSTRUCTIONS #}
         <div class="row d-flex justify-content-center instruct-size">
-            Click a ball or a tile to move it into the box.
+            Click a ball or a tile to move it into the box. Click the erase button to erase the letters in a box.
         </div>
 
         <div class="row d-flex flex-wrap py-3 pl-3">
             {% for letter in soundLetters %}
                 {% set vc = (letter|first in ['a','e','i','o','u']) ? 'tile-vowel' : 'tile-consonant' %}
-                <div id="tile-{{ letter }}" class="letter-tile tile mb-2 {{ vc }}"
+                <div id="tile-{{ letter }}" class="tile mb-2 {{ vc }} d-flex align-items-center justify-content-center"
                      style="margin:3px !important;" onclick="soundBox.tileClicked('{{ letter }}')">
-                    <div id="cvc-{{ i }}" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">{{ letter }}</div>
+                    <div id="cvc-{{ letter }}" class="m-auto tile-letter" >{{ letter }}</div>
                 </div>
             {% endfor %}
         </div>

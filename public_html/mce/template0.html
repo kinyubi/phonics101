@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+
+  <title>Testing</title>
+
+  <script src="https://cdn.tiny.cloud/1/lfbb42hq8b49iuh4k4tiwqjvz9vcsnvsdp8596cwcavrbo6d/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+  <script>
+    tinymce.init({
+      selector: '.editable',
+      inline: true,
+      menubar: false,
+      plugins: '',
+      toolbar: '',
+      toolbar_mode: 'floating',
+    });
+  </script>
+
+  <link rel="apple-touch-icon" href="/images/favicons/favicon-57.png">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicons/favicon.ico">
+
+  <script src="https://kit.fontawesome.com/12c5ce46e9.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
+
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/phonics.css" media="all">
+
+
+  <style>
+    :root {
+      --box-dim: 20vw;
+      --ball-holder-height: 9vw;
+      --tile-holder-height: 7vw;
+      --ball-holder-width: 15vw;
+      --tile-holder-width: 15vw;
+      --tile-dim: 6vw;
+      --tile-font-size: 4vw;
+      --instruct-font-size: 3vw;
+      --tile-margin: 0;
+      --button-width: 18vw;
+      --ball-size: 7.2vw;
+      --table-padding: 1vw;
+    }
+
+    @media screen and (min-width: 768px) {
+      :root {
+        --box-dim: 130px;
+        --ball-holder-height: 60px;
+        --tile-holder-height: 40px;
+        --ball-holder-width: 110px;
+        --tile-holder-width: 110px;
+        --tile-dim: 2em;
+        --tile-font-size: 1.4em;
+        --instruct-font-size: 1em;
+        --tile-margin: 2px;
+        --button-width: 120px;
+        --ball-size: 40px;
+        --table-padding: 4px;
+      }
+    }
+
+    td {
+      text-align: center;
+      vertical-align: middle;
+      max-width: 98%;
+      max-height: 98%;
+    }
+
+    .box {
+      height: var(--box-dim);
+      width: var(--box-dim);
+      padding: 3px;
+    }
+
+    .box--border {
+      border: 3px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      width: var(--button-width) !important;
+    }
+
+    .instruct-size {
+      font-size: var(--instruct-font-size);
+      line-height: var(--instruct-font-size);
+    }
+
+    table {
+      padding: var(--table-padding);
+      margin: 0;
+    }
+
+    tbody, tr {max-width: 98%; max-height: 98%;}
+
+    .ball--border {
+      border: 3px solid white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: var(--box-dim);
+    }
+
+    .letter-tile {
+      height: var(--tile-dim);
+      min-width: var(--tile-dim);
+      width: fit-content;
+      width: -moz-fit-content;
+      line-height: var(--tile-dim);
+      font-size: var(--tile-font-size);
+      padding: 3px;
+      font-weight: bold;
+    }
+
+
+    .ballHolder {
+      height: var(--ball-holder-height);
+      width: var(--ball-holder-width);
+      text-align: center;
+    }
+
+    .tileHolder {
+      height: var(--tile-holder-height);
+      width: var(--tile-holder-width);
+      text-align: center;
+      margin: 1px;
+    }
+
+    .boxTile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .boxLetter {
+      flex-shrink: 0;
+    }
+
+
+    /* define styling for the tiles in the spinner(spell) tab and the write tab */
+    /* use with .wordlist .size--list-icon */
+    .tile {
+      border-style: solid;
+      border-width: 1px;
+      color: #2C3E50;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 2px 2px 1px #888888;
+      cursor: pointer;
+      margin: 3px !important;
+      padding: 3px !important;
+    }
+
+    .tile-vowel {background-color: var(--vowel-tile)}
+
+    .tile-vowel:hover {background-color: var(--vowel-tile--hover)}
+
+    .tile-consonant {background-color: var(--consonant-tile)}
+
+    .tile-consonant:hover {background-color: var(--consonant-tile--hover)}
+
+    .start-hidden {visibility: hidden}
+
+  </style>
+
+  <script src="/js/jquery-3.5.1.js"></script>
+  <script src="/js/jquery.colorbox.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap4-custom/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+  <script src="/js/phonics.js"></script>
+
+</head>
+
+<body>
+
+
+<div class="m-0 p-0 p-sm-1 p-md-3 p-lg-5 container-fluid" id="base-container" style="max-width: 950px;">
+
+  <div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2" id="readxyz-title">
+    <div class="ml-0 float-left col-3 bg-image--title"></div>
+
+    <div class="my-auto mx-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb h6">
+          <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color: #6c757d;">Admin</a></li>
+          <li class="breadcrumb-item"><a href="/studentlist">students</a></li>
+          <li class="breadcrumb-item"><a href="#" style="text-decoration: none;color: #6c757d;">Annie</a></li>
+          <li class="breadcrumb-item"><a href="/lessons">lessons</a></li>
+          <li class="breadcrumb-item active " aria-current="page">ap</li>
+        </ol>
+      </nav>
+    </div>
+
+    <a id="current-animal" class="img-contain col-1 zoo-animals cboxElement" href="/generated/S5c9e79a6534ca0Z123456789_000_zoo.html" style="height:75px;width:75px">
+      <img src="/images/animals/named/dog.jpg" alt="Dog" title="See my zoo" style="width:90%">
+    </a>
+
+    <a id="next-animal" class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" style="height:75px;width:75px">
+      <img src="/images/animals/gray/cat_gray.jpg" alt="Cat" title="Award the Cat to Annie" style="width:90%">
+    </a>
+    <!-- Modal -->
+    <div class="modal fade" id="award-confirm" tabindex="-1" role="dialog" aria-labelledby="award-confirmLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Award Ceremony</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Award the Cat to Annie</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-readred" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-readxyz yes" data-dismiss="modal">Proceed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $('.yes').click(function () {
+          $.post("/handler/award").done(function (data) {
+            noAward(data);
+          });
+        });
+      });
+    </script>
+
+
+  </div>
+
+
+  <div class="container-fluid p-0 bg-white" id="lesson-container">
+    <div id="tab-bar" class="row m-0 p-0 justify-content-start bg-readlite" style="width: auto;">
+
+      <nav>
+        <div class="nav nav-tabs bg-tab bg-readlite" id="nav-tab" role="tablist">
+          <a class=" p-2 size--tab-icon " id="lessons-home-link" href="/lessons" style="text-decoration: none !important;">
+            <div class="d-flex flex-column justify-content-between">
+              <img src="/images/tabs/home.png" alt="home" height="60%" width="60%" class="m-auto ">
+              <div class="text-white m-auto nodec sfp pt-1" style="vertical-align: bottom">Home</div>
+            </div>
+          </a>
+          <a class=" nav-item p-2  size--tab-icon " data-toggle="tab" id="warmup-tab" href="#warmup-body" role="tab" aria-controls="warmup-body" style="text-decoration: none !important;">
+            <div class="d-flex flex-column ">
+              <img src="/images/tabs/warmup.png" alt="Warmup" height="60%" width="60%" class="m-auto">
+              <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">Warmup</div>
+            </div>
+          </a>
+          <a class=" nav-item p-2  size--tab-icon " data-toggle="tab" id="intro-tab" href="#intro-body" role="tab" aria-controls="intro-body" style="text-decoration: none !important;">
+            <div class="d-flex flex-column ">
+              <img src="/images/tabs/intro.png" alt="Intro" height="60%" width="60%" class="m-auto">
+              <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">Intro</div>
+            </div>
+          </a>
+          <a class=" nav-item p-2 active size--tab-icon " data-toggle="tab" id="write-tab" href="#write-body" role="tab" aria-controls="write-body" style="text-decoration: none !important;">
+            <div class="d-flex flex-column ">
+              <img src="/images/tabs/write.png" alt="TapMap" height="60%" width="60%" class="m-auto">
+              <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">TapMap</div>
+            </div>
+          </a>
+          <a class=" nav-item p-2  size--tab-icon " data-toggle="tab" id="practice-tab" href="#practice-body" role="tab" aria-controls="practice-body" style="text-decoration: none !important;">
+            <div class="d-flex flex-column ">
+              <img src="/images/tabs/practice.png" alt="Practice" height="60%" width="60%" class="m-auto">
+              <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">Practice</div>
+            </div>
+          </a>
+          <a class=" nav-item p-2  size--tab-icon " data-toggle="tab" id="spell-tab" href="#spell-body" role="tab" aria-controls="spell-body" style="text-decoration: none !important;">
+            <div class="d-flex flex-column ">
+              <img src="/images/tabs/spell.png" alt="Chain" height="60%" width="60%" class="m-auto">
+              <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">Chain</div>
+            </div>
+          </a>
+          <a class=" nav-item p-2  size--tab-icon " data-toggle="tab" id="mastery-tab" href="#mastery-body" role="tab" aria-controls="mastery-body" style="text-decoration: none !important;">
+            <div class="d-flex flex-column ">
+              <img src="/images/tabs/mastery.png" alt="Mastery" height="60%" width="60%" class="m-auto">
+              <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">Mastery</div>
+            </div>
+          </a>
+          <a class=" nav-item p-2  size--tab-icon " data-toggle="tab" id="fluency-tab" href="#fluency-body" role="tab" aria-controls="fluency-body" style="text-decoration: none !important;">
+            <div class="d-flex flex-column ">
+              <img src="/images/tabs/fluency.png" alt="Fluency" height="60%" width="60%" class="m-auto">
+              <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">Fluency</div>
+            </div>
+          </a>
+          <a class=" nav-item p-2  size--tab-icon " data-toggle="tab" id="test-tab" href="#test-body" role="tab" aria-controls="test-body" style="text-decoration: none !important;">
+            <div class="d-flex flex-column ">
+              <img src="/images/tabs/test.png" alt="Test" height="60%" width="60%" class="m-auto">
+              <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">Test</div>
+            </div>
+          </a>
+          <a class="nav-item  p-2 _PDFF_link size--tab-icon" id="lessons-book-link" source="/pdfflip/2.2 Kat and Pap.pdf" style="text-decoration: none !important;" pdff-parsed="true">
+            <div class="d-flex flex-column">
+              <img src="/images/tabs/book.png" alt="home" height="60%" width="60%" class="m-auto ">
+              <div class="text-white m-auto nodec sfp pt-1" style="vertical-align: bottom">Storytime</div>
+            </div>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="row d-flex flex-lg-nowrap justify-content-start" id="tabs-container">
+      <div class="tab-content w-100" id="myTabContent">
+        <div id="warmup-body" class="tab-pane fade " role="tabpanel" aria-labelledby="warmup-tab">
+
+          <div class="container-fluid bg-white" id="warmup-container">
+
+            <div class="row  d-flex  flex-nowrap p-2">
+              <div id="warmup-main" class="col-8 m-0">
+
+                <div class="row  d-flex flex-nowrap justify-content-start  m-2 px-1 py-3">
+                  <div class="text-readxyz ">Script:&nbsp;</div>
+                  <div class="text-secondary ">"I am going to ask you some questions. During this exercise, you will watch me and listen. Roll the die to see which question you get to answer next."
+                  </div>
+                </div>
+
+                <div id="warmup-accordion" class="mw-600">
+
+                  <div class="card">
+
+                    <div class="card-header" id="warmup-header1">
+                      <div class="row d-flex flex-nowrap justify-content-start">
+                        <div>
+                          <img src="/dice/images/dice1-150x150.jpg" alt="1" height="40" width="40">
+                        </div>
+                        <div class="mb-0 h5">
+                          <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content1" aria-expanded="false" aria-controls="warmup-content1">In this
+                            lesson we are practicing short a words that end with ap - like cap. Count the words in the sentence.
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="warmup-content1" class="collapse" aria-labelledby="warmup-header1" data-parent="#warmup-accordion">
+                      <div class="card-body">
+                        <ul class="list-group">
+                          <li class="list-group-item list-group-item-readxyz">Where is my cap?</li>
+                          <li class="list-group-item list-group-item-readxyz">Is it in the gap?</li>
+                          <li class="list-group-item list-group-item-readxyz">The cap is under the map.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+
+                    <div class="card-header" id="warmup-header2">
+                      <div class="row d-flex flex-nowrap justify-content-start">
+                        <div>
+                          <img src="/dice/images/dice2-150x150.jpg" alt="2" height="40" width="40">
+                        </div>
+                        <div class="mb-0 h5">
+                          <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content2" aria-expanded="false" aria-controls="warmup-content2">What is
+                            the first sound you hear in...
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="warmup-content2" class="collapse" aria-labelledby="warmup-header2" data-parent="#warmup-accordion">
+                      <div class="card-body">
+                        <ul class="list-group">
+                          <li class="list-group-item list-group-item-readxyz">lap</li>
+                          <li class="list-group-item list-group-item-readxyz">map</li>
+                          <li class="list-group-item list-group-item-readxyz">tap</li>
+                          <li class="list-group-item list-group-item-readxyz">rap</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+
+                    <div class="card-header" id="warmup-header3">
+                      <div class="row d-flex flex-nowrap justify-content-start">
+                        <div>
+                          <img src="/dice/images/dice3-150x150.jpg" alt="3" height="40" width="40">
+                        </div>
+                        <div class="mb-0 h5">
+                          <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content3" aria-expanded="false" aria-controls="warmup-content3">What
+                            rhymes with...
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="warmup-content3" class="collapse" aria-labelledby="warmup-header3" data-parent="#warmup-accordion">
+                      <div class="card-body">
+                        <ul class="list-group">
+                          <li class="list-group-item list-group-item-readxyz">cap</li>
+                          <li class="list-group-item list-group-item-readxyz">cat</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+
+                    <div class="card-header" id="warmup-header4">
+                      <div class="row d-flex flex-nowrap justify-content-start">
+                        <div>
+                          <img src="/dice/images/dice4-150x150.jpg" alt="4" height="40" width="40">
+                        </div>
+                        <div class="mb-0 h5">
+                          <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content4" aria-expanded="false" aria-controls="warmup-content4">Cap and
+                            sap rhyme because they both end in /ap/. Do the following words rhyme?
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="warmup-content4" class="collapse" aria-labelledby="warmup-header4" data-parent="#warmup-accordion">
+                      <div class="card-body">
+                        <ul class="list-group">
+                          <li class="list-group-item list-group-item-readxyz">lap/pap</li>
+                          <li class="list-group-item list-group-item-readxyz">tap/tan</li>
+                          <li class="list-group-item list-group-item-readxyz">yap/map</li>
+                          <li class="list-group-item list-group-item-readxyz">fat/cap</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+
+                    <div class="card-header" id="warmup-header5">
+                      <div class="row d-flex flex-nowrap justify-content-start">
+                        <div>
+                          <img src="/dice/images/dice5-150x150.jpg" alt="5" height="40" width="40">
+                        </div>
+                        <div class="mb-0 h5">
+                          <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content5" aria-expanded="false" aria-controls="warmup-content5">How many
+                            syllables are in...
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="warmup-content5" class="collapse" aria-labelledby="warmup-header5" data-parent="#warmup-accordion">
+                      <div class="card-body">
+                        <ul class="list-group">
+                          <li class="list-group-item list-group-item-readxyz">tapping</li>
+                          <li class="list-group-item list-group-item-readxyz">gap</li>
+                          <li class="list-group-item list-group-item-readxyz">mattress</li>
+                          <li class="list-group-item list-group-item-readxyz">capital</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card">
+
+                    <div class="card-header" id="warmup-header6">
+                      <div class="row d-flex flex-nowrap justify-content-start">
+                        <div>
+                          <img src="/dice/images/dice6-150x150.jpg" alt="6" height="40" width="40">
+                        </div>
+                        <div class="mb-0 h5">
+                          <button class="btn btn-link collapsed text-readxyz tal" data-toggle="collapse" data-target="#warmup-content6" aria-expanded="false" aria-controls="warmup-content6">What is
+                            the first syllable in...
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="warmup-content6" class="collapse" aria-labelledby="warmup-header6" data-parent="#warmup-accordion">
+                      <div class="card-body">
+                        <ul class="list-group">
+                          <li class="list-group-item list-group-item-readxyz">capture</li>
+                          <li class="list-group-item list-group-item-readxyz">wrapper</li>
+                          <li class="list-group-item list-group-item-readxyz">happen</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+              <div id="warmup-sidebar" class="col-4 mx-1 px-0 pt-4 scaled">
+
+                <iframe src="/dice/rolldice-orig.php" height="160" width="200" style="border: none"></iframe>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div id="intro-body" class="tab-pane fade " role="tabpanel" aria-labelledby="intro-tab">
+          <div class="container-fluid bg-white" id="intro-container">
+
+            <div class="row  d-flex flex-nowrap  m-2 p-2">
+              <div id="intro-main" class="col-9">
+                <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
+                  <div>Intro</div>
+                </div>
+                <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
+
+                  <div class="text-readxyz ">Script:&nbsp;</div>
+                  <div class="text-secondary ">"Today we are learning words that end with /at/. Let's read the words together."</div>
+                </div>
+
+                <table class="table table-sm table-borderless">
+                  <tbody>
+                  <tr class="d-flex">
+                    <td class="wordlist col-4 mx-2 px-0">cat</td>
+                    <td class="wordlist col-4 mx-2 px-0">cap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-4 mx-2 px-0">lat</td>
+                    <td class="wordlist col-4 mx-2 px-0">lap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-4 mx-2 px-0">mat</td>
+                    <td class="wordlist col-4 mx-2 px-0">map</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-4 mx-2 px-0">pat</td>
+                    <td class="wordlist col-4 mx-2 px-0">pap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-4 mx-2 px-0">rat</td>
+                    <td class="wordlist col-4 mx-2 px-0">rap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-4 mx-2 px-0">sat</td>
+                    <td class="wordlist col-4 mx-2 px-0">sap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-4 mx-2 px-0">tat</td>
+                    <td class="wordlist col-4 mx-2 px-0">tap</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div id="intro-sidebar" class="col-3 mx-1 px-0 ">
+
+                <div class="row d-flex justify-content-center">
+                  <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true" title="" data-original-title="Read across or down. Require clear pronunciation."></div>
+                </div>
+
+
+                <table id="intro-sidebar-contents" class="table table-sm table-borderless">
+                  <tbody>
+
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="games cboxElement" href="https://wordwall.net/embed/d0cb59c0a13e4ce09e506751c6a8e2c1?themeId=27&amp;templateId=70">
+                        <img src="/images/sidebar/random.jpg" alt="Word Cards" onclick="disableScroll()" title="Word Cards" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="games cboxElement" href="https://wordwall.net/embed/352223559a164da290a98fdaa821d556?themeId=1&amp;templateId=47">
+                        <img src="/images/sidebar/word-builder.jpg" alt="Word Builder" onclick="disableScroll()" title="Word Builder" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div id="write-body" class="tab-pane fade show active editable" role="tabpanel" aria-labelledby="write-tab">
+
+          <div class="container bg-white mx-2 pt-1" id="write-container" style="max-width: 800px; width:95%">
+            <div class="row d-flex justify-content-start p-2">
+              <h1 class="my-1 col-12 tac">Sound Boxes</h1>
+            </div>
+
+            <div class="row d-flex justify-content-center ">
+
+              <div class="btn-group my-3 mx-1 p-0 dropdown-">
+                <button id="color-button" type="button" class="btn-readxyz dropdown-toggle button-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border:none;">Color
+                </button>
+                <div class="dropdown-menu" aria-labelledby="color-button">
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:red" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:green" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:orangered" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:blue" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item color-click" href="#">
+                    <i class="fas fa-circle fa-2x" style="color:goldenrod" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="btn-group  my-3 mx-1 p-0 ">
+                <button id="count-button" type="button" class="btn-readxyz dropdown-toggle button-text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="border:none; width:var(--button-width)">Count
+                </button>
+                <div class="dropdown-menu" aria-labelledby="count-button">
+                  <a class="dropdown-item count-click" href="#"><span class="h3">3</span></a>
+                  <a class="dropdown-item count-click" href="#"><span class="h3">4</span></a>
+                  <a class="dropdown-item count-click" href="#"><span class="h3">5</span></a>
+                </div>
+              </div>
+
+              <div class="btn-group  my-3 mx-1 p-0 ">
+                <button type="button" class="btn-readxyz px-2 button-text" onclick="reload()" style="border:none; width:var(--button-width);">Reset</button>
+              </div>
+            </div>
+
+            <div class="row d-flex justify-content-center">
+              <table id="big-box-0" class="box box--border consonant">
+                <tbody>
+                <tr id="ball-row-0" class="ballHolder">
+                  <td id="ball-holder-0" colspan="2" class="ballHolder" style="min-width: 95%; min-height: 47%; border-bottom: 1px dotted lightgrey ">
+
+                  </td>
+                </tr>
+                <tr id="tile-row-0">
+                  <td id="tile-cell-0" style="border-right: 1px dotted lightgrey">
+                    <div id="tile-holder-0" class="tileHolder boxTile">
+                      <div id="box-tile-0" class="letter-tile tile tile-consonant mb-2 boxLetter mx-auto" style="margin:3px !important; visibility: hidden">
+                        <div id="letter-0" class="mx-auto" style="vertical-align: center; line-height: var(--tile-font-size)"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <table id="big-box-1" class="box box--border vowel">
+                <tbody>
+                <tr id="ball-row-1" class="ballHolder">
+                  <td id="ball-holder-1" colspan="2" class="ballHolder" style="min-width: 95%; min-height: 47%; border-bottom: 1px dotted lightgrey ">
+
+                  </td>
+                </tr>
+                <tr id="tile-row-1">
+                  <td id="tile-cell-1" style="border-right: 1px dotted lightgrey">
+                    <div id="tile-holder-1" class="tileHolder boxTile">
+                      <div id="box-tile-1" class="letter-tile tile tile-consonant mb-2 boxLetter mx-auto" style="margin:3px !important; visibility: hidden">
+                        <div id="letter-1" class="mx-auto" style="vertical-align: center; line-height: var(--tile-font-size)"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <table id="big-box-2" class="box box--border consonant">
+                <tbody>
+                <tr id="ball-row-2" class="ballHolder">
+                  <td id="ball-holder-2" colspan="2" class="ballHolder" style="min-width: 95%; min-height: 47%; border-bottom: 1px dotted lightgrey ">
+
+                  </td>
+                </tr>
+                <tr id="tile-row-2">
+                  <td id="tile-cell-2" style="border-right: 1px dotted lightgrey">
+                    <div id="tile-holder-2" class="tileHolder boxTile">
+                      <div id="box-tile-2" class="letter-tile tile tile-consonant mb-2 boxLetter mx-auto" style="margin:3px !important; visibility: hidden">
+                        <div id="letter-2" class="mx-auto" style="vertical-align: center; line-height: var(--tile-font-size)"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="tile-instructions" class="row d-flex justify-content-center instruct-size mx-3 my-1" style="visibility: hidden">
+              To add the letter, tap the tile in the box. To replace the letter tap in the box but not on the tile.
+            </div>
+            <div class="row d-flex justify-content-center flex-nowrap">
+              <div class="ball--border">
+                <div id="ball-0" class="m-0 pt-1 ball" onclick="soundBox.moveBall(0)" style="color: green;">
+                  <i class="fas fa-circle  tac" style="font-size: var(--ball-size);" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="ball--border">
+                <div id="ball-1" class="m-0 pt-1 ball" onclick="soundBox.moveBall(1)" style="color: green;">
+                  <i class="fas fa-circle  tac" style="font-size: var(--ball-size);" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="ball--border">
+                <div id="ball-2" class="m-0 pt-1 ball" onclick="soundBox.moveBall(2)" style="color: green;">
+                  <i class="fas fa-circle  tac" style="font-size: var(--ball-size);" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="row d-flex justify-content-center instruct-size">
+              Click a ball or a tile to move it into the box.
+            </div>
+
+            <div class="row d-flex flex-wrap py-3 pl-3">
+              <div id="tile-a" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('a')">
+                <div id="cvc-a" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">a</div>
+              </div>
+              <div id="tile-b" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('b')">
+                <div id="cvc-b" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">b</div>
+              </div>
+              <div id="tile-c" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('c')">
+                <div id="cvc-c" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">c</div>
+              </div>
+              <div id="tile-d" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('d')">
+                <div id="cvc-d" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">d</div>
+              </div>
+              <div id="tile-e" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('e')">
+                <div id="cvc-e" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">e</div>
+              </div>
+              <div id="tile-f" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('f')">
+                <div id="cvc-f" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">f</div>
+              </div>
+              <div id="tile-g" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('g')">
+                <div id="cvc-g" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">g</div>
+              </div>
+              <div id="tile-h" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('h')">
+                <div id="cvc-h" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">h</div>
+              </div>
+              <div id="tile-i" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('i')">
+                <div id="cvc-i" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">i</div>
+              </div>
+              <div id="tile-j" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('j')">
+                <div id="cvc-j" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">j</div>
+              </div>
+              <div id="tile-k" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('k')">
+                <div id="cvc-k" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">k</div>
+              </div>
+              <div id="tile-l" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('l')">
+                <div id="cvc-l" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">l</div>
+              </div>
+              <div id="tile-m" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('m')">
+                <div id="cvc-m" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">m</div>
+              </div>
+              <div id="tile-n" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('n')">
+                <div id="cvc-n" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">n</div>
+              </div>
+              <div id="tile-o" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('o')">
+                <div id="cvc-o" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">o</div>
+              </div>
+              <div id="tile-p" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('p')">
+                <div id="cvc-p" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">p</div>
+              </div>
+              <div id="tile-q" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('q')">
+                <div id="cvc-q" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">q</div>
+              </div>
+              <div id="tile-r" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('r')">
+                <div id="cvc-r" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">r</div>
+              </div>
+              <div id="tile-s" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('s')">
+                <div id="cvc-s" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">s</div>
+              </div>
+              <div id="tile-t" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('t')">
+                <div id="cvc-t" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">t</div>
+              </div>
+              <div id="tile-u" class="letter-tile tile mb-2 tile-vowel" style="margin:3px !important;" onclick="soundBox.tileClicked('u')">
+                <div id="cvc-u" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">u</div>
+              </div>
+              <div id="tile-v" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('v')">
+                <div id="cvc-v" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">v</div>
+              </div>
+              <div id="tile-w" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('w')">
+                <div id="cvc-w" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">w</div>
+              </div>
+              <div id="tile-x" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('x')">
+                <div id="cvc-x" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">x</div>
+              </div>
+              <div id="tile-y" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('y')">
+                <div id="cvc-y" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">y</div>
+              </div>
+              <div id="tile-z" class="letter-tile tile mb-2 tile-consonant" style="margin:3px !important;" onclick="soundBox.tileClicked('z')">
+                <div id="cvc-z" class="m-auto" style="vertical-align: center; line-height: var(--tile-font-size)">z</div>
+              </div>
+            </div>
+            <div id="sound-box-lesson-name" style="display: none">ap</div>
+          </div>
+
+
+        </div>
+        <div id="practice-body" class="tab-pane fade " role="tabpanel" aria-labelledby="practice-tab">
+          <div class="container-fluid bg-white" id="practice-container">
+            <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+              <div id="practice-main" class="col-9">
+                <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
+                  <div>Practice</div>
+                </div>
+                <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
+
+                  <div class="text-readxyz ">Script:&nbsp;</div>
+                  <div class="text-secondary ">"Read each word out loud. We will use the timer and play the games in the sidebar for additional practice."</div>
+                </div>
+
+                <table class="table table-sm table-borderless">
+                  <tbody>
+                  <tr class="d-flex">
+                    <td class="wordlist col-3 mx-2">zap</td>
+                    <td class="wordlist col-3 mx-2">cap</td>
+                    <td class="wordlist col-3 mx-2">wap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-3 mx-2">rap</td>
+                    <td class="wordlist col-3 mx-2">zap</td>
+                    <td class="wordlist col-3 mx-2">sap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-3 mx-2">cap</td>
+                    <td class="wordlist col-3 mx-2">gap</td>
+                    <td class="wordlist col-3 mx-2">yap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-3 mx-2">sap</td>
+                    <td class="wordlist col-3 mx-2">tap</td>
+                    <td class="wordlist col-3 mx-2">sap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-3 mx-2">gap</td>
+                    <td class="wordlist col-3 mx-2">map</td>
+                    <td class="wordlist col-3 mx-2">wap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-3 mx-2">yap</td>
+                    <td class="wordlist col-3 mx-2">lap</td>
+                    <td class="wordlist col-3 mx-2">yap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td class="wordlist col-3 mx-2">lap</td>
+                    <td class="wordlist col-3 mx-2">tap</td>
+                    <td class="wordlist col-3 mx-2">tap</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div id="practice-sidebar" class="col-3 mx-1 px-0">
+
+                <div class="row d-flex justify-content-center">
+                  <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true" title=""
+                       data-original-title="<b>Instructions:</b> Have the student practice reading the words. Challenge the student with the stopwatch to make it more interesting. Refresh the list for additional practice."></div>
+                </div>
+
+
+                <table id="practice-sidebar-contents" class="table table-sm table-borderless">
+                  <tbody>
+
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="tic-tac-toe cboxElement" href="/tictactoe/tictac-lg.php">
+                        <img src="/images/sidebar/tic-tac-toe.jpg" alt="Tic-Tac-Toe" onclick="disableScroll()" title="Tic-Tac-Toe" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="games cboxElement" href="https://wordwall.net/embed/1829a71b98e2466e999f126d894836f1?themeId=49&amp;templateId=45">
+                        <img src="/images/sidebar/whack-a-mole.jpg" alt="Whack-A-Mole" onclick="disableScroll()" title="Whack-A-Mole" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="games cboxElement" href="https://wordwall.net/embed/20b8bacc629e46fa89018596ec1b87aa?themeId=1&amp;templateId=2">
+                        <img src="/images/sidebar/sort.jpg" alt="Rhyme Sort" onclick="disableScroll()" title="Rhyme Sort" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="games cboxElement" href="https://wordwall.net/embed/19e5e7e720f24986a64abfd1f89c1bed?themeId=23&amp;templateId=47">
+                        <img src="/images/sidebar/alien.jpg" alt="Alien" onclick="disableScroll()" title="Alien" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+
+                <div class="row d-flex py-2">
+                  <div class="container mx-0 px-0">
+                    <div class="row d-flex flex-nowrap justify-content-center">
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="practiceStartButton"
+                           style="background: url(/images/sidebar/Start.png) no-repeat; background-size: contain;" data-original-title="start timer">
+                      </div>
+
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="practiceStopButton"
+                           style="background: url(/images/sidebar/Stop.png) no-repeat; background-size: contain;" data-original-title="stop timer">
+                      </div>
+
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="practiceResetButton"
+                           style="background: url(/images/sidebar/Reset.png) no-repeat; background-size: contain;" data-original-title="reset timer">
+                      </div>
+
+                      <div class=""></div>
+                    </div>
+                    <div class="row d-flex align-content-center">
+                      <div id="practiceTime" class="wordlist mx-auto my-3">00:00</div>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="row d-flex">
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div id="spell-body" class="tab-pane fade " role="tabpanel" aria-labelledby="spell-tab">
+          <div class="container-fluid bg-white" id="spell-container">
+
+            <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+              <div class="col-9">
+                <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
+                  <div>Chain</div>
+                </div>
+                <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
+
+                  <div class="text-readxyz ">Script:&nbsp;</div>
+                  <div class="text-secondary ">"<p>Click the letters to spell &lt;say a word&gt;.<br>Now change the first letter to &lt;pick a letter&gt;.<br>What word did you spell?"</p></div>
+                </div>
+
+                <div class="row d-flex flex-nowrap">
+
+                  <div class="col">
+                    <div class="row ">
+                      <div class="h3 py-3 tac col-12 d-sm-block d-none" role="heading">First</div>
+                    </div>
+                    <div class="row ">
+                      <div class="d-flex flex-wrap align-items-center tac " role="group" data-toggle="tooltip" data-placement="top" title=""
+                           data-original-title="Select a letter from each group to make a word.">
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','b')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          b
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','c')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          c
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','d')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          d
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','f')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          f
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','g')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          g
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','h')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          h
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','j')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          j
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','k')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          k
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','l')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          l
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','m')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          m
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','n')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          n
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','p')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          p
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','r')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          r
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','s')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          s
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','t')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          t
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','v')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          v
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','w')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          w
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','y')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          y
+                        </button>
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-2 col-lg-1" type="button" onclick="WSpin.wordSpinner('p','z')"
+                                style="min-width:34px;font-weight:bold; font-size:1.5em">
+                          z
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="col">
+                    <div class="row">
+                      <div class="h3 py-3 tac d-sm-block d-none">Vowel</div>
+                    </div>
+                    <div class="row">
+                      <div class="d-flex flex-wrap align-items-center tac" role="group">
+                        <button class="btn btn-outline-danger rounded m-1 p-1 tac col-12" type="button" onclick="WSpin.wordSpinner('v','a')" style="min-width:34px;font-weight:bold; font-size:1.5em">a
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="row">
+                      <div class="h3 py-3 tac  d-sm-block d-none">Last</div>
+                    </div>
+                    <div class="row">
+                      <div class="d-flex flex-wrap align-items-center tac" role="group">
+                        <button class="btn btn-outline-primary rounded m-1 p-1 tac col-12" type="button" onclick="WSpin.wordSpinner('s','p')" style="min-width:34px;font-weight:bold; font-size:1.5em">p
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div id="spinResult" class="col-md-12 wordlist bg-light mt-2 p-1" style="height: 1.75em">
+                  </div>
+                </div>
+              </div>
+
+              <div id="spell-sidebar" class="col-3 mx-1 px-0">
+
+                <div class="row d-flex justify-content-center">
+                  <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true" title=""
+                       data-original-title="<b>Instructions:</b> Give the student control of the mouse and dictate words from the lesson. </br></br><b>Note:</b> It works best to change one sound at a time. ie: mat -> cat -> cap -> sap -> sat -> sit"></div>
+                </div>
+
+
+                <table id="spell-sidebar-contents" class="table table-sm table-borderless">
+                  <tbody>
+
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="games cboxElement" href="https://wordwall.net/embed/8802473f7df7492f8c8f25d1013073d3?themeId=1&amp;templateId=38">
+                        <img src="/images/sidebar/scramble.jpg" alt="Word Scramble" onclick="disableScroll()" title="Word Scramble" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div id="mastery-body" class="tab-pane fade " role="tabpanel" aria-labelledby="mastery-tab">
+          <div class="container-fluid bg-white" id="mastery-container">
+            <div class="row  d-flex flex-nowrap  m-2 justify-content-start">
+              <div id="mastery-main" class="col-9">
+                <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
+                  <div>Mastery</div>
+                </div>
+                <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
+
+                  <div class="text-readxyz ">Script:&nbsp;</div>
+                  <div class="text-secondary ">"I will point to a word. If you read it correctly, I will check the box. If not, it is ok. We will practice it at the end."</div>
+                </div>
+
+                <div class="row">
+                  <form id="masteryform" name="masteryform" method="POST" action="/">
+                    <div class="row d-flex flex-wrap ">
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId1" value="tap" checked="">
+                        <label class="mx-2 wordlist" for="wordId1">tap</label>
+                      </div>
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId2" value="map" checked="">
+                        <label class="mx-2 wordlist" for="wordId2">map</label>
+                      </div>
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId3" value="sap" checked="">
+                        <label class="mx-2 wordlist" for="wordId3">sap</label>
+                      </div>
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId4" value="wap">
+                        <label class="mx-2 wordlist" for="wordId4">wap</label>
+                      </div>
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId5" value="cap" checked="">
+                        <label class="mx-2 wordlist" for="wordId5">cap</label>
+                      </div>
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId6" value="gap" checked="">
+                        <label class="mx-2 wordlist" for="wordId6">gap</label>
+                      </div>
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId7" value="lap" checked="">
+                        <label class="mx-2 wordlist" for="wordId7">lap</label>
+                      </div>
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId8" value="zap" checked="">
+                        <label class="mx-2 wordlist" for="wordId8">zap</label>
+                      </div>
+                      <div class="checkbox col-6 col-md-4 col-lg-3 mt-1" style="vertical-align: baseline">
+                        <input type="checkbox" name="word1[]" class="size--list-icon " id="wordId9" value="yap">
+                        <label class="mx-2 wordlist" for="wordId9">yap</label>
+                      </div>
+                      <input type="hidden" name="wordlist" value="cap,gap,lap,map,rap,sap,tap,yap,wap,zap">
+                      <input type="hidden" name="handler" value="mastery">
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div id="mastery-sidebar" class="col-3 mx-1 ">
+
+                <div class="row d-flex justify-content-center">
+                  <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true" title=""
+                       data-original-title="<b>Instructions:</b> Check off the word if the student reads it correctly. Review incorrect words when you get to the end of the list."></div>
+                </div>
+
+
+                <table id="mastery-sidebar-contents" class="table table-sm table-borderless">
+                  <tbody>
+
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="games cboxElement" href="https://wordwall.net/embed/53a6e1e034834f0a8cca13fcbb3d1336?themeId=1&amp;templateId=7">
+                        <img src="/images/sidebar/mastery.jpg" alt="Mastery Flip" onclick="disableScroll()" title="Mastery Flip" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+
+
+                <div class="container mx-0 px-0">
+                  <div class="row tac">
+                    <div id="saveMasteryProgressButton" class="btn btn-outline-readxyz mx-auto  button-text">
+                      Save Progress
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+          </div>
+
+
+        </div>
+        <div id="fluency-body" class="tab-pane fade " role="tabpanel" aria-labelledby="fluency-tab">
+          <div class="container-fluid bg-white" id="fluency-container">
+
+            <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+              <div id="fluency-main" class="col-8 ">
+                <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
+                  <div>Fluency</div>
+                </div>
+                <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
+
+                  <div class="text-readxyz ">Script:&nbsp;</div>
+                  <div class="text-secondary ">"You will read this 3 times. I will use the timer, but focus on reading the words smoothly and correctly."</div>
+                </div>
+
+                <div class="wordlist">
+                  <span>Pat can tap the map.</span><br>
+                  <span>Pat has a cap.</span><br>
+                  <span>The rat sat on his lap.</span><br>
+                </div>
+              </div>
+              <div id="fluency-sidebar" class="col-3 mx-1 px-0">
+
+                <div class="row d-flex justify-content-center">
+                  <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true" title=""
+                       data-original-title="<b>Instructions:</b> Time the student reading the passage 3 times. <br/><br/>Define unfamiliar words. <br/><br/>Encourage fluency and accuracy over speed."></div>
+                </div>
+
+
+                <table id="fluency-sidebar-contents" class="table table-sm table-borderless">
+                  <tbody>
+
+                  <tr class="d-flex justify-content-center align-items-center">
+                    <td colspan="2">
+                      <a class="games cboxElement" href="https://wordwall.net/embed/a9985e0f68bf4894b2e6ff9bfdda98b9?themeId=1&amp;templateId=36">
+                        <img src="/images/sidebar/sentences.jpg" alt="Missing Word" onclick="disableScroll()" title="Missing Word" width="150" height="115">
+                      </a>
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+
+                <div class="row d-flex py-2">
+                  <div class="container">
+                    <div class="row d-flex flex-wrap justify-content-center">
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="fluencyStartButton"
+                           style="background: url(/images/sidebar/Start.png) no-repeat; background-size: contain;" data-original-title="start timer">
+                      </div>
+
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="fluencyStopButton"
+                           style="background: url(/images/sidebar/Stop.png) no-repeat; background-size: contain;" data-original-title="stop timer">
+                      </div>
+
+                      <div class="w-100"></div>
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="fluencyResetButton"
+                           style="background: url(/images/sidebar/Reset.png) no-repeat; background-size: contain;" data-original-title="reset timer">
+                      </div>
+
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="fluencySaveButton"
+                           style="background: url(/images/sidebar/Save.png) no-repeat; background-size: contain;" data-original-title="save time and display in graph">
+                      </div>
+
+                    </div>
+                    <div class="row d-flex align-content-center">
+                      <div id="fluencyTime" class="wordlist mx-auto my-3">00:00</div>
+                    </div>
+
+                  </div>
+
+                  <form name="fluencyTimerForm" id="fluencyTimerForm" data-ajax="false" method="post" action="/">
+                    <input type="hidden" name="seconds" value="0/">
+                    <input type="hidden" name="source" value="fluency">
+                    <input type="hidden" name="handler" value="timer">
+                    <input type="hidden" name="timestamp" value="0">
+                  </form>
+
+                </div>
+                <div class="row d-flex">
+
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div id="test-body" class="tab-pane fade " role="tabpanel" aria-labelledby="test-tab">
+          <div class="container-fluid bg-white" id="test-container">
+
+            <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+              <div id="test-main" class="col-8">
+                <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
+                  <div>Test</div>
+                </div>
+                <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1">
+
+                  <div class="text-readxyz ">Script:&nbsp;</div>
+                  <div class="text-secondary ">"Let's see how well you have learned the words in this lesson. (Mastery Goal: all words correct in 10 - 15 seconds.)"</div>
+                </div>
+
+                <table class="table table-sm table-borderless">
+                  <tbody>
+                  <tr class="d-flex">
+                    <td id="TM0" class="wordlist col-12 mx-2">tap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td id="TM1" class="wordlist col-12 mx-2">zap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td id="TM2" class="wordlist col-12 mx-2">map</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td id="TM3" class="wordlist col-12 mx-2">rap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td id="TM4" class="wordlist col-12 mx-2">sap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td id="TM5" class="wordlist col-12 mx-2">yap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td id="TM6" class="wordlist col-12 mx-2">wap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td id="TM7" class="wordlist col-12 mx-2">gap</td>
+                  </tr>
+                  <tr class="d-flex">
+                    <td id="TM8" class="wordlist col-12 mx-2">lap</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div id="test-sidebar" class="col-3 mx-1 px-0">
+
+                <div class="row d-flex justify-content-center">
+                  <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true" title=""
+                       data-original-title="<b>Instructions:</b> Shoot for a goal of 15 seconds. (Be flexible for students with slow processing speed. Automaticity is more important than speed.)</br></br>Click <i>Mastered</i> if the student does not need to review the lesson again. Click <i>Advancing</i> if the student can move on but needs to revisit the lesson at a later date."></div>
+                </div>
+
+
+                <table id="test-sidebar-contents" class="table table-sm table-borderless">
+                  <tbody>
+
+
+                  </tbody>
+                </table>
+
+                <div class="row d-flex py-2">
+                  <div class="container mx-0 px-0">
+                    <div class="row d-flex flex-wrap justify-content-center">
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="testStartButton"
+                           style="background: url(/images/sidebar/Start.png) no-repeat; background-size: contain;" data-original-title="start timer">
+                      </div>
+
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="testStopButton"
+                           style="background: url(/images/sidebar/Stop.png) no-repeat; background-size: contain;" data-original-title="stop timer">
+                      </div>
+
+                      <div class="w-100"></div>
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="testResetButton"
+                           style="background: url(/images/sidebar/Reset.png) no-repeat; background-size: contain;" data-original-title="reset timer">
+                      </div>
+
+                      <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left" title="" id="testSaveButton"
+                           style="background: url(/images/sidebar/Save.png) no-repeat; background-size: contain;" data-original-title="save time and display in graph">
+                      </div>
+
+                    </div>
+                    <div class="row d-flex align-content-center">
+                      <div id="testTime" class="wordlist mx-auto my-3">00:00</div>
+                    </div>
+
+                    <div class="row">
+                      <form name="testMasteryForm" id="testMasteryForm" data-ajax="false" method="post" action="/">
+                        <div class="d-flex flex-wrap">
+                          <input class="col" type="hidden" name="masteryType" value="">
+                          <input class="col" type="hidden" name="testWords" value="">
+                          <input class="col" type="hidden" name="source" value="testMastery">
+                          <input class="col" type="hidden" name="handler" value="timer">
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row d-flex">
+
+                  <div class="container mx-0 px-0">
+                    <div class="row d-flex flex-wrap justify-content-center">
+                      <button id="testAdvancingButton" class="btn btn-outline-info col-9 m-1 btn-sm" data-toggle="tooltip" data-placement="left" title=""
+                              data-original-title="Press to indicate that the student is advancing but has not yet mastered the lesson">Advancing
+                      </button>
+                      <button id="testMasteredButton" class="btn btn-outline-info col-9 m-1 btn-sm" data-toggle="tooltip" data-placement="left" title=""
+                              data-original-title="Press to indicate that the student has mastered the lesson">Mastered
+                      </button>
+                    </div>
+                  </div>
+                  <form name="testTimerForm" id="testTimerForm" data-ajax="false" method="post" action="/">
+                    <input type="hidden" name="seconds" value="0/">
+                    <input type="hidden" name="source" value="test">
+                    <input type="hidden" name="handler" value="timer">
+                    <input type="hidden" name="timestamp" value="0">
+                  </form>
+
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    $('.modal-backdrop').removeClass("modal-backdrop");
+    $('[data-toggle="tooltip"]').tooltip({'delay': {show: 500, hide: 100}});
+
+    $(window).resize(function () {
+      setScreenCookie();
+    });
+
+    $(".ajax").colorbox();
+    $(".intro-image").colorbox({photo: true, innerWidth: 450, innerHeight: 500, top: 200});
+    $(".iframe").colorbox({iframe: true, width: "80%", height: "80%"});
+    $(".inline").colorbox({inline: true, width: "50%"});
+    $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
+    $(".zoo-animals").colorbox({
+      iframe: true, innerWidth: "90%", maxWidth: "900px", innerHeight: "100%", maxHeight: "700px",
+      top: 20, overlayClose: false, scrolling: true
+    });
+    $(".zoo-animals-sm").colorbox({
+      iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
+      top: 20, overlayClose: false, scrolling: true
+    });
+    $(".tic-tac-toe").colorbox({
+      iframe: true, innerWidth: "660px", maxWidth: "95%", innerHeight: "660px", maxHeight: "90%",
+      top: 20, overlayClose: false, scrolling: false
+    });
+    // $(".tic-tac-toe").colorbox({
+    //     iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "760px",
+    //     top: 20, overlayClose: false, scrolling: false
+    // });
+
+    $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", width: "750px", height: "540px"});
+    $(".sound-box").colorbox({
+      iframe: true, scrolling: false, overlayClose: false, width: "450px", height: "400px"
+    });
+
+
+    $.colorbox.settings.close = '<i class="fa fa-times-circle-o" aria-hidden="true" style="vertical-align: bottom"></i>';
+
+    $(document).bind('cbox_open', function () {
+      $('html').addClass("body__scroll_disable");
+    }).bind('cbox_cleanup', function () {
+      $('html').removeClass("body__scroll_disable");
+    });
+
+  });
+
+</script>
+
+
+<div id="cboxOverlay" style="display: none;"></div>
+<div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
+  <div id="cboxWrapper">
+    <div>
+      <div id="cboxTopLeft" style="float: left;"></div>
+      <div id="cboxTopCenter" style="float: left;"></div>
+      <div id="cboxTopRight" style="float: left;"></div>
+    </div>
+    <div style="clear: left;">
+      <div id="cboxMiddleLeft" style="float: left;"></div>
+      <div id="cboxContent" style="float: left;">
+        <div id="cboxTitle" style="float: left;"></div>
+        <div id="cboxCurrent" style="float: left;"></div>
+        <button type="button" id="cboxPrevious"></button>
+        <button type="button" id="cboxNext"></button>
+        <button type="button" id="cboxSlideshow"></button>
+        <div id="cboxLoadingOverlay" style="float: left;"></div>
+        <div id="cboxLoadingGraphic" style="float: left;"></div>
+      </div>
+      <div id="cboxMiddleRight" style="float: left;"></div>
+    </div>
+    <div style="clear: left;">
+      <div id="cboxBottomLeft" style="float: left;"></div>
+      <div id="cboxBottomCenter" style="float: left;"></div>
+      <div id="cboxBottomRight" style="float: left;"></div>
+    </div>
+  </div>
+  <div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div>
+</div>
+</body>
+</html>

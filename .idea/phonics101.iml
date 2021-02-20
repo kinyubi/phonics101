@@ -112,5 +112,6 @@
     <orderEntry type="library" name="js-cookie" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="colorbox" level="application" />
+    <orderEntry type="library" name="tinymce" level="application" />
   </component>
 </module>

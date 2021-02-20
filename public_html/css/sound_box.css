@@ -1,0 +1,123 @@
+
+
+:root {
+    --box-dim: 20vw;
+    --ball-holder-height: 9vw;
+    --tile-holder-height: 7vw;
+    --ball-holder-width: 15vw;
+    --tile-holder-width: 15vw;
+
+    --instruct-font-size: 3vw;
+    --button-width: 18vw;
+    --ball-size: 10vw;
+    --table-padding: 1vw;
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+      --box-dim: 130px;
+      --ball-holder-height: 60px;
+      --tile-holder-height: 40px;
+      --ball-holder-width: 110px;
+      --tile-holder-width: 110px;
+      --tile-dim: 2em;
+      --tile-font-size: 1.4em;
+      --instruct-font-size: 1em;
+      --tile-margin: 2px;
+      --button-width: 120px;
+      --ball-size: 60px;
+      --table-padding: 4px;
+  }
+}
+
+td {
+    text-align: center;
+    vertical-align: middle;
+    max-width: 98%;
+    max-height: 98%;
+}
+
+.box {
+    height: var(--box-dim);
+    width: var(--box-dim);
+    padding: 5px;
+}
+
+.box--border {
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+button {
+    width: var(--button-width) !important;
+}
+
+.instruct-size {
+    font-size: var(--instruct-font-size);
+    line-height: var(--instruct-font-size);
+}
+
+table {
+    padding: var(--table-padding);
+    margin: 0;
+}
+
+tbody, tr {max-width: 98%; max-height: 98%;}
+
+.ball--border {
+    border: 3px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--box-dim);
+}
+
+.upper-letter-tile {
+    line-height: 100%;
+    font-size: var(--tile-font-size);
+    padding: 3px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.ballHolder {
+    height: var(--ball-holder-height);
+    width: var(--ball-holder-width);
+    text-align: center;
+}
+
+.tileHolder {
+    height: var(--tile-holder-height);
+    width: var(--tile-holder-width);
+    text-align: center;
+    margin: 1px;
+}
+
+.boxTile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxLetter {
+    flex-shrink: 0;
+}
+
+.ball {
+    font-size: var(--ball-size);
+    line-height: var(--ball-size);
+    width: 100%;
+    height: var(--ball-size);
+    text-align: center;
+    vertical-align: bottom;
+    display: inline-block;
+}
+
+
+
+
+.start-hidden {visibility: hidden}

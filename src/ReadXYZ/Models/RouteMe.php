@@ -13,6 +13,7 @@ use App\ReadXYZ\Handlers\LoginForm;
 use App\ReadXYZ\Handlers\StudentSelector;
 use App\ReadXYZ\Handlers\TimerForms;
 use App\ReadXYZ\Handlers\WordMasteryForm;
+use App\ReadXYZ\Helpers\Cleaner;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Helpers\Util;
@@ -81,6 +82,7 @@ class RouteMe
     public static function parseRoute()
     {
         $requestUri     = parse_url($_SERVER['REQUEST_URI']);
+        $requestUriPath = $requestUri['path'] ?? '';
         $postParameters = [];
         $mainRoute      = '';
         $target         = '';
@@ -94,9 +96,12 @@ class RouteMe
         foreach ($_REQUEST as $key => $value) {
             $postParameters[$key] = $value;
         }
-
+        if (Util::contains('clean', $requestUriPath)) {
+            $result = (new Cleaner())->deleteTwigCache();
+            $requestUriPath = str_replace('/clean','', $requestUriPath);
+        }
         //trim the path part of request_uri of whitespace and leading forward slash
-        $fullPath = trim($requestUri['path'] ?? '');
+        $fullPath = trim($requestUriPath);
         if ((strlen($fullPath) > 0) && ($fullPath[0] == '/')) {
             $fullPath = substr($fullPath, 1);
         }
@@ -109,7 +114,6 @@ class RouteMe
         for ($i=0; $i<count($routeParts); $i++) {
             $part = $routeParts[$i];
             if (is_numeric($part)) {$routeParts[$i] = intval($part);}
-
         }
 
 
@@ -179,6 +183,9 @@ class RouteMe
             case 'crud':
                 // see tables_crud.html.twig
                 (new CrudTemplate('abc_' . $routeParts[0]))->display();
+                break;
+            case 'lesson':
+                self::lessonCheck($routeParts);
                 break;
             case 'lessons':
             case 'lessonlist':
@@ -256,6 +263,22 @@ class RouteMe
             } else {
                 (new LoginTemplate())->display();
             }
+        }
+    }
+
+    /**
+     * @param array $routeParts
+     * @throws PhonicsException
+     */
+    private static function lessonCheck(array $routeParts)
+    {
+        if (count($routeParts)) {
+            (new LessonTemplate($routeParts[0], $routeParts[1] ?? ''))->display();
+        } elseif (Session::hasLesson()) {
+            (new LessonTemplate(Session::getCurrentLessonCode()));
+        } else {
+            self::rerouteCheck();
+            (new LessonListTemplate())->display();
         }
     }
 
