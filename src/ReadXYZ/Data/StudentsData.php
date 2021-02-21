@@ -31,7 +31,7 @@ class StudentsData extends AbstractData
         $query = <<<EOT
 CREATE TABLE `abc_students` (
 	`studentCode` VARCHAR(32) NOT NULL,
-	`userName` VARCHAR(100) NULL DEFAULT NULL COMMENT 'If the trainer is deleted, then username in this table is set to null. If the trainerCode is chainged in abc_trainer, then it will be updated here as well.',
+	`userName` VARCHAR(100) NULL DEFAULT NULL COMMENT 'If the trainer is deleted, then username in this table is set to null. If the trainerCode is changed in abc_trainer, then it will be updated here as well.',
 	`studentName` VARCHAR(50) NOT NULL,
 	`compositeCode` VARCHAR(100) NOT NULL,
 	`avatarFileName` VARCHAR(50) NOT NULL DEFAULT '',

@@ -52,4 +52,11 @@ class Cleaner
         }
     }
 
+    public function deleteGeneratedFiles(): BoolWithMessage
+    {
+        $generatedDir = Util::getPublicPath('generated');
+        $this->deleteDirectory($generatedDir);
+        if (!file_exists($generatedDir)) mkdir($generatedDir);
+    }
+
 }

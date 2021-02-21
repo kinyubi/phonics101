@@ -5,7 +5,7 @@ use App\ReadXYZ\Helpers\Location;
 use App\ReadXYZ\JSON\ZooAnimalsJson;
 use App\ReadXYZ\Models\Session;
 
-$cssJsVer = '?ver=1.0102.0';
+$cssJsVer = '?ver=1.0221.0';
 $bootstrapVer = '?ver=1.01.17.0';
 $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'cap,gap,lap,map,rap,sap,tap,zap,nap',

@@ -16,7 +16,7 @@
       {
         "tabTypeId": "spell",
         "tabDisplayAs": "Chain",
-        "script": "<p>Click the letters to spell &lt;say a word&gt;.<br>Now change the first letter to &lt;pick a letter&gt;.<br>What word did you spell?",
+        "script": "<p>Click the eye to see suggested words for stduent to spell.<br>Click the letters to spell &lt;say a word&gt;.<br>Now change the first letter to &lt;pick a letter&gt;.<br>What word did you spell?",
         "imageFile": "/images/tabs/spell.png",
         "aliases": ["spinner"]
       },

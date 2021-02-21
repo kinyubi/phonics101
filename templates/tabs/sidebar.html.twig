@@ -1,6 +1,8 @@
 {# input:
     tabInfo         : fields -> tabTypeId, tabDisplayAs, tabClassName, script, imageFile
 
+  tabIds are: practice, spell, intro, test, write, fluency, mastery, warmup
+
 #}
 {% block SideBar %}
   {% set tabId = tabInfo.tabTypeId %}
@@ -8,48 +10,57 @@
   {% set information = sideNote.getNote(lesson.groupCode, tabId) %}
   {% set isBdpLesson = 'b-d-p' in lesson.lessonName %}
 
-    {# Refresh and Info icon display #}
-    {% if information|default is not empty %}
-      <div class="row d-flex justify-content-center">
-        <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true"
-             title="{{ information }}"></div>
-          {# <a href="#"> #}
-          {# <i class="fas fa-info-circle fa-2x text-info " aria-hidden="true"></i> #}
-          {# <span class="shadow">{{ information|raw }}</span> #}
-          {# </a> #}
+  {# Refresh and Info icon display #}
+  {% if information|default is not empty %}
+    <div class="row d-flex justify-content-center">
+      <div class="bg-info py-3 my-3" data-toggle="tooltip" data-placement="left" data-html="true"
+           title="{{ information }}"></div>
+        {# <a href="#"> #}
+        {# <i class="fas fa-info-circle fa-2x text-info " aria-hidden="true"></i> #}
+        {# <span class="shadow">{{ information|raw }}</span> #}
+        {# </a> #}
+    </div>
+  {% endif %}
+
+  {% if (tabId == 'spell')  and  (lesson.chain is not empty) %}
+  <div class="w-100 tac">
+
+    <i class="fas fa-eye fa-3x text-info sbr" aria-hidden="true"
+       data-toggle="tooltip" data-placement="left"  data-html="true" title="{{ lesson.chain }}"></i>
+  </div>
+  {% endif %}
+
+  {# BDP Dice if applicable #}
+  {% if (tabId == 'intro') and isBdpLesson %}
+    <div class="row d-flex justify-content-center " style="width: 100%;">
+      <div class="px-2 scaled">
+        <iframe src="/dice/rolldice-orig.php?pips=bdpq" height="160" width="200"></iframe>
       </div>
-    {% endif %}
-    {# BDP Dice if applicable #}
-    {% if (tabId == 'intro') and isBdpLesson %}
-      <div class="row d-flex justify-content-center " style="width: 100%;">
-        <div class="px-2 scaled">
-          <iframe src="/dice/rolldice-orig.php?pips=bdpq" height="160" width="200"></iframe>
-        </div>
-      </div>
-    {% endif %}
+    </div>
+  {% endif %}
 
 
-    {# GAMES #}
-    <table id="{{ tabId }}-sidebar-contents" class="table table-sm table-borderless">
-      <tbody>
-      {% set h =  smaller ? 68 : 115 %}
-      {% set w = smaller  ? 75 : 150 %}
+  {# GAMES #}
+  <table id="{{ tabId }}-sidebar-contents" class="table table-sm table-borderless">
+    <tbody>
+    {% set h =  smaller ? 68 : 115 %}
+    {% set w = smaller  ? 75 : 150 %}
 
-      {% for game in lesson.games[tabId]|default %}
-        <tr class="d-flex justify-content-center align-items-center">
-          <td colspan="2">
-            {% set url = (game.gameTypeId == 'tic-tac-toe') and (h > 100) ? '/tictactoe/tictac-lg.php' : game.url %}
-            {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell', 'sound-box']) ? game.gameTypeId : 'games' %}
-            <a class="{{ class }}" href="{{ url }}">
-              <img src="{{ game.thumbNailUrl }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
-                   title="{{ game.gameTitle }}" width="{{ w }}" height="{{ h }}">
-            </a>
-          </td>
-        </tr>
-      {% endfor %}
+    {% for game in lesson.games[tabId]|default %}
+      <tr class="d-flex justify-content-center align-items-center">
+        <td colspan="2" >
+          {% set url = (game.gameTypeId == 'tic-tac-toe') and (h > 100) ? '/tictactoe/tictac-lg.php' : game.url %}
+          {% set class = (game.gameTypeId in ['tic-tac-toe', 'advanced-spell', 'sound-box']) ? game.gameTypeId : 'games' %}
+          <a class="{{ class }}" href="{{ url }}">
+            <img src="{{ game.thumbNailUrl }}" alt="{{ game.gameTitle }}" onclick="disableScroll()"
+                 class="sb" title="{{ game.gameTitle }}" width="{{ w }}" height="{{ h }}">
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
 
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 
   {# Timer if applicable #}
   {% if tabId in ['fluency', 'test', 'practice'] %}

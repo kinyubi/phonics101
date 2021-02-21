@@ -82,7 +82,7 @@ class LessonTemplate
         $args['this_crumb'] = $this->lesson->lessonName;
         $args['soundBox'] = $this->getSoundBoxCookie();
         $args['animals']       = ZooAnimalsJson::getInstance()->getStudentAnimalSet(Session::getStudentCode());
-
+        // tabInfo is set by lesson.html.twig for each of the tabs. It is an abc_tabType record
 
         if ($this->initialTabName) {
             $args['initialTabName'] = $this->initialTabName;

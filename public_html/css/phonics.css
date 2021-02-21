@@ -1,6 +1,6 @@
 /* MAKE SURE YOU MAINTAIN PHONICS.CSS and PHONICS.MOBILE.CSS TOGETHER */
 
-/* version 1.0102.0 */
+/* version 1.0221.0 */
 
 
 :root {
@@ -240,12 +240,16 @@ td.info-thumb {
   transition: opacity 0.1s;
 }
 
-.btn-img-shadow {
+.btn-img-shadow-round {
+  border-radius: 50%;
+}
+
+.btn-img-shadow, .btn-img-shadow-round {
   box-shadow: none;
   transition: box-shadow 0.5s;
 }
 
-.btn-img-shadow:hover {
+.btn-img-shadow:hover, .btn-img-shadow-round:hover {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
@@ -477,6 +481,12 @@ a.img-contain img {
   background-color: transparent !important;
   height: 50px;
   width: 50px;
+  transition: background-image 0.7s ease-in-out;
+}
+
+.bg-info:hover {
+  background-image: url("/images/sidebar/info-hover.png");
+  transition: background-image 0.7s ease-in-out;
 }
 
 .bg-image--title {
@@ -545,3 +555,18 @@ a.img-contain img {
   font-weight: bold;
   margin: 3px !important;
 }
+
+.sbr {
+  border-radius: 50%;
+}
+
+.sb, .sbr {
+  box-shadow: none;
+  transition: box-shadow 0.5s;
+}
+
+.sb:hover, .sbr:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+

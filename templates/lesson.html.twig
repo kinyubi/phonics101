@@ -45,7 +45,7 @@ Optional Arguments
 {% endblock otherStyles %}
 
 {% block otherScripts %}
-  {% set cssJsVer = '1.0202.0' %}
+  {% set cssJsVer = '1.0221.0' %}
  	<script src="/js/timers.js?ver={{ cssJsVer }}"></script>
   <script src="/js/sound_box.js?ver={{ cssJsVer }}"></script>
  	<script src="/pdfflip/pflip/js/pdfflip.js"></script>
@@ -107,6 +107,7 @@ Optional Arguments
           {% set bodyId = tabId ~ '-body' %}
           {% set tabElemId = tabId ~ '-tab' %}
           {% set blockName = tabId|capitalize ~ 'Tab' %}
+          {# bring in the appropriate template for each tab #}
           <div id="{{ bodyId }}" class="tab-pane fade {{ active }}" role="tabpanel" aria-labelledby="{{ tabElemId }}" >
             {{ block(blockName, tabId ~ '.html.twig') }}
           </div>

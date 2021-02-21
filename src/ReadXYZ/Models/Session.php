@@ -365,6 +365,9 @@ class Session
         if ( ! self::isValid()) {
             throw new PhonicsException("There is no session active for a student. Cannot update lesson.");
         }
+        if ('pflip' == $lessonName) {
+            return;
+        }
         $lessons             = LessonsJson::getInstance();
         $student             = self::get(self::STUDENTS);
         $student->lessonName = $lessons->getLessonName($lessonName);

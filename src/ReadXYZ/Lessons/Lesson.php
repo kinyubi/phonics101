@@ -38,6 +38,7 @@ class Lesson
     public ?Spinner     $spinner;
     public string       $pronounceImage; // plain array
     public string       $pronounceImageThumb;
+    public string       $chain;
     /** @var string[] */
     public ?array       $contrastImages;
     public int          $ordinal = 0;
@@ -49,6 +50,7 @@ class Lesson
     private string      $lessonCode;
     private ?array      $wordList;
     private ?array      $supplementalWordList;
+
 
     /**
      * Lesson constructor. The input is a stdClass object from the abc_lessons table in readxyz0_phonics database
@@ -75,6 +77,11 @@ class Lesson
             if ($array) {
                 $this->contrastImages = $array;
             }
+        }
+        $this->chain            = $lesson->chain ?? '';
+        if ($this->chain) {
+            $this->chain = str_replace(',', '<br>', $this->chain);
+            $this->chain = '<p>' . $this->chain . '</p>';
         }
         $this->soundLetters     = $lesson->soundLetters ?? 'abcdefghijklmnopqrstubwxyz';
         $this->stretchList      = is_string($lesson->stretchList) ? CSV::stretchListToArray($lesson->stretchList) : $lesson->stretchList;

@@ -25,7 +25,7 @@
 #}
 {% macro timerButton(tab, name, tooltip) %}
   {% set filename = '/images/sidebar/' ~ name ~ '.png' %}
-    <div class="size--side-icon m-1 btn-img btn-img-shadow" data-toggle="tooltip" data-placement="left"
+    <div class="size--side-icon m-1 btn-img btn-img-shadow-round" data-toggle="tooltip" data-placement="left"
     title="{{ tooltip }}" id="{{ tab }}{{ name }}Button"
     style="background: url({{ filename }}) no-repeat; background-size: contain;">
     </div>
