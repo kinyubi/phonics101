@@ -1,0 +1,52 @@
+{#
+inputs: parentName, studentName, lessonName, wordList, sentences[], actualEmail
+#}
+
+<html lang="en">
+<head>
+    <title>Lesson email</title>
+    <style>
+        body {
+            font-family: sans-serif; font-weight: 550; text-align: center;
+            margin: 24px; padding-top: 16px;
+            width: 400px; height:600px; max-width:100%;
+            /*box-shadow: 10px -10px 5px #CCC; */
+            /*border: solid 1px #555;*/
+            /*border-radius: 20px;*/
+      	}
+        h1, h3,span {color: #00aabe;}
+        div, p {color: #888}
+        img, a, button {display: block; margin-left:auto; margin-right: auto}
+        button {padding:0; border:none; background:none;}
+    </style>
+</head>
+<body>
+{% if not actualEmail %}
+<div><img src="/images/readxyzlogo2-2020.png" width=250 alt=""> </div>
+{% endif %}
+<h1>Hi {{ parentName|default("Parent") }},</h1>
+<p>Today {{ studentName|default("your child") }} worked on the lesson <span>"{{ lessonName }}"</span>.</p><br>
+<h3>The practice words are:</h3>
+<div>{{ wordList }}</div><br><br>
+<h3>The fluency passages are:</h3>
+{% for sentences in sentences %}
+<p>{{ sentence }}</p>
+{% endfor %}
+<br>
+{% if not actualEmail %}
+<button onclick="sendEmail()"><img height=40 src="http://phonics101.test/images/send.png" alt="Send Email"></button>
+{% endif %}
+
+<script>
+    function sendEmail() {
+        $.post( "/lessonEmail", {
+            parent: "{{ parentName|default('Parent') }}",
+            student: "{{ studentName|default('your child') }}",
+            lesson: "{{ lessonName }}",
+            words: "{{ wordList }}",
+            sentences: "{{ sentences|join('|') }}"
+        } );
+    }
+</script>
+</body>
+</html>

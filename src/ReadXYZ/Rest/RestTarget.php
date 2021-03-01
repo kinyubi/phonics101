@@ -4,8 +4,8 @@
 namespace App\ReadXYZ\Rest;
 
 
+use App\ReadXYZ\Data\PhonicsDb;
 use Exception;
-use App\ReadXYZ\Helpers\Util;
 
 /* HTTP Codes
 200 - OK
@@ -62,11 +62,11 @@ class RestTarget
      */
     protected function sqlExists($query): bool
     {
-        $conn = Util::dbConnect();
+        $db = new PhonicsDb();
+        $conn = $db->getConnection();
         if ($result = $conn->query($query)) {
             $exists = ($result->num_rows > 0);
             $result->close();
-            $conn->close();
             return $exists;
         } else {
             throw new Exception("Query unexpectedly failed ({$conn->error}): $query");

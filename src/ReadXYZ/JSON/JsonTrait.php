@@ -171,6 +171,13 @@ trait JsonTrait
         return count($this->persisted['map']);
     }
 
+    public function getKeys(bool $sorted=false): array
+    {
+        $keys = array_keys($this->persisted['map']);
+        if ($sorted) sort($keys);
+        return $keys;
+    }
+
 // ======================== PROTECTED METHODS =====================
     /**
      * JsonTrait constructor. We only populate primaryKey, json, objects and map if primary key is provided,

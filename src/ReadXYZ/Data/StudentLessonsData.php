@@ -9,6 +9,7 @@ use App\ReadXYZ\Enum\MasteryLevel;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\TimerType;
 use App\ReadXYZ\Helpers\Util;
+use App\ReadXYZ\JSON\LessonsJson;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Helpers\PhonicsException;
@@ -23,7 +24,8 @@ class StudentLessonsData extends AbstractData
     private string  $hasLesson;
 
     /**
-     * StudentLessonsData constructor.
+     * StudentLessonsData constructor. If student not specified, there needs to be a current student
+     * in session.
      * This will look to session to provide the studentCode or lessonCode whenever needed.
      * @param string $studentCode   if empty, use Session's current studentCode.
      * @param string $lessonCode    if empty, use Session's current lessonCode
@@ -89,6 +91,40 @@ CREATE TABLE `abc_student_lesson` (
 ) COMMENT='Used to track a students progress' COLLATE='utf8_general_ci' ENGINE=InnoDB AUTO_INCREMENT=6 ;
 EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
+    }
+
+    public function insertAll(): int
+    {
+        $lessonsJson = LessonsJson::getInstance();
+        $lessonCount = $lessonsJson->getCount();
+        $mastery = $this->getLessonMastery();
+        $count = 0;
+        if (count($mastery) < $lessonCount) {
+            $masteredCodes = array_map(function ($lesson) {return $lesson->lessonCode;}, $mastery);
+            sort($masteredCodes);
+            reset($masteredCodes);
+            $currMasteredCode = next($masteredCodes);
+            if ($currMasteredCode === false) $currMasteredCode = 'zzz';
+            $sortedLessonCodes = $lessonsJson->getKeys(true);
+            reset($sortedLessonCodes);
+            $emptyArray = $this->encodeJsonQuoted([]);
+            $fields = 'studentCode, lessonCode, dateLastPresented,fluencyTimes,testTimes';
+            $s = $this->quotedStudentCode;
+            while ($currLessonCode = next($sortedLessonCodes)) {
+                $quotedCode = $this->smartQuotes($currLessonCode);
+                if ($currLessonCode < $currMasteredCode) {
+                    $values = "$s,$quotedCode,CURDATE(),$emptyArray, $emptyArray";
+                    $query = "INSERT INTO abc_student_lesson($fields) VALUES($values)";
+                    $this->throwableQuery($query, QueryType::AFFECTED_COUNT);
+                    $count++;
+                } elseif ($currLessonCode == $currMasteredCode) {
+                    $currMasteredCode = next($masteredCodes);
+                    if ($currMasteredCode === false) $currMasteredCode = 'zzz';
+                }
+            }
+
+        }
+        return $count;
     }
 
     /**
@@ -195,9 +231,10 @@ EOT;
 
     /**
      * This gets run before a sql update to create the record if it doesn't already exist.
+     * @param string $specificLesson overrides use of current lesson
      * @throws PhonicsException on ill-formed SQL
      */
-    private function createStudentLessonAsNeeded(): void
+    public function createStudentLessonAsNeeded(string $specificLesson=''): void
     {
         if (! $this->hasLesson) {
             throw new PhonicsException('Cannot update timed test without a lesson.');
@@ -205,7 +242,7 @@ EOT;
         $query = "SELECT * FROM abc_student_lesson WHERE {$this->whereClause}";
         $count = $this->throwableQuery($query, QueryType::RECORD_COUNT);
         $student = $this->quotedStudentCode;
-        $lesson = $this->quotedLessonCode;
+        $lesson = ($specificLesson) ? $this->smartQuotes($specificLesson) : $this->quotedLessonCode;
         $emptyArray = $this->encodeJsonQuoted([]);
         $fields = 'studentCode, lessonCode, dateLastPresented,fluencyTimes,testTimes';
         $values = "$student,$lesson,CURDATE(),$emptyArray, $emptyArray";

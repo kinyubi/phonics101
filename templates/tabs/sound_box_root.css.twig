@@ -1,0 +1,18 @@
+{#
+ inputs: soundBox.count, soundBox.color, soundBox.boxSize, soundBox.ballSize
+
+ #}
+:root {
+    --box-dim: {{ soundBox.boxSize }}px;
+    --ball-size: {{ soundBox.ballSize }}px;
+    --ball-holder-height: {{ (soundBox.boxSize * 0.45)|round(0,'floor') }}px;
+    --tile-holder-height: {{ (soundBox.boxSize * 0.35)|round(0,'floor') }}px;
+    --ball-holder-width: {{ (soundBox.boxSize * 0.75)|round(0,'floor') }}px;
+    --tile-holder-width: {{ (soundBox.boxSize * 0.75)|round(0,'floor') }}px;
+    --tile-dim: {{ (soundBox.boxSize * 0.30)|round(0,'floor') }}px;
+    --tile-font-size: {{ (soundBox.boxSize * 0.2)|round(0,'floor') }}px;
+    --instruct-font-size: {{ (soundBox.boxSize * 0.1)|round(0,'floor') }}px;
+    --tile-margin: {{ smaller ? '1px' : '2px' }};
+    --button-width: {{ (soundBox.boxSize * 0.90)|round(0,'floor') }}px;
+    --table-padding: {{ smaller ? '2px' : '4px' }};
+}

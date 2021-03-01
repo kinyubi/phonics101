@@ -38,10 +38,13 @@ Optional Arguments
 
 {% block otherStyles %}
   <link rel="stylesheet" href="/pdfflip/pflip/css/pdfflip.css">
-  <link rel="stylesheet" href="/css/sound_box.css">
   <style>
-
+  {{ include('tabs/sound_box_root.css.twig') }}
   </style>
+  <link rel="stylesheet" href="/css/sound_box.css">
+
+
+
 {% endblock otherStyles %}
 
 {% block otherScripts %}

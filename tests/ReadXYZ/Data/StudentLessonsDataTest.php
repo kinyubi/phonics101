@@ -2,8 +2,11 @@
 
 namespace Tests\ReadXYZ\Data;
 
+use App\ReadXYZ\Data\GeneralData;
 use App\ReadXYZ\Data\StudentLessonsData;
+use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\TimerType;
+use App\ReadXYZ\JSON\LessonsJson;
 use App\ReadXYZ\Models\Session;
 use PHPUnit\Framework\TestCase;
 
@@ -36,5 +39,24 @@ class StudentLessonsDataTest extends TestCase
             $this->assertNotContains(9, $times);
         }
 
+    }
+    public function testInsertAll()
+    {
+        $studentCode = 'S5fb85708ef0b74Z27026968 ';
+        $studentLessonsData = new StudentLessonsData($studentCode);
+        $query = "DELETE FROM abc_student_lesson WHERE studentCode = '$studentCode'";
+        $studentLessonsData->throwableQuery($query, QueryType::STATEMENT);
+
+        $totalLessonCount = LessonsJson::getInstance()->getCount();
+        $studentLessonsData->createStudentLessonAsNeeded('at');
+        $mastery = $studentLessonsData->getLessonMastery();
+
+        $originalMasteryCount = count($mastery);
+        $studentLessonsData->insertAll();
+        $mastery = $studentLessonsData->getLessonMastery();
+        $finalCount = count($mastery);
+        $this->assertEquals($totalLessonCount, $finalCount);
+        $query = "DELETE FROM abc_student_lesson WHERE studentCode = '$studentCode'";
+        $studentLessonsData->throwableQuery($query, QueryType::STATEMENT);
     }
 }

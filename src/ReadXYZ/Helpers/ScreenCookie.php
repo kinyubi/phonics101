@@ -34,8 +34,20 @@ class ScreenCookie
         $dims = explode(',', $_COOKIE['readxyz_screen']);
         $type = self::getDeviceType($dims[0], $dims[1]);
         $screenInfo = self::makeObject(intval($dims[0]), intval($dims[1]), intval($dims[2]), intval($dims[3]), $type);
+        Session::sessionContinue();
         $_SESSION['SCREEN_DIM'] = $screenInfo;
         return $screenInfo;
+    }
+
+    public function getIdealPartWidth(int $parts, float $padPercent=.9)
+    {
+        $screenInfo = $this->getScreenInfo();
+        if ($screenInfo->deviceType == 'phone') {
+            $fullWidth = $screenInfo->screenWidth;
+        } else {
+            $fullWidth = min($screenInfo->windowWidth, 800);
+        }
+        return round(($padPercent * $fullWidth) / $parts);
     }
 
     public function getDeviceType(int $width=0, int $height=0): string

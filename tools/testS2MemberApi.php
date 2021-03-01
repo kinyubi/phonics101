@@ -6,17 +6,17 @@ require 'autoload.php';
 
 
 $membership = new Membership();
-// $erinEmail  = $membership->getUser('erinweinman@gmail.com');
-// $erinComposite       = $membership->getUser('erinweinman@gmail.com-Charlotte');
-$uc     = $membership->getUser('jamiehafling@aol.com-Jojo');
-$lc = $membership->getUser('jamiehafling@aol.com-jojo');
+$erinEmail  = $membership->getUser('erinweinman@gmail.com');
+$erinComposite       = $membership->getUser('erinweinman@gmail.com-Charlotte');
+// $uc     = $membership->getUser('jamiehafling@aol.com-Jojo');
+// $lc = $membership->getUser('jamiehafling@aol.com-jojo');
 //$lisaComp = $membership->getUser('carlbaker');
-// print_r($erinEmail);
-// print_r($erinComposite);
+print_r($erinEmail);
+print_r($erinComposite);
 // print_r($erinLowerCase);
 // print_r($lisaEmail);
-print_r($uc);
-print_r($lc);
+// print_r($uc);
+// print_r($lc);
 
 /*
  AFTER EXTRACT USER INFO

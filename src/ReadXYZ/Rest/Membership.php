@@ -85,7 +85,8 @@ class Membership
             'data'    => [$fieldName => $member] //user_login, ID or user_email value allowed
         ];
         $result    = $this->post($inputData);
-        return $this->extractUserInfo($result);
+        //return $this->extractUserInfo($result);
+        return $result;
 
     }
 

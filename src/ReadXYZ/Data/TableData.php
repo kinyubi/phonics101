@@ -9,6 +9,11 @@ use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Enum\Regex;
 
+/**
+ * Class TableData
+ * @package App\ReadXYZ\Data
+ * This class is able to analyze table structures and fields.
+ */
 class TableData extends AbstractData
 {
     private array $fields      = [];

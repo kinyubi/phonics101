@@ -19,6 +19,7 @@ use JsonSerializable;
  */
 class LessonsJson implements JsonSerializable
 {
+    //trait includes exists($key), get($key), getAll(), getCount(),
     use JsonTrait;
     protected static LessonsJson   $instance;
 

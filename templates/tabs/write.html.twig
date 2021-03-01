@@ -1,10 +1,10 @@
 {# Tap and Write Tab (Elkonin boxes
 
-input soundBox.color, soundBox.count
+input soundBox.color, soundBox.count, soundBox.boxSize
 #}
 {% block WriteTab %}
-    {% set count = count ?? 3 %}
-    {% set color = color ?? 'random' %}
+    {% set count = soundBox.count  ?? 3 %}
+    {% set color = soundBox.color ?? 'blue' %}
     {% set colorSet = ['red', 'green', 'orangered', 'blue', 'goldenrod'] %}
 
     {% if color == 'random' %}
@@ -57,6 +57,8 @@ input soundBox.color, soundBox.count
                     <a class="dropdown-item count-click" href="#"><span class="h3">3</span></a>
                     <a class="dropdown-item count-click" href="#"><span class="h3">4</span></a>
                     <a class="dropdown-item count-click" href="#"><span class="h3">5</span></a>
+                    <a class="dropdown-item count-click" href="#"><span class="h3">6</span></a>
+                    <a class="dropdown-item count-click" href="#"><span class="h3">7</span></a>
                 </div>
             </div>
 
@@ -121,8 +123,8 @@ input soundBox.color, soundBox.count
         {# ROW -- BALLS (End) #}
 
         {# ROW -- INSTRUCTIONS #}
-        <div class="row d-flex justify-content-center instruct-size">
-            Click a ball or a tile to move it into the box. Click the erase button to erase the letters in a box.
+        <div class="row d-flex justify-content-center instruct-size mt-2">
+            Click on a ball or a tile to move it into the box. Click the erase button to erase the letters in a box.
         </div>
 
         <div class="row d-flex flex-wrap py-3 pl-3">

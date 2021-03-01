@@ -106,9 +106,15 @@ class LessonTemplate
 
     private function getSoundBoxCookie(): object
     {
+        Session::sessionContinue();
         $rawCookie = $_COOKIE['readxyz_sound_box'] ?? '3blue';
+        $count = intval($rawCookie[0]);
+        $idealPartSize = ScreenCookie::getInstance()->getIdealPartWidth($count);
         return (object) [
-            'count' => intval($rawCookie[0]), 'color' => substr($rawCookie, 1)
+            'count' => $count,
+            'color' => substr($rawCookie, 1),
+            'boxSize' => $idealPartSize,
+            'ballSize' => round($idealPartSize * .65)
         ];
     }
 

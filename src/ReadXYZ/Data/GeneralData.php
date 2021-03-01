@@ -7,6 +7,13 @@ use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
 use App\ReadXYZ\Helpers\PhonicsException;
 
+/**
+ * Class GeneralData
+ * @package App\ReadXYZ\Data
+ * GeneralData has methods to:
+ *  1. test if a database or table exists
+ *  2. get a list of all tables or views
+ */
 class GeneralData extends AbstractData
 {
     private const NOT_LIKE = ' table_name NOT LIKE ';
