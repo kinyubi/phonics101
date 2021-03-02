@@ -2,6 +2,9 @@
     "behat/gherkin": {
         "version": "v4.8.0"
     },
+    "bshaffer/oauth2-server-php": {
+        "version": "v1.10.0"
+    },
     "codeception/codeception": {
         "version": "2.3",
         "recipe": {

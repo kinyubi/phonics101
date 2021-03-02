@@ -2,9 +2,12 @@
 
 Phonics101 is a collection of online exercises and lessons to assist in tutoring individuals that struggle with reading.
 
-####License - MIT
+#### Progress Bar code
+- progress bar is for the lesson list screen
+    - Lesson list is created in src/ReadXYZ/Twig/LessonListTemplate.php
+    - Twig template used is in templates/lesson_list.html.twig
 
-###Audience
+### Audience
 This repository contains a collection of online "lessons" that assist in tutoring/teaching:
 * dyslexic students, 
 * ESL students, 

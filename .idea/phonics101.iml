@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/src/3rdParty/Peekmo" isTestSource="false" packagePrefix="Peekmo\" />
       <excludeFolder url="file://$MODULE_DIR$/_gsdata_" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bshaffer/oauth2-server-php" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/codeception/module-webdriver" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/instantiator" />
