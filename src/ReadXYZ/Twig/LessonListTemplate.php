@@ -8,7 +8,7 @@ use App\ReadXYZ\Enum\GeneratedType;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\JSON\KeyChainJson;
 use App\ReadXYZ\JSON\LessonsJson;
-use App\ReadXYZ\JSON\ZooAnimalsJson;
+use App\ReadXYZ\JSON\ZooAnimalsAlt;
 use App\ReadXYZ\Lessons\LearningCurve;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\BreadCrumbs;
@@ -20,7 +20,7 @@ class LessonListTemplate
 
     public function __construct()
     {
-        LearningCurve::cleanUpOldGraphics();
+        // LearningCurve::cleanUpOldGraphics();
     }
 
     /**
@@ -36,7 +36,8 @@ class LessonListTemplate
         // make breadcrumbs
         $crumbs = (new BreadCrumbs())->getPrevious($currentCrumb);
         $zooTemplate = new ZooTemplate($student->studentCode);
-
+        $awardTemplate = new AwardTemplate($student->studentCode);
+        $zooAnimals = ZooAnimalsAlt::getInstance();
         $args = [
             'accordion'         => $lessons->getAccordionWithMastery(),
             'studentName'       => $studentName,
@@ -46,7 +47,9 @@ class LessonListTemplate
             'this_crumb'        => $currentCrumb,
             'zooUrl'            => $zooTemplate->getZooUrl(),
             'LessonsJson'       => $lessons,
-            'animals'           => ZooAnimalsJson::getInstance()->getStudentAnimalSet($student->studentCode),
+            'animals'           => $zooAnimals->getStudentAnimalSet($student->studentCode),
+            'animalIndex'       => $zooAnimals->getIndex($student->studentCode),
+            'awardUrl'          => $awardTemplate->getUrl(),
             'isLocal' => Util::isLocal()
         ];
 

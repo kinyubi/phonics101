@@ -11,7 +11,7 @@ use App\ReadXYZ\Models\RouteMe;
 use Symfony\Component\ErrorHandler\Debug;
 
 //require dirname(__DIR__).'/config/bootstrap.php';
-require 'autoload.php';
+require __DIR__ . '/autoload.php';
 
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);

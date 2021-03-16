@@ -16,7 +16,7 @@ class ZooAnimalsJson
     use JsonTrait;
 
     protected static ZooAnimalsJson   $instance;
-    protected static array                   $animals = [
+    protected static array $animals = [
         'dog', 'cat', 'elephant', 'monkey', 'tiger', 'panda', 'lion', 'bear', 'leopard', 'dolphin',
         'horse', 'wolf', 'salmon', 'jellyfish', 'penguin', 'cow', 'whale', 'giraffe', 'raccoon', 'goat',
         'rhino', 'otter', 'pig', 'hamster', 'hedgehog', 'pigeon', 'sheep', 'koala', 'fox', 'platypus',
@@ -28,7 +28,9 @@ class ZooAnimalsJson
         'guineapig', 'llama', 'cheetah', 'turtle', 'walrus', 'yak', 'arcticfox', 'orca', 'deer', 'shrimp',
         'jaguar', 'emu', 'toad', 'stingray', 'beetle', 'lobster', 'scorpion', 'reindeer', 'spider', 'mantis'
     ];
-    protected array                   $keys;
+
+    protected static bool $useNumbers = false;
+    protected array $keys;
 
     /**
      * ZooAnimalsJson constructor.

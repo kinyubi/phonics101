@@ -123,24 +123,29 @@ otherJS
 
             {# placeholder to allow screen to define zoo animals #}
             {% set useModal = false %}
+
             {% if (animals and not hideTitleAnimals) %}
                 {% set studentCode = session.currStudent|default %}
                 {% set studentName = (studentCode is empty) ? '' : session['STUDENTS'][studentCode].studentName %}
-                {% set zooClass = (studentName is empty) ?  '' : 'zoo-animals' %}
+                {% set zooClass = (studentName is empty) ?  '' :  'zoo-animals' %}
                 {% set zooUrl = (zooClass is empty) ? '#' : zooUrl %}
-                {% set dim = smaller ? '40px' : '75px' %}
-                <a id="current-animal" class="img-contain col-1 {{ zooClass }}" href="{{ zooUrl }}" >
-                    <img src="{{ animals[0].fileName }}" alt="{{ animals[0].friendlyName }}"
-                         title="See my zoo" class="mw-100 mh-100">
+                {% set dim = smaller ? '30' : '60' %}
+                <div style="display: none;" id="animal-index">{{ animalIndex }}</div>
+                {# invokes $(".zoo-animals").colorbox() where href is a generated zoo file for student #}
+                <a id="current-animal" class="m-0 p-0 {{ zooClass }}" href="{{ zooUrl }}"
+                   style="width: {{ dim }}px; height: {{ dim }}px">
+                    <img src="{{ animals[0].fileName }}" alt="My Latest Animal" height="{{ dim }}" width="{{ dim }}"
+                         title="See my zoo" class="mw-100 mh-100" id="current-animal-img">
                 </a>
 
-                {% set titleText = 'Award the ' ~ animals[1].friendlyName ~ ' to ' ~ studentName %}
-                <a id="next-animal" class="img-contain col-1" href="#" data-toggle="modal" data-target="#award-confirm" {{ anchorStyle }}>
-                    <img src="{{ animals[1].grayFileName }}" alt="{{ animals[1].friendlyName }}"
-                         title="{{ titleText }}"  class="mw-100 mh-100">
+                {% set titleText = 'Award this animal prize to ' ~ studentName %}
+                <a id="next-animal"  href="{{ awardUrl }}" style="width: {{ dim }}px; height: {{ dim }}px"
+                    class="award m-0 p-0" >
+                    <img src="{{ animals[1].grayFileName }}" alt="Next Animal" height="{{ dim }}" width="{{ dim }}"
+                         title="{{ titleText }}"  class="mw-100 mh-100  m-0" id="next-animal-img">
                 </a>
                 {# dialog(id, title, text, clickTarget, doneFunc) #}
-                {{ dialog("award-confirm", "Award Ceremony", titleText, '/handler/award', 'noAward') }}
+{#                {{ dialog("award-confirm", "Award Ceremony", titleText, '/handler/award', 'noAward') }}#}
             {% endif %}
 
 
@@ -177,6 +182,7 @@ otherJS
 <script>
     {% set game_dimensions__ = smaller ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
     {% set sound_box_dimensions__ = smaller ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
+
     $(document).ready(function () {
         {# when bootstrap modal is active, don't dim background #}
         $('.modal-backdrop').removeClass("modal-backdrop");
@@ -192,21 +198,19 @@ otherJS
         $(".inline").colorbox({inline: true, width: "50%"});
         $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
         $(".zoo-animals").colorbox({
-            iframe: true, innerWidth: "90%", maxWidth: "900px", innerHeight: "100%", maxHeight: "700px",
+            iframe: true, innerWidth: "660px", maxWidth: "95%", innerHeight: "660px", maxHeight: "90%",
             top: 20, overlayClose: false, scrolling: true
         });
-        $(".zoo-animals-sm").colorbox({
-            iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "660px",
-            top: 20, overlayClose: false, scrolling: true
-        });
+
         $(".tic-tac-toe").colorbox({
             iframe: true, innerWidth: "660px", maxWidth: "95%", innerHeight: "660px", maxHeight: "90%",
             top: 20, overlayClose: false, scrolling: false
         });
-        // $(".tic-tac-toe").colorbox({
-        //     iframe: true, innerWidth: "90%", maxWidth: "660px", innerHeight: "100%", maxHeight: "760px",
-        //     top: 20, overlayClose: false, scrolling: false
-        // });
+        {# the colorbox() invoked when greyed animal is clicked #}
+        $(".award").colorbox({
+            iframe: true, innerWidth: "660px", maxWidth: "95%", innerHeight: "660px", maxHeight: "90%",
+            top: 20, overlayClose: false, scrolling: false, onClosed: function() {advanceAnimal();}
+        });
 
         $(".games").colorbox({iframe: true, top: 20, className: "gameFrame", {{ game_dimensions__ }}});
         $(".sound-box").colorbox({

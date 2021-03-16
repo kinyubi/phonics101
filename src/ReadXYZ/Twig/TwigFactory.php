@@ -30,9 +30,10 @@ class TwigFactory
     {
         $options = [];
         $options['debug'] =  Util::isLocal();
-        $options['auto_reload'] = Util::isLocal();
-        $options['cache'] = Util::getReadXyzSourcePath('cache');
-        // $options['cache'] = false;
+        // $options['auto_reload'] = Util::isLocal();
+        $options['auto_reload'] = true;
+        // $options['cache'] = Util::getReadXyzSourcePath('cache');
+        $options['cache'] = false;
         $options['autoescape'] = false;
         $options['optimizations'] = 0;
         $path = Util::getProjectPath('templates');

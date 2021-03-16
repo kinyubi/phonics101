@@ -7,21 +7,19 @@ namespace App\ReadXYZ\Enum;
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\JSON\LessonsJson;
 use App\ReadXYZ\Models\Session;
-use App\ReadXYZ\Twig\TicTacToeTemplate;
 use MyCLabs\Enum\Enum;
 
 class GeneratedType extends Enum
 {
-    const TicTacToe     = 'ttt';
     const Zoo           = 'zoo';
+    const Award         = 'awd';
     const LearningCurve = 'lcv';
     const TestCurve     = 'tcv';
 
     private array $extensionMap = [
-        self::TicTacToe     => 'html',
         self::Zoo           => 'html',
+        self::Award         => 'html',
         self::LearningCurve => 'png',
         self::TestCurve     => 'png'
     ];
@@ -48,17 +46,9 @@ class GeneratedType extends Enum
             $code = $studentsData->getStudentCode($studentTag);
         }
         $this->studentCode = $code;
-        $ordinal = 0;
-        if ($value == GeneratedType::Zoo) {
-            $ordinal = $studentsData->getAnimalIndex($code);
-        } else {
-            $lessonCode = Session::getCurrentLessonCode();
-            if ($lessonCode) {
-                $ordinal = LessonsJson::getInstance()->getOrdinal($lessonCode);
-            }
-        }
-        $this->url = sprintf('/generated/%s_%03d_%s.%s', $code, $ordinal, $this->value, $this->getExtension());
-        $this->globPattern = sprintf('/generated/%s_???_%s.%s', $code,  $this->value, $this->getExtension());
+
+        $this->url = sprintf('/generated/%s_%s.%s', $code,  $this->value, $this->getExtension());
+        $this->globPattern = sprintf('/generated/%s_%s.%s', $code,  $this->value, $this->getExtension());
         $this->globPattern = Util::getPublicPath($this->globPattern);
         $this->fileName = Util::getPublicPath($this->url);
     }

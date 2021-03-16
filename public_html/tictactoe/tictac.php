@@ -1,7 +1,7 @@
 <?php
 require dirname(__DIR__) . '/autoload.php';
 use App\ReadXYZ\Helpers\Location;
-use App\ReadXYZ\JSON\ZooAnimalsJson;
+use App\ReadXYZ\JSON\ZooAnimalsAlt;
 use App\ReadXYZ\Models\Session;
 
 $cssJsVer = '?ver=1.0221.0';
@@ -24,21 +24,9 @@ $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'bud,dub,dud,pub,pug,pup,dub,bud,dud',
           'bet,get,jet,let,met,net,pet,set,wet'];
 
-$animals = ZooAnimalsJson::getInstance()->getAnimalNames();
-Session::sessionContinue();
-if (isset($_GET['P1']) && in_array($_GET['P1'], $animals)) {
-    $player1 = $_GET['P1'];
-} else {
-    $player1 = $animals[rand(0, 99)];
-}
-if (isset($_GET['P2']) && in_array($_GET['P2'], $animals)) {
-    $player2 = $_GET['P2'];
-} else {
-    $player2 = $animals[rand(0, 99)];
-}
-while ($player2 == $player1) {
-    $player2 = $animals[rand(0, 99)];
-}
+$animals = ZooAnimalsAlt::getInstance()->get2AnimalObjects();Session::sessionContinue();
+$player1 = $animals[0];
+$player2 = $animals[1];
 
 if (isset($_SESSION['TicTacToe'])) {
   $word_list = $_SESSION['TicTacToe'];
@@ -48,8 +36,8 @@ if (isset($_SESSION['TicTacToe'])) {
     $word_list = explode(',', $words[$idx]);
 }
 
-$rat = Location::getTicTacToeAnimal($player1);
-$cat = location::getTicTacToeAnimal($player2);
+$rat = $player1->fileName;
+$cat = $player2->fileName;
 ?>
 
 <!DOCTYPE html>

@@ -7,18 +7,18 @@ namespace App\ReadXYZ\Twig;
 use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Enum\GeneratedType;
 use App\ReadXYZ\Helpers\PhonicsException;
-use App\ReadXYZ\Helpers\Util;
-use App\ReadXYZ\JSON\ZooAnimalsJson;
+use App\ReadXYZ\JSON\ZooAnimalsAlt;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Page\Page;
 use Exception;
+use stdClass;
 
 class ZooTemplate
 {
 
     private GeneratedType $generator;
     private string $studentCode;
-    private ?\stdClass $student;
+    private ?stdClass $student;
     /**
      * ZooTemplate constructor.
      * @param string $studentTag
@@ -42,19 +42,19 @@ class ZooTemplate
      * @throws PhonicsException
      * @throws Exception
      */
-    public function createZooPage()
+    public function CreatePage()
     {
         $args        = [];
         $page        = new Page('My Animals');
 
-        $zoo         = ZooAnimalsJson::getInstance();
+        $zoo         = ZooAnimalsAlt::getInstance();
 
 
-        $lastAnimal  = $this->student->nextAnimal;
+        $currentIndex  = $this->student->nextAnimal;
         $studentName = $this->student->studentName;
-        $pretend     = (0 == $lastAnimal);
+        $pretend     = (0 == $currentIndex);
         if ($pretend) {
-            $lastAnimal    = random_int(40, 95);
+            $currentIndex    = 103;
             $args['title'] = "Earn these animal prizes!";
         } else {
             $args['title'] = "$studentName's Animal Friends";
@@ -62,7 +62,7 @@ class ZooTemplate
 
         $args['hideTitleAnimals'] = true;
         $filePath = $this->generator->getFileName();
-        $animals  = array_slice($zoo->getStudentZoo($lastAnimal), 0, $lastAnimal + 1);
+        $animals  = $zoo->getStudentZoo();
         shuffle($animals);
         $args['animals'] = $animals;
         $page->addArguments($args);
@@ -98,9 +98,10 @@ class ZooTemplate
      */
     private function createIfMissing(): void
     {
-        if ( ! file_exists($this->generator->getFileName())) {
-            $this->createZooPage();
-        }
+        $this->CreatePage();
+        // if ( ! file_exists($this->generator->getFileName())) {
+        //     $this->CreatePage();
+        // }
     }
 
 }

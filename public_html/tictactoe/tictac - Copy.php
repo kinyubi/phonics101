@@ -1,7 +1,7 @@
 <?php
 require dirname(__DIR__) . '/autoload.php';
 use App\ReadXYZ\Helpers\Location;
-use App\ReadXYZ\JSON\ZooAnimalsJson;
+use App\ReadXYZ\JSON\ZooAnimalsAlt;
 use App\ReadXYZ\Models\Session;
 
 $cssJsVer = '?ver=1.0221.0';
@@ -24,7 +24,7 @@ $words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
           'bud,dub,dud,pub,pug,pup,dub,bud,dud',
           'bet,get,jet,let,met,net,pet,set,wet'];
 
-$animals = ZooAnimalsJson::getInstance()->getAnimalNames();
+$animals = ZooAnimalsAlt::getInstance()->getAnimalNames();
 Session::sessionContinue();
 if (isset($_GET['P1']) && in_array($_GET['P1'], $animals)) {
     $player1 = $_GET['P1'];

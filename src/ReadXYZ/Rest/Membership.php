@@ -86,7 +86,7 @@ class Membership
         ];
         $result    = $this->post($inputData);
         //return $this->extractUserInfo($result);
-        return $result;
+        return $this->extractUserInfo($result);
 
     }
 

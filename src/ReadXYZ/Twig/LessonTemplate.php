@@ -6,13 +6,14 @@ namespace App\ReadXYZ\Twig;
 
 use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Data\WordMasteryData;
+use App\ReadXYZ\Enum\GeneratedType;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\JSON\LessonsJson;
 use App\ReadXYZ\JSON\TabTypesJson;
 use App\ReadXYZ\JSON\WarmupsJson;
-use App\ReadXYZ\JSON\ZooAnimalsJson;
+use App\ReadXYZ\JSON\ZooAnimalsAlt;
 use App\ReadXYZ\Lessons\Lesson;
 use App\ReadXYZ\Lessons\SideNote;
 use App\ReadXYZ\Models\BreadCrumbs;
@@ -66,7 +67,8 @@ class LessonTemplate
         if ($initialTab) {
             $this->initialTabName = $initialTab;
         }
-
+        $awardTemplate = new AwardTemplate($this->studentCode);
+        $zooAnimals = ZooAnimalsAlt::getInstance();
         $sideNote              = SideNote::getInstance();
         $args                  = [];
         $args['students']      = Views::getInstance()->getStudentNamesForUser($this->trainerCode);
@@ -81,7 +83,10 @@ class LessonTemplate
         $args['masteredWords'] = (new WordMasteryData())->getMasteredWords();
         $args['this_crumb'] = $this->lesson->lessonName;
         $args['soundBox'] = $this->getSoundBoxCookie();
-        $args['animals']       = ZooAnimalsJson::getInstance()->getStudentAnimalSet(Session::getStudentCode());
+        $args['studentCode'] = $this->studentCode;
+        $args['animals']       = $zooAnimals->getStudentAnimalSet($this->studentCode);
+        $args['animalIndex']   = $zooAnimals->getIndex($this->studentCode);
+        $args['awardUrl'] = $awardTemplate->getUrl();
         // tabInfo is set by lesson.html.twig for each of the tabs. It is an abc_tabType record
 
         if ($this->initialTabName) {

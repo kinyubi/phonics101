@@ -107,22 +107,22 @@ EOT;
 
     /**
      * @param string $studentTag
-     * @return int
+     * @return string
      * @throws PhonicsException
      */
     public function advanceAnimal(string $studentTag): string
     {
         $object = $this->get($studentTag);
         if ($object == null) return '0';
-        if ($object->lastAwarded > (time() - 1200)) return '0'; //award only once every 20 minutes
+        // if ($object->lastAwarded > (time() - 1200)) return '0'; //award only once every 20 minutes
         $index = $object->nextAnimal;
         $time = time();
         $studentCode = $object->studentCode;
-        if ($index < 99) {
+        if ($index < 103) {
             $query = "UPDATE abc_students SET nextAnimal = nextAnimal + 1, lastAwarded = $time WHERE studentCode = '$studentCode'";
             $this->throwableQuery($query, QueryType::STATEMENT);
             $zooTemplate = new ZooTemplate($studentCode);
-            $zooTemplate->createZooPage();
+            $zooTemplate->CreatePage();
             return strval($index + 1);
         }
         return strval($index);
@@ -131,7 +131,7 @@ EOT;
     public function getAnimalIndex(string $studentTag): int
     {
         $object = $this->get($studentTag);
-        return ($object != null) ? $object->nextAnimal : 0;
+        return ($object != null) ? intval($object->nextAnimal) : 0;
     }
 
     /**

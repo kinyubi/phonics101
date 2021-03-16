@@ -7,12 +7,14 @@
 {% endblock %}
 
 {% block body %}
+	{% set dim = smaller ? '30' : '75' %}
 	<div id="zoo-header" class="row d-flex justify-content-between">
 		<div  class="h1 mx-auto w-100 p-3">{{ title|raw }}</div>
 	</div>
 	<div class="row d-flex justify-content-start content">
 		{% for animal in animals %}
-			<img src="{{ animal.fileName }}" alt="{{ animal.friendlyName }}" title=""{{ animal.friendlyName }} class="m-1">
+			<img src="{{ animal.fileName }}" alt="{{ animal.friendlyName }}" title=""{{ animal.friendlyName }}
+			     class="m-1" height="{{ dim }}" width="{{ dim }}">
 		{% endfor %}
 	</div>
 

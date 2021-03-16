@@ -5,6 +5,7 @@ namespace App\ReadXYZ\Page;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Models\KeyValuePair;
+use App\ReadXYZ\Twig\CacheTemplate;
 use App\ReadXYZ\Twig\TwigFactory;
 
 class Page
@@ -121,6 +122,10 @@ class Page
      */
     public function display(string $template): void
     {
+        if (isset($_SESSION['TwigClear'])) {
+            (new CacheTemplate())->clearTwigCache(true);
+            unset($_SESSION['TwigClear']);
+        }
         echo $this->getHtml($template);
     }
 

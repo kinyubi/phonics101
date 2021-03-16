@@ -85,6 +85,17 @@ function noAward(data) {
     }
 }
 
+function advanceAnimal() {
+    let animalIndex = parseInt(document.getElementById("animal-index").innerText);
+    let first = animalIndex + 1;
+    let second = animalIndex + 2;
+    document.getElementById("current-animal-img").src = "/images/animals/numbered/" + first.toString() + ".png";
+    document.getElementById("next-animal-img").src = "/images/animals/gray_numbered/" + second.toString() + ".png";
+    document.getElementById("animal-index").innerText = first.toString();
+    $.post("/handler/award?t={{ 'now'|date('U') }}");
+    return true;
+}
+
 $(document).ready(function () {
     WSpin.init();
     setScreenCookie();

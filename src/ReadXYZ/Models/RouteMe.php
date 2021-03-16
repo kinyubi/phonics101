@@ -169,17 +169,21 @@ class RouteMe
                         LessonSelector::route($postParameters, $routeParts);
                         break;
                     case 'award':
-                        $result = (new StudentsData())->advanceAnimal(Session::getStudentCode());
-                        echo $result;
+                        // $_SESSION['TwigClear'] = true;
+                        (new StudentsData())->advanceAnimal(Session::getStudentCode());
+                        // if (Session::hasLesson()) {
+                        //     (new LessonTemplate(Session::getCurrentLessonName(), ''))->display();
+                        // } else {
+                        //     (new LessonListTemplate())->display();
+                        // }
                         break;
                     default:
                 }
                 break;
-            case 'sess_fix':
 
             case 'clear':
                 (new CacheTemplate())->display();
-
+                break;
             case 'crud':
                 // see tables_crud.html.twig
                 (new CrudTemplate('abc_' . $routeParts[0]))->display();

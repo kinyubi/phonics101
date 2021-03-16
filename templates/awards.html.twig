@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{# arguments: title, mp4, callback #}
+
+{% block titleBar %}
+{% endblock %}
+
+{% block body %}
+    <video id="award-video" controls type="video/mp4" preload="auto" >
+        <source src="{{ mp4 }}">
+    </video>
+    <script>
+        function playVideo() {
+            let video = document.getElementById("award-video");
+            video.play();
+        }
+
+        $(document).ready(function () {
+            $("#award-video").prop("volume", 0.1);
+            window.addEventListener('unload', function() {$.post( "{{ callback }}");});
+            // let video = document.getElementById("award-video");
+            // video.addEventListener('loadeddata', playVideo);
+        });
+    </script>
+
+
+{% endblock %}
+
+{% block otherJS %}
+
+{% endblock %}
