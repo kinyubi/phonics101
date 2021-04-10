@@ -49,7 +49,6 @@ class LessonListTemplate
             'LessonsJson'       => $lessons,
             'animals'           => $zooAnimals->getStudentAnimalSet($student->studentCode),
             'animalIndex'       => $zooAnimals->getIndex($student->studentCode),
-            'awardUrl'          => $awardTemplate->getUrl(),
             'isLocal' => Util::isLocal()
         ];
 

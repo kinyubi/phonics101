@@ -36,6 +36,9 @@ class ZooAnimalsAlt
         $this->makeAllObjects();
     }
 
+    /**
+     * @return array for tic-tac-toe to random objects
+     */
     public function get2AnimalObjects(): array
     {
         $count = count($this->animals);
@@ -65,18 +68,13 @@ class ZooAnimalsAlt
             $studentTag = Session::getStudentCode();
         }
         $index = (new StudentsData())->getAnimalIndex($studentTag);
-        $animal1 = $this->makeObject($index + 1);
-        $animal2 = (($index+2)>= $count) ? null : $this->makeObject($index + 2);
+        $animal1 = $this->makeObject($index );
+        $animal2 = (($index+2)>= $count) ? null : $this->makeObject($index + 1);
         return [$animal1, $animal2];
     }
 
-    public function getStudentZoo(int $length=0): array
+    public function getStudentZoo(int $length): array
     {
-        if ($length == 0) {
-            $studentTag = Session::getStudentCode();
-            $length = (new StudentsData())->getAnimalIndex($studentTag) + 1;
-        }
-
         return array_slice($this->map,0, $length);
     }
 
@@ -85,21 +83,19 @@ class ZooAnimalsAlt
         if ($studentTag == '') {
             $studentTag = Session::getStudentCode();
         }
-        $index = (new StudentsData())->getAnimalIndex($studentTag);
-        return $index + 1;
+        return (new StudentsData())->getAnimalIndex($studentTag);
     }
 
     private function makeObject(int $number): object
     {
-        $number = clamp($number, 1, 104);
-        $ordinal = $number -1;
+        $number = clamp($number, 0, 104);
         $strVal = strval($number);
         return (object) [
             'animalCode' => $strVal,
-            'fileName' => "/images/animals/numbered/$strVal.png",
-            'grayFileName' => "/images/animals/gray_numbered/$strVal.png",
+            'fileName' => "/images/animals/numbered150/$strVal.png",
+            'grayFileName' => "/images/animals/gray150/$strVal.png",
             'friendlyName' => "My animal",
-            'ordinal' => $ordinal
+            'ordinal' => $number
         ];
 
     }

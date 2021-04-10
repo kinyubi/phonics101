@@ -59,6 +59,7 @@ function setScreenCookie() {
     let windowStr = window.innerWidth.toString() + ',' + window.innerHeight.toString();
     let deviceStr = mobileCheck() ? 'mobile' : 'desktop';
     let cookieValue = screenStr + ',' + windowStr + ',' + deviceStr;
+    // from js-cookie library
     Cookies.set(cookieName, cookieValue, { expires: 1 });
 }
 
@@ -86,14 +87,18 @@ function noAward(data) {
 }
 
 function advanceAnimal() {
-    let animalIndex = parseInt(document.getElementById("animal-index").innerText);
-    let first = animalIndex + 1;
-    let second = animalIndex + 2;
-    document.getElementById("current-animal-img").src = "/images/animals/numbered/" + first.toString() + ".png";
-    document.getElementById("next-animal-img").src = "/images/animals/gray_numbered/" + second.toString() + ".png";
-    document.getElementById("animal-index").innerText = first.toString();
-    $.post("/handler/award?t={{ 'now'|date('U') }}");
-    return true;
+    let animalIndexDiv = document.getElementById("animal-index");
+    let animalIndex = parseInt(animalIndexDiv.innerText);
+    let firstStr = (animalIndex + 1).toString();
+    let secondStr = (animalIndex + 2).toString();
+    let url = '/handler/award?n=' + firstStr+ '&t=' + Date.now().toString();
+
+    document.getElementById('next-animal').href = '/award.php?n=' + secondStr;
+    document.getElementById("current-animal-img").src = "/images/animals/numbered150/" + firstStr + ".png";
+    document.getElementById("next-animal-img").src = "/images/animals/gray150/" + secondStr + ".png";
+    animalIndexDiv.innerText = firstStr;
+
+    $.post(url);
 }
 
 $(document).ready(function () {

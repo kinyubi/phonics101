@@ -44,12 +44,13 @@ class AwardTemplate
             $args        = [];
             $page        = new Page('Award Ceremony');
 
-            $nextAnimal  = $this->student->nextAnimal + 2;
-            $nextStr = strval($nextAnimal);
-            if (file_exists(Util::getPublicPath("images/mp4/$nextStr.mp4"))) {
-                $url = "/images/mp4/$nextAnimal.mp4";
+            $video  = $this->student->nextAnimal + 1;
+            $videoStr = strval($video);
+
+            if (file_exists(Util::getPublicPath("images/mp4/$videoStr.mp4"))) {
+                $url = "/images/mp4/$videoStr.mp4";
             } else {
-                $url = "/images/mp4/1.mp4";
+                $url = "/images/mp4/01.mp4";
             }
             $args['title'] = "Award Ceremony";
             $args['mp4'] = $url;

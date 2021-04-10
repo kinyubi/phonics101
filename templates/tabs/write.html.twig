@@ -3,9 +3,11 @@
 input soundBox.color, soundBox.count, soundBox.boxSize
 #}
 {% block WriteTab %}
+    {% from "macros.html.twig" import tabHeader  %}
+
     {% set count = soundBox.count  ?? 3 %}
-    {% set color = soundBox.color ?? 'blue' %}
-    {% set colorSet = ['red', 'green', 'orangered', 'blue', 'goldenrod'] %}
+    {% set color = soundBox.color ?? '#00aabe' %}
+    {% set colorSet = ['#00aabe', '#ff625b', '#f5cf62', '#f39d66', '#a7d163'] %}
 
     {% if color == 'random' %}
         {% set randColor = random(colorSet) %}
@@ -18,7 +20,7 @@ input soundBox.color, soundBox.count, soundBox.boxSize
     <div class="container bg-white mx-2 pt-1" id="{{ tabId }}-container" style="max-width: 800px; width:95%">
         {# <div id="write-tab-container" class="container" style="max-width: 600px; width:95%"> #}
         <div class="row d-flex justify-content-start p-2">
-            <h1 class="my-1 col-12 tac">Sound Boxes</h1>
+            {{ tabHeader(tabInfo, lesson.wordList|join('   ')) }}
         </div>
 
         <!-- -------------- BUTTONS SECTION START ----------------------------- -->
@@ -31,19 +33,19 @@ input soundBox.color, soundBox.count, soundBox.boxSize
                 </button>
                 <div class="dropdown-menu" aria-labelledby="color-button">
                     <a class="dropdown-item color-click" href="#">
-                        <i class="fas fa-circle fa-2x" style="color:red"></i>
+                        <i class="fas fa-circle fa-2x" style="color:#00aabe"></i>
                     </a>
                     <a class="dropdown-item color-click" href="#">
-                        <i class="fas fa-circle fa-2x" style="color:green"></i>
+                        <i class="fas fa-circle fa-2x" style="color:#ff625b"></i>
                     </a>
                     <a class="dropdown-item color-click" href="#">
-                        <i class="fas fa-circle fa-2x" style="color:orangered"></i>
+                        <i class="fas fa-circle fa-2x" style="color:#f5cf62"></i>
                     </a>
                     <a class="dropdown-item color-click" href="#">
-                        <i class="fas fa-circle fa-2x" style="color:blue"></i>
+                        <i class="fas fa-circle fa-2x" style="color:#f39d66"></i>
                     </a>
                     <a class="dropdown-item color-click" href="#">
-                        <i class="fas fa-circle fa-2x" style="color:goldenrod"></i>
+                        <i class="fas fa-circle fa-2x" style="color:#a7d163"></i>
                     </a>
                 </div>
             </div>
@@ -64,7 +66,10 @@ input soundBox.color, soundBox.count, soundBox.boxSize
 
             {# BUTTON -- RESET #}
             <div class="btn-group  my-3 mx-1 p-0 ">
-                <button type="button" class="btn-readxyz px-2 button-text" onclick="soundBox.reload()" style="border:none; width:var(--button-width);">Reset</button>
+                <button type="button" class="btn-readxyz px-2 button-text"
+                        onclick="soundBox.reload()"
+                        style="border:none; width:var(--button-width);">Reset
+                </button>
             </div>
         </div>
         <!-- -------------- BUTTONS SECTION END ----------------------------- -->
@@ -76,24 +81,20 @@ input soundBox.color, soundBox.count, soundBox.boxSize
                 {% set letterType = (i == 1) ? 'vowel' : 'consonant' %}
 
                 <div id="big-box-{{ i }}" class="box box--border p-0 d-flex flex-nowrap">
-                    <div  id="actions-{{ i }}"
-                         class="col col-4 m-0 h-100 d-flex flex-column justify-content-between" style="padding: 0 0 0 3px ">
-                        <button id="eraser-{{ i }}" class="btn btn-white w-100" onclick="soundBox.erase('{{ i }}')"
-                                type="button">
-                            <i class="fa fa-eraser text-readlite" data-toggle="tooltip"
-                               title="Erase all letters in the box"></i>
-                        </button>
-                        <button id="exchanger-{{ i }}" class="btn btn-white w-100" type="button"
-                                onclick="soundBox.exchange('{{ i }}')">
-                            <i class="fa fa-exchange text-readlite" data-toggle="tooltip"
-                               title="Exchange the letters in the box with the selected letter"></i>
-                        </button>
-                        <button id="appender-{{ i }}" class="btn btn-white w-100" type="button"
-                                onclick="soundBox.appendLetter('{{ i }}')">
-                            <i class="fa fa-plus text-readlite"
-                               data-toggle="tooltip" title="Append the selected letter to the letters in the box"></i>
-                        </button>
-                    </div>
+{#                    <div  id="actions-{{ i }}"#}
+{#                         class="col col-4 m-0 h-100 d-flex flex-column justify-content-between" #}
+{#                          style="padding: 0 0 0 3px " onclick="">#}
+{#                        <button id="eraser-{{ i }}" class="btn btn-white w-100" onclick="soundBox.erase('{{ i }}')"#}
+{#                                type="button">#}
+{#                            <i class="fa fa-eraser text-readlite" data-toggle="tooltip"#}
+{#                               title="Erase all letters in the box"></i>#}
+{#                        </button>#}
+{#                        <button id="appender-{{ i }}" class="btn btn-white w-100" type="button"#}
+{#                                onclick="soundBox.appendLetter('{{ i }}')">#}
+{#                            <i class="fa fa-plus text-readlite"#}
+{#                               data-toggle="tooltip" title="Append the selected letter to the letters in the box"></i>#}
+{#                        </button>#}
+{#                    </div>#}
                     <div class="col col-8 m-0 p-0 h-100 flex-column" id="upper-ball-and-tile-{{ i }}">
                         <div class="justify-content-center flex-column d-flex h-75" >
                             <i id="uball-{{ i }}" class="fa fa-circle ball tac" style="visibility: hidden"
@@ -124,7 +125,7 @@ input soundBox.color, soundBox.count, soundBox.boxSize
 
         {# ROW -- INSTRUCTIONS #}
         <div class="row d-flex justify-content-center instruct-size mt-2">
-            Click on a ball or a tile to move it into the box. Click the erase button to erase the letters in a box.
+{#            Click on a ball or a tile to move it into the box. Click the erase button to erase the letters in a box.#}
         </div>
 
         <div class="row d-flex flex-wrap py-3 pl-3">

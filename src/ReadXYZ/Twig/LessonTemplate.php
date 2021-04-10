@@ -6,7 +6,6 @@ namespace App\ReadXYZ\Twig;
 
 use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Data\WordMasteryData;
-use App\ReadXYZ\Enum\GeneratedType;
 use App\ReadXYZ\Helpers\PhonicsException;
 use App\ReadXYZ\Helpers\ScreenCookie;
 use App\ReadXYZ\Helpers\Util;
@@ -67,7 +66,7 @@ class LessonTemplate
         if ($initialTab) {
             $this->initialTabName = $initialTab;
         }
-        $awardTemplate = new AwardTemplate($this->studentCode);
+
         $zooAnimals = ZooAnimalsAlt::getInstance();
         $sideNote              = SideNote::getInstance();
         $args                  = [];
@@ -86,7 +85,6 @@ class LessonTemplate
         $args['studentCode'] = $this->studentCode;
         $args['animals']       = $zooAnimals->getStudentAnimalSet($this->studentCode);
         $args['animalIndex']   = $zooAnimals->getIndex($this->studentCode);
-        $args['awardUrl'] = $awardTemplate->getUrl();
         // tabInfo is set by lesson.html.twig for each of the tabs. It is an abc_tabType record
 
         if ($this->initialTabName) {
@@ -114,7 +112,8 @@ class LessonTemplate
         Session::sessionContinue();
         $rawCookie = $_COOKIE['readxyz_sound_box'] ?? '3blue';
         $count = intval($rawCookie[0]);
-        $idealPartSize = ScreenCookie::getInstance()->getIdealPartWidth($count);
+        $sizeCt = max(intval($rawCookie[0]), 5);
+        $idealPartSize = ScreenCookie::getInstance()->getIdealPartWidth($sizeCt);
         return (object) [
             'count' => $count,
             'color' => substr($rawCookie, 1),

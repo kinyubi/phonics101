@@ -62,8 +62,7 @@ class ZooTemplate
 
         $args['hideTitleAnimals'] = true;
         $filePath = $this->generator->getFileName();
-        $animals  = $zoo->getStudentZoo();
-        shuffle($animals);
+        $animals  = $zoo->getStudentZoo($currentIndex);
         $args['animals'] = $animals;
         $page->addArguments($args);
 

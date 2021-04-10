@@ -1,13 +1,11 @@
 /* MAKE SURE YOU MAINTAIN PHONICS.CSS and PHONICS.MOBILE.CSS TOGETHER */
 
-/* version 1.0221.0 */
+/* version 1.0407.0 */
 
 
 :root {
   --vowel-tile: #E36B7B;
-  --consonant-tile: #85C1E9;
   --vowel-tile--hover: #FC7788;
-  --consonant-tile--hover: #8CCBF5;
   --tile-dim: 6vw;
   --tile-font-size: 4vw;
   --tile-margin: 0;
@@ -532,12 +530,13 @@ a.img-contain img {
 .tile {
     width: var(--tile-dim);
     height: var(--tile-dim);
-    line-height:  var(--tile-dim);
+    line-height:  calc(var(--tile-dim) - 8px);
     font-size: var(--tile-font-size);
     font-weight: bold;
 	border-style: solid;
 	border-width: 1px;
     cursor: pointer;
+    vertical-align: middle;
 	text-align: center;
 	border-radius: 5px;
 	box-shadow: 2px 2px 1px #888888;
@@ -546,8 +545,8 @@ a.img-contain img {
 }
 .tile-vowel {background-color: var(--vowel-tile)}
 .tile-vowel:hover {background-color: var(--vowel-tile--hover)}
-.tile-consonant {background-color: var(--consonant-tile)}
-.tile-consonant:hover {background-color: var(--consonant-tile--hover)}
+.tile-consonant {background-color: white}
+.tile-consonant:hover {background-color: var(--readxyz)}
 
 .tile-letter {
   font-size: var(--tile-font-size);

@@ -57,7 +57,7 @@ class Page
      */
     public function addArgument(string $key, $value): void
     {
-        if ($value) {
+        if ($value || ($value===0) || ($value==='')) {
             $this->arguments[$key] = $value;
         }
     }
@@ -123,7 +123,7 @@ class Page
     public function display(string $template): void
     {
         if (isset($_SESSION['TwigClear'])) {
-            (new CacheTemplate())->clearTwigCache(true);
+            (new CacheTemplate())->clearCacheAndGenerated();
             unset($_SESSION['TwigClear']);
         }
         echo $this->getHtml($template);

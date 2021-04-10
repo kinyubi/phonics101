@@ -16,7 +16,7 @@
       {
         "tabTypeId": "spell",
         "tabDisplayAs": "Chain",
-        "script": "<p>Click the eye to see suggested words for stduent to spell.<br>Click the letters to spell &lt;say a word&gt;.<br>Now change the first letter to &lt;pick a letter&gt;.<br>What word did you spell?",
+        "script": "I will say several <a id='chain-word-link'>words from the lesson</a>. Each time I say a new word, click the correct letter(s) to make the word.",
         "imageFile": "/images/tabs/spell.png",
         "aliases": ["spinner"]
       },
@@ -37,7 +37,7 @@
       {
         "tabTypeId": "write",
         "tabDisplayAs": "TapMap",
-        "script": "I will choose 4 words from the lesson. For each word, you will tap the sounds and then write the word.",
+        "script": "I will say a word from the lesson. First, tap a circle as you say each sound in the word. Next, tap one or more letters to go in the same box as the circle. Tap the ball in a box to erase the letters in the box. Tap the ball again to add new letters.",
         "imageFile": "/images/tabs/write.png",
         "aliases": ["word", "tapAndMap"]
       },

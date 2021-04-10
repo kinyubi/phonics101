@@ -61,7 +61,7 @@ class GeneratedType extends Enum
 
     public function getUrl(): string
     {
-        return $this->url;
+        return $this->url . '?ts=' . time();
     }
 
     public function getStudentCode(): string

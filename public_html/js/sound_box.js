@@ -2,15 +2,17 @@
 // Sound Boxes
 // ---------------------------------------------------
 let soundBox = {
-    color: "blue",
+    color: "#00aabe",
     count: 3,
     tileLetter: '',
+    currentBox: 0,
 
     moveLowerBall: function(num) {
         let lowerBall = document.getElementById('ball-' + num.toString());
         let upperBall = document.getElementById('uball-' + num.toString());
         lowerBall.style.visibility = "hidden";
         upperBall.style.visibility = "visible";
+        soundBox.currentBox = num;
     },
 
     moveUpperBall: function(num) {
@@ -18,12 +20,15 @@ let soundBox = {
         let upperBall = document.getElementById('uball-' + num.toString());
         lowerBall.style.visibility = "visible";
         upperBall.style.visibility = "hidden";
+        soundBox.erase(num);
+        soundBox.currentBox = -1;
     },
 
     tileClicked: function(letter) {
         soundBox.tileLetter = letter
         const instructions = document.getElementById("tile-instructions");
         instructions.style.visibility = "visible";
+        soundBox.appendLetter(soundBox.currentBox);
     },
 
     erase: function (idNum) {
@@ -32,6 +37,9 @@ let soundBox = {
     },
 
     exchange: function(idNum) {
+        let num = parseInt(idNum);
+        if ((num < 0) || (num >= soundBox.count)) return;
+
         let letterTile = document.getElementById(("box-letters-" + idNum));
         const instructions = document.getElementById("tile-instructions");
         letterTile.innerText = soundBox.tileLetter;
@@ -40,6 +48,9 @@ let soundBox = {
     },
 
     appendLetter: function(idNum) {
+        let num = parseInt(idNum);
+        if ((num < 0) || (num >= soundBox.count)) return;
+
         let letterTile = document.getElementById(("box-letters-" + idNum));
         let tileText = letterTile.innerText;
         let letter = soundBox.tileLetter;
@@ -77,13 +88,14 @@ let soundBox = {
             soundBox.color = cookieValue.substring(1);
         } else {
             soundBox.count = 3;
-            soundBox.color = 'blue'
-            soundBox.writeCookie();
+            soundBox.color = '#00aabe'
         }
+        soundBox.writeCookie();
     },
 
     setColorDirect: function(newColor) {
-        soundBox.color = newColor; soundBox.writeCookie()
+        soundBox.color =  (newColor[0] === '#') ? newColor : '#00aabe';
+        soundBox.writeCookie()
         let elements = document.getElementsByClassName('ball');
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.color = soundBox.color;

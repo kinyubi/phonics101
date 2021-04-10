@@ -18,7 +18,7 @@ otherJS
 	this_crumb      : displayText (no link
 #}
 {% from "macros.html.twig" import dialog, dialogAnchor, dialogButton %}
-{% set cssJsVer = '1.0221.0' %}
+{% set cssJsVer = '1.0407.0' %}
 {% set bootstrapVer = '1.0117.0' %}
 <!DOCTYPE html>
 
@@ -129,18 +129,19 @@ otherJS
                 {% set studentName = (studentCode is empty) ? '' : session['STUDENTS'][studentCode].studentName %}
                 {% set zooClass = (studentName is empty) ?  '' :  'zoo-animals' %}
                 {% set zooUrl = (zooClass is empty) ? '#' : zooUrl %}
-                {% set dim = smaller ? '30' : '60' %}
+                {% set dim = smaller ? '40' : '60' %}
                 <div style="display: none;" id="animal-index">{{ animalIndex }}</div>
                 {# invokes $(".zoo-animals").colorbox() where href is a generated zoo file for student #}
-                <a id="current-animal" class="m-0 p-0 {{ zooClass }}" href="{{ zooUrl }}"
+                <a id="current-animal" class="my-0 mx-3 p-0 {{ zooClass }}" href="{{ zooUrl }}"
                    style="width: {{ dim }}px; height: {{ dim }}px">
                     <img src="{{ animals[0].fileName }}" alt="My Latest Animal" height="{{ dim }}" width="{{ dim }}"
                          title="See my zoo" class="mw-100 mh-100" id="current-animal-img">
                 </a>
 
                 {% set titleText = 'Award this animal prize to ' ~ studentName %}
-                <a id="next-animal"  href="{{ awardUrl }}" style="width: {{ dim }}px; height: {{ dim }}px"
-                    class="award m-0 p-0" >
+                {% set nextAnimal = animalIndex + 1 %}
+                <a id="next-animal"  href="/award.php?n={{ nextAnimal }}" style="width: {{ dim }}px; height: {{ dim }}px"
+                    class="award my-0 mx-2 p-0" >
                     <img src="{{ animals[1].grayFileName }}" alt="Next Animal" height="{{ dim }}" width="{{ dim }}"
                          title="{{ titleText }}"  class="mw-100 mh-100  m-0" id="next-animal-img">
                 </a>
@@ -198,7 +199,7 @@ otherJS
         $(".inline").colorbox({inline: true, width: "50%"});
         $(".info-box").colorbox({inline: true, width: 400, top: 50, left: 450});
         $(".zoo-animals").colorbox({
-            iframe: true, innerWidth: "660px", maxWidth: "95%", innerHeight: "660px", maxHeight: "90%",
+            iframe: true, innerWidth: "660px", maxWidth: "90%", innerHeight: "660px", maxHeight: "90%",
             top: 20, overlayClose: false, scrolling: true
         });
 
@@ -208,7 +209,7 @@ otherJS
         });
         {# the colorbox() invoked when greyed animal is clicked #}
         $(".award").colorbox({
-            iframe: true, innerWidth: "660px", maxWidth: "95%", innerHeight: "660px", maxHeight: "90%",
+            iframe: true, innerWidth: "700px", maxWidth: "98%", innerHeight: "500px", maxHeight: "98%",
             top: 20, overlayClose: false, scrolling: false, onClosed: function() {advanceAnimal();}
         });
 

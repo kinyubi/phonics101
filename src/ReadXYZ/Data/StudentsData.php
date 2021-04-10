@@ -110,7 +110,7 @@ EOT;
      * @return string
      * @throws PhonicsException
      */
-    public function advanceAnimal(string $studentTag): string
+    public function advanceAnimal(string $studentTag, int $awardedAnimal): string
     {
         $object = $this->get($studentTag);
         if ($object == null) return '0';
@@ -119,7 +119,7 @@ EOT;
         $time = time();
         $studentCode = $object->studentCode;
         if ($index < 103) {
-            $query = "UPDATE abc_students SET nextAnimal = nextAnimal + 1, lastAwarded = $time WHERE studentCode = '$studentCode'";
+            $query = "UPDATE abc_students SET nextAnimal = $awardedAnimal, lastAwarded = $time WHERE studentCode = '$studentCode'";
             $this->throwableQuery($query, QueryType::STATEMENT);
             $zooTemplate = new ZooTemplate($studentCode);
             $zooTemplate->CreatePage();

@@ -7,14 +7,18 @@
 {% endblock %}
 
 {% block body %}
-	{% set dim = smaller ? '30' : '75' %}
+	{% set dim = smaller ? '50px' : '150px' %}
+	{% set dim2 = smaller ? '60px' : '180px' %}
 	<div id="zoo-header" class="row d-flex justify-content-between">
 		<div  class="h1 mx-auto w-100 p-3">{{ title|raw }}</div>
 	</div>
-	<div class="row d-flex justify-content-start content">
+	<div class="row d-flex justify-content-start m-1">
 		{% for animal in animals %}
-			<img src="{{ animal.fileName }}" alt="{{ animal.friendlyName }}" title=""{{ animal.friendlyName }}
-			     class="m-1" height="{{ dim }}" width="{{ dim }}">
+			<div style="height:{{ dim2 }}; width:{{ dim2 }}">
+				<img src="{{ animal.fileName }}" alt="animal" title="{{ animal.friendlyName }}"
+				     class="m-auto" height="{{ dim }}" width="{{ dim }}" style="object-fit: contain">
+			</div>
+
 		{% endfor %}
 	</div>
 

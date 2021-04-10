@@ -18,6 +18,7 @@ class CacheTemplate
 
     public function __construct(string $errorMessage = '')
     {
+        $_SESSION['TwigClear'] = true;
         $this->page = new Page('ReadXYZ Cache Status');
         if ($errorMessage) {
             $this->page->addError($errorMessage);
@@ -30,6 +31,14 @@ class CacheTemplate
             $files = array_merge($files, $this->recursiveGlob($dir.'/'.basename($pattern), $flags));
         }
         return $files;
+    }
+
+    // ======================== PUBLIC METHODS =====================
+
+    public function clearCacheAndGenerated(): void
+    {
+        $this->clearTwigCache(true);
+        $this->clearGenerated();
     }
 
     public function clearTwigCache(bool $force = false): void
@@ -53,7 +62,13 @@ class CacheTemplate
         if ($flagExists) unlink($cacheFlag);
 
     }
-// ======================== PUBLIC METHODS =====================
+
+    public function clearGenerated()
+    {
+        $generatedPath = Util::getPublicPath('generated');
+        $files = $this->recursiveGlob("$generatedPath/*.*") ;
+        foreach ($files as $file) {unlink($file);}
+    }
 
     /**
      * @param string $errorMessage

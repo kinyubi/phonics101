@@ -28,7 +28,7 @@ class BreadCrumbs
                 $this->trainer->trainerType = (new TrainersData())->getTrainerType($this->trainer->trainerCode);
             }
             if ($this->trainer->trainerType == TrainerType::ADMIN) {
-                $this->breadCrumbs[] = ['text' => 'Admin', 'link' => '#'];
+                $this->breadCrumbs[] = ['text' => 'Admin', 'link' => '/admin'];
             } elseif ($this->trainer->trainerType == TrainerType::STAFF) {
                 $this->breadCrumbs[] = ['text' => 'Staff', 'link' => '#'];
             }

@@ -80,8 +80,8 @@ class Lesson
         }
         $this->chain            = $lesson->chain ?? '';
         if ($this->chain) {
-            $this->chain = str_replace(',', '<br>', $this->chain);
-            $this->chain = '<p>' . $this->chain . '</p>';
+            $this->chain = str_replace(',', '   ', $this->chain);
+            //$this->chain = '<p>' . $this->chain . '</p>';
         }
         $this->soundLetters     = $lesson->soundLetters ?? 'abcdefghijklmnopqrstubwxyz';
         $this->stretchList      = is_string($lesson->stretchList) ? CSV::stretchListToArray($lesson->stretchList) : $lesson->stretchList;

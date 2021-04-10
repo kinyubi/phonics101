@@ -170,7 +170,11 @@ class RouteMe
                         break;
                     case 'award':
                         // $_SESSION['TwigClear'] = true;
-                        (new StudentsData())->advanceAnimal(Session::getStudentCode());
+                        if (isset($postParameters['n'])) {
+                            $awarded = intval($postParameters['n']);
+                            (new StudentsData())->advanceAnimal(Session::getStudentCode(), $awarded);
+                        }
+
                         // if (Session::hasLesson()) {
                         //     (new LessonTemplate(Session::getCurrentLessonName(), ''))->display();
                         // } else {
@@ -182,6 +186,7 @@ class RouteMe
                 break;
 
             case 'clear':
+            case 'clean':
                 (new CacheTemplate())->display();
                 break;
             case 'crud':
