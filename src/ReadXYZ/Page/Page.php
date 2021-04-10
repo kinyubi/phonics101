@@ -79,25 +79,25 @@ class Page
         }
     }
 
-    public function addBreadcrumb(string $text, string $link = ''): void
-    {
-        $this->prevCrumbs[] = [$text => $link];
-    }
-
-    /**
-     * @param array $crumbs
-     * @throws PhonicsException
-     */
-    public function addBreadcrumbs(array $crumbs): void
-    {
-        if (isAssociative($crumbs)) {
-            foreach ($crumbs as $name => $value) {
-                $this->addBreadcrumb($name, $value);
-            }
-        } else {
-            throw new PhonicsException("Arguments must be an associative array.");
-        }
-    }
+    // public function addBreadcrumb(string $text, string $link = ''): void
+    // {
+    //     $this->prevCrumbs[] = [$text => $link];
+    // }
+    //
+    // /**
+    //  * @param array $crumbs
+    //  * @throws PhonicsException
+    //  */
+    // public function addBreadcrumbs(array $crumbs): void
+    // {
+    //     if (isAssociative($crumbs)) {
+    //         foreach ($crumbs as $name => $value) {
+    //             $this->addBreadcrumb($name, $value);
+    //         }
+    //     } else {
+    //         throw new PhonicsException("Arguments must be an associative array.");
+    //     }
+    // }
 
     public function addError(string $message): void
     {
@@ -140,9 +140,9 @@ class Page
         $this->addArgument(self::PAGE_TITLE, $this->pageTitle);
         $this->addArgument(self::NAVBAR, $this->navBar);
         $this->addArgument(self::ERRORS, $this->errors);
-        $this->addArgument(self::IS_SMALL_SCREEN, ScreenCookie::getInstance()->isScreenSizeSmall());
-        $this->addArgument(self::PREV_CRUMBS, $this->prevCrumbs);
-        $this->addArgument(self::THIS_CRUMB, $this->crumb);
+        // $this->addArgument(self::IS_SMALL_SCREEN, ScreenCookie::getInstance()->isScreenSizeSmall());
+        // $this->addArgument(self::PREV_CRUMBS, $this->prevCrumbs);
+        // $this->addArgument(self::THIS_CRUMB, $this->crumb);
 
         return TwigFactory::getInstance()->renderTemplate($template, $this->arguments);
     }
