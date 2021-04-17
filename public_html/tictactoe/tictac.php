@@ -1,6 +1,6 @@
 <?php
 require dirname(__DIR__) . '/autoload.php';
-use App\ReadXYZ\Helpers\Location;
+
 use App\ReadXYZ\JSON\ZooAnimalsAlt;
 use App\ReadXYZ\Models\Session;
 

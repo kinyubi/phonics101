@@ -14,10 +14,11 @@
 	</div>
 	<div class="row d-flex justify-content-start m-1">
 		{% for animal in animals %}
-			<div style="height:{{ dim2 }}; width:{{ dim2 }}">
+			<figure style="height:{{ dim2 }}; width:{{ dim2 }}">
 				<img src="{{ animal.fileName }}" alt="animal" title="{{ animal.friendlyName }}"
 				     class="m-auto" height="{{ dim }}" width="{{ dim }}" style="object-fit: contain">
-			</div>
+				<figcaption style="text-align: center; font-family: Muli,serif">{{ animal.friendlyName }}</figcaption>
+			</figure>
 
 		{% endfor %}
 	</div>
