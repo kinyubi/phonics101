@@ -125,7 +125,7 @@ class Lesson
         if ($this->spinner) {
             $this->tabNames[] = 'spell';
         }
-        $this->tabNames = array_merge($this->tabNames, ['mastery', 'fluency', 'test']);
+        $this->tabNames = array_merge($this->tabNames, ['mastery', 'fluency', 'test', 'email']);
         // if ($this->book) {
         //     $this->tabNames[] = 'book';
         // }

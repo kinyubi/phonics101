@@ -184,6 +184,16 @@ otherJS
     {% set game_dimensions__ = smaller ? 'width: "300px", height: "288px"' : 'width: "750px", height: "540px"' %}
     {% set sound_box_dimensions__ = smaller ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
 
+    function sendEmail() {
+        $.post("/lessonEmail", {
+            parent: "{{ parentName|default('Parent') }}",
+            student: "{{ page.studentName|default('your child') }}",
+            lesson: "{{ lesson.lessonName }}",
+            words: "{{ lesson.allWords|join(",")}}",
+            sentences: "{{ lesson.fluencySentences|join("|") }}"
+        });
+    }
+
     $(document).ready(function () {
         {# when bootstrap modal is active, don't dim background #}
         $('.modal-backdrop').removeClass("modal-backdrop");

@@ -75,11 +75,14 @@ Optional Arguments
             {% set selected = (tabId == visibleTab|lower) ? 'true' : 'false' %}
             {% set tabElemId = tabId ~ '-tab' %}
             {% set body = tabId ~ '-body' %}
-            <a class=" nav-item p-2 {{ active }} size--tab-icon " data-toggle="tab" id="{{ tabElemId }}" href="#{{ body }}"
-               role="tab" aria-controls="{{ body }}" style="text-decoration: none !important;">
+            <a class=" nav-item p-2 {{ active }} size--tab-icon " data-toggle="tab" id="{{ tabElemId }}"
+               href="#{{ body }}" role="tab" aria-controls="{{ body }}" style="text-decoration: none !important;">
               <div class="d-flex flex-column ">
-                <img src="{{ tabInfo.imageFile }}" alt="{{ tabInfo.tabDisplayAs }}" height="60%" width="60%" class="m-auto"/>
-                <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">{{ tabInfo.tabDisplayAs }}</div>
+                <img src="{{ tabInfo.imageFile }}" alt="{{ tabInfo.tabDisplayAs }}"
+                     height="60%" width="60%" class="m-auto"/>
+                <div class="text-white mx-auto nodec sfp pt-1" style="vertical-align: bottom">
+                  {{ tabInfo.tabDisplayAs }}
+                </div>
               </div>
             </a>
           {% endfor %}

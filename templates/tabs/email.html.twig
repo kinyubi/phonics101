@@ -1,0 +1,36 @@
+{#
+inputs: parentName, studentName, lessonName, wordList, sentences[], actualEmail
+#}
+{% block EmailTab %}
+    {% from "macros.html.twig" import tabHeader %}
+    {% set listIndex = listIndex ?? 0 %}
+    <div class="container-fluid bg-white" id="{{ tabId }}-container">
+
+      <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
+        <div id="{{ tabId }}-main" class="col-8" style="font-size: 1em;font-family:'Comic Sans MS',serif;">
+            <p class="my-2 font-weight-bold">Hi {{ parentName|default("Parent") }},</p>
+            <p>Today {{ page.studentName|default("your child") }} worked on the lesson <span>"{{ lesson.lessonName }}"</span>.</p><br>
+            <p class="font-weight-bold">The practice words are:</p>
+            <ul class="ml-3">
+                {% for word in lesson.allWords %}
+                <li class="mx-1" >{{ word }}</li>
+                {% endfor %}
+            </ul><br><br>
+            <p class="font-weight-bold">The fluency passages are:</p>
+            <ul>
+                {% for sentence in lesson.fluencySentences %}
+                    <li class="ml-3">{{ sentence }}</li>
+                {% endfor %}
+            </ul>
+
+            <br>
+            {% if not actualEmail %}
+                <div onclick="sendEmail()" style="border:none">
+                    <img height=40 src="http://phonics101.test/images/send.png" alt="Send Email">
+                </div>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

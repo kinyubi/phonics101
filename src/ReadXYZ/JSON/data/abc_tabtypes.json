@@ -68,6 +68,13 @@
         "script": "",
         "imageFile": "/images/tabs/book.png",
         "aliases": ["story", "storyTime"]
+      },
+      {
+        "tabTypeId": "email",
+        "tabDisplayAs": "Email",
+        "script": "",
+        "imageFile": "/images/tabs/send.png",
+        "aliases": []
       }
     ]
   }

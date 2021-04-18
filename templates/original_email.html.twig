@@ -22,7 +22,7 @@ inputs: parentName, studentName, lessonName, wordList, sentences[], actualEmail
 </head>
 <body>
 {% if not actualEmail %}
-<div><img src="/images/readxyzlogo2-2020.png" width=250 alt=""> </div>
+<div><img src="/images/readxyzlogo2-2020.png" width=250 alt="e-mail"> </div>
 {% endif %}
 <h1>Hi {{ parentName|default("Parent") }},</h1>
 <p>Today {{ studentName|default("your child") }} worked on the lesson <span>"{{ lessonName }}"</span>.</p><br>
