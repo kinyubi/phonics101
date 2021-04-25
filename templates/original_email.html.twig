@@ -45,7 +45,7 @@ inputs: parentName, studentName, lessonName, wordList, sentences[], actualEmail
             lesson: "{{ lessonName }}",
             words: "{{ wordList }}",
             sentences: "{{ sentences|join('|') }}"
-        } );
+        }).done(function() {$("#email_toast").show();});
     }
 </script>
 </body>

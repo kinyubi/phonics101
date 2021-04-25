@@ -35,14 +35,22 @@ CREATE TABLE `abc_students` (
 	`studentName` VARCHAR(50) NOT NULL,
 	`compositeCode` VARCHAR(100) NOT NULL,
 	`avatarFileName` VARCHAR(50) NOT NULL DEFAULT '',
+	`s2MemberId` INT(11) NOT NULL DEFAULT '0',
 	`dateCreated` DATE NOT NULL,
 	`dateLastAccessed` DATE NOT NULL,
 	`validUntilDate` DATE NULL DEFAULT NULL,
 	`active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+	`nextAnimal` INT(11) NOT NULL DEFAULT '0',
+	`lastAwarded` INT(11) NOT NULL DEFAULT '0',
+	`parentEmail` VARCHAR(100) NULL DEFAULT NULL,
 	PRIMARY KEY (`studentCode`),
 	INDEX `fk_student__trainer` (`userName`),
 	CONSTRAINT `fk_student__trainer` FOREIGN KEY (`userName`) REFERENCES `abc_trainers` (`userName`) ON UPDATE CASCADE ON DELETE SET NULL
-) COMMENT='Replaces abc_Student' COLLATE='utf8_general_ci' ENGINE=InnoDB ;
+)
+COMMENT='Replaces abc_Student'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
 EOT;
         $this->throwableQuery($query, QueryType::STATEMENT);
     }
@@ -106,6 +114,7 @@ EOT;
     }
 
     /**
+     * Updates nextAnimal and lastAwarded fields
      * @param string $studentTag
      * @return string
      * @throws PhonicsException
@@ -154,8 +163,35 @@ EOT;
     }
 
     /**
+     * Get the parent email for the specified student
+     * @param string $studentTag
+     * @return string
+     * @throws PhonicsException
+     */
+    public function getParentEmail(string $studentTag): string
+    {
+        $where = "studentCode = '$studentTag' OR compositeCode = '$studentTag'";
+        $query = "SELECT parentEmail FROM abc_students WHERE $where";
+        return $this->throwableQuery($query, QueryType::SCALAR) ?? '';
+    }
+
+    /**
+     * Update parentEmail for student
+     * @param string $studentTag studentCode or composite code
+     * @param string $parentEmail
+     * @throws PhonicsException
+     */
+    public function updateParentEmail(string $studentTag, string $parentEmail): void
+    {
+        $where = "studentCode = '$studentTag' OR compositeCode = '$studentTag'";
+        $query = "UPDATE abc_students SET parentEmail='$parentEmail' WHERE $where";
+        $this->throwableQuery($query, QueryType::STATEMENT);
+    }
+
+    /**
      * fields (studentCode, userName, studentName, compositeCode, avatarFileName, s2MemberId, nextAnimal, ...)
      * @param string $studentTag
+     * @return stdClass|null
      * @throws PhonicsException
      */
     public function get(string $studentTag): ?stdClass
@@ -164,6 +200,7 @@ EOT;
         $query = "SELECT * FROM abc_students WHERE $where";
         return $this->throwableQuery($query, QueryType::SINGLE_OBJECT);
     }
+
 
 // ======================== PRIVATE METHODS =====================
     private static function createCompositeCode(string $studentName, string $userName): string

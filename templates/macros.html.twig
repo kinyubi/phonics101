@@ -67,7 +67,7 @@
   @param bool   autohide   if autohide is true we must show a close button
   @param int    delay      if autohide is true we will wait this number of milliseconds to close
 #}
-{% macro toast(header, smalltext, message, autohide = false, delay = 500) %}
+{% macro toast(id, header, smalltext, message, autohide = false, delay = 500) %}
   {% if autohide == false %}
     {% set hideAttr  = 'data-autohide="false"' %}
     {% set delayAttr = (delay == 500) ? 'data-delay="' ~ delay ~ '"' : '' %}
@@ -75,7 +75,7 @@
     {% set hideAttr  = '' %}
     {% set delayAttr = '' %}
   {% endif %}
-  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" {{ hideAttr }} {{ delayAttr }} >
+  <div id="{{ id }}" class="toast" role="alert" aria-live="assertive" aria-atomic="true" {{ hideAttr }} {{ delayAttr }} >
     <div class="toast-header">
       <img src="images/logo-150.png" class="rounded mr-2" alt="logo">
       <strong class="mr-auto">{{ header }}</strong>

@@ -4,6 +4,7 @@
 namespace App\ReadXYZ\Twig;
 
 
+use App\ReadXYZ\Data\StudentsData;
 use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Data\WordMasteryData;
 use App\ReadXYZ\Helpers\PhonicsException;
@@ -85,6 +86,7 @@ class LessonTemplate
         $args['studentCode'] = $this->studentCode;
         $args['animals']       = $zooAnimals->getStudentAnimalSet($this->studentCode);
         $args['animalIndex']   = $zooAnimals->getIndex($this->studentCode);
+        $args['parentEmail']   = (new StudentsData)->getParentEmail($this->studentCode);
         // tabInfo is set by lesson.html.twig for each of the tabs. It is an abc_tabType record
 
         if ($this->initialTabName) {

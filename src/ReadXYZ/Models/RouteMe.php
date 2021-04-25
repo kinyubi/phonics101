@@ -10,6 +10,7 @@ use App\ReadXYZ\Data\Views;
 use App\ReadXYZ\Handlers\CrudHandler;
 use App\ReadXYZ\Handlers\LessonSelector;
 use App\ReadXYZ\Handlers\LoginForm;
+use App\ReadXYZ\Handlers\ParentEmail;
 use App\ReadXYZ\Handlers\StudentSelector;
 use App\ReadXYZ\Handlers\TimerForms;
 use App\ReadXYZ\Handlers\WordMasteryForm;
@@ -161,6 +162,9 @@ class RouteMe
                         break;
                     case 'timer':
                         TimerForms::handlePost();
+                        break;
+                    case 'lessonEmail':
+                        ParentEmail::handlePost();
                         break;
                     case 'validate':
                         LoginForm::handlePost();
