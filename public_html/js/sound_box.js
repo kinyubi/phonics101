@@ -5,7 +5,7 @@ let soundBox = {
     color: "#00aabe",
     count: 3,
     tileLetter: '',
-    currentBox: 0,
+    currentBox: -1,
 
     moveLowerBall: function(num) {
         let lowerBall = document.getElementById('ball-' + num.toString());
@@ -26,8 +26,8 @@ let soundBox = {
 
     tileClicked: function(letter) {
         soundBox.tileLetter = letter
-        const instructions = document.getElementById("tile-instructions");
-        instructions.style.visibility = "visible";
+        // const instructions = document.getElementById("tile-instructions");
+        // instructions.style.visibility = "visible";
         soundBox.appendLetter(soundBox.currentBox);
     },
 
@@ -41,24 +41,26 @@ let soundBox = {
         if ((num < 0) || (num >= soundBox.count)) return;
 
         let letterTile = document.getElementById(("box-letters-" + idNum));
-        const instructions = document.getElementById("tile-instructions");
+        // const instructions = document.getElementById("tile-instructions");
         letterTile.innerText = soundBox.tileLetter;
-        instructions.style.visibility = "hidden";
+        // instructions.style.visibility = "hidden";
         soundBox.tileLetter = "";
     },
 
     appendLetter: function(idNum) {
-        let num = parseInt(idNum);
-        if ((num < 0) || (num >= soundBox.count)) return;
+        if(soundBox.currentBox != -1){
+            let num = parseInt(idNum);
+            if ((num < 0) || (num >= soundBox.count)) return;
 
-        let letterTile = document.getElementById(("box-letters-" + idNum));
-        let tileText = letterTile.innerText;
-        let letter = soundBox.tileLetter;
-        soundBox.tileLetter = "";
-        const instructions = document.getElementById("tile-instructions");
-        instructions.style.visibility = "hidden";
-        if (tileText.length > 3) return ;
-        letterTile.innerText = tileText + letter;
+            let letterTile = document.getElementById(("box-letters-" + idNum));
+            let tileText = letterTile.innerText;
+            let letter = soundBox.tileLetter;
+            soundBox.tileLetter = "";
+            // const instructions = document.getElementById("tile-instructions");
+            // instructions.style.visibility = "hidden";
+            if (tileText.length > 3) return ;
+            letterTile.innerText = tileText + letter;
+        }
     },
 
     writeCookie: function() {
@@ -125,6 +127,17 @@ let soundBox = {
         return false; // don't bubble up if the child element triggered.
     },
 
+    selectBox: function(index) {
+        if(soundBox.currentBox != index){
+            if(soundBox.currentBox != -1){
+                document.getElementById(`big-box-${soundBox.currentBox}`).classList.remove('tapmap-active-box');
+            }
+            soundBox.currentBox = index;
+            document.getElementById(`big-box-${index}`).classList.add('tapmap-active-box');
+        }
+
+    },
+
     reload: function() {
         let lessonName = document.getElementById('sound-box-lesson-name').innerText;
             window.location.href = '/handler/lesson/' + lessonName + '/write';
@@ -147,5 +160,3 @@ $(document).ready(function () {
     }
 
 });
-
-
