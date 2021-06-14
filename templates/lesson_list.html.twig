@@ -22,7 +22,7 @@ inputs:
 
 {% block body %}
 	{% set iconList = ['no-mastery', 'advancing', 'mastered'] %}
-	{% set iconTip = ['Unmastered', 'Advancing', 'Mastered'] %}
+	{% set iconTip = ['Unmastered', 'Advancing', 'Mastered!'] %}
 	<style>
       a span {
           font-stretch: 100%;
@@ -34,7 +34,7 @@ inputs:
 	<div class="row d-flex bg-white justify-content-start mx-2 flex-wrap">
 
 	{# DISPLAY MOST RECENT LESSON IF IT'S IN THE COOKIE #}
-	{% if mostRecentLessonCode %}
+	{# {% if mostRecentLessonCode %}
 		<div id="lesson-accordion" class="col-md-12 col-sm-12 col-lg-5 lesson-list--width">
 		<div id="most-recent" class="card bg-readlite">
 			<div class="card-header">
@@ -49,59 +49,111 @@ inputs:
 			</div>
 		</div>
 		</div>
-	{% endif %}
+	{% endif %} #}
 	</div>
-	<div class="row d-flex bg-white justify-content-start mx-2 flex-wrap">
+	<div class="row d-flex bg-white justify-content-start mx-2 flex-wrap lesson-list-container">
 	{# FOR EACH GROUP #}
-	<div id="lesson-accordion" class="col-md-12 col-sm-12 col-lg-5 lesson-list--width">
-		{% for groupCode, groupInfo in accordion %}
-			{% set groupName = groupInfo.groupName %}
-			{% set groupIndex = loop.index %}
-			{% set groupHeader = 'header-' ~ loop.index %}
-			{% set groupCollapse = 'collapse-' ~ loop.index %}
-			{% set groupAnimal = keychainAnimals[groupCode].fileName %}
-			<div class="card bg-white border-readxyz ">
-				<div class="card-header bg-white" id="{{ groupHeader }}">
-					<a class="card-link" data-toggle="collapse" data-target="#{{ groupCollapse }}"
-					   aria-controls="{{ groupCollapse }}" aria-expanded="false" style="cursor: pointer">
-						<div class="row d-flex flex-nowrap align-items-center ">
-							<div class="col-1">
-								<img src="/images/lessonlist/accordion-unexpanded.png" alt="-" class="size--list-icon"/>
-							</div>
-							<div class="ml-3 text-dark col-6 button-text">{{ groupName }}</div>
-							<div class="col-4 accordion--image" style="background-image: url({{ groupAnimal }})">
-							</div>
-						</div>
-
-					</a>
+	<div id="lesson-accordion" class="col-md-12 col-sm-12 col-lg-5 lesson-list--width lesson-list">
+		<div class="container">
+			<div class="row lesson-progress">
+				<div class="col-4">
+					<div> {{lessonsCompleted}} of {{lessonsTotal}} Lessons Completed</div>
 				</div>
-				<div id="{{ groupCollapse }}" class="collapse" data-parent="#lesson-accordion"
-				     aria-labelledby="{{ groupHeader }}">
-					<div class="card-body">
-						<div class="bg-white">
-							<ul class="d-flex flex-column flex-nowrap pl-4" style="width:100%; ">
-
-								{# FOR EACH LESSON IN A GROUP #}
-								{% for lessonId, lessonInfo in groupInfo.lessons %}
-									{% set lessonName = lessonInfo.lessonName %}
-									{% set mastery = lessonInfo.mastery %}
-									{% set href = '/handler/lesson/' ~ lessonId|url_encode %}
-									<div class="list-group-item list-group-item-white">
-										<div class="row d-flex flex-nowrap" style="height: 2em;">
-											<div data-toggle="tooltip" title="{{ iconTip[mastery] }}"
-											     {# depending on mastery level, use mastery--no-mastery, mastery--advancing or mastery--mastered #}
-											     class="col-1 h-75 align-self-center mastery--image mastery--{{ iconList[mastery] }}"></div>
-											<a role="button" href="{{ href }}" class="h4 text-dark ml-3">{{ lessonName }}</a>
-										</div>
-									</div>
-								{% endfor %}
-							</ul>
-						</div>
+				<div class="col-4">
+					<div class="progress lesson-progress-bar">
+						<div class="progress-bar progress-bar-completed" role="progressbar" style="width: {{lessonsProgress}}%" aria-valuemin="0" aria-valuemax="100"></div>
 					</div>
-
+				</div>
+				<div class="col-4">
+                    {% if mostRecentLessonCode %}
+                        {% set href = '/handler/lesson/' ~ mostRecentLessonCode %}
+    					<div class="row">
+    						<div class="col-7"> <div>Most Recent:</div><div>Unit {{mostRecentLessonUnit}}: {{ mostRecentLessonName }}</div></div>
+                            <a href="{{ href }}">
+			                    <div class="col-5 progress-arrow-right" style="cursor: pointer;" ></div>
+                            </a>
+    					</div>
+                    {% endif %}
 				</div>
 			</div>
-		{% endfor %}
+		</div>
+
+        <ul class="lesson-list-ul">
+    		{% for groupCode, groupInfo in accordion %}
+    			{% set groupName = groupInfo.groupName %}
+    			{% set groupIndex = loop.index %}
+    			{% set groupHeader = 'header-' ~ loop.index %}
+    			{% set groupCollapse = 'collapse-' ~ loop.index %}
+    			{% set groupAnimal = keychainAnimals[groupCode].fileName %}
+				{% set masteryIndex = lessonMasteries[loop.index - 1] %}
+                <li class="lesson-list-li">
+        			<div class="card bg-white border-readxyz lesson-list-card">
+        				<div class="card-header bg-white" id="{{ groupHeader }}">
+        					<a class="card-link" data-toggle="collapse" data-target="#{{ groupCollapse }}"
+        					   aria-controls="{{ groupCollapse }}" aria-expanded="false" style="cursor: pointer">
+        						<div class="row d-flex flex-nowrap align-items-center">
+                                    <div class="col-2 accordion--image lesson-list-animal-image" style="background-image: url({{ groupAnimal }})"></div>
+        							<div class="col-6 ml-3 text-dark button-text lesson-list-button-text">Unit {{groupIndex}}: {{ groupName }}</div>
+									{% if masteryIndex == 0 %}
+										<div class="col-4">
+											<div class="progress lesson-progress-bar">
+												<div class="progress-bar progress-bar-completed" role="progressbar" style="width: {{lessonMasteriesCount[loop.index - 1]}}%" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+									{% else %}
+										<div class="col-4">
+											<div class="row">
+												<span style="font-size: 18px; font-weight: unset;">
+													{{ iconTip[masteryIndex] }}
+												</span>
+												<div data-toggle="tooltip" title="{{ iconTip[masteryIndex] }}"
+													class="col-4 mastery-group-icon mastery--{{ iconList[masteryIndex] }}">
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								</div>
+        					</a>
+        				</div>
+        				<div id="{{ groupCollapse }}" class="collapse lesson-group-items" data-parent="#lesson-accordion"
+        				     aria-labelledby="{{ groupHeader }}">
+							<div class="card-header lesson-header-label">Lessons:</div>
+        					<div class="card-body card-group-body">
+        						<div class="bg-white">
+        							<ul class="d-flex flex-column flex-nowrap pl-4" style="width:100%; ">
+
+        								{# FOR EACH LESSON IN A GROUP #}
+        								{% for lessonId, lessonInfo in groupInfo.lessons %}
+        									{% set lessonName = lessonInfo.lessonName %}
+        									{% set mastery = lessonInfo.mastery %}
+        									{% set href = '/handler/lesson/' ~ lessonId|url_encode %}
+        									<div class="list-group-item list-group-item-white list-group-item-lesson">
+        										<div class="row d-flex flex-nowrap" style="height: 2em; position: relative;">
+        											<div class="col-9">
+														<a role="button" href="{{ href }}" class="text-dark ml-3 item-lesson-button">{{ lessonName }}</a>
+													</div>
+
+													<div class="col-3 list-group-icon">
+													    {% if mastery == 0 %}
+															<div class="progress lesson-progress-bar">
+																<div class="progress-bar progress-bar-completed" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+															</div>
+														{% else %}
+															<div data-toggle="tooltip" title="{{ iconTip[mastery] }}"
+															class="col-1 h-75 align-self-center mastery--image mastery--{{ iconList[mastery] }} mastery-icon"></div>
+														{% endif %}
+													</div>
+        										</div>
+        									</div>
+        								{% endfor %}
+        							</ul>
+        						</div>
+        					</div>
+        				</div>
+        			</div>
+                </li>
+    		{% endfor %}
+        </ul>
 	</div>
 
 	</div>
