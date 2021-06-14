@@ -11,42 +11,50 @@ inputs: parentName, studentName, lessonName, wordList, sentences[], actualEmail
                 <label>Parent Email
                     <input type="email" id="parentEmail" name="parentEmail" value="{{ parentEmail }}" size="50">
                 </label>
+                <input type="hidden" name="trainerCode" value="{{ trainerCode }}" />
                 <input type="hidden" name="parentName" value="{{ parentName|default('Parent') }}">
                 <input type="hidden" name="studentName" value="{{ page.studentName|default('your child') }}">
                 <input type="hidden" name="studentCode" value="{{ studentCode }}">
                 <input type="hidden" name="lessonName" value="{{ lesson.lessonName }}">
+                <input type="hidden" name="emailBody" value="" />
                 {% for word in lesson.allWords %}
                     <input type="hidden" name="words[]" value="{{ word }}">
                 {% endfor %}
                 {% for sentence in lesson.fluencySentences %}
                     <input type="hidden" name="sentences[]" value="{{ sentence }}">
                 {% endfor %}
-                <div class="row  d-flex flex-nowrap  m-2 justify-content-between">
-                            <div id="{{ tabId }}-main" class="col-8" style="font-size: 1em;font-family:'Comic Sans MS',serif;">
-                                <p class="my-2 font-weight-bold">Hi {{ parentName|default("Parent") }},</p>
+                <div class="row  d-flex flex-nowrap  m-2 justify-content-between email-content-container">
+                            <div id="{{ tabId }}-main" class="col-8 email-content-inner-container" style="font-size: 1em;font-family:'Muli',serif;">
                                 {% set name = page.studentName|default("your child") %}
-                                <p>Today {{ name }} worked on the lesson "{{ lesson.lessonName }}".</p><br>
-                                <p class="font-weight-bold">The practice list is:</p>
-                                <ul class="ml-3">
-                                    {% for word in lesson.allWords %}
-                                        <li class="mx-1">{{ word }}</li>
-                                    {% endfor %}
-                {#                </ul>#}
-                {#                <br><br>#}
-                {#                <p class="font-weight-bold">The fluency passages are:</p>#}
-                {#                <ul>#}
+                                {% set emailPracticeList = 'The practice list is:\n\n' %}
+                                {% set emailFluencyList = '' %}
+                                {% for word in lesson.allWords %}
+                                    {% set emailPracticeList = [emailPracticeList, '- ' ~ word ~ '\n'] | join %}
+                                {% endfor %}
+                                {% set emailFluencyList = '' %}
+                                {% if lesson.fluencySentences is not empty %}
+                                    {% if lesson.groupCode == "letters" %}
+                                        {% set emailFluencyList = '\nFor additional practice, have your child say each sound in the row.\n\n' %}
+                                    {% else %}
+                                        {% set emailFluencyList = '\nThe fluency passages are:\n\n' %}
+                                    {% endif %}
                                     {% for sentence in lesson.fluencySentences %}
-                                        <li class="mx-1 mt-2">{{ sentence }}</li>
+                                        {% set emailFluencyList = [emailFluencyList,  '- ' ~ sentence ~ '\n'] | join %}
                                     {% endfor %}
-                                </ul><br>
+                                {% endif %}
+                                {% set emailBody = 'Hi ' ~ parentName|default("Parent") ~',\n' ~
+                                    'Today ' ~ name ~ ' worked on the lesson ' ~ lesson.lessonName ~ '.\n\n' ~ emailPracticeList ~ emailFluencyList
+                                %}
+                                <div contenteditable role="textbox" id="emailContent" class="email-body">{{emailBody}}</div>
                             </div>
                         </div>
 {#                <div onclick="sendEmail()" style="border:none; height: 40px; width: 40px">#}
 {#                    <img src="/images/send.png" alt="Send Email" style="width: 100%; height: 100%"#}
 {#                         title="Send Email">#}
 {#                </div>#}
-                <input type="image" height="40" width="40" style="border:none;" src="/images/send.png"
-                alt="Send Email" onclick="sendEmail()">
+                <div class="send-email-button-container">
+                    <button type="button" class="send-email-button" onclick="sendEmail()">Send Email</button>
+                </div>
             </form>
         </div>
     </div>
