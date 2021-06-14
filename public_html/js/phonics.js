@@ -5,21 +5,59 @@
 let WPrefix = "";
 let WVowel = "";
 let WSuffix = "";
+let acceptedWords = [];
+let completedWords = [];
 
 WSpin = {		// Word Spinner
 
 	init: function(){
 		//alert("in WSpin.init");
-		WSpin.prefix = "";
-		WSpin.vowel  = "";
-		WSpin.suffix = "";
+		WPrefix = "";
+		WVowel  = "";
+		WSuffix = "";
 	},
+
+    setAcceptedWords: function(words){
+        acceptedWords = words.trim().replace(/\s+/g, ' ').split(' ');
+    },
+
     spinIt: function(pvs, letters, finalVowel) {
         if(pvs==="p") {WPrefix = letters;}
         if(pvs==="v") {WVowel = letters;}
-        if(pvs === "s") {WSuffix = letters;}
-        document.getElementById("spinResult").innerHTML = WPrefix+WVowel+WSuffix+finalVowel;
+        if(pvs === "s") {WSuffix = finalVowel != '' ? letters + finalVowel : letters}
+
+        let wordFormed = WPrefix+WVowel+WSuffix;
+        let isLettersLesson = document.getElementById('isChainLetters').value;
+
+        let isAcceptedWord = false;
+
+        if(isLettersLesson == "true")
+            isAcceptedWord = true;
+        else
+            isAcceptedWord = WPrefix != "" && WVowel != "" && WSuffix != "";
+
+        let isCompletedWord = false;
+
+        if(isAcceptedWord){
+            isCompletedWord = completedWords[completedWords.length - 1] == wordFormed;
+            if(!isCompletedWord) {
+                completedWords.push(wordFormed);
+                let spanWord = document.createElement('SPAN');
+                spanWord.classList.add("chain-completed-word");
+                spanWord.innerHTML = wordFormed;
+                let foundWordContainer = document.createElement('DIV');
+                foundWordContainer.appendChild(spanWord);
+
+                let wordsFoundContainer = document.getElementById('words-found');
+                wordsFoundContainer.prepend(foundWordContainer);
+
+            }
+        }
+
+        document.getElementById("spinResult").innerHTML = wordFormed;
     },
+
+
 
     wordSpinner: function (pvs,letters){this.spinIt(pvs, letters, "");},
 
@@ -41,6 +79,7 @@ function enableScroll() {
 
 function eraseSpellBox() {
     $("#spinResult").html("");
+    WSpin.init();
 }
 
 // ====================================================
@@ -98,10 +137,16 @@ function advanceAnimal() {
     document.getElementById("next-animal-img").src = "/images/animals/gray150/" + secondStr + ".png";
     animalIndexDiv.innerText = firstStr;
 
-    $.post(url);
+    $.post(url).done(() => {
+        window.location.reload();
+    });
 }
 
 $(document).ready(function () {
     WSpin.init();
+    if(document.getElementById('chain-accepted-words') !== null){
+        WSpin.setAcceptedWords(document.getElementById('chain-accepted-words').value);
+    }
+
     setScreenCookie();
 });
