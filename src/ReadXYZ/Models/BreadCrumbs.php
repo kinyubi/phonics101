@@ -35,7 +35,7 @@ class BreadCrumbs
             if ($this->trainer->studentCt== 1) {
                 $this->breadCrumbs[] = ['text' => $this->student->studentName, 'link' => '#'];
             } elseif ($this->trainer->studentCt > 1) {
-                $this->breadCrumbs[] = ['text' => 'students', 'link' => '/studentlist'];
+                $this->breadCrumbs[] = ['text' => 'Students', 'link' => '/studentlist'];
                 $this->breadCrumbs[] = ['text' => $this->student->studentName, 'link' => '#'];
             }
         }
@@ -43,8 +43,14 @@ class BreadCrumbs
 
     public function getPrevious(string $currentCrumb): array
     {
+
         if ($currentCrumb == 'lesson') {
             $this->breadCrumbs[] = ['text' => 'lessons', 'link' => '/lessons'];
+        }
+        else if($currentCrumb == 'students') {
+            $newBreadCrumbs = [];
+            $newBreadCrumbs[] = $this->breadCrumbs[0];
+            $this->breadCrumbs = $newBreadCrumbs;
         }
         return $this->breadCrumbs;
     }
