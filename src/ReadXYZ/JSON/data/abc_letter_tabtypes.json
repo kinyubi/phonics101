@@ -1,0 +1,74 @@
+[
+{"type":"header","comment":"created manually. replaces readxyz0_phonics.tabtypes."},
+{"type":"filler"},
+  {
+    "type": "json_table",
+    "name": "abc__letter_tabtypes",
+    "version": "1.0104.1",
+    "data": [
+      {
+        "tabTypeId": "practice",
+        "tabDisplayAs": "Practice",
+        "script": "Read each letter out loud. We will use the timer and play the games in the sidebar for additional practice.",
+        "imageFile": "/images/tabs/practice.png",
+        "aliases": []
+      },
+      {
+        "tabTypeId": "spell",
+        "tabDisplayAs": "Chain",
+    "script": "I will say several <a id='chain-word-link'>letters from the lesson</a>. Each time I say a letter, click the correct letter.",
+        "imageFile": "/images/tabs/spell.png",
+        "aliases": ["spinner"]
+      },
+      {
+        "tabTypeId": "intro",
+        "tabDisplayAs": "Intro",
+        "script": "Today we are learning letters. Let's read the letters together.",
+        "imageFile": "/images/tabs/intro.png",
+        "aliases": ["stretch"]
+      },
+      {
+        "tabTypeId": "test",
+        "tabDisplayAs": "Test",
+        "script": "Let's see how well you have learned the letters in this lesson. (Mastery Goal: all letters correct in 10 - 15 seconds.)",
+        "imageFile": "/images/tabs/test.png",
+        "aliases": []
+      },
+      {
+        "tabTypeId": "fluency",
+        "tabDisplayAs": "Fluency",
+        "script": "You will read this 3 times. I will use the timer, but focus on reading the letters smoothly and correctly.",
+        "imageFile": "/images/tabs/fluency.png",
+        "aliases": ["reading"]
+      },
+      {
+        "tabTypeId": "mastery",
+        "tabDisplayAs": "Mastery",
+        "script": "I will point to a letter. If you read it correctly, I will check the box. If not, it is ok. We will practice it at the end.",
+        "imageFile": "/images/tabs/mastery.png",
+        "aliases": []
+      },
+      {
+        "tabTypeId": "warmup",
+        "tabDisplayAs": "Warmup",
+        "script": "Using warmups.instructions. This should never display.",
+        "imageFile": "/images/tabs/warmup.png",
+        "aliases": []
+      },
+      {
+        "tabTypeId": "book",
+        "tabDisplayAs": "Story",
+        "script": "",
+        "imageFile": "/images/tabs/book.png",
+        "aliases": ["story", "storyTime"]
+      },
+      {
+        "tabTypeId": "email",
+        "tabDisplayAs": "Email",
+        "script": "",
+        "imageFile": "/images/tabs/send.png",
+        "aliases": []
+      }
+    ]
+  }
+  ]
