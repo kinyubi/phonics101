@@ -545,7 +545,8 @@ a.img-contain img {
 }
 .tile-vowel {background-color: var(--vowel-tile)}
 .tile-vowel:hover {background-color: var(--vowel-tile--hover)}
-.tile-consonant {background-color: white}
+/* .tile-consonant {background-color: white} */
+.tile-consonant {background-color: #99dde5}
 .tile-consonant:hover {background-color: var(--readxyz)}
 
 .tile-letter {
