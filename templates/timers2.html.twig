@@ -30,6 +30,7 @@
           <input class="col" type="hidden" name="testWords" value=""/>
           <input class="col" type="hidden" name="source" value="testMastery"/>
           <input class="col" type="hidden" name="handler" value="timer"/>
+          <input class="col" type="hidden" name="currentLesson" value="{{lesson.lessonName}}" />
         </div>
       </form>
     </div>
@@ -55,6 +56,7 @@
     <input type="hidden" name="source" value="test"/>
     <input type="hidden" name="handler" value="timer"/>
     <input type="hidden" name="timestamp" value="0" />
+    <input type="hidden" name="currentLesson" value="{{lesson.lessonName}}" />
   </form>
 {% endblock %}
 
@@ -79,6 +81,7 @@
     <input type="hidden" name="source" value="fluency"/>
     <input type="hidden" name="handler" value="timer"/>
     <input type="hidden" name="timestamp" value="0" />
+    <input type="hidden" name="currentLesson" value="{{lesson.lessonName}}" />
   </form>
 {% endblock %}
 
@@ -112,4 +115,3 @@
 {% block LearningCurve %}
   <img src="{{ imageUrl }}" alt="Learning Curve" style="border: 0 solid gray; max-width: 100%;" class="mx-auto">
 {% endblock %}
-
