@@ -1,20 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {# parameters:
+    displayName (Display name of user that is logged in)
     studentLinks[] (keys: url, title)
 #}
 {% block body %}
+<div class="container-fluid container-student">
   <div class="row m-4">
-    <div class="h3 pt-3">Select a student:</div>
+    <div class="h3 pt-3">Hi {{ displayName }}. Please select a student:</div>
   </div>
   <div class="row m-4">
-    <div class="list-group p-3" style="max-width: 200px">
+    <div class="list-group p-3 list-group-student" style="max-width: 200px">
         {% for student in studentLinks %}
-            {% set active = loop.first ? 'active' : '' %}
+            {% set active = loop.first ? 'active list-group-item-student-active' : '' %}
             <a href="{{ student.url }}" class="list-group-item list-group-item-action {{ active }}">{{ student.title }}</a>
         {% endfor %}
     </div>
   </div>
+</div>
 
 {% endblock %}
 
