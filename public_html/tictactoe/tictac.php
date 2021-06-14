@@ -1,40 +1,17 @@
 <?php
 require dirname(__DIR__) . '/autoload.php';
 
-use App\ReadXYZ\JSON\ZooAnimalsAlt;
 use App\ReadXYZ\Models\Session;
+use App\ReadXYZ\JSON\ZooAnimalsAlt;
+Session::sessionContinue();
 
 $cssJsVer = '?ver=1.0407.0';
 $bootstrapVer = '?ver=1.01.17.0';
 
-$words = ['fat,cat,hat,sat,mat,pat,bat,rat,vat',
-          'cap,gap,lap,map,rap,sap,tap,zap,nap',
-          'bag,hag,jag,lag,nag,rag,sag,tag,wag',
-          'ban,can,fan,lan,man,pan,ran,tan,van',
-          'pap,dad,bab,dab,bad,pad,bad,pad,dad',
-          'bit,fit,hit,kit,mitt,pit,sit,wit,zit',
-          'big,dig,fig,jig,pig,rig,wig,zig,gig',
-          'dip,hip,jip,lip,nip,pip,rip,sip,zip',
-          'cot,dot,got,hot,jot,lot,not,pot,rot',
-          'bog,cog,dog,fog,hog,jog,log,hop,top',
-          'fob,fop,gob,God,hop,job,lob,mob,mod',
-          'mop,nod,pod,pop,rob,rod,sob,sod,top',
-          'but,cut,gut,hut,jut,mutt,nut,putt,rut',
-          'bug,dug,hug,lug,jug,mug,pug,rug,tug',
-          'bud,dub,dud,pub,pug,pup,dub,bud,dud',
-          'bet,get,jet,let,met,net,pet,set,wet'];
+$animals = ZooAnimalsAlt::getInstance()->get2AnimalObjects();
 
-$animals = ZooAnimalsAlt::getInstance()->get2AnimalObjects();Session::sessionContinue();
 $player1 = $animals[0];
 $player2 = $animals[1];
-
-if (isset($_SESSION['TicTacToe'])) {
-  $word_list = $_SESSION['TicTacToe'];
-} else {
-    $list_count = count($words);
-    $idx = rand(0, $list_count - 1);
-    $word_list = explode(',', $words[$idx]);
-}
 
 $rat = $player1->fileName;
 $cat = $player2->fileName;
@@ -44,7 +21,6 @@ $cat = $player2->fileName;
 <html lang="en-US">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1">
   <title>Tic Tac Toe</title>
@@ -58,6 +34,7 @@ $cat = $player2->fileName;
 
   <script src="/js/jquery.colorbox.js"></script>
   <script src="/js/bootstrap4-custom/bootstrap.min.js<?php echo $bootstrapVer; ?>"></script>
+  <script src="/js/tictactoe-revised.js"></script>
   <script src="/js/drag-and-touch.js"></script>
 
   <style>
@@ -110,15 +87,19 @@ $cat = $player2->fileName;
       }
 
       .gamePiece {
-          width: 45px;
-          height: 45px;
+          width: 60px;
+          height: 60px;
           margin: 0;
           z-index: 100;
       }
       .gamePiece__wrapper {
-          width: 50px;
-          height: 50px;
-          margin: 2px;
+          width: 65px;
+          height: 65px;
+          margin-top: 5px;
+      }
+
+      .gamePiece__wrapper_right {
+          text-align: right;
       }
 
       .row__ticTacToe:after {
@@ -128,13 +109,20 @@ $cat = $player2->fileName;
       }
 
       .square {
-          width: 70px;
-          height: 70px;
+          width: 85px;
+          height: 85px;
           padding: 3px;
           border-collapse: collapse;
           font-family: serif;
           font-size: 24px;
           color: black;
+          -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+             -khtml-user-select: none; /* Konqueror HTML */
+               -moz-user-select: none; /* Old versions of Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none; /* Non-prefixed version, currently
+                                          supported by Chrome, Edge, Opera and Firefox */
       }
 
       .border__right {
@@ -149,119 +137,34 @@ $cat = $player2->fileName;
           text-align: center;
           padding-top: 15px;
       }
+
+      .mover-disabled {
+        -khtml-user-select: none;
+        -o-user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      .table-style {
+          table-layout: fixed;
+          width: 100%;
+      }
+
+      .table-td {
+          width: 33%;
+      }
   </style>
-
-  <script>
-      let rats = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      let cats = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      const winners = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]];
-      let moves = 0;
-      let status = "UNFINISHED";
-
-      function winner() {
-          $.colorbox({
-              closeButton: true, close: "X", opacity: 1, maxWidth: "200px", left: "18%", top: "25%",
-              href: "https://movellas-users.s3.amazonaws.com/comment/201210171910330233/201307010339396490.gif"
-          });
-      }
-
-      function noWinner() {
-          $.colorbox({html: "The game was a tie. Try again!"});
-      }
-
-      function setGameStatus() {
-          let combo;
-          for (combo of winners) {
-              if (cats[combo[0]] && cats[combo[1]] && cats[combo[2]]) {
-                  status = "WINCAT";
-                  return;
-              }
-          }
-          for (combo of winners) {
-              if (rats[combo[0]] && rats[combo[1]] && rats[combo[2]]) {
-                  status = "WINRAT";
-                  return;
-              }
-          }
-          if (moves === 9) {
-              status = "DRAW";
-              return;
-          }
-          status = "UNFINISHED";
-      }
-
-      function checkStatus(moverId, receiverId) {
-          let idx = parseInt(receiverId.substring(1));
-          moves++;
-          if (moverId.charAt(0) === "r") {
-              rats[idx] = 1;
-          } else {
-              cats[idx] = 1;
-          }
-          setGameStatus();
-          if (status.startsWith("WIN")) {
-              winner();
-          } else if (status === "DRAW") {
-              noWinner();
-          }
-      }
-
-      function dropOnSquare(event) {
-          event.preventDefault();
-          let moverId = event.dataTransfer.getData("text");
-          let receiverId = event.target.id;
-          checkStatus(moverId, receiverId);
-      }
-
-      function touchSquare(event) {
-          const receptacles = document.getElementsByClassName('receptacle');
-          let mover = event.target;
-          let receiver = null;
-          for (let r of receptacles) {
-              if (detectContainment(mover, r)) {
-                  receiver = r;
-                  break;
-              }
-          }
-          if (receiver) {
-              checkStatus(mover.id, receiver.id);
-              mover.removeEventListener('touchend', touchSquare, {passive: true});
-          }
-      }
-
-      document.addEventListener("DOMContentLoaded", function (event) {
-          const receptacles = document.getElementsByClassName('receptacle');
-          for (let receiver of receptacles) {
-              receiver.addEventListener('drop', dropOnSquare, false);
-          }
-          const movers = document.getElementsByClassName('mover');
-          for (let mover of movers) {
-              mover.addEventListener('touchend', touchSquare, {passive: true});
-          }
-      });
-
-      // window.onload = function () {
-      //     const receptacles = document.getElementsByClassName('receptacle');
-      //     for (let receiver of receptacles) {
-      //         receiver.addEventListener('drop', dropOnSquare, false);
-      //     }
-      //     const movers = document.getElementsByClassName('mover');
-      //     for (let mover of movers) {
-      //         mover.addEventListener('touchend', touchSquare, {passive: true});
-      //     }
-      // }
-
-  </script>
 </head>
 
-<body style=" background-color: white;">
-<div class="container p-0 m-0">
-  <div class="row row__ticTacToe row__header m-3 p-0">
-    <h1 style="text-align: center; width:100%">Tic-Tac-Toe Fun</h1>
+<body style="background-color: white;">
+<div class="p-0 m-0">
+  <div class="row row__ticTacToe row__header m-3 p-0 justify-content-center">
+    <h1>Tic-Tac-Toe Fun</h1>
   </div>
 
-  <div class="row__ticTacToe d-flex flex-nowrap" style="background-color:white; ">
-    <div id="rats" class="d-flex flex-column m-1 p-1">
+  <div class="row__ticTacToe d-flex flex-nowrap justify-content-center" style="background-color:white; ">
+    <div id="rats" class="d-flex flex-column">
       <div class="gamePiece__wrapper"><img id="rat1" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
       <div class="gamePiece__wrapper"><img id="rat2" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
       <div class="gamePiece__wrapper"><img id="rat3" class="gamePiece mover" src="<?php echo $rat; ?>" alt="P1"></div>
@@ -272,21 +175,21 @@ $cat = $player2->fileName;
       <div id="container">
 
         <div id="theboard">
-          <table>
+          <table class="table-style">
             <tr>
-              <td id="s1" class="square receptacle border__right border__bottom"><?php echo $word_list[0]; ?></td>
-              <td id="s2" class=" square receptacle border__right border__bottom"><?php echo $word_list[1]; ?></td>
-              <td id="s3" class=" square receptacle border__bottom"><?php echo $word_list[2]; ?></td>
+              <td id="s-1" class="square receptacle border__right border__bottom table-td">-</td>
+              <td id="s-2" class=" square receptacle border__right border__bottom table-td">-</td>
+              <td id="s-3" class=" square receptacle border__bottom table-td">-</td>
             </tr>
             <tr>
-              <td id="s4" class=" square receptacle border__right border__bottom"><?php echo $word_list[3]; ?></td>
-              <td id="s5" class=" square receptacle border__right border__bottom"><?php echo $word_list[4]; ?></td>
-              <td id="s6" class=" square receptacle border__bottom"><?php echo $word_list[5]; ?></td>
+              <td id="s-4" class=" square receptacle border__right border__bottom table-td">-</td>
+              <td id="s-5" class=" square receptacle border__right border__bottom table-td">-</td>
+              <td id="s-6" class=" square receptacle border__bottom table-td">-</td>
             </tr>
             <tr>
-              <td id="s7" class=" square receptacle border__right"><?php echo $word_list[6]; ?></td>
-              <td id="s8" class=" square receptacle border__right"><?php echo $word_list[7]; ?></td>
-              <td id="s9" class=" square receptacle"><?php echo $word_list[8]; ?></td>
+              <td id="s-7" class=" square receptacle border__right table-td">-</td>
+              <td id="s-8" class=" square receptacle border__right table-td">-</td>
+              <td id="s-9" class=" square receptacle table-td">-</td>
             </tr>
           </table>
         </div>
@@ -296,12 +199,12 @@ $cat = $player2->fileName;
         </div>
       </div>
     </div>
-    <div id="cats" class="d-flex flex-column m-1 p-1">
-      <div class="gamePiece__wrapper"><img id="cat1" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
-      <div class="gamePiece__wrapper"><img id="cat2" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
-      <div class="gamePiece__wrapper"><img id="cat3" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
-      <div class="gamePiece__wrapper"><img id="cat4" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
-      <div class="gamePiece__wrapper"><img id="cat5" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+    <div id="cats" class="d-flex flex-column">
+      <div class="gamePiece__wrapper gamePiece__wrapper_right"><img id="cat1" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+      <div class="gamePiece__wrapper gamePiece__wrapper_right"><img id="cat2" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+      <div class="gamePiece__wrapper gamePiece__wrapper_right"><img id="cat3" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+      <div class="gamePiece__wrapper gamePiece__wrapper_right"><img id="cat4" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
+      <div class="gamePiece__wrapper gamePiece__wrapper_right"><img id="cat5" class="gamePiece mover" src="<?php echo $cat; ?>" alt="P2"></div>
     </div>
   </div>
 </div>
