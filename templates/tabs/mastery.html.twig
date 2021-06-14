@@ -22,6 +22,7 @@
                         {% endfor %}
                         <input type="hidden" name="wordlist" value="{{ lesson.allWords|join(',') }}"/>
                         <input type="hidden" name="handler" value="mastery"/>
+                        <input type="hidden" name="currentLesson" value="{{lesson.lessonName}}" />
                     </div>
                 </form>
 
