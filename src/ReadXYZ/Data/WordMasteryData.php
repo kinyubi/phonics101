@@ -3,10 +3,9 @@
 
 namespace App\ReadXYZ\Data;
 
-
+use App\ReadXYZ\CSV\CSV;
 use App\ReadXYZ\Enum\DbVersion;
 use App\ReadXYZ\Enum\QueryType;
-use App\ReadXYZ\Helpers\Util;
 use App\ReadXYZ\Models\BoolWithMessage;
 use App\ReadXYZ\Models\Log;
 use App\ReadXYZ\Models\Session;
@@ -42,7 +41,7 @@ EOT;
     public function update(string $studentCode, string $presentedWordList, array $masteredWords): BoolWithMessage
     {
         $conn = $this->db->getConnection();
-        $quotedList = Util::quoteList($presentedWordList);
+        $quotedList = CSV::getInstance()->quoteList($presentedWordList);
         $query = "DELETE FROM abc_word_mastery WHERE studentCode = '$studentCode' AND word IN ($quotedList)";
         $conn->begin_transaction();
         $result = $this->db->queryStatement($query);
