@@ -16,6 +16,7 @@ otherJS
 	navbar          : [ [ displayText => link ]  ] (by default, part of titleBar block)
 	previous_crumbs : [ [ displayText => link ]  ] (by default, part of titleBar block)
 	this_crumb      : displayText (no link
+    studentList     : List of students
 #}
 {% from "macros.html.twig" import dialog, dialogAnchor, dialogButton %}
 {% set cssJsVer = '1.0407.0' %}
@@ -42,10 +43,12 @@ otherJS
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/bootstrap4-custom/bootstrap.min.css?ver={{ cssJsVer }}">
 
+
     <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
 
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/phonics.css?ver={{ cssJsVer }}" media="all">
+	<link rel="stylesheet" href="/css/custom.css">
 
     {% block otherStyles %}{% endblock %}
 
@@ -55,11 +58,12 @@ otherJS
     <script src="/js/bootstrap4-custom/bootstrap.bundle.js?ver={{ bootstrapVer }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script src="/js/phonics.js?ver={{ cssJsVer }}"></script>
+    <script src="/js/mobile_nav.js"></script>
 
     {% block otherScripts %}{% endblock %}
 </head>
 
-<body>
+<body class="body-background">
 {# <div id="page-wrapper" style="width: auto!important; max-width: 98%;  padding: 0.1em; margin:9px; "> #}
 
 {# MODALS BLOCK #}
@@ -87,18 +91,16 @@ otherJS
     {% endif %}
 {% endblock %}
 
-{# Container for the whole page #}
-<div class="m-0 p-0 p-sm-1 p-md-3 p-lg-5 container-fluid" id="base-container" style="max-width: 950px;">
-
-    {# breadcrumbs in the titlebar
-   if a user has multiple students:  <username> / students / lessons / <lessonname>
-	 if a user has one student:        <username> / <studentname> / lessons / <lessonname>
-    #}
-    {% block titleBar %}
-        {# TITLE BAR - START #}
-        <div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2" id="readxyz-title">
+{# breadcrumbs in the titlebar
+if a user has multiple students:  <username> / students / lessons / <lessonname>
+ if a user has one student:        <username> / <studentname> / lessons / <lessonname>
+#}
+{% block titleBar %}
+	{# TITLE BAR - START #}
+	<div class="ml-0 row bg-white  d-flex flex-wrap justify-content-start height--title-bar align-baseline h1 my-2 header-design" id="readxyz-title">
+        <div class="header-container">
             {# title bar: logo #}
-            <div class="w-25 bg-image--title"></div>
+            <div class="bg-image--title header-logo"></div>
             {# title bar: nav items #}
             {% for title, link in navBar %}
                 <a id="menuItem-{{ loop.index }}" class="nav-link text-black-50" href="{{ link }}">{{ title }}</a>
@@ -106,15 +108,15 @@ otherJS
             {# title bar - breadcrumbs #}
 
             {% if previous_crumbs or this_crumb %}
-                <div class="my-auto mx-3">
+                <div class="my-auto mx-3 header-breadcrumbs">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb h6">
                             {% for crumb in previous_crumbs %}
                                 {% set decoration = ((crumb.link is empty) or (crumb.link == '#')) ? 'style="text-decoration: none;color: #6c757d;"' : '' %}
-                                <li class="breadcrumb-item"><a href="{{ crumb.link }}" {{ decoration }}>{{ crumb.text }}</a></li>
+                                <li class="breadcrumb-item"><a href="{{ crumb.link }}" {{ decoration }}>{{ crumb.text|capitalize }}</a></li>
                             {% endfor %}
                             {% if this_crumb %}
-                                <li class="breadcrumb-item active " aria-current="page">{{ this_crumb }}</li>
+                                <li class="breadcrumb-item active " aria-current="page">{{ this_crumb|capitalize }}</li>
                             {% endif %}
                         </ol>
                     </nav>
@@ -123,36 +125,123 @@ otherJS
 
             {# placeholder to allow screen to define zoo animals #}
             {% set useModal = false %}
-
             {% if (animals and not hideTitleAnimals) %}
                 {% set studentCode = session.currStudent|default %}
                 {% set studentName = (studentCode is empty) ? '' : session['STUDENTS'][studentCode].studentName %}
                 {% set zooClass = (studentName is empty) ?  '' :  'zoo-animals' %}
                 {% set zooUrl = (zooClass is empty) ? '#' : zooUrl %}
                 {% set dim = smaller ? '40' : '60' %}
+
                 <div style="display: none;" id="animal-index">{{ animalIndex }}</div>
-                {# invokes $(".zoo-animals").colorbox() where href is a generated zoo file for student #}
-                <a id="current-animal" class="my-0 mx-3 p-0 {{ zooClass }}" href="{{ zooUrl }}"
-                   style="width: {{ dim }}px; height: {{ dim }}px">
-                    <img src="{{ animals[0].fileName }}" alt="My Latest Animal" height="{{ dim }}" width="{{ dim }}"
-                         title="See my zoo" class="mw-100 mh-100" id="current-animal-img">
-                </a>
 
-                {% set titleText = 'Award this animal prize to ' ~ studentName %}
-                {% set nextAnimal = animalIndex + 1 %}
-                <a id="next-animal"  href="/award.php?n={{ nextAnimal }}" style="width: {{ dim }}px; height: {{ dim }}px"
-                    class="award my-0 mx-2 p-0" >
-                    <img src="{{ animals[1].grayFileName }}" alt="Next Animal" height="{{ dim }}" width="{{ dim }}"
-                         title="{{ titleText }}"  class="mw-100 mh-100  m-0" id="next-animal-img">
-                </a>
+                <div class="header-next-animal-container" style="width: {{ dim }}px; height: {{ dim }}px">
+                    {% set titleText = 'Award this animal prize to ' ~ studentName %}
+                    {% set nextAnimal = animalIndex + 1 %}
+                    <a id="next-animal"  href="/award.php?n={{ nextAnimal }}"
+                        class="award my-0 mx-2 p-0" >
+                        <img class="header-animal-image" src="{{ animals[1].grayFileName }}" alt="Next Animal"
+                            title="{{ titleText }}"  class="mw-100 mh-100  m-0" id="next-animal-img">
+                    </a>
+                </div>
+
+                <div class="header-current-animal-container" style="width: {{ dim }}px; height: {{ dim }}px">
+                    <a id="current-animal" class="my-0 mx-3 p-0 {{ zooClass }}" href="{{ zooUrl }}">
+                        <img class="header-animal-image" src="{{ animals[0].fileName }}" alt="My Latest Animal"
+                            title="See my zoo" class="mw-100 mh-100" id="current-animal-img">
+                    </a>
+                </div>
+
+                {% if studentList is defined %}
+                    <div class="dropdown header-dropdown">
+                        <button class="btn btn-default header-dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-xpanded="false" aria-expanded="false">
+                            <img class="students-arrow-down" src="/images/arrow-down.PNG" id="arrow-down-img">
+                        </button>
+
+
+                        <div class="dropdown-menu header-dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                            {% for student in studentList %}
+                                {% if student.title != studentName %}
+                                    <a class="dropdown-item header-dropdown-item" href="{{student.url}}">{{student.title}}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="header-student-details">
+                            <p class="header-student-name">{{ studentName }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="mobile-bars-container">
+                    <i class="mobile-bars fas fa-bars fa-1x" onclick="mobileNav.open()"></i>
+                </div>
+
+                <div id="mobile-menu-overlay" class="mobile-menu-overlay">
+                    <div class="mobile-menu-header">
+                        <div class="mobile-header-current-animal-container">
+                            <a id="current-animal" class="my-0 mx-3 p-0 {{ zooClass }}" href="{{ zooUrl }}">
+                                <img class="mobile-header-animal-image" src="{{ animals[0].fileName }}" alt="My Latest Animal"
+                                    title="See my zoo" class="mw-100 mh-100" id="current-animal-img">
+                            </a>
+                        </div>
+                        <div class="mobile-header-next-animal-container">
+                            {% set titleText = 'Award this animal prize to ' ~ studentName %}
+                            {% set nextAnimal = animalIndex + 1 %}
+                            <a id="next-animal"  href="/award.php?n={{ nextAnimal }}"
+                                class="award my-0 mx-2 p-0" >
+                                <img class="mobile-header-animal-image" src="{{ animals[1].grayFileName }}" alt="Next Animal"
+                                    title="{{ titleText }}"  class="mw-100 mh-100  m-0" id="next-animal-img">
+                            </a>
+                        </div>
+                        <span class="mobile-header-text">{{studentName}}</span>
+                        <div class="mobile-header-close-container">
+                            <i class="mobile-header-close fas fa-times fa-1x" onclick="mobileNav.close()"></i>
+                        </div>
+                    </div>
+                    <div class="mobile-header-content">
+                        {% if previous_crumbs or this_crumb %}
+                                {% for crumb in previous_crumbs %}
+                                    {% if((crumb.link is empty) or (crumb.link == '#')) %}
+                                    <div class="mobile-header-content-item mobile-header-content-item-inactive">
+                                        <a href="{{crumb.link}}">
+                                            {{crumb.text|capitalize}}
+                                        </a>
+                                    </div>
+                                    {% else %}
+                                    <div class="mobile-header-content-item">
+                                        <a href="{{crumb.link}}">
+                                            {{crumb.text|capitalize}}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                                {% if this_crumb %}
+                                    <div class="mobile-header-content-item mobile-header-content-item-active">
+                                        <span>{{ this_crumb|capitalize }}</span>
+                                    </div>
+                                {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+
+
+
                 {# dialog(id, title, text, clickTarget, doneFunc) #}
-{#                {{ dialog("award-confirm", "Award Ceremony", titleText, '/handler/award', 'noAward') }}#}
+    {#                {{ dialog("award-confirm", "Award Ceremony", titleText, '/handler/award', 'noAward') }}#}
             {% endif %}
-
-
         </div>
-    {% endblock titleBar %}
-    {# TITLE BAR - END #}
+
+
+
+
+
+	</div>
+{% endblock titleBar %}
+{# TITLE BAR - END #}
+
+{# Container for the whole page #}
+<div class="m-0 p-0 p-sm-1 p-md-3 p-lg-5 container-fluid container-base" id="base-container" style="max-width: 950px;">
 
     {# #}{# ERRORS BLOCK #}
     {# {% block errors %} #}
@@ -185,7 +274,10 @@ otherJS
     {% set sound_box_dimensions__ = smaller ? 'width: "300px", height: "267px"' : 'width: "450px", height: "400px"' %}
 
     function sendEmail() {
-        document.getElementById("parent-email").submit();
+        let formObject = document.forms['parentEmailForm'];
+        let emailContent = document.getElementById('emailContent');
+        formObject.elements['emailBody'].value = emailContent.innerHTML;
+        formObject.submit();
         {#$.post("/lessonEmail", {#}
         {#    parent: "{{ parentName|default('Parent') }}",#}
         {#    student: "{{ page.studentName|default('your child') }}",#}
