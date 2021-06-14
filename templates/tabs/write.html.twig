@@ -19,8 +19,8 @@ input soundBox.color, soundBox.count, soundBox.boxSize
 
     <div class="container bg-white mx-2 pt-1" id="{{ tabId }}-container" style="max-width: 800px; width:95%">
         {# <div id="write-tab-container" class="container" style="max-width: 600px; width:95%"> #}
-        <div class="row d-flex justify-content-start p-2">
-            {{ tabHeader(tabInfo, lesson.wordList|join('   ')) }}
+        <div class="row d-flex justify-content-start p-2 align-item">
+            {{ tabHeader(tabInfo, lesson.wordLists.mastery|join(' ')) }}
         </div>
 
         <!-- -------------- BUTTONS SECTION START ----------------------------- -->
@@ -74,43 +74,6 @@ input soundBox.color, soundBox.count, soundBox.boxSize
         </div>
         <!-- -------------- BUTTONS SECTION END ----------------------------- -->
 
-        {# ROW -- RECEPTACLE BOXES (Start) #}
-        <div class="row d-flex justify-content-center">
-            {% for i in range(0,count - 1) %}
-
-                {% set letterType = (i == 1) ? 'vowel' : 'consonant' %}
-
-                <div id="big-box-{{ i }}" class="box box--border p-0 d-flex flex-nowrap">
-{#                    <div  id="actions-{{ i }}"#}
-{#                         class="col col-4 m-0 h-100 d-flex flex-column justify-content-between" #}
-{#                          style="padding: 0 0 0 3px " onclick="">#}
-{#                        <button id="eraser-{{ i }}" class="btn btn-white w-100" onclick="soundBox.erase('{{ i }}')"#}
-{#                                type="button">#}
-{#                            <i class="fa fa-eraser text-readlite" data-toggle="tooltip"#}
-{#                               title="Erase all letters in the box"></i>#}
-{#                        </button>#}
-{#                        <button id="appender-{{ i }}" class="btn btn-white w-100" type="button"#}
-{#                                onclick="soundBox.appendLetter('{{ i }}')">#}
-{#                            <i class="fa fa-plus text-readlite"#}
-{#                               data-toggle="tooltip" title="Append the selected letter to the letters in the box"></i>#}
-{#                        </button>#}
-{#                    </div>#}
-                    <div class="col col-8 m-0 p-0 h-100 flex-column" id="upper-ball-and-tile-{{ i }}">
-                        <div class="justify-content-center flex-column d-flex h-75" >
-                            <i id="uball-{{ i }}" class="fa fa-circle ball tac" style="visibility: hidden"
-                               onclick="soundBox.moveUpperBall('{{ i }}')"></i>
-                        </div>
-                        <div class="justify-content-center flex-column d-flex h-25" id="tile-holder-{{ i }}">
-                            <span id="box-letters-{{ i }}" class="tac upper-letter-tile"></span>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        {# ROW -- RECEPTACLE BOXES (End) #}
-        <div id="tile-instructions" class="row d-flex justify-content-center instruct-size mx-3 my-1" style="visibility: hidden">
-            Use replace or append buttons in each box to control to copy the selected letter to a box.
-        </div>
         {# ROW -- BALLS (Start) #}
         <div class="row d-flex justify-content-center flex-nowrap">
             {% for i in range(0,count -1) %}
@@ -122,6 +85,51 @@ input soundBox.color, soundBox.count, soundBox.boxSize
             {% endfor %}
         </div>
         {# ROW -- BALLS (End) #}
+
+        {# ROW -- RECEPTACLE BOXES (End) #}
+        <div id="tile-instructions" class="row d-flex justify-content-center instruct-size mx-3 my-1" style="visibility: hidden">
+            Use replace or append buttons in each box to control to copy the selected letter to a box.
+        </div>
+
+        {# ROW -- RECEPTACLE BOXES (Start) #}
+        <div class="row d-flex justify-content-center">
+            {% for i in range(0,count - 1) %}
+
+                {% set letterType = (i == 1) ? 'vowel' : 'consonant' %}
+                <div>
+                    <div id="big-box-{{ i }}" class="box box--border p-0 d-flex flex-nowrap">
+    {#                    <div  id="actions-{{ i }}"#}
+    {#                         class="col col-4 m-0 h-100 d-flex flex-column justify-content-between" #}
+    {#                          style="padding: 0 0 0 3px " onclick="">#}
+    {#                        <button id="eraser-{{ i }}" class="btn btn-white w-100" onclick="soundBox.erase('{{ i }}')"#}
+    {#                                type="button">#}
+    {#                            <i class="fa fa-eraser text-readlite" data-toggle="tooltip"#}
+    {#                               title="Erase all letters in the box"></i>#}
+    {#                        </button>#}
+    {#                        <button id="appender-{{ i }}" class="btn btn-white w-100" type="button"#}
+    {#                                onclick="soundBox.appendLetter('{{ i }}')">#}
+    {#                            <i class="fa fa-plus text-readlite"#}
+    {#                               data-toggle="tooltip" title="Append the selected letter to the letters in the box"></i>#}
+    {#                        </button>#}
+    {#                    </div>#}
+                        <div class="col col-8 m-0 p-0 h-100 flex-column" id="upper-ball-and-tile-{{ i }}">
+                            <div class="justify-content-center flex-column d-flex h-75" >
+                                <i id="uball-{{ i }}" class="fa fa-circle ball tac" style="visibility: hidden"
+                                onclick="soundBox.moveUpperBall('{{ i }}')"></i>
+                            </div>
+                            <div class="justify-content-center flex-column d-flex h-25" id="tile-holder-{{ i }}">
+                                <span id="box-letters-{{ i }}" class="tac upper-letter-tile"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa fa-plus text-readxyz pr-2" style="cursor:pointer;"onclick="soundBox.selectBox({{ i }})"></i>
+                        <i class="fa fa-eraser text-readxyz pl-2" style="cursor:pointer;" onclick="soundBox.erase({{ i }})"></i>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {# ROW -- RECEPTACLE BOXES (End) #}
 
         {# ROW -- INSTRUCTIONS #}
         <div class="row d-flex justify-content-center instruct-size mt-2">
@@ -141,4 +149,3 @@ input soundBox.color, soundBox.count, soundBox.boxSize
     </div>
 
 {% endblock WriteTab %}
-
