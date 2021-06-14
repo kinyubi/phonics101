@@ -21,9 +21,21 @@ class TabTypesJson
      * @see https://goessner.net/articles/JsonPath/
      * @throws PhonicsException
      */
-    protected function __construct()
+
+    public function __construct()
     {
-        $this->baseConstruct('abc_tabtypes.json', 'tabTypeId');
+        if (isset($_SESSION['isLetters'])) {
+            $isLetters = $_SESSION['isLetters'];
+            if($isLetters){
+                $this->baseConstruct('abc_letters_tabtypes.json', 'tabTypeId');
+            }
+            else{
+                $this->baseConstruct('abc_tabtypes.json', 'tabTypeId');
+            }
+        }
+        else{
+            $this->baseConstruct('abc_tabtypes.json', 'tabTypeId');
+        }
         $this->makeMap();
     }
 
