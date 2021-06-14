@@ -20,7 +20,9 @@ use App\ReadXYZ\Models\BreadCrumbs;
 use App\ReadXYZ\Models\Session;
 use App\ReadXYZ\Page\LessonPage;
 
-class LessonTemplate
+use App\ReadXYZ\Twig\BaseTemplate;
+
+class LessonTemplate extends BaseTemplate
 {
     private LessonsJson    $lessonsJson;
     private ?Lesson    $lesson;
@@ -68,6 +70,25 @@ class LessonTemplate
             $this->initialTabName = $initialTab;
         }
 
+        $withE = false;
+
+        if(isset($this->lesson->chain)){
+            $acceptedWords = $this->lesson->chain;
+            $acceptedWordList = explode(' ', trim($acceptedWords));
+            $endingLetter = substr($acceptedWordList[0], -1);
+            if($endingLetter == "e"){
+                $withE = true;
+            }
+        }
+
+
+        $isLetters = false;
+
+        if($this->lesson->groupCode == 'letters')
+            $isLetters = true;
+
+        $_SESSION["isLetters"] = $isLetters;
+
         $zooAnimals = ZooAnimalsAlt::getInstance();
         $sideNote              = SideNote::getInstance();
         $args                  = [];
@@ -87,6 +108,10 @@ class LessonTemplate
         $args['animals']       = $zooAnimals->getStudentAnimalSet($this->studentCode);
         $args['animalIndex']   = $zooAnimals->getIndex($this->studentCode);
         $args['parentEmail']   = (new StudentsData)->getParentEmail($this->studentCode);
+        $args['withE']         = $withE;
+        $args['studentList']   = parent::getStudentList();
+        $args['trainerCode']   = Session::getTrainerCode();
+        $args['someSampleData'] = "Sample";
         // tabInfo is set by lesson.html.twig for each of the tabs. It is an abc_tabType record
 
         if ($this->initialTabName) {
@@ -105,6 +130,8 @@ class LessonTemplate
         if ($breadcrumbs) {
             $args['previous_crumbs'] = $breadcrumbs;
         }
+
+        unset($_SESSION['isLetters']);
         $this->page->addArguments($args);
         $this->page->displayLesson();
     }
