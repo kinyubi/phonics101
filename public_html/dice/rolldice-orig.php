@@ -54,15 +54,10 @@ if (!file_exists($die_file)) {
         #dice {
             position: absolute;
             top: 0;
-            left: 20px;
+            left: 30px;
             width: 100px;
             height: 100px;
-
-            -moz-backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            -ms-backface-visibility: hidden;
-            -o-backface-visibility: hidden;
-            backface-visibility: hidden;
+            margin-top: 15px;
 
             -webkit-transform-style: preserve-3d;
             -moz-transform-style: preserve-3d;
@@ -221,5 +216,3 @@ if (!file_exists($die_file)) {
 
 </body>
 </html>
-
-
