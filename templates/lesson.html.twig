@@ -104,7 +104,7 @@ Optional Arguments
     {% block body %}
     {# TAB CONTENT #}
     {% set visibleTab = (initialTabName is empty) ? (lesson.tabNames|first|lower) : initialTabName|lower %}
-    <div class="row d-flex flex-lg-nowrap justify-content-start" id="tabs-container">
+    <div class="row d-flex flex-lg-nowrap justify-content-start" id="tabs-container" style="margin:0">
       <div class="tab-content w-100" id="myTabContent">
           {# CONTENT FOR EACH TAB #}
         {% for tabId in lesson.tabNames %}
