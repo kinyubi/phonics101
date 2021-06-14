@@ -20,8 +20,14 @@ class WordMasteryForm extends AbstractHandler
     {
         self::fullLocalErrorReportingOn();
         try {
-            if (!Session::hasLesson()) {
+            if(isset($_POST['currentLesson'])){
+                $lessonName = $_POST['currentLesson'];
+            }
+            else if (!Session::hasLesson()) {
                 throw new PhonicsException('Cannot update user mastery without an active lesson.');
+            }
+            else{
+                $lessonName = Session::getCurrentLessonName();
             }
             $studentCode = Session::getStudentCode();
             $presentedWordList = $_POST['wordlist'];

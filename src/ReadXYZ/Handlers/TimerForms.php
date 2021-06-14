@@ -20,14 +20,20 @@ class TimerForms extends AbstractHandler
     {
         self::fullLocalErrorReportingOn();
         try {
-            if (!Session::hasLesson()) {
+            if(isset($_POST['currentLesson'])){
+                $lessonName = $_POST['currentLesson'];
+            }
+            else if (!Session::hasLesson()) {
                 throw new PhonicsException('Cannot update user mastery without an active lesson.');
+            }
+            else{
+                $lessonName = Session::getCurrentLessonName();
             }
             $source = $_POST['source'] ?? 'unknown';
             $seconds = intval($_POST['seconds'] ?? '0');
             $timeStamp = intval($_POST['timestamp'] ?? '0');
             $tab = ('fluency' == $source) ? 'fluency' : 'test';
-            $lessonName = Session::getCurrentLessonName();
+
             $lessonTemplate = new LessonTemplate($lessonName, $tab);
             $studentLessonData = new StudentLessonsData();
             if (('fluency' == $source) || ('test' == $source)) {
