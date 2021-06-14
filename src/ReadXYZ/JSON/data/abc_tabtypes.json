@@ -37,7 +37,8 @@
       {
         "tabTypeId": "write",
         "tabDisplayAs": "TapMap",
-        "script": "I will say a word from the lesson. First, tap a circle as you say each sound in the word. Next, tap one or more letters to go in the same box as the circle. Tap the ball in a box to erase the letters in the box. Tap the ball again to add new letters.",
+        "tabDisplayAsHeader": "Tap & Map Sound Boxes",
+        "script": "I will say <a id='tapAndMap-word-link'>a word from the lesson</a>. First, tap a circle as you say each sound in the word. Next, tap a letter and then the plus sign to map the letter(s) to the corresponding sound boxes.",
         "imageFile": "/images/tabs/write.png",
         "aliases": ["word", "tapAndMap"]
       },
