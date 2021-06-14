@@ -1,17 +1,29 @@
 {#
   @name tabHeader macro:
   Displays the tab name as a heading as well as the teacher's script instructions
-  @param tabInfo: TabType class object (tabTypeId, tabDisplayAs, script, etc)
+  @param tabInfo: TabType class object (tabTypeId, tabDisplayAs, script, etc, tabDisplayAsHeader)
 #}
 {% macro tabHeader(tabInfo, words="") %}
-  <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center">
-    <div>{{ tabInfo.tabDisplayAs }}</div>
+{% set tabHeader = tabInfo.tabTypeId == 'write' ? tabInfo.tabDisplayAsHeader : tabInfo.tabDisplayAs %}
+  <div class="row h5 my-1 text-readxyz d-flex flex-nowrap justify-content-center w-100">
+    {% if tabHeader != 'Chain' %}
+        <div>{{ tabHeader }}</div>
+    {% endif %}
   </div>
   {% if tabInfo.script %}
     <div class="row  d-flex flex-nowrap justify-content-start  m-1 p-1 " >
 
-      <div class="text-readxyz ">Script:&nbsp;</div>
-      <div class="text-secondary " title="{{ words }}" data-toggle="tooltip" data-placement="top" >&quot;{{ tabInfo.script }}&quot;</div>
+      <div class="text-readxyz "><b>Script:</b>&nbsp;</div>
+    {% if tabHeader == 'Chain' %}
+        <div class="text-secondary lesson-script-description" title="{{ words }}" data-toggle="tooltip" data-placement="top" >&quot;{{ tabInfo.script }}&quot;</div>
+        <input type="hidden" id="chain-accepted-words" value="{{words}}" />
+    {% elseif tabHeader == 'Tap & Map Sound Boxes' %}
+        <div class="text-secondary lesson-script-description" title="{{ words }}" data-toggle="tooltip" data-placement="top" >&quot;{{ tabInfo.script }}&quot;</div>
+        <input type="hidden" id="tapmap-accepted-words" value="{{ words }}" />
+    {% else %}
+        <div class="text-secondary lesson-script-description" title="{{ words }}" data-toggle="tooltip" data-placement="top" >&quot;{{ tabInfo.script }}&quot;</div>
+
+      {% endif %}
     </div>
   {% endif %}
 {% endmacro %}
@@ -25,9 +37,9 @@
 #}
 {% macro timerButton(tab, name, tooltip) %}
   {% set filename = '/images/sidebar/' ~ name ~ '.png' %}
-    <div class="size--side-icon m-1 btn-img btn-img-shadow-round" data-toggle="tooltip" data-placement="left"
+    <div class="size--side-icon m-1 btn-img" data-toggle="tooltip" data-placement="left"
     title="{{ tooltip }}" id="{{ tab }}{{ name }}Button"
-    style="background: url({{ filename }}) no-repeat; background-size: contain;">
+    style="background: url({{ filename }}) no-repeat; background-size: contain; cursor: pointer;">
     </div>
 {% endmacro %}
 
