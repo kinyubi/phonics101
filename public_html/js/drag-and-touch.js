@@ -12,6 +12,10 @@
 //    Adds listeners to receptacles and movers. Also adds draggable attribute to movers.
 let activeEvent = '';
 let receiverIds = [];
+let willHandleDrop = false;
+let receptacleToFill = null;
+let fillWord = '';
+let isWithinBoard = false;
 
 function handleDragEnter(e) {
   // document.getElementById('app_status').innerHTML = "You are dragging over the " + e.target.getAttribute('id');
@@ -25,19 +29,22 @@ function handleDragOver(e) {
 }
 
 function handleDrop(e) {
-  e.preventDefault();
-  const receiver = e.target;
-  let element_id = e.dataTransfer.getData("text");
-  const mover = document.getElementById(element_id);
-  receiver.innerText = '';
-  receiver.appendChild(mover);
-  mover.removeAttribute("draggable")
-  mover.style.cursor = "default";
+    if(willHandleDrop){
+        e.preventDefault();
+        const receiver = e.target;
+        let element_id = e.dataTransfer.getData("text");
+        const mover = document.getElementById(element_id);
+        receiver.innerText = '';
+        receiver.appendChild(mover);
+        if(isWithinBoard){
+            receptacleToFill.innerHTML = fillWord;
+        }
+    }
 
-  receiver.removeEventListener('dragenter', handleDragEnter, false);
-  receiver.removeEventListener('dragover', handleDragOver, false);
-  receiver.removeEventListener('dragleave', handleDragLeave, false);
-  receiver.removeEventListener('drop', handleDrop, false);
+  // receiver.removeEventListener('dragenter', handleDragEnter, false);
+  // receiver.removeEventListener('dragover', handleDragOver, false);
+  // receiver.removeEventListener('dragleave', handleDragLeave, false);
+  // receiver.removeEventListener('drop', handleDrop, false);
 }
 
 
@@ -68,27 +75,38 @@ function handleTouchMove(e) {
 
 function handleTouchEnd(e) {
   // e.preventDefault();
+
   if (activeEvent === 'move') {
     let receiver = null;
+    let isOnBoard = false;
     for (let rId of receiverIds) {
       let r = document.getElementById(rId);
       let mover = e.target;
       if (detectContainment(mover, r)) {
         receiver = r;
-        receiver.innerText = '';
-        mover.style.position = 'relative';
-        mover.style.left = '';
-        mover.style.top = '';
-        break;
+        isOnBoard = true;
       }
     }
-    if (receiver && receiver.classList.contains('unlocked')) {
-      // receiver.innerText = '';
-      receiver.appendChild(e.target);
-      e.target.removeEventListener('touchstart', handleTouchStart, {passive: true});
-      e.target.removeEventListener('touchmove', handleTouchMove, {passive: true});
-      e.target.removeEventListener('touchend', handleTouchEnd, {passive: true});
-      receiver.classList.remove('unlocked');
+    if (isOnBoard) {
+      moverId = e.target.id;
+      receiverId = receiver.id;
+      dropOnSquareMobile(moverId, receiverId);
+      if(willHandleDrop){
+          let newMover = document.getElementById(moverId);
+          newMover.style.position = 'relative';
+          newMover.style.left = '';
+          newMover.style.top = '';
+          const newReceiver = document.getElementById(receiverId);
+          newReceiver.innerText = '';
+          newReceiver.appendChild(newMover);
+          if(isWithinBoard){
+              receptacleToFill.innerHTML = fillWord;
+          }
+      }
+      // e.target.removeEventListener('touchstart', handleTouchStart, {passive: true});
+      // e.target.removeEventListener('touchmove', handleTouchMove, {passive: true});
+      // e.target.removeEventListener('touchend', handleTouchEnd, {passive: true});
+      // receiver.classList.remove('unlocked');
     } else {
       e.target.style.position = 'initial';
     }
@@ -100,8 +118,6 @@ function detectContainment(mover, receiver) {
   let m = mover.getBoundingClientRect();
   let r = receiver.getBoundingClientRect();
   let contained = ((m.x + m.width - 4) <= (r.x + r.width) && (m.x + 4) > r.x && (m.y+4) > r.y && (m.y + m.height - 4) < (r.y + r.height));
-  if (contained) {
-  }
   return contained;
 }
 
@@ -153,5 +169,3 @@ document.addEventListener("DOMContentLoaded", function (event) {
 //     obj.addEventListener('touchmove', handleTouchMove, {passive: true});
 //     obj.addEventListener('touchend', handleTouchEnd, {passive: true});
 //   }
-
-
