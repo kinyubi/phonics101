@@ -10,14 +10,14 @@
 	{% set dim = smaller ? '50px' : '150px' %}
 	{% set dim2 = smaller ? '60px' : '180px' %}
 	<div id="zoo-header" class="row d-flex justify-content-between">
-		<div  class="h1 mx-auto w-100 p-3">{{ title|raw }}</div>
+		<div class="h1 mx-auto w-100 p-3 zoo-animals-title">{{ title|raw }}</div>
 	</div>
 	<div class="row d-flex justify-content-start m-1">
-		{% for animal in animals %}
-			<figure style="height:{{ dim2 }}; width:{{ dim2 }}">
+		{% for animal in animals|reverse %}
+			<figure style="height:{{ dim }}; width:{{ dim }}; margin-bottom: 30px;">
 				<img src="{{ animal.fileName }}" alt="animal" title="{{ animal.friendlyName }}"
 				     class="m-auto" height="{{ dim }}" width="{{ dim }}" style="object-fit: contain">
-				<figcaption style="text-align: center; font-family: Muli,serif">{{ animal.friendlyName }}</figcaption>
+				<figcaption style="text-align: center; font-family: Muli,serif; width:{{dim}};">{{ animal.friendlyName }}</figcaption>
 			</figure>
 
 		{% endfor %}
@@ -38,5 +38,3 @@
 	 }
 	</style>
 {% endblock %}
-
-
