@@ -113,6 +113,12 @@ EOT;
         return ($object != null) ? $object->studentName : '';
     }
 
+    public function getUserName(string $studentTag): string
+    {
+        $object = $this->get($studentTag);
+        return ($object != null) ? $object->userName : '';
+    }
+
     /**
      * Updates nextAnimal and lastAwarded fields
      * @param string $studentTag
