@@ -191,11 +191,11 @@ $(function () {
         let dataString = $("#masteryform").serialize();
         $.ajax({
             type: "post",
-            url: "/update_mastery",
+            url: "/handler/mastery",
             data: dataString,
             datatype: "json",
             success: function (data) {
-                if (data.code === 200) {
+                if (data.code == 200) {
                     $.colorbox({html: "<h1 class='text-readxyz'>Mastery Update Successful</h1>"})
                 } else {
                     $.colorbox({html: "<h1 class='text-danger'>Mastery Update Failed </h1>"})
@@ -210,4 +210,3 @@ $(function () {
 
 
 });
-
